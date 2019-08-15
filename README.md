@@ -10,7 +10,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
 
 ## Requirements
 
-  * Perl 5.24.0+
+  * Perl 5.24.1+
 
 ## Getting started
 
@@ -36,6 +36,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
 1.  Now run the following command at the command prompt. This will install all
     dependencies needed for using the library and running examples.
 
+        cpan install Module::Build
         perl Build.PL
         perl Build installdeps
 
@@ -97,9 +98,9 @@ API](https://developers.google.com/google-ads/api/docs/start).
         `googleads.properties` file in your home directory. Don't forget to fill
         in your developer token too.
 
-1.  Run the [get_campaigns](examples/basic_operations/get_campaigns.pl) to test
-    if your credentials are valid. You also need to pass your Google Ads account's
-    customer ID as a command-line parameter:
+1.  Run the [get_campaigns](examples/basic_operations/get_campaigns.pl) example
+    to test if your credentials are valid. You also need to pass your Google Ads
+    account's customer ID as a command-line parameter:
 
         perl examples/basic_operations/get_campaigns.pl -customer_id <YOUR_CUSTOMER_ID>
 
@@ -111,7 +112,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
     The [examples](examples) directory contains several useful examples. Most of
     the examples require parameters. You can either pass the parameters as
     arguments (recommended) or edit the `INSERT_XXXXX_HERE` values in the source
-    code. To see a usage statement for an example, pass `--help` as a
+    code. To see a usage statement for an example, pass `-help` as a
     command-line argument.
 
 ## Basic usage
@@ -125,7 +126,6 @@ with the following format:
     developerToken=INSERT_DEVELOPER_TOKEN_HERE
 
     ### OAuth2 ###
-
     clientId=INSERT_OAUTH2_CLIENT_ID_HERE
     clientSecret=INSERT_OAUTH2_CLIENT_SECRET_HERE
     refreshToken=INSERT_REFRESH_TOKEN_HERE
@@ -140,7 +140,7 @@ If you have an `googleads.properties` configuration file in the above format in
 your home directory, you can instantiate the client with no arguments:
 
 ```perl
-my $client = Google::Ads::GoogleAds::GoogleAdsClient->new();
+my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new();
 ```
 
 If your configuration file is not in your home directory, you can pass the file
@@ -149,7 +149,7 @@ location to the the `properties_file` property as follows:
 ```perl
 my $properties_file = "/path/to/googleads.properties";
 
-my $client = Google::Ads::GoogleAds::GoogleAdsClient->new({
+my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({
   properties_file => $properties_file
 });
 ```
@@ -159,12 +159,12 @@ object from the `GoogleAdsClient`, and change the client ID, client secret and
 refresh token at runtime:
 
 ```perl
-my $client = Google::Ads::GoogleAds::GoogleAdsClient->new({
+my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({
   developer_token   => "INSERT_DEVELOPER_TOKEN_HERE",
   login_customer_id => "INSERT_LOGIN_CUSTOMER_ID_HERE"
 });
 
-my $oauth_2_applications_handler = $client->get_oauth_2_applications_handler();
+my $oauth_2_applications_handler = $api_client->get_oauth_2_applications_handler();
 $oauth_2_applications_handler->set_client_id("INSERT_CLIENT_ID");
 $oauth_2_applications_handler->set_client_secret("INSERT_CLIENT_SECRET");
 $oauth_2_applications_handler->set_refresh_token("INSERT_REFRESH_TOKEN");
@@ -176,8 +176,7 @@ Once you have an instance of `GoogleAdsClient`, you can obtain a service client
 for a particular service using one of the `...Service()` methods:
 
 ```perl
-my $campaign_serevice = $client->CampaignService();
-
+my $campaign_serevice = $api_client->CampaignService();
 ```
 
 ### Request/Response Logging
@@ -196,7 +195,7 @@ succeeded.
 | SUMMARY  | Google.Ads.GoogleAds.Summary   | INFO          | WARN          |
 | DETAIL   | Google.Ads.GoogleAds.Detail    | DEBUG         | INFO          |
 
-**Caveat**: Mutate requests where [Partial failure](https://developers.google.com/google-ads/api/docs/samples/handle-partial-failure) 
+**Caveat**: Mutate requests where [Partial failure](https://developers.google.com/google-ads/api/docs/samples/handle-partial-failure)
 is true do not cause the entire request to fail. Therefore, partial failure logs
 are always logged at Success level, not at Failure level as may be expected.
 
@@ -209,19 +208,28 @@ loggers will log to relative files in the `logs` folder under your home director
 But the default configuration can be overridden by providing a
 [log4perl.conf](log4perl.conf) file in your home directory.
 
-Logging can be enabled/disabled using the following methods.
+Logging can be enabled/disabled using the following methods:
 
-*   `Google::Ads::GoogleAds::Logging::GoogleAdsLogger::enable_all_logging();`
-     Enables logging both loggers.
+* Enables logging for both loggers.
 
-*   `Google::Ads::GoogleAds::Logging::GoogleAdsLogger::disable_summary_logging();`
-     Disables the summary logging.
+  ```perl
+  Google::Ads::GoogleAds::Logging::GoogleAdsLogger::enable_all_logging();
+  ```
 
-*   `Google::Ads::GoogleAds::Logging::GoogleAdsLogger::disable_detail_logging();`
-     Disables the detail logging.
+* Disables the summary logging.
 
-You can use the methods of the Logger class directly for even more control over
-how requests are logged.
+  ```perl
+  Google::Ads::GoogleAds::Logging::GoogleAdsLogger::disable_summary_logging();
+  ```
+
+* Disables the detail logging.
+
+  ```perl
+  Google::Ads::GoogleAds::Logging::GoogleAdsLogger::disable_detail_logging();
+  ```
+
+You can use the methods of the `GoogleAdsLogger` class directly for even more
+control over how requests are logged.
 
 ## Miscellaneous
 

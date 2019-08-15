@@ -1,0 +1,78 @@
+[
+  {
+    "results": [
+      {
+        "campaign": {
+          "resourceName": "customers/1234567890/campaigns/111111111",
+          "id": "111111111",
+          "name": "Campaign #1"
+        }
+      },
+      {
+        "campaign": {
+          "resourceName": "customers/1234567890/campaigns/222222222",
+          "id": "222222222",
+          "name": "Campaign #2"
+        }
+      },
+      {
+        "campaign": {
+          "resourceName": "customers/1234567890/campaigns/333333333",
+          "id": "333333333",
+          "name": "Campaign #3"
+        }
+      }
+    ],
+    "nextPageToken": "CL7v2OGn6Oz26AEQBhi9hc7Jry0iFjQwVVh6SHhDTTU5SVEyWUhHdWdWdEEqAlYx",
+    "totalResultsCount": "8",
+    "fieldMask": "campaign.id,campaign.name"
+  },
+  {
+    "results": [
+      {
+        "campaign": {
+          "resourceName": "customers/1234567890/campaigns/444444444",
+          "id": "444444444",
+          "name": "Campaign #4"
+        }
+      },
+      {
+        "campaign": {
+          "resourceName": "customers/1234567890/campaigns/555555555",
+          "id": "555555555",
+          "name": "Campaign #5"
+        }
+      },
+      {
+        "campaign": {
+          "resourceName": "customers/1234567890/campaigns/666666666",
+          "id": "666666666",
+          "name": "Campaign #6"
+        }
+      }
+    ],
+    "nextPageToken": "CL7v2OGn6Oz26AEQHhily9_Jry0iFmxNclM5RldtX3BZdTNLUFNNdTlpLXcqAlYx",
+    "totalResultsCount": "8",
+    "fieldMask": "campaign.id,campaign.name"
+  },
+  {
+    "results": [
+      {
+        "campaign": {
+          "resourceName": "customers/1234567890/campaigns/777777777",
+          "id": "777777777",
+          "name": "Campaign #7"
+        }
+      },
+      {
+        "campaign": {
+          "resourceName": "customers/1234567890/campaigns/888888888",
+          "id": "888888888",
+          "name": "Campaign #8"
+        }
+      }
+    ],
+    "totalResultsCount": "8",
+    "fieldMask": "campaign.id,campaign.name"
+  }
+]

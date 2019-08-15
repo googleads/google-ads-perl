@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "resourceName": "customers/1234/adGroups/7890"
+    },
+    {
+    },
+    {
+    }
+  ],
+  "partialFailureError": {
+    "code": 3,
+    "message": "Multiple errors in 'details'. First error: '{campaign_id}' part of the resource name is invalid., at operations[1].create.campaign",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.ads.googleads.v2.errors.GoogleAdsFailure",
+        "errors": [
+          {
+            "errorCode": {
+              "requestError": "BAD_RESOURCE_ID"
+            },
+            "message": "'{campaign_id}' part of the resource name is invalid.",
+            "location": {
+              "fieldPathElements": [
+                {
+                  "fieldName": "operations",
+                  "index": "1"
+                },
+                {
+                  "fieldName": "create"
+                },
+                {
+                  "fieldName": "campaign"
+                }
+              ]
+            }
+          },
+          {
+            "errorCode": {
+              "adGroupError": "DUPLICATE_ADGROUP_NAME"
+            },
+            "message": "AdGroup with the same name already exists for the campaign.",
+            "trigger": {
+              "stringValue": "Valid AdGroup: 25ESak3iiOJfO"
+            },
+            "location": {
+              "fieldPathElements": [
+                {
+                  "fieldName": "operations",
+                  "index": "2"
+                },
+                {
+                  "fieldName": "create"
+                },
+                {
+                  "fieldName": "name"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
