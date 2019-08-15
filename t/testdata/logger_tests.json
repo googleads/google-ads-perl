@@ -1,0 +1,108 @@
+{
+  "success_logging": {
+    "request": {
+      "method": "POST",
+      "endpoint": "https://googleads.googleapis.com/v1/customers/1234567890/campaignBudgets:mutate",
+      "headers": [
+        "Content-Type",
+        "application/json; charset=utf-8",
+        "user-agent",
+        "gl-perl/5.24.0",
+        "x-goog-api-client",
+        "gl-perl/5.24.0",
+        "developer-token",
+        "test-developer-token",
+        "Authorization",
+        "Bearer test-acceess-token"
+      ],
+      "content": {
+        "customerId": "1234567890",
+        "operations": {
+          "create": {
+            "name": "Interplanetary budget",
+            "amountMicros": 500000,
+            "deliveryMethod": "STANDARD"
+          }
+        }
+      }
+    },
+    "response": {
+      "code": 200,
+      "message": "OK",
+      "headers": [
+        "content-type",
+        "application/json; charset=UTF-8",
+        "client-date",
+        "Wed, 29 May 2019 07:08:39 GMT",
+        "date",
+        "Wed, 29 May 2019 07:08:39 GMT",
+        "request-id",
+        "cdor20UpKmPLPFR60DhuMQ"
+      ],
+      "content": {
+        "results": [
+          {
+            "resourceName": "customers/1234567890/campaigns/1112223334"
+          }
+        ]
+      }
+    }
+  },
+  "error_logging": {
+    "request": {
+      "method": "POST",
+      "endpoint": "https://googleads.googleapis.com/v1/customers/1234567890/googleAds:search",
+      "headers": [
+        "Content-Type",
+        "application/json; charset=utf-8",
+        "user-agent",
+        "gl-perl/5.24.1",
+        "x-goog-api-client",
+        "gl-perl/5.24.1",
+        "developer-token",
+        "test-developer-token",
+        "Authorization",
+        "Bearer test-acceess-token"
+      ],
+      "content": {
+        "customerId": "1234567890",
+        "query": "SELECT campaign.invalid_key, campaign.name FROM campaign ORDER BY campaign.id",
+        "pageSize": 100
+      }
+    },
+    "response": {
+      "code": 400,
+      "message": "Bad Request",
+      "headers": [
+        "content-type",
+        "application/json; charset=UTF-8",
+        "client-date",
+        "Wed, 29 May 2019 07:08:39 GMT",
+        "date",
+        "Wed, 29 May 2019 07:08:39 GMT",
+        "request-id",
+        "p6RN_upPmz3xn8xR9Z-ARg"
+      ],
+      "content": {
+        "error": {
+          "code": 400,
+          "message": "Request contains an invalid argument.",
+          "status": "INVALID_ARGUMENT",
+          "details": [
+            {
+              "@type": "type.googleapis.com/google.ads.googleads.v1.errors.GoogleAdsFailure",
+              "errors": [
+                {
+                  "errorCode": {
+                    "queryError": "UNRECOGNIZED_FIELD"
+                  },
+                  "message": "Unrecognized field in the query: 'campaign.invalid_key'."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "error": {
+    "code": 400,
+    "message": "Request contains an invalid argument.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.ads.googleads.v1.errors.GoogleAdsFailure",
+        "errors": [
+          {
+            "errorCode": {
+              "queryError": "UNRECOGNIZED_FIELD"
+            },
+            "message": "Unrecognized field in the query: 'metrics.fake_field'."
+          },
+          {
+            "errorCode": {
+              "adError": "BAD_SNIPPET"
+            },
+            "message": "There is a problem with the snippet.",
+            "location": {
+              "fieldPathElements": [
+                {
+                  "fieldName": "snippet",
+                  "index": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

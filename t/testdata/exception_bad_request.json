@@ -1,0 +1,22 @@
+{
+  "error": {
+    "code": 400,
+    "message": "Invalid value at 'operations[0].update.status' (TYPE_ENUM), \"adsf\"\nInvalid JSON payload received. Unknown name \"paths1\" at 'operations[0].update_mask': Cannot find field.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "field": "operations[0].update.status",
+            "description": "Invalid value at 'operations[0].update.status' (TYPE_ENUM), \"adsf\""
+          },
+          {
+            "field": "operations[0].update_mask",
+            "description": "Invalid JSON payload received. Unknown name \"pa1hs\" at 'operations[0].update_mask': Cannot find field."
+          }
+        ]
+      }
+    ]
+  }
+}
