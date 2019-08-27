@@ -43,6 +43,10 @@ my %services_of : ATTR(:name<services> :default<{}>);
 my %auth_handlers_of : ATTR(:name<auth_handlers> :default<>);
 my %__enabled_auth_handler_of : ATTR(:name<__enabled_auth_handler> :default<>);
 
+# Runtime statistics.
+my %last_request_of : ATTR(:name<last_request> :default<>);
+my %last_response_of : ATTR(:name<last_response> :default<>);
+
 # Automatically called by Class::Std after the values for all the attributes
 # have been populated but before the constructor returns the new object.
 sub START {
@@ -65,8 +69,8 @@ sub START {
     $proxy_of{$ident}             ||= $properties{proxy};
   }
 
-  # Provide default values for below attributes if they weren't
-  # set by parameters to new() nor in the properties file.
+  # Provide default values for below attributes if they weren't set by
+  # parameters to new() nor in the properties file.
   $service_address_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_SERVICE_ADDRESS;
   $version_of{$ident} ||=
@@ -268,6 +272,10 @@ this attribute is required and must be set to the customer ID of the manager acc
 
 The proxy server URL to be used for internet connectivity.
 
+=head2 service_address
+
+The Google Ads API service address.
+
 =head2 version
 
 The version of the Google Ads API to use. The latest is the default.
@@ -284,6 +292,14 @@ The default is "false".
 
 The path of the configuration file. The default value is F<googleads.properties>
 file in the home directory.
+
+=head2 last_request
+
+The last HTTP request sent by this client.
+
+=head2 last_response
+
+The last HTTP response received by this client.
 
 =head1 METHODS
 

@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 58);
+use Test::More (tests => 60);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -293,9 +293,26 @@ ok(
 );
 
 # error_handling
+$api_client->set_die_on_faults(0);
+require
+  qw(examples/error_handling/handle_expanded_text_ad_policy_violations.pl);
+ok(
+  handle_expanded_text_ad_policy_violations(
+    $api_client, $customer_id, $search_ad_group_id
+  ),
+  "Test of handle_expanded_text_ad_policy_violations example."
+);
+require qw(examples/error_handling/handle_keyword_policy_violations.pl);
+ok(
+  handle_keyword_policy_violations(
+    $api_client, $customer_id, $search_ad_group_id, "abortion"
+  ),
+  "Test of handle_keyword_policy_violations example."
+);
 require qw(examples/error_handling/handle_partial_failure.pl);
 ok(handle_partial_failure($api_client, $customer_id, $search_ad_group_id),
   "Test of handle_partial_failure example.");
+$api_client->set_die_on_faults(1);
 
 # extensions
 # NOTE: Skip the add_google_my_business_location_extensions.pl as it requires additional setup.

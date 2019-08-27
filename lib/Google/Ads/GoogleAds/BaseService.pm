@@ -60,6 +60,9 @@ sub call {
 
   my $api_client = $self->get_api_client();
 
+  ##############################################################################
+  # Step 1: Prepare for the request URL and request content.
+  ##############################################################################
   if ($http_method eq GET) {
     # HTTP GET request scenarios:
     #  GET: v2/customers:listAccessibleCustomers
@@ -116,6 +119,9 @@ sub call {
       : '{}';
   }
 
+  ##############################################################################
+  # Step 2: Send the authorized HTTP request and handle the HTTP response.
+  ##############################################################################
   my $auth_handler = $api_client->_get_auth_handler();
   if (!$auth_handler) {
     $api_client->get_die_on_faults()
@@ -140,12 +146,20 @@ sub call {
     ? $user_agent->proxy(['http', 'https'], $proxy)
     : $user_agent->env_proxy;
 
+  # Keep track of the last sent HTTP request.
+  $api_client->set_last_request($http_request);
+
   my $http_response = $user_agent->request($http_request);
+
+  # Keep track of the last received HTTP response.
+  $api_client->set_last_response($http_response);
 
   my $response_content = $http_response->decoded_content();
 
-  # Log the one-line summary and the traffic detail. Error may occur when the
-  # response content is not in JSON format.
+  ##############################################################################
+  # Step 3: Log the one-line summary and the traffic detail. Error may occur
+  # when the response content is not in JSON format.
+  ##############################################################################
   eval {
     Google::Ads::GoogleAds::Logging::GoogleAdsLogger::log_summary($http_request,
       $http_response);
@@ -159,6 +173,9 @@ sub call {
     return;
   }
 
+  ##############################################################################
+  # Step 4: Return the decoded object or exception from the response content.
+  ##############################################################################
   my $response_body = $json_coder->decode($response_content);
 
   if ($http_response->is_success) {
