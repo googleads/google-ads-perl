@@ -34,6 +34,7 @@ sub new {
     expandedTextAd              => $args->{expandedTextAd},
     finalAppUrls                => $args->{finalAppUrls},
     finalMobileUrls             => $args->{finalMobileUrls},
+    finalUrlSuffix              => $args->{finalUrlSuffix},
     finalUrls                   => $args->{finalUrls},
     gmailAd                     => $args->{gmailAd},
     hotelAd                     => $args->{hotelAd},

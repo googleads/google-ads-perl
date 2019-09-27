@@ -56,7 +56,9 @@ sub START {
 
 # Sends a HTTP request to Google Ads API server and handles the response.
 sub call {
-  my ($self, $http_method, $request_path, $request_body, $response_type) = @_;
+  my ($self, $http_method, $request_path, $request_body, $response_type,
+    $content_callback)
+    = @_;
 
   my $api_client = $self->get_api_client();
 
@@ -149,7 +151,13 @@ sub call {
   # Keep track of the last sent HTTP request.
   $api_client->set_last_request($http_request);
 
-  my $http_response = $user_agent->request($http_request);
+  # Send HTTP request with optional content callback handler.
+  my $http_response = undef;
+  if ($content_callback) {
+    $http_response = $user_agent->request($http_request, $content_callback);
+  } else {
+    $http_response = $user_agent->request($http_request);
+  }
 
   # Keep track of the last received HTTP response.
   $api_client->set_last_response($http_response);
@@ -176,7 +184,8 @@ sub call {
   ##############################################################################
   # Step 4: Return the decoded object or exception from the response content.
   ##############################################################################
-  my $response_body = $json_coder->decode($response_content);
+  my $response_body =
+    $response_content ? $json_coder->decode($response_content) : {};
 
   if ($http_response->is_success) {
     # Bless the JSON format response to the response type class.
@@ -283,6 +292,8 @@ be encoded into JSON string for a HTTP POST request. Should be C<undef> for GET 
 
 I<response_type>: The class name of the expected response. A instance of this class
 will be returned if the request succeeds.
+
+I<content_callback>: The optional streaming content callback method.
 
 =back
 

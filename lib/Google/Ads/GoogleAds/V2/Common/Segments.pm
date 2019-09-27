@@ -57,6 +57,7 @@ sub new {
     hotelCountry                    => $args->{hotelCountry},
     hotelDateSelectionType          => $args->{hotelDateSelectionType},
     hotelLengthOfStay               => $args->{hotelLengthOfStay},
+    hotelPriceBucket                => $args->{hotelPriceBucket},
     hotelRateRuleId                 => $args->{hotelRateRuleId},
     hotelRateType                   => $args->{hotelRateType},
     hotelState                      => $args->{hotelState},

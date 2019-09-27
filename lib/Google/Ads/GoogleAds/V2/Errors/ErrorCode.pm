@@ -85,6 +85,7 @@ sub new {
     idError                         => $args->{idError},
     imageError                      => $args->{imageError},
     internalError                   => $args->{internalError},
+    invoiceError                    => $args->{invoiceError},
     keywordPlanAdGroupError         => $args->{keywordPlanAdGroupError},
     keywordPlanCampaignError        => $args->{keywordPlanCampaignError},
     keywordPlanError                => $args->{keywordPlanError},

@@ -12,26 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V2::Enums::ExtensionTypeEnum;
+package Google::Ads::GoogleAds::V2::Enums::InvoiceTypeEnum;
 
 use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED        => "UNSPECIFIED",
-  UNKNOWN            => "UNKNOWN",
-  NONE               => "NONE",
-  APP                => "APP",
-  CALL               => "CALL",
-  CALLOUT            => "CALLOUT",
-  MESSAGE            => "MESSAGE",
-  PRICE              => "PRICE",
-  PROMOTION          => "PROMOTION",
-  SITELINK           => "SITELINK",
-  STRUCTURED_SNIPPET => "STRUCTURED_SNIPPET",
-  LOCATION           => "LOCATION",
-  AFFILIATE_LOCATION => "AFFILIATE_LOCATION",
-  HOTEL_CALLOUT      => "HOTEL_CALLOUT"
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN     => "UNKNOWN",
+  CREDIT_MEMO => "CREDIT_MEMO",
+  INVOICE     => "INVOICE"
 ];
 
 1;

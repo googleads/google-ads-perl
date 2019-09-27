@@ -31,6 +31,8 @@ sub new {
     device                    => $args->{device},
     endDateTime               => $args->{endDateTime},
     extensionType             => $args->{extensionType},
+    hotelCalloutFeedItem      => $args->{hotelCalloutFeedItem},
+    id                        => $args->{id},
     locationFeedItem          => $args->{locationFeedItem},
     priceFeedItem             => $args->{priceFeedItem},
     promotionFeedItem         => $args->{promotionFeedItem},

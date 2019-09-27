@@ -1,3 +1,6 @@
+## 2.2.0 - 2019-09-16
+*   Added support for Google Ads API v2_2.
+
 ## 2.1.0 - 2019-08-15
 *   Added support for Google Ads API v2_1.
 *   Added examples for campaign experiments and mutate jobs.

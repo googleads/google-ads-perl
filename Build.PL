@@ -42,7 +42,7 @@ $build_sc->new(
   create_makefile_pl => "traditional",
   dist_abstract      => "Google Ads API Client Library for Perl",
   dist_name          => "Google-Ads-GoogleAds-Client",
-  dist_version       => "2.1.0",
+  dist_version       => "2.2.0",
   requires           => {
     "Class::Load"                  => 0,
     "Class::Std::Fast"             => 0,
@@ -66,6 +66,7 @@ $build_sc->new(
     "HTTP::Server::Simple::CGI"    => 0,
     "IO::Socket::SSL"              => 0,
     "JSON::Parse"                  => 0,
+    "JSON::SL"                     => 0,
     "JSON::XS"                     => 0,
     "List::Util"                   => 0,
     "Log::Log4perl"                => 0,

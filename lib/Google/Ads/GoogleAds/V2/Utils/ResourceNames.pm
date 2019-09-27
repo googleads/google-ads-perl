@@ -747,6 +747,15 @@ sub hotel_performance_view {
   return expand_path_template($path_template, [$customer_id]);
 }
 
+# Returns the invoice resource name for the specified components.
+sub invoice {
+  my ($customer_id, $invoice_id) = @_;
+
+  my $path_template = 'customers/{customer_id}/invoices/{invoice_id}';
+
+  return expand_path_template($path_template, [$customer_id, $invoice_id]);
+}
+
 # Returns the keyword_plan resource name for the specified components.
 sub keyword_plan {
   my ($customer_id, $kp_plan_id) = @_;
