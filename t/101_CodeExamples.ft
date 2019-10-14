@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 60);
+use Test::More (tests => 61);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -95,8 +95,6 @@ my $label_id = TestAPIUtils::create_label($api_client, $customer_id);
 ################################## Examples ##################################
 
 # account_management
-# NOTE: Skip the link_manager_to_client.pl since $customer_id and
-# $manager_customer_id might have already been linked together.
 require qw(examples/account_management/create_customer.pl);
 ok(create_customer($api_client, $manager_customer_id),
   "Test of create_customer example.");
@@ -105,11 +103,16 @@ ok(
   get_account_changes($api_client, $customer_id),
   "Test of get_account_changes example."
 );
+require qw(examples/account_management/get_account_hierarchy.pl);
+ok(get_account_hierarchy($api_client, $manager_customer_id),
+  "Test of get_account_hierarchy example.");
 require qw(examples/account_management/get_account_information.pl);
 ok(
   get_account_information($api_client, $customer_id),
   "Test of get_account_information example."
 );
+# NOTE: Skip the link_manager_to_client.pl since $customer_id and
+# $manager_customer_id might have already been linked together.
 require qw(examples/account_management/list_accessible_customers.pl);
 ok(
   list_accessible_customers($api_client),
