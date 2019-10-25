@@ -94,7 +94,7 @@ sub issue_access_token {
 
   push my @headers, "Content-Type" => "application/x-www-form-urlencoded";
   my $request  = HTTP::Request->new("POST", OAUTH2_TOKEN_URL, \@headers, $body);
-  my $response = $self->get___user_agent()->request($request);
+  my $response = $self->get___lwp_agent()->request($request);
 
   if (!$response->is_success()) {
     return $response->decoded_content();
@@ -133,7 +133,7 @@ sub _refresh_access_token {
   push my @headers, "Content-Type" => "application/x-www-form-urlencoded";
 
   my $request  = HTTP::Request->new("POST", OAUTH2_TOKEN_URL, \@headers, $body);
-  my $response = $self->get___user_agent()->request($request);
+  my $response = $self->get___lwp_agent()->request($request);
 
   if (!$response->is_success()) {
     my $err_msg = $response->decoded_content();

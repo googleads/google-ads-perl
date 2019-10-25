@@ -28,11 +28,11 @@ use Test::MockObject;
 # Tests use Google::Ads::GoogleAds::OAuth2ApplicationsHandler.
 use_ok("Google::Ads::GoogleAds::OAuth2ApplicationsHandler");
 
-my $user_agent_mock = Test::MockObject->new();
-$user_agent_mock->mock(env_proxy => sub { });
+my $lwp_agent_mock = Test::MockObject->new();
+$lwp_agent_mock->mock(env_proxy => sub { });
 
 my $handler = Google::Ads::GoogleAds::OAuth2ApplicationsHandler->new(
-  {__user_agent => $user_agent_mock});
+  {__lwp_agent => $lwp_agent_mock});
 
 my $api_client = get_test_client_no_auth();
 is(
@@ -74,7 +74,7 @@ $handler->initialize(
     additionalScopes => "https://www.googleapis.com/auth/analytics"
   });
 
-$user_agent_mock->mock(
+$lwp_agent_mock->mock(
   request => sub {
     my $response = HTTP::Response->new(200, "");
     $response->content(
@@ -122,7 +122,7 @@ is(
   "Test authorization url."
 );
 
-$user_agent_mock->mock(
+$lwp_agent_mock->mock(
   request => sub {
     my ($self, $request) = @_;
 
@@ -153,7 +153,7 @@ is(
   "Test error response when issuing access token."
 );
 
-$user_agent_mock->mock(
+$lwp_agent_mock->mock(
   request => sub {
     my ($self, $request) = @_;
 

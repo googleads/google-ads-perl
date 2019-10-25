@@ -33,8 +33,9 @@ use constant AUTH_HANDLERS_ORDER          => (OAUTH_2_APPLICATIONS_HANDLER);
 # These need to go in the same line for older Perl interpreters to understand.
 my %developer_token_of : ATTR(:name<developer_token> :default<>);
 my %login_customer_id_of : ATTR(:name<login_customer_id> :default<>);
-my %proxy_of : ATTR(:name<proxy> :default<>);
 my %service_address_of : ATTR(:name<service_address> :default<>);
+my %user_agent_of : ATTR(:name<user_agent> :default<>);
+my %proxy_of : ATTR(:name<proxy> :default<>);
 my %version_of : ATTR(:name<version> :default<>);
 my %die_on_faults_of : ATTR(:name<die_on_faults> :default<0>);
 
@@ -66,6 +67,7 @@ sub START {
     $developer_token_of{$ident}   ||= $properties{developerToken};
     $login_customer_id_of{$ident} ||= $properties{loginCustomerId};
     $service_address_of{$ident}   ||= $properties{serviceAddress};
+    $user_agent_of{$ident}        ||= $properties{userAgent};
     $proxy_of{$ident}             ||= $properties{proxy};
   }
 
@@ -268,13 +270,17 @@ This is the customer ID of the authorized customer to use in the request, withou
 hyphens. If your access to the customer account is through a manager account,
 this attribute is required and must be set to the customer ID of the manager account.
 
-=head2 proxy
-
-The proxy server URL to be used for internet connectivity.
-
 =head2 service_address
 
 The Google Ads API service address.
+
+=head2 user_agent
+
+The user-agent request header used to identify this application.
+
+=head2 proxy
+
+The proxy server URL to be used for internet connectivity.
 
 =head2 version
 

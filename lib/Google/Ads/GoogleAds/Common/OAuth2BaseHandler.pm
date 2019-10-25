@@ -37,13 +37,13 @@ my %api_client_of : ATTR(:name<api_client> :default<>);
 my %client_id_of : ATTR(:name<client_id> :default<>);
 my %access_token_of : ATTR(:init_arg<access_token> :default<>);
 my %access_token_expires_of : ATTR(:name<access_token_expires> :default<>);
-my %__user_agent_of : ATTR(:name<__user_agent> :default<>);
+my %__lwp_agent_of : ATTR(:name<__lwp_agent> :default<>);
 
 # Constructor
 sub START {
   my ($self, $ident) = @_;
 
-  $__user_agent_of{$ident} ||= LWP::UserAgent->new();
+  $__lwp_agent_of{$ident} ||= LWP::UserAgent->new();
 }
 
 # Methods from Google::Ads::GoogleAds::Common::AuthHandlerInterface
@@ -57,11 +57,11 @@ sub initialize : CUMULATIVE(BASE FIRST) {
   $access_token_of{$ident} = $properties->{accessToken}
     || $access_token_of{$ident};
 
-  # Set up proxy for __user_agent.
+  # Set up proxy for __lwp_agent.
   my $proxy = $api_client->get_proxy();
   $proxy
-    ? $__user_agent_of{$ident}->proxy(['http', 'https'], $proxy)
-    : $__user_agent_of{$ident}->env_proxy;
+    ? $__lwp_agent_of{$ident}->proxy(['http', 'https'], $proxy)
+    : $__lwp_agent_of{$ident}->env_proxy;
 }
 
 sub prepare_request {
@@ -133,7 +133,7 @@ sub _is_access_token_valid {
   if (!$self->get_access_token_expires()) {
     my $url =
       OAUTH2_TOKEN_INFO_URL . "?access_token=" . uri_escape($access_token);
-    my $response = $self->get___user_agent()->request(GET $url);
+    my $response = $self->get___lwp_agent()->request(GET $url);
     if (!$response->is_success()) {
       my $err_msg = $response->decoded_content();
       $self->get_api_client()->get_die_on_faults()

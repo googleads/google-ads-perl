@@ -40,7 +40,7 @@ use constant POST => "POST";
 # Class::Std-style attributes. Need to be kept in the same line.
 # These need to go in the same line for older Perl interpreters to understand.
 my %api_client_of : ATTR(:name<api_client> :default<>);
-my %__user_agent_of : ATTR(:name<__user_agent> :default<>);
+my %__lwp_agent_of : ATTR(:name<__lwp_agent> :default<>);
 my %__json_coder_of : ATTR(:name<__json_coder> :default<>);
 
 # Automatically called by Class::Std after the values for all the attributes
@@ -48,7 +48,7 @@ my %__json_coder_of : ATTR(:name<__json_coder> :default<>);
 sub START {
   my ($self, $ident) = @_;
 
-  $__user_agent_of{$ident} ||= LWP::UserAgent->new();
+  $__lwp_agent_of{$ident} ||= LWP::UserAgent->new();
   # The 'pretty' attribute should be enabled for more readable form in the log.
   # The 'convert_blessed' attributed should be enabled to convert blessed objects.
   $__json_coder_of{$ident} ||= JSON::XS->new->utf8->pretty->convert_blessed;
@@ -139,14 +139,14 @@ sub call {
 
   utf8::is_utf8 $http_request and utf8::encode $http_request;
 
-  my $user_agent = $self->get___user_agent();
+  my $lwp_agent = $self->get___lwp_agent();
 
-  # Set up timeout and proxy for the user agent.
-  $user_agent->timeout(Google::Ads::GoogleAds::Constants::DEFAULT_LWP_TIMEOUT);
+  # Set up timeout and proxy for the lwp agent.
+  $lwp_agent->timeout(Google::Ads::GoogleAds::Constants::DEFAULT_LWP_TIMEOUT);
   my $proxy = $api_client->get_proxy();
   $proxy
-    ? $user_agent->proxy(['http', 'https'], $proxy)
-    : $user_agent->env_proxy;
+    ? $lwp_agent->proxy(['http', 'https'], $proxy)
+    : $lwp_agent->env_proxy;
 
   # Keep track of the last sent HTTP request.
   $api_client->set_last_request($http_request);
@@ -154,9 +154,9 @@ sub call {
   # Send HTTP request with optional content callback handler.
   my $http_response = undef;
   if ($content_callback) {
-    $http_response = $user_agent->request($http_request, $content_callback);
+    $http_response = $lwp_agent->request($http_request, $content_callback);
   } else {
-    $http_response = $user_agent->request($http_request);
+    $http_response = $lwp_agent->request($http_request);
   }
 
   # Keep track of the last received HTTP response.
@@ -205,12 +205,15 @@ sub _get_http_headers {
   my ($self) = @_;
 
   my $api_client = $self->get_api_client();
+  my $user_agent = $api_client->get_user_agent();
 
   my $headers = [
     "Content-Type",
     "application/json; charset=utf-8",
     "user-agent",
-    Google::Ads::GoogleAds::Constants::DEFAULT_USER_AGENT,
+    $user_agent
+    ? $user_agent
+    : Google::Ads::GoogleAds::Constants::DEFAULT_USER_AGENT,
     "x-goog-api-client",
     Google::Ads::GoogleAds::Constants::DEFAULT_USER_AGENT,
     "developer-token",
