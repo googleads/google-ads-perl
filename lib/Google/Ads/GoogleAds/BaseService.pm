@@ -141,8 +141,13 @@ sub call {
 
   my $lwp_agent = $self->get___lwp_agent();
 
-  # Set up timeout and proxy for the lwp agent.
-  $lwp_agent->timeout(Google::Ads::GoogleAds::Constants::DEFAULT_LWP_TIMEOUT);
+  # Set up http timeout and proxy for the lwp agent.
+  my $http_timeout = $api_client->get_http_timeout();
+  $lwp_agent->timeout(
+      $http_timeout
+    ? $http_timeout
+    : Google::Ads::GoogleAds::Constants::DEFAULT_HTTP_TIMEOUT
+  );
   my $proxy = $api_client->get_proxy();
   $proxy
     ? $lwp_agent->proxy(['http', 'https'], $proxy)

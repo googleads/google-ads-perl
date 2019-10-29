@@ -49,7 +49,7 @@ use constant DEFAULT_SERVICE_ADDRESS => "https://googleads.googleapis.com/";
 use constant DEFAULT_USER_AGENT => "gl-perl/" . substr($^V, 1);
 
 # Default LWP::UserAgent timeout.
-use constant DEFAULT_LWP_TIMEOUT => 3600;
+use constant DEFAULT_HTTP_TIMEOUT => 3600;
 
 # The LongRunning.OperationSerivce version.
 use constant OPERATION_SERVICE_VERSION => "V2";

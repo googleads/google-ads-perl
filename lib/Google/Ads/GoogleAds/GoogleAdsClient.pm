@@ -36,6 +36,7 @@ my %login_customer_id_of : ATTR(:name<login_customer_id> :default<>);
 my %service_address_of : ATTR(:name<service_address> :default<>);
 my %user_agent_of : ATTR(:name<user_agent> :default<>);
 my %proxy_of : ATTR(:name<proxy> :default<>);
+my %http_timeout_of : ATTR(:name<http_timeout> :default<>);
 my %version_of : ATTR(:name<version> :default<>);
 my %die_on_faults_of : ATTR(:name<die_on_faults> :default<0>);
 
@@ -75,6 +76,8 @@ sub START {
   # parameters to new() nor in the properties file.
   $service_address_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_SERVICE_ADDRESS;
+  $http_timeout_of{$ident} ||=
+    Google::Ads::GoogleAds::Constants::DEFAULT_HTTP_TIMEOUT;
   $version_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_API_VERSION;
 
