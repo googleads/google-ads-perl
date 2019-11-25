@@ -227,7 +227,7 @@ sub add_hotel_ad_group_ad {
       ad => Google::Ads::GoogleAds::V2::Resources::Ad->new({
           hotelAd => Google::Ads::GoogleAds::V2::Common::HotelAdInfo->new()}
       ),
-      status => Google::Ads::GoogleAds::V2::Enums::AdGroupAdStatusEnum::PAUSED
+      status => Google::Ads::GoogleAds::V2::Enums::AdGroupAdStatusEnum::ENABLED
     });
 
   # Create an ad group ad operation.
