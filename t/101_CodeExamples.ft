@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 61);
+use Test::More (tests => 63);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -381,6 +381,11 @@ ok(
   add_real_estate_feed($api_client, $customer_id),
   "Test of add_real_estate_feed example."
 );
+require qw(examples/remarketing/add_remarketing_action.pl);
+ok(
+  add_remarketing_action($api_client, $customer_id),
+  "Test of add_remarketing_action example."
+);
 # NOTE: Skip the remove_feed_item_attribute_value.pl as it requires additional setup.
 # NOTE: Skip the remove_feed_items.pl as it requires additional setup.
 # NOTE: Skip the update_feed_item_attribute_value.pl as it requires additional setup.
@@ -418,7 +423,14 @@ ok(
 require qw(examples/targeting/add_customer_negative_criteria.pl);
 ok(
   add_customer_negative_criteria($api_client, $customer_id),
-  "Test of add_campaign_targeting_criteria example."
+  "Test of add_customer_negative_criteria example."
+);
+require qw(examples/targeting/add_demographic_targeting_criteria.pl);
+ok(
+  add_demographic_targeting_criteria(
+    $api_client, $customer_id, $display_ad_group_id
+  ),
+  "Test of add_demographic_targeting_criteria example."
 );
 require qw(examples/targeting/get_campaign_targeting_criteria.pl);
 ok(
