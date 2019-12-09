@@ -295,7 +295,7 @@ sub create_text_ads {
   my $new_ads =
     get_ads($google_ads_client, $customer_id, $new_ad_resource_names);
   foreach my $new_ad (@$new_ads) {
-    printf "Created expanded text ad with ID %d, status %s " .
+    printf "Created expanded text ad with ID %d, status '%s' " .
       "and headline '%s - %s'.\n",
       $new_ad->{ad}{id}, $new_ad->{status},
       $new_ad->{ad}{expandedTextAd}{headlinePart1},
@@ -372,7 +372,7 @@ sub create_keywords {
     get_keywords($google_ads_client, $customer_id,
     $new_ad_group_criterion_resource_names);
   foreach my $new_keyword (@$new_keywords) {
-    printf "Keyword with text '%s', id = %d and match type %s was created.\n",
+    printf "Keyword with text '%s', id = %d and match type '%s' was created.\n",
       $new_keyword->{keyword}{text},
       $new_keyword->{criterionId},
       $new_keyword->{keyword}{matchType};

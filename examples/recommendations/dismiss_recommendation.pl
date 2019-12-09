@@ -68,7 +68,7 @@ sub dismiss_recommendation {
       customerId => $customer_id,
       operations => [$dismiss_recommendation_operation]});
 
-  printf "Dismissed recommendation with resource name: %s.\n",
+  printf "Dismissed recommendation with resource name: '%s'.\n",
     $dismiss_recommendation_response->{results}[0]{resourceName};
 
   return 1;

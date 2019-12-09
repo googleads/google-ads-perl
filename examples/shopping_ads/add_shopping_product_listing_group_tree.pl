@@ -277,7 +277,7 @@ sub remove_listing_group_tree {
   while ($iterator->has_next) {
     my $google_ads_row     = $iterator->next;
     my $ad_group_criterion = $google_ads_row->{adGroupCriterion};
-    printf "Found an ad group criterion with the resource name: %s.\n",
+    printf "Found an ad group criterion with the resource name: '%s'.\n",
       $ad_group_criterion->{resourceName};
 
     # Create an ad group criterion operation.

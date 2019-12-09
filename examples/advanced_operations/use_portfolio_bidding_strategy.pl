@@ -110,7 +110,7 @@ sub create_bidding_strategy {
   my $bidding_strategy_resource_name =
     $bidding_strategy_response->{results}[0]{resourceName};
 
-  printf "Created portfolio bidding strategy with resource name: %s.\n",
+  printf "Created portfolio bidding strategy with resource name: '%s'.\n",
     $bidding_strategy_resource_name;
 
   return $bidding_strategy_resource_name;
@@ -144,7 +144,7 @@ sub create_shared_campaign_buget {
   my $campaign_budget_resource_name =
     $campaign_budget_response->{results}[0]{resourceName};
 
-  printf "Created a shared budget with resource name: %s.\n",
+  printf "Created a shared budget with resource name: '%s'.\n",
     $campaign_budget_resource_name;
 
   return $campaign_budget_resource_name;
@@ -191,7 +191,7 @@ sub create_campaign_with_bidding_strategy {
 
   my $campaign_resource_name = $campaign_response->{results}[0]{resourceName};
 
-  printf "Created a campaign with resource name: %s.\n",
+  printf "Created a campaign with resource name: '%s'.\n",
     $campaign_resource_name;
 }
 

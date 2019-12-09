@@ -58,7 +58,7 @@ sub remove_campaign {
       customerId => $customer_id,
       operations => [$campaign_operation]});
 
-  printf "Removed campaign with resource name: %s.\n",
+  printf "Removed campaign with resource name: '%s'.\n",
     $campaign_response->{results}[0]{resourceName};
 
   return 1;

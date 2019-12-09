@@ -81,7 +81,7 @@ sub add_campaign_bid_modifier {
       customerId => $customer_id,
       operations => [$campaign_bid_modifier_operation]});
 
-  printf "Created campaign bid modifier %s.\n",
+  printf "Created campaign bid modifier '%s'.\n",
     $campaign_bid_modifier_response->{results}[0]{resourceName};
 
   return 1;

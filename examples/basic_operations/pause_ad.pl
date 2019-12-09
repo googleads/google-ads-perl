@@ -71,7 +71,7 @@ sub pause_ad {
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
-  printf "Ad with resource name %s is paused.\n",
+  printf "Ad with resource name '%s' is paused.\n",
     $ad_group_ad_response->{results}[0]{resourceName};
 
   return 1;

@@ -78,7 +78,7 @@ sub update_keyword {
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
-  printf "Updated keyword criterion with resource name: %s.\n",
+  printf "Updated keyword criterion with resource name: '%s'.\n",
     $ad_group_criterion_response->{results}[0]{resourceName};
 
   return 1;

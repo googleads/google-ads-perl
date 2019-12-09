@@ -59,7 +59,7 @@ sub remove_ad {
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
-  printf "Removed ad with resource name: %s.\n",
+  printf "Removed ad with resource name: '%s'.\n",
     $ad_group_ad_response->{results}[0]{resourceName};
 
   return 1;

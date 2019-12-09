@@ -88,8 +88,9 @@ sub get_account_changes {
 
     my $change_status = $google_ads_row->{changeStatus};
 
-    printf "On %s, change status %s shows a resource type of '%s' " .
-      "with resource name %s was '%s'.\n", $change_status->{lastChangeDateTime},
+    printf "On %s, change status '%s' shows a resource type of '%s' " .
+      "with resource name '%s' was '%s'.\n",
+      $change_status->{lastChangeDateTime},
       $change_status->{resourceName}, $change_status->{resourceType},
       __get_resource_name_for_resource_type($change_status),
       $change_status->{resourceStatus};

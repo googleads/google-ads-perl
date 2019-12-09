@@ -108,7 +108,7 @@ sub create_mutate_job {
     })->{resourceName};
 
   printf
-    "Created a mutate job with resource name: %s.\n",
+    "Created a mutate job with resource name: '%s'.\n",
     $mutate_job_resource_name;
 
   return $mutate_job_resource_name;
@@ -144,7 +144,7 @@ sub run_mutate_job {
     $mutate_job_service->run({resourceName => $mutate_job_resource_name});
 
   printf
-    "Mutate job with resource name %s has been executed.\n",
+    "Mutate job with resource name '%s' has been executed.\n",
     $mutate_job_resource_name;
 
   return $mutate_job_lro;
@@ -166,7 +166,7 @@ sub poll_mutate_job {
 sub fetch_and_print_results {
   my ($mutate_job_service, $mutate_job_resource_name) = @_;
 
-  printf "Mutate job with resource name %s has finished. " .
+  printf "Mutate job with resource name '%s' has finished. " .
     "Now, printing its results...\n",
     $mutate_job_resource_name;
 

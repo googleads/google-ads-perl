@@ -111,7 +111,7 @@ sub add_google_my_business_location_extensions {
 
   my $feed_resource_name = $feed_response->{results}[0]{resourceName};
 
-  printf "GMB feed created with resource name: %s.\n", $feed_resource_name;
+  printf "GMB feed created with resource name: '%s'.\n", $feed_resource_name;
 
   # Add a CustomerFeed that associates the feed with this customer for the LOCATION
   # placeholder type.
@@ -174,7 +174,7 @@ sub add_google_my_business_location_extensions {
       $customer_feed_resource_name =
         $customer_feed_response->{results}[0]{resourceName};
 
-      printf "Customer feed created with resource name: %s.\n",
+      printf "Customer feed created with resource name: '%s'.\n",
         $customer_feed_resource_name;
 
       last;

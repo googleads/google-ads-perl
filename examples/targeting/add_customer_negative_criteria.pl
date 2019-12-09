@@ -80,7 +80,7 @@ sub add_customer_negative_criteria {
   printf "Created %d new negative customer criteria.\n",
     scalar @$customer_negative_criterion_results;
   foreach my $result (@{$customer_negative_criterion_results}) {
-    printf "Created new negative customer criteria with resource name %s.\n",
+    printf "Created new negative customer criteria with resource name '%s'.\n",
       $result->{resourceName};
   }
 

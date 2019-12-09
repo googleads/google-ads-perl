@@ -105,7 +105,7 @@ sub add_gmail_ad {
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
-  printf "Created ad group ad with resource name: %s.\n",
+  printf "Created ad group ad with resource name: '%s'.\n",
     $ad_group_ad_response->{results}[0]{resourceName};
 
   return 1;
@@ -163,7 +163,7 @@ sub add_media_files {
         [$logo_media_file_operation, $marketing_media_file_operation]});
 
   foreach my $result (@{$media_file_response->{results}}) {
-    printf "Created media file with resource name: %s.\n",
+    printf "Created media file with resource name: '%s'.\n",
       $result->{resourceName};
   }
 

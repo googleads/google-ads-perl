@@ -166,7 +166,7 @@ sub request_exemption {
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
-  printf "Successfully added an expanded text ad with resource name %s by " .
+  printf "Successfully added an expanded text ad with resource name '%s' by " .
     "requesting for policy violation exemption.\n",
     $ad_group_ad_response->{results}[0]{resourceName};
 }

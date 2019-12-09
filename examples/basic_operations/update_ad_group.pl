@@ -73,7 +73,7 @@ sub update_ad_group {
       customerId => $customer_id,
       operations => [$ad_group_operation]});
 
-  printf "Updated ad group with resource name: %s.\n",
+  printf "Updated ad group with resource name: '%s'.\n",
     $ad_group_response->{results}[0]{resourceName};
 
   return 1;

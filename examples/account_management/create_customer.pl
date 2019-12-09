@@ -73,7 +73,7 @@ sub create_customer {
     });
 
   printf
-    "Created a customer with resource name %s under the manager account " .
+    "Created a customer with resource name '%s' under the manager account " .
     "with customer ID %d.\n", $create_customer_client_response->{resourceName},
     $manager_customer_id;
 

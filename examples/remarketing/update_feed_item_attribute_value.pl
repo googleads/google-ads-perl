@@ -106,7 +106,7 @@ sub update_feed_item_attribute_value {
       customerId => $customer_id,
       operations => [$feed_item_operation]});
 
-  printf "Updated feed item with resource name: %s.\n",
+  printf "Updated feed item with resource name: '%s'.\n",
     $feed_item_response->{results}[0]{resourceName};
 
   return 1;

@@ -75,7 +75,7 @@ sub add_conversion_action {
       customerId => $customer_id,
       operations => [$conversion_action_operation]});
 
-  printf "New conversion action added with resource name: %s.\n",
+  printf "New conversion action added with resource name: '%s'.\n",
     $conversion_action_response->{results}[0]{resourceName};
 
   return 1;

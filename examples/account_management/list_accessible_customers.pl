@@ -44,7 +44,7 @@ sub list_accessible_customers {
   foreach
     my $resource_name (@{$list_accessible_customers_response->{resourceNames}})
   {
-    printf "Customer resource name: %s.\n", $resource_name;
+    printf "Customer resource name: '%s'.\n", $resource_name;
   }
 
   return 1;

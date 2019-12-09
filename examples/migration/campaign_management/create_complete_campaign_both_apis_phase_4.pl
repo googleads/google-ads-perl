@@ -293,7 +293,7 @@ sub create_text_ads {
   my $new_ads =
     get_ads($google_ads_client, $customer_id, $new_ad_resource_names);
   foreach my $new_ad (@$new_ads) {
-    printf "Created expanded text ad with ID %d, status %s " .
+    printf "Created expanded text ad with ID %d, status '%s' " .
       "and headline '%s - %s'.\n",
       $new_ad->{ad}{id}, $new_ad->{status},
       $new_ad->{ad}{expandedTextAd}{headlinePart1},

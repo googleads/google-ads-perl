@@ -66,7 +66,7 @@ sub remove_feed_items {
       operations => [$feed_item_operations]});
 
   foreach my $feed_item_result (@{$feed_item_response->{results}}) {
-    printf "Removed feed item with resource name %s.\n",
+    printf "Removed feed item with resource name '%s'.\n",
       $feed_item_result->{resourceName};
   }
 

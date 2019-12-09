@@ -135,7 +135,7 @@ sub create_campaign {
 
   my $campaign_resource_name = $campaign_response->{results}[0]{resourceName};
 
-  printf "Created campaign with resource name %s.\n", $campaign_resource_name;
+  printf "Created campaign with resource name '%s'.\n", $campaign_resource_name;
 
   return $campaign_resource_name;
 }
@@ -163,7 +163,7 @@ sub create_ad_group {
 
   my $ad_group_resource_name = $ad_group_response->{results}[0]{resourceName};
 
-  printf "Created ad group with resource name %s.\n", $ad_group_resource_name;
+  printf "Created ad group with resource name '%s'.\n", $ad_group_resource_name;
 
   return $ad_group_resource_name;
 }
@@ -259,7 +259,7 @@ sub create_ad {
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
-  printf "Created ad group ad with resource name %s.\n",
+  printf "Created ad group ad with resource name '%s'.\n",
     $ad_group_ad_response->{results}[0]{resourceName};
 }
 
@@ -290,7 +290,7 @@ sub upload_asset {
 
   my $image_resource_name = $asset_response->{results}[0]{resourceName};
 
-  printf "Created image asset with resource name %s.\n", $image_resource_name;
+  printf "Created image asset with resource name '%s'.\n", $image_resource_name;
 
   return $image_resource_name;
 }
@@ -320,7 +320,7 @@ sub attach_user_list {
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
-  printf "Created ad group criterion with resource name %s.\n",
+  printf "Created ad group criterion with resource name '%s'.\n",
     $ad_group_criterion_response->{results}[0]{resourceName};
 }
 

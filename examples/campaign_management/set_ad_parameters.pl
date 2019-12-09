@@ -91,7 +91,7 @@ sub set_ad_parameters {
   printf "Set %d ad parameters:\n", scalar @$ad_parameter_results;
 
   foreach my $ad_parameter_result (@$ad_parameter_results) {
-    printf "Set ad parameter %s.\n", $ad_parameter_result->{resourceName};
+    printf "Set ad parameter '%s'.\n", $ad_parameter_result->{resourceName};
   }
 
   return 1;

@@ -57,7 +57,7 @@ sub get_geo_target_constant_by_names {
   foreach my $geo_target_constant_suggestion (
     @{$suggest_response->{geoTargetConstantSuggestions}})
   {
-    printf "Found %s ('%s','%s','%s',%s) in locale '%s' with reach %d" .
+    printf "Found '%s' ('%s','%s','%s',%s) in locale '%s' with reach %d" .
       " for the search term '%s'.\n",
       $geo_target_constant_suggestion->{geoTargetConstant}{resourceName},
       $geo_target_constant_suggestion->{geoTargetConstant}{name},

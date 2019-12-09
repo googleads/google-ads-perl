@@ -110,7 +110,7 @@ sub add_campaigns {
       customerId => $customer_id,
       operations => [$campaign_operation]});
 
-  printf "Created campaign %s.\n",
+  printf "Created campaign '%s'.\n",
     $campaign_response->{results}[0]{resourceName};
 
   return 1;

@@ -120,13 +120,13 @@ sub find_and_remove_criteria_from_shared_set {
       $google_ads_row->{sharedCriterion}{resourceName};
 
     if ($google_ads_row->{sharedCriterion}{type} eq KEYWORD) {
-      printf "Shared criterion with resource name %s for negative keyword " .
+      printf "Shared criterion with resource name '%s' for negative keyword " .
         "with text '%s' and match type '%s' was found.\n",
         $shared_criterion_resource_name,
         $google_ads_row->{sharedCriterion}{keyword}{text},
         $google_ads_row->{sharedCriterion}{keyword}{matchType};
     } else {
-      printf "Shared criterion with resource name %s was found.\n",
+      printf "Shared criterion with resource name '%s' was found.\n",
         $shared_criterion_resource_name;
     }
 
@@ -151,7 +151,7 @@ sub find_and_remove_criteria_from_shared_set {
     });
 
   foreach my $result (@{$shared_criterion_response->{results}}) {
-    printf "Removed shared criterion with resource name: %s.\n",
+    printf "Removed shared criterion with resource name: '%s'.\n",
       $result->{resourceName};
   }
 

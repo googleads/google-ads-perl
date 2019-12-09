@@ -139,7 +139,7 @@ sub create_feed {
 
   my $feed_resource_name = $feed_response->{results}[0]{resourceName};
 
-  printf "Feed with resource name %s was created.\n", $feed_resource_name;
+  printf "Feed with resource name '%s' was created.\n", $feed_resource_name;
 
   return $feed_resource_name;
 }
@@ -254,7 +254,7 @@ sub create_feed_mapping {
       customerId => $customer_id,
       operations => [$feed_mapping_operation]});
 
-  printf "Created feed mapping with resource name %s.\n",
+  printf "Created feed mapping with resource name '%s'.\n",
     $feed_mapping_response->{results}[0]{resourceName};
 }
 
@@ -316,7 +316,7 @@ sub create_feed_item {
       customerId => $customer_id,
       operations => [$feed_item_operation]});
 
-  printf "Created feed item with resource name %s.\n",
+  printf "Created feed item with resource name '%s'.\n",
     $feed_item_response->{results}[0]{resourceName};
 }
 

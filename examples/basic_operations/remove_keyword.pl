@@ -64,7 +64,7 @@ sub remove_keyword {
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
-  printf "Removed keyword criterion with resource name: %s.\n",
+  printf "Removed keyword criterion with resource name: '%s'.\n",
     $ad_group_criterion_response->{results}[0]{resourceName};
 
   return 1;

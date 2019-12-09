@@ -77,7 +77,7 @@ sub get_campaigns_by_label {
   while ($iterator->has_next) {
     my $google_ads_row = $iterator->next;
 
-    printf "Campaign found with name '%s', ID %d, and label: %s.\n",
+    printf "Campaign found with name '%s', ID %d, and label: '%s'.\n",
       $google_ads_row->{campaign}{name}, $google_ads_row->{campaign}{id},
       $google_ads_row->{label}{name};
   }

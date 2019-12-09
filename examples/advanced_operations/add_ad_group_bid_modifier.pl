@@ -77,7 +77,7 @@ sub add_ad_group_bid_modifier {
       customerId => $customer_id,
       operations => [$ad_group_bid_modifier_operation]});
 
-  printf "Created ad group bid modifier %s.\n",
+  printf "Created ad group bid modifier '%s'.\n",
     $ad_group_bid_modifier_response->{results}[0]{resourceName};
 
   return 1;

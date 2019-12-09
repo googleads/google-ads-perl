@@ -77,7 +77,7 @@ sub get_text_ad_recommendations {
     my $google_ads_row = $iterator->next;
     my $recommendation = $google_ads_row->{recommendation};
     printf
-      "Recommendation %s was found for campaign %s:\n",
+      "Recommendation '%s' was found for campaign '%s':\n",
       $recommendation->{resourceName},
       $recommendation->{campaign};
 

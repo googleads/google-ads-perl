@@ -85,7 +85,7 @@ sub add_campaign_labels {
   printf "Added %d campaign labels:\n", scalar @$campaign_label_results;
 
   foreach my $campaign_label_result (@$campaign_label_results) {
-    printf "Created campaign label %s.\n",
+    printf "Created campaign label '%s'.\n",
       $campaign_label_result->{resourceName};
   }
 

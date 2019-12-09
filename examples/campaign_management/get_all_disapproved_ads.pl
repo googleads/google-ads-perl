@@ -87,12 +87,12 @@ sub get_all_disapproved_ads {
 
     $disapproved_ads_count += 1;
 
-    printf "Ad with ID %d and type %s was disapproved with the " .
+    printf "Ad with ID %d and type '%s' was disapproved with the " .
       "following policy topic entries:\n", $ad->{id}, $ad->{type};
 
     # Display the policy topic entries related to the ad disapproval.
     foreach my $policy_topic_entry (@{$policy_summary->{policyTopicEntries}}) {
-      printf "  topic: %s, type: %s\n", $policy_topic_entry->{topic},
+      printf "  topic: '%s', type: '%s'\n", $policy_topic_entry->{topic},
         $policy_topic_entry->{type};
 
       # Display the attributes and values that triggered the policy topic.
@@ -102,7 +102,7 @@ sub get_all_disapproved_ads {
         while (my ($index, $text) =
           each @{$policy_topic_evidence->{textList}{texts}})
         {
-          printf "    evidence text[%d]: %s\n", $index, $text;
+          printf "    evidence text[%d]: '%s'\n", $index, $text;
         }
       }
     }

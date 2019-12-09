@@ -73,7 +73,7 @@ sub upload_image {
       customerId => $customer_id,
       operations => [$media_file_operation]});
 
-  printf "Uploaded media file with resource name: %s.\n",
+  printf "Uploaded media file with resource name: '%s'.\n",
     $media_file_response->{results}[0]{resourceName};
 
   return 1;

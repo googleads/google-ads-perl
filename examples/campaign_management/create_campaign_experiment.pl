@@ -66,7 +66,7 @@ sub create_campaign_experiment {
     });
 
   printf "Asynchronous request to create campaign experiment with " .
-    "resource name %s started.\n",
+    "resource name '%s' started.\n",
     $campaign_experiment_lro->{metadata}{campaignExperiment};
 
   printf "Waiting until operation completes.\n";
@@ -87,7 +87,7 @@ sub create_campaign_experiment {
     query      => $search_query
   });
 
-  printf "Experiment campaign %s finished creation.\n",
+  printf "Experiment campaign '%s' finished creation.\n",
     $search_response->{results}[0]{campaignExperiment}{experimentCampaign};
 
   return 1;

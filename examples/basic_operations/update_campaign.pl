@@ -75,7 +75,7 @@ sub update_campaign {
       customerId => $customer_id,
       operations => [$campaign_operation]});
 
-  printf "Updated campaign with resource name: %s.\n",
+  printf "Updated campaign with resource name: '%s'.\n",
     $campaign_response->{results}[0]{resourceName};
 
   return 1;

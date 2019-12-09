@@ -111,7 +111,7 @@ sub create_keyword_plan {
       customerId => $customer_id,
       operations => [$keyword_plan_operation]})->{results}[0]{resourceName};
 
-  printf "Created keyword plan: %s.\n", $keyword_plan_resource;
+  printf "Created keyword plan: '%s'.\n", $keyword_plan_resource;
 
   return $keyword_plan_resource;
 }
@@ -158,7 +158,7 @@ sub create_keyword_plan_campaign {
       operations => [$keyword_plan_campaign_operation]}
   )->{results}[0]{resourceName};
 
-  printf "Created campaign for keyword plan: %s.\n",
+  printf "Created campaign for keyword plan: '%s'.\n",
     $keyword_plan_campaign_resource;
 
   return $keyword_plan_campaign_resource;
@@ -190,7 +190,7 @@ sub create_keyword_plan_ad_group {
       operations => [$keyword_plan_ad_group_operation]}
   )->{results}[0]{resourceName};
 
-  printf "Created ad group for keyword plan: %s.\n",
+  printf "Created ad group for keyword plan: '%s'.\n",
     $keyword_plan_ad_group_resource;
 
   return $keyword_plan_ad_group_resource;
@@ -243,7 +243,7 @@ sub create_keyword_plan_keywords {
     });
 
   foreach my $result (@{$keyword_plan_keyword_response->{results}}) {
-    printf "Created keyword for keyword plan: %s.\n", $result->{resourceName};
+    printf "Created keyword for keyword plan: '%s'.\n", $result->{resourceName};
   }
 }
 
@@ -272,7 +272,7 @@ sub create_keyword_plan_negative_keywords {
       customerId => $customer_id,
       operations => [$keyword_plan_negative_keyword_operation]});
 
-  printf "Created negative keyword for keyword plan: %s.\n",
+  printf "Created negative keyword for keyword plan: '%s'.\n",
     $keyword_plan_negative_keyword_response->{results}[0]{resourceName};
 }
 

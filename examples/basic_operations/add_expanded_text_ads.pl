@@ -82,7 +82,7 @@ sub add_expanded_text_ads {
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
-  printf "Created expanded text ad %s.\n",
+  printf "Created expanded text ad '%s'.\n",
     $ad_group_ad_response->{results}[0]{resourceName};
 
   return 1;

@@ -130,7 +130,7 @@ sub add_campaign_budget {
       customerId => $customer_id,
       operations => [$campaign_budget_operation]})->{results}[0]{resourceName};
 
-  printf "Added a budget with resource name: %s.\n",
+  printf "Added a budget with resource name: '%s'.\n",
     $campaign_budget_resource_name;
 
   return $campaign_budget_resource_name;
@@ -185,7 +185,7 @@ sub add_standard_shopping_campaign {
       customerId => $customer_id,
       operations => [$campaign_operation]})->{results}[0]{resourceName};
 
-  printf "Added a standard shopping campaign with resource name: %s.\n",
+  printf "Added a standard shopping campaign with resource name: '%s'.\n",
     $campaign_resource_name;
 
   return $campaign_resource_name;
@@ -216,7 +216,7 @@ sub add_shopping_product_ad_group {
       customerId => $customer_id,
       operations => [$ad_group_operation]})->{results}[0]{resourceName};
 
-  printf "Added a product shopping ad group with resource name: %s.\n",
+  printf "Added a product shopping ad group with resource name: '%s'.\n",
     $ad_group_resource_name;
 
   return $ad_group_resource_name;
@@ -248,7 +248,7 @@ sub add_shopping_product_ad_group_ad {
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]})->{results}[0]{resourceName};
 
-  printf "Added a product shopping ad group ad with resource name: %s.\n",
+  printf "Added a product shopping ad group ad with resource name: '%s'.\n",
     $ad_group_ad_resource_name;
 
   return $ad_group_ad_resource_name;
@@ -293,7 +293,7 @@ sub add_default_shopping_listing_group {
   )->{results}[0]{resourceName};
 
   printf "Added an ad group criterion containing a listing group " .
-    "with resource name: %s.\n", $ad_group_criterion_resource_name;
+    "with resource name: '%s'.\n", $ad_group_criterion_resource_name;
 
   return $ad_group_criterion_resource_name;
 }

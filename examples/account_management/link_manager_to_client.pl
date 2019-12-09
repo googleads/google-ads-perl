@@ -89,7 +89,7 @@ sub link_manager_to_client {
     $api_client_link_response->{result}{resourceName};
 
   printf "Extended an invitation from the manager customer %d to the " .
-    "client customer %d with the customer client link resource name: %s.\n",
+    "client customer %d with the customer client link resource name: '%s'.\n",
     $manager_customer_id, $api_client_customer_id,
     $api_client_link_resource_name;
 
@@ -136,7 +136,7 @@ sub link_manager_to_client {
       operations => [$manager_link_operation]});
 
   printf "The client customer %d accepted the invitation with " .
-    "the customer manager link resource name: %s.\n",
+    "the customer manager link resource name: '%s'.\n",
     $api_client_customer_id,
     $manager_link_response->{results}[0]{resourceName};
 

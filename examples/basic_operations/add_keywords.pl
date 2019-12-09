@@ -75,7 +75,7 @@ sub add_keywords {
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
-  printf "Created keyword %s.\n",
+  printf "Created keyword '%s'.\n",
     $ad_group_criterion_response->{results}[0]{resourceName};
 
   return 1;

@@ -87,7 +87,7 @@ sub get_campaign_targeting_criteria {
       $campaign_criterion->{negative} ? "negative " : "";
 
     if ($campaign_criterion->{type} eq KEYWORD) {
-      printf "keyword with text '%s' and match type %s.\n",
+      printf "keyword with text '%s' and match type '%s'.\n",
         $campaign_criterion->{keyword}{text},
         $campaign_criterion->{keyword}{matchType};
     } else {

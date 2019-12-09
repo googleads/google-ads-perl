@@ -97,7 +97,7 @@ sub add_account_budget_proposal {
       operation  => $account_budget_proposal_operation
     });
 
-  printf "Created account budget proposal %s.\n",
+  printf "Created account budget proposal '%s'.\n",
     $account_budget_proposal_response->{result}{resourceName};
 
   return 1;

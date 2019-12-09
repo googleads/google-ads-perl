@@ -75,7 +75,7 @@ sub create_and_attach_shared_keyword_set {
 
   my $shared_set_resource_name =
     $shared_set_response->{results}[0]{resourceName};
-  printf "Created shared set: %s.\n", $shared_set_resource_name;
+  printf "Created shared set: '%s'.\n", $shared_set_resource_name;
 
   # Create shared set criterion.
   my $shared_criterion_operations = [];
@@ -132,7 +132,7 @@ sub create_and_attach_shared_keyword_set {
       customerId => $customer_id,
       operations => [$campaign_shared_set_operation]});
 
-  printf "Created campaign shared set: %s.\n",
+  printf "Created campaign shared set: '%s'.\n",
     $campaign_shared_set_response->{results}[0]{resourceName};
   return 1;
 }

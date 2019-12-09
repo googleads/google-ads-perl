@@ -136,7 +136,7 @@ sub create_feed {
 
   my $feed_resource_name = $feed_response->{results}[0]{resourceName};
 
-  printf "Created feed with resource name: %s.\n", $feed_resource_name;
+  printf "Created feed with resource name: '%s'.\n", $feed_resource_name;
 
   return get_feed($api_client, $customer_id, $feed_resource_name);
 }
@@ -198,7 +198,7 @@ sub create_feed_mapping {
       customerId => $customer_id,
       operations => [$feed_mapping_operation]});
 
-  printf "Created feed mapping with resource name: %s.\n",
+  printf "Created feed mapping with resource name: '%s'.\n",
     $feed_mapping_response->{results}[0]{resourceName};
 }
 
@@ -248,7 +248,7 @@ sub create_feed_items {
   });
 
   foreach my $feed_item_result (@{$feed_item_response->{results}}) {
-    printf "Created feed item with resource name: %s.\n",
+    printf "Created feed item with resource name: '%s'.\n",
       $feed_item_result->{resourceName};
   }
 }
@@ -286,7 +286,7 @@ sub update_campaign_dsa_setting {
       customerId => $customer_id,
       operations => [$campaign_operation]});
 
-  printf "Updated campaign with resource name: %s.\n",
+  printf "Updated campaign with resource name: '%s'.\n",
     $campaign_response->{results}[0]{resourceName};
 }
 
@@ -365,7 +365,7 @@ sub add_dsa_target {
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
-  printf "Created ad group criterion with resource name: %s.\n",
+  printf "Created ad group criterion with resource name: '%s'.\n",
     $ad_group_criterion_response->{results}[0]{resourceName};
 }
 

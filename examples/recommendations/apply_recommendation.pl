@@ -81,7 +81,7 @@ sub apply_recommendation {
       customerId => $customer_id,
       operations => [$apply_recommendation_operation]});
 
-  printf "Applied recommendation with resource name: %s.\n",
+  printf "Applied recommendation with resource name: '%s'.\n",
     $apply_recommendation_response->{results}[0]{resourceName};
 
   return 1;

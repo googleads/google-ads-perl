@@ -126,7 +126,7 @@ sub add_campaign_budget {
       customerId => $customer_id,
       operations => [$campaign_budget_operation]})->{results}[0]{resourceName};
 
-  printf "Added a budget with resource name: %s.\n",
+  printf "Added a budget with resource name: '%s'.\n",
     $campaign_budget_resource_name;
 
   return $campaign_budget_resource_name;
@@ -177,7 +177,7 @@ sub add_hotel_campaign {
       customerId => $customer_id,
       operations => [$campaign_operation]})->{results}[0]{resourceName};
 
-  printf "Added a hotel campaign with resource name: %s.\n",
+  printf "Added a hotel campaign with resource name: '%s'.\n",
     $campaign_resource_name;
 
   return $campaign_resource_name;
@@ -209,7 +209,7 @@ sub add_hotel_ad_group {
       customerId => $customer_id,
       operations => [$ad_group_operation]})->{results}[0]{resourceName};
 
-  printf "Added a hotel ad group with resource name: %s.\n",
+  printf "Added a hotel ad group with resource name: '%s'.\n",
     $ad_group_resource_name;
 
   return $ad_group_resource_name;
@@ -240,7 +240,7 @@ sub add_hotel_ad_group_ad {
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]})->{results}[0]{resourceName};
 
-  printf "Added a hotel ad group ad with resource name: %s.\n",
+  printf "Added a hotel ad group ad with resource name: '%s'.\n",
     $ad_group_ad_resource_name;
 
   return $ad_group_ad_resource_name;

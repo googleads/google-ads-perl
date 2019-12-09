@@ -105,7 +105,7 @@ sub handle_keyword_policy_violations {
         "non-policy related errors thrown.\n";
     }
   } else {
-    printf "Added a keyword with resource name %s.\n",
+    printf "Added a keyword with resource name '%s'.\n",
       $response->{results}[0]{resourceName};
   }
 
@@ -173,7 +173,7 @@ sub request_exemption {
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
-  printf "Successfully added a keyword with resource name %s by requesting " .
+  printf "Successfully added a keyword with resource name '%s' by requesting " .
     "for policy violation exemption.\n",
     $ad_group_criterion_response->{results}[0]{resourceName};
 }

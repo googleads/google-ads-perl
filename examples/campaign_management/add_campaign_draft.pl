@@ -70,7 +70,7 @@ sub add_campaign_draft {
       customerId => $customer_id,
       operations => [$campaign_draft_operation]});
 
-  printf "Added a campaign draft with resource name: %s.\n",
+  printf "Added a campaign draft with resource name: '%s'.\n",
     $campaign_draft_response->{results}[0]{resourceName};
 
   return 1;

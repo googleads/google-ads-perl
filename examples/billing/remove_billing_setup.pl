@@ -65,7 +65,7 @@ sub remove_billing_setup {
     operation  => $billing_setup_operation
   });
 
-  printf "Removed billing setup with resource name: %s.\n",
+  printf "Removed billing setup with resource name: '%s'.\n",
     $billing_setup_response->{result}{resourceName};
 
   return 1;

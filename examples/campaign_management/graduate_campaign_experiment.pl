@@ -69,8 +69,8 @@ sub graduate_campaign_experiment {
       customerId => $customer_id,
       operations => [$campaign_budget_operation]})->{results}[0]{resourceName};
 
-  printf
-    "Created new campaign budget %s to add to experiment during graduation.\n",
+  printf "Created new campaign budget '%s' to add to experiment" .
+    " during graduation.\n",
     $campaign_budget_resource_name;
 
   # Graduate the campaign using the campaign budget created above.
@@ -79,7 +79,7 @@ sub graduate_campaign_experiment {
     campaignBudget     => $campaign_budget_resource_name
   });
 
-  printf "Campaign experiment %s is now graduated.\n",
+  printf "Campaign experiment '%s' is now graduated.\n",
     $graduate_response->{graduatedCampaign};
 
   return 1;

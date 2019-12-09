@@ -89,7 +89,7 @@ sub add_site_links {
       customerId => $customer_id,
       operations => [$campaign_extension_setting_operation]});
 
-  printf "Created campaign extension setting with resource name %s.\n",
+  printf "Created campaign extension setting with resource name '%s'.\n",
     $campaign_extension_setting_response->{results}[0]{resourceName};
 
   return 1;
@@ -219,7 +219,7 @@ sub create_extension_feed_items {
 
   my $resource_names = [];
   foreach my $extension_feed_item_result (@$extension_feed_item_results) {
-    printf "\tCreated extension feed item with resource name %s.\n",
+    printf "\tCreated extension feed item with resource name '%s'.\n",
       $extension_feed_item_result->{resourceName};
     push @$resource_names, $extension_feed_item_result->{resourceName};
   }

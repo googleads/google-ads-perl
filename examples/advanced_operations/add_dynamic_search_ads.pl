@@ -110,7 +110,7 @@ sub create_campaign_budget {
 
   my $campaign_budget_resource_name =
     $campaign_budget_response->{results}[0]{resourceName};
-  printf "Created campaign budget %s.\n", $campaign_budget_resource_name;
+  printf "Created campaign budget '%s'.\n", $campaign_budget_resource_name;
 
   return $campaign_budget_resource_name;
 }
@@ -151,7 +151,7 @@ sub create_campaign {
 
   my $campaign_resource_name = $campaign_response->{results}[0]{resourceName};
 
-  printf "Created campaign %s.\n", $campaign_resource_name;
+  printf "Created campaign '%s'.\n", $campaign_resource_name;
 
   return $campaign_resource_name;
 }
@@ -183,7 +183,7 @@ sub create_ad_group {
 
   my $ad_group_resource_name = $ad_group_response->{results}[0]{resourceName};
 
-  printf "Created ad group %s.\n", $ad_group_resource_name;
+  printf "Created ad group '%s'.\n", $ad_group_resource_name;
 
   return $ad_group_resource_name;
 }
@@ -216,7 +216,7 @@ sub create_expanded_dsa {
   my $ad_group_ad_resource_name =
     $ad_group_ad_response->{results}[0]{resourceName};
 
-  printf "Created ad group ad %s.\n", $ad_group_ad_resource_name;
+  printf "Created ad group ad '%s'.\n", $ad_group_ad_resource_name;
 
   return $ad_group_ad_resource_name;
 }
@@ -260,7 +260,8 @@ sub add_web_page_criterion {
   my $ad_group_criterion_resource_name =
     $ad_group_criterion_response->{results}[0]{resourceName};
 
-  printf "Created ad group criterion %s.\n", $ad_group_criterion_resource_name;
+  printf "Created ad group criterion '%s'.\n",
+    $ad_group_criterion_resource_name;
 }
 
 # Don't run the example if the file is being included.

@@ -70,7 +70,7 @@ sub add_remarketing_action {
   my $remarketing_action_resource_name =
     $remarketing_action_response->{results}[0]{resourceName};
   printf
-    "Added remarketing action with resource name %s.\n",
+    "Added remarketing action with resource name '%s'.\n",
     $remarketing_action_resource_name;
 
   # Create a query that retrieves the previously created remarketing action with
