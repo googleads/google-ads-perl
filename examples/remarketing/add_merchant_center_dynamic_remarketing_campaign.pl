@@ -179,7 +179,7 @@ sub create_ad {
     $marketing_image_name);
 
   my $logo_image_url  = "https://goo.gl/mtt54n";
-  my $logo_image_name = "Logo Image";
+  my $logo_image_name = "Square Marketing Image";
   my $logo_image_resource_name =
     upload_asset($api_client, $customer_id, $logo_image_url, $logo_image_name);
 
