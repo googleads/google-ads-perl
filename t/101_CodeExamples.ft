@@ -368,6 +368,7 @@ ok(
   add_keyword_plan($api_client, $customer_id),
   "Test of add_keyword_plan example."
 );
+# NOTE: Skip the forecast_reach.pl as it requires additional setup.
 # NOTE: Skip the generate_forecast_metrics.pl as it requires additional setup.
 require qw(examples/planning/generate_keyword_ideas.pl);
 ok(
