@@ -139,10 +139,10 @@ upload_offline_conversion.pl [options]
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
     -conversion_action_id       The ID of the conversion action to upload to.
-    -gclid                      The GCLID for the conversion (should be newer than 30 days).
-    -conversion_time            The date and time of the conversion (should be after the
-                                click time). The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g.
-                                “2019-01-01 12:32:45-08:00”
+    -gclid                      The GCLID for the conversion (should be newer than the number of days
+                                set on the conversion window of the conversion action).
+    -conversion_time            The date and time of the conversion (should be after the click time).
+                                The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. “2019-01-01 12:32:45-08:00”.
     -conversion_value           The value of the conversion.
 
 =cut
