@@ -44,10 +44,10 @@ use Cwd qw(abs_path);
 #
 # Running the example with -h will print the command line usage.
 my $customer_id          = "INSERT_CUSTOMER_ID_HERE";
-my $conversion_action_id = 'INSERT_CONVERSION_ACTION_ID_HERE';
-my $gclid                = 'INSERT_GCLID_HERE';
-my $conversion_time      = 'INSERT_CONVERSION_TIME_HERE';
-my $conversion_value     = 'INSERT_CONVERSION_VALUE_HERE';
+my $conversion_action_id = "INSERT_CONVERSION_ACTION_ID_HERE";
+my $gclid                = "INSERT_GCLID_HERE";
+my $conversion_time      = "INSERT_CONVERSION_TIME_HERE";
+my $conversion_value     = "INSERT_CONVERSION_VALUE_HERE";
 
 sub upload_offline_conversion {
   my ($api_client, $customer_id, $conversion_action_id, $gclid,

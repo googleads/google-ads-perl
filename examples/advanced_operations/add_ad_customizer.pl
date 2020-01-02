@@ -67,8 +67,8 @@ use constant PAGE_SIZE => 1;
 #
 # Running the example with -h will print the command line usage.
 my $customer_id   = "INSERT_CUSTOMER_ID_HERE";
-my $ad_group_id_1 = 'INSERT_AD_GROUP_ID_1_HERE';
-my $ad_group_id_2 = 'INSERT_AD_GROUP_ID_2_HERE';
+my $ad_group_id_1 = "INSERT_AD_GROUP_ID_1_HERE";
+my $ad_group_id_2 = "INSERT_AD_GROUP_ID_2_HERE";
 
 sub add_ad_customizer {
   my ($api_client, $customer_id, $ad_group_id_1, $ad_group_id_2) = @_;
