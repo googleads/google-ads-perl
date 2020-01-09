@@ -413,6 +413,7 @@ ok(
 # NOTE: Skip the remove_feed_item_attribute_value.pl as it requires additional setup.
 # NOTE: Skip the remove_feed_items.pl as it requires additional setup.
 # NOTE: Skip the update_feed_item_attribute_value.pl as it requires additional setup.
+# NOTE: Skip the upload_conversion_adjustment.pl as it requires additional setup.
 # NOTE: Skip the upload_offline_conversion.pl as it requires additional setup.
 
 # reporting

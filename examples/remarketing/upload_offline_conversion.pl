@@ -46,12 +46,12 @@ use Cwd qw(abs_path);
 my $customer_id          = "INSERT_CUSTOMER_ID_HERE";
 my $conversion_action_id = "INSERT_CONVERSION_ACTION_ID_HERE";
 my $gclid                = "INSERT_GCLID_HERE";
-my $conversion_time      = "INSERT_CONVERSION_TIME_HERE";
+my $conversion_date_time = "INSERT_CONVERSION_DATE_TIME_HERE";
 my $conversion_value     = "INSERT_CONVERSION_VALUE_HERE";
 
 sub upload_offline_conversion {
   my ($api_client, $customer_id, $conversion_action_id, $gclid,
-    $conversion_time, $conversion_value)
+    $conversion_date_time, $conversion_value)
     = @_;
 
   # Create a click conversion by specifying currency as USD.
@@ -64,7 +64,7 @@ sub upload_offline_conversion {
         ),
       gclid              => $gclid,
       conversionValue    => $conversion_value,
-      conversionDateTime => $conversion_time,
+      conversionDateTime => $conversion_date_time,
       currencyCode       => "USD"
     });
 
@@ -105,7 +105,7 @@ GetOptions(
   "customer_id=s"          => \$customer_id,
   "conversion_action_id=i" => \$conversion_action_id,
   "gclid=s"                => \$gclid,
-  "conversion_time=s"      => \$conversion_time,
+  "conversion_date_time=s" => \$conversion_date_time,
   "conversion_value=i"     => \$conversion_value
 );
 
@@ -113,11 +113,11 @@ GetOptions(
 # in the command line.
 pod2usage(2)
   if not check_params($customer_id, $conversion_action_id, $gclid,
-  $conversion_time, $conversion_value);
+  $conversion_date_time, $conversion_value);
 
 # Call the example.
 upload_offline_conversion($api_client, $customer_id =~ s/-//gr,
-  $conversion_action_id, $gclid, $conversion_time, $conversion_value);
+  $conversion_action_id, $gclid, $conversion_date_time, $conversion_value);
 
 =pod
 
@@ -141,7 +141,7 @@ upload_offline_conversion.pl [options]
     -conversion_action_id       The ID of the conversion action to upload to.
     -gclid                      The GCLID for the conversion (should be newer than the number of days
                                 set on the conversion window of the conversion action).
-    -conversion_time            The date and time of the conversion (should be after the click time).
+    -conversion_date_time       The date and time of the conversion (should be after the click time).
                                 The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. "2019-01-01 12:32:45-08:00".
     -conversion_value           The value of the conversion.
 
