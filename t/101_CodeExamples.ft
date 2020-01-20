@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 67);
+use Test::More (tests => 68);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -339,6 +339,9 @@ ok(
   ),
   "Test of add_hotel_callout_extension example."
 );
+require qw(examples/extensions/add_prices.pl);
+ok(add_prices($api_client, $customer_id, $search_campaign_id),
+  "Test of add_prices example.");
 require qw(examples/extensions/add_site_links.pl);
 ok(add_site_links($api_client, $customer_id, $search_campaign_id),
   "Test of add_site_links example.");

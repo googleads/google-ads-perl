@@ -64,6 +64,7 @@ sub add_site_links {
     Google::Ads::GoogleAds::V2::Utils::ResourceNames::campaign($customer_id,
     $campaign_id);
 
+  # Create extension feed items as sitelinks.
   my $extension_feed_items =
     create_extension_feed_items($api_client, $customer_id,
     $campaign_resource_name);
