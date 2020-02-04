@@ -57,7 +57,7 @@ use POSIX qw(strftime mktime);
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 
-sub add_site_links {
+sub add_sitelinks {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   my $campaign_resource_name =
@@ -271,13 +271,13 @@ GetOptions("customer_id=s" => \$customer_id, "campaign_id=i" => \$campaign_id);
 pod2usage(2) if not check_params($customer_id, $campaign_id);
 
 # Call the example.
-add_site_links($api_client, $customer_id =~ s/-//gr, $campaign_id);
+add_sitelinks($api_client, $customer_id =~ s/-//gr, $campaign_id);
 
 =pod
 
 =head1 NAME
 
-add_site_links
+add_sitelinks
 
 =head1 DESCRIPTION
 
@@ -285,7 +285,7 @@ This example adds sitelinks to a campaign. To create a campaign, run add_campaig
 
 =head1 SYNOPSIS
 
-add_site_links.pl [options]
+add_sitelinks.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
