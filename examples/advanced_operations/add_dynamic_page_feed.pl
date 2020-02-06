@@ -313,7 +313,7 @@ sub get_dsa_setting {
 
   # Die if a campaign with the provided ID does not exist.
   die "No campaign found with ID $campaign_id.\n"
-    if $search_response->{totalResultsCount} == 0;
+    if scalar @{$search_response->{results}} == 0;
 
   my $dynamic_search_ads_setting =
     $search_response->{results}[0]{campaign}{dynamicSearchAdsSetting};

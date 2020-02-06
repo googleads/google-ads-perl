@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 70);
+use Test::More (tests => 71);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -302,6 +302,9 @@ ok(
   ),
   "Test of set_ad_parameters example."
 );
+require qw(examples/campaign_management/validate_text_ad.pl);
+ok(validate_text_ad($api_client, $customer_id, $search_ad_group_id),
+  "Test of validate_text_ad example.");
 
 # error_handling
 $api_client->set_die_on_faults(0);

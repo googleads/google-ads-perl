@@ -156,10 +156,18 @@ sub call {
   # Keep track of the last sent HTTP request.
   $api_client->set_last_request($http_request);
 
-  # Send HTTP request with optional content callback handler.
+  # Send HTTP request with optional content callback handler (for search stream).
   my $http_response = undef;
   if ($content_callback) {
     $http_response = $lwp_agent->request($http_request, $content_callback);
+    # The callback handler is not invoked when the response status is error.
+    if ($http_response->is_error) {
+      # The error response content returned by the search stream interface is
+      # enclosed in square brackets, deviating from normal GoogleAdsException.
+      # Remove the leading and trailing square brackets in the response content,
+      # to make it operable in the subsequent steps (logging, exception handling).
+      $http_response->content($http_response->decoded_content =~ s/^\[|\]$//gr);
+    }
   } else {
     $http_response = $lwp_agent->request($http_request);
   }
