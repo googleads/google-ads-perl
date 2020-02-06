@@ -1,6 +1,6 @@
 # Google Ads API Client Library for Perl
 
-This project hosts the client library for Perl for the [Google Ads
+This project hosts the Perl client library for the [Google Ads
 API](https://developers.google.com/google-ads/api/docs/start).
 
 ## Features
@@ -22,7 +22,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
 
         cd google-ads-perl
 
-    You'll see some files and sub directories:
+    You'll see some files and subdirectories:
 
     *   `Build.PL`: the Perl build file, which holds the dependencies and test
         types of this project.
@@ -40,7 +40,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
         perl Build.PL
         perl Build installdeps
 
-1.  Setup your OAuth2 credentials.
+1.  Set up your OAuth2 credentials.
 
     The Google Ads API uses [OAuth2](http://oauth.net/2/) as the authentication
     mechanism. Choose the appropriate option below based on your use case, and
@@ -230,6 +230,14 @@ Logging can be enabled/disabled using the following methods:
 
 You can use the methods of the `GoogleAdsLogger` class directly for even more
 control over how requests are logged.
+
+## Running in a Docker container
+
+See the [Running in a Docker Container guide](https://developers.google.com/google-ads/api/docs/client-libs/perl/docker).
+
+## Proxy configuration
+
+See the [Proxy guide](https://developers.google.com/google-ads/api/docs/client-libs/perl/proxy).
 
 ## Miscellaneous
 
