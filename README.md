@@ -5,6 +5,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
 
 ## Features
 
+  * Distributed via [CPAN](https://metacpan.org/release/Google-Ads-GoogleAds-Client).
   * Easy management of credentials.
   * Easy creation of Google Ads API service clients.
 
