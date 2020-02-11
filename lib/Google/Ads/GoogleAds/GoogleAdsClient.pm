@@ -17,10 +17,10 @@ package Google::Ads::GoogleAds::GoogleAdsClient;
 use strict;
 use warnings;
 use version;
+our $VERSION = qv("2.2.0");
 
 # The following needs to be on one line because CPAN uses a particularly hacky
 # eval() to determine module versions.
-use Google::Ads::GoogleAds::Constants; our $VERSION = ${Google::Ads::GoogleAds::Constants::VERSION};
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::Logging::GoogleAdsLogger;
 
