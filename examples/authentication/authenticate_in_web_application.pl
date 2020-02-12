@@ -204,7 +204,7 @@ before running this example, where PORT defaults to 8080.
 
 =head1 SYNOPSIS
 
-authenticate_in_standalone_application.pl [options]
+authenticate_in_web_application.pl [options]
 
     -help                       Show the help message.
     -client_id                  The OAuth2 client id.
