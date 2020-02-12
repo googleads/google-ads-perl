@@ -222,7 +222,7 @@ Google::Ads::GoogleAds::GoogleAdsClient
 
   use Google::Ads::GoogleAds::GoogleAdsClient;
 
-  my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({version => "V1"});
+  my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({version => "V2"});
 
   my $customer_id = "1234567890";
 
@@ -435,8 +435,8 @@ instance is set to die() on API faults.
 
 The client object contains a method for each service provided by the Google Ads
 API. For example it can be invoked as $api_client->AdGroupService() and it will
-return an object of type L<Google::Ads::GoogleAds::V1::Services::AdGroupService>
-when using version V1 of the API.
+return an object of type L<Google::Ads::GoogleAds::V2::Services::AdGroupService>
+when using version V2 of the API.
 
 For a list of all the available services please refer to
 L<https://developers.google.com/google-ads/api/docs> and for code samples on

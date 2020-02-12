@@ -256,7 +256,7 @@ AdGroupService, etc.
 
   use Google::Ads::GoogleAds::GoogleAdsClient;
 
-  my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({version => "V1"});
+  my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({version => "V2"});
 
   my $campaign_service = $api_client->CampaignService();
 

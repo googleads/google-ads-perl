@@ -32,7 +32,7 @@ use
 use
   Google::Ads::GoogleAds::V2::Services::ConversionAdjustmentUploadService::GclidDateTimePair;
 use
-  Google::Ads::GoogleAds::V1::Services::ConversionAdjustmentUploadService::RestatementValue;
+  Google::Ads::GoogleAds::V2::Services::ConversionAdjustmentUploadService::RestatementValue;
 use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
@@ -86,7 +86,7 @@ sub upload_conversion_adjustment {
 
   # Set adjusted value for adjustment type RESTATEMENT.
   $conversion_adjustment->{restatementValue} =
-    Google::Ads::GoogleAds::V1::Services::ConversionAdjustmentUploadService::RestatementValue
+    Google::Ads::GoogleAds::V2::Services::ConversionAdjustmentUploadService::RestatementValue
     ->new({
       adjustedValue => $restatement_value
     }) if defined $restatement_value && $adjustment_type eq RESTATEMENT;
