@@ -130,7 +130,7 @@ sub create_campaign_budget {
       create => $campaign_budget
     });
 
-  # Issue a mutate request to add campaign budgets.
+  # Issue a mutate request to add the campaign budget.
   my $campaign_budget_response = $api_client->CampaignBudgetService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_budget_operation]});
