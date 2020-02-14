@@ -254,16 +254,16 @@ AdGroupService, etc.
 
 =head1 SYNOPSIS
 
-  use Google::Ads::GoogleAds::GoogleAdsClient;
+  use Google::Ads::GoogleAds::Client;
 
-  my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({version => "V2"});
+  my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
 
   my $campaign_service = $api_client->CampaignService();
 
 =head1 ATTRIBUTES
 
-Each service instance is initialized by L<Google::Ads::GoogleAds::GoogleAdsClient>,
-and these attributes are set automatically.
+Each service instance is initialized by L<Google::Ads::GoogleAds::Client>,and
+these attributes are set automatically.
 
 Alternatively, there is a get_ and set_ method associated with each attribute
 for retrieving or setting them dynamically.
@@ -272,8 +272,8 @@ for retrieving or setting them dynamically.
 
 =head2 api_client
 
-A reference to the L<Google::Ads::GoogleAds::GoogleAdsClient>, holding the API
-credentials and configurations.
+A reference to the L<Google::Ads::GoogleAds::Client>, holding the API credentials
+and configurations.
 
 =head1 METHODS
 
@@ -318,7 +318,7 @@ I<content_callback>: The optional streaming content callback method.
 A instance of the class defined by the C<response_type> argument, or a
 L<Google::Ads::GoogleAds::GoogleAdsException> object if an error has occurred at the
 server side by default. However if the C<die_on_faults> flag is set to true in
-L<Google::Ads::GoogleAds::GoogleAdsClient>, the service will issue a die() with error
+L<Google::Ads::GoogleAds::Client>, the service will issue a die() with error
 message on API errors.
 
 =head2 _get_http_headers

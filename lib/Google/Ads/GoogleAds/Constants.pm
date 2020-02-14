@@ -29,8 +29,8 @@ our $VERSION = qv("2.2.0");
 use constant DEFAULT_PROPERTIES_FILE =>
   catfile(File::HomeDir->my_home, "googleads.properties");
 
-# Default Google Ads API version used if the GoogleAdsClient is created without
-# a specified version.
+# Default Google Ads API version used if the API client is created without a
+# specified version.
 use constant DEFAULT_API_VERSION => "V2";
 
 # Default OAuth2 scope for Google Ads API.

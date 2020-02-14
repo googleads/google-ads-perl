@@ -12,15 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::GoogleAdsClient;
+package Google::Ads::GoogleAds::Client;
 
 use strict;
 use warnings;
 use version;
 our $VERSION = qv("2.2.0");
 
-# The following needs to be on one line because CPAN uses a particularly hacky
-# eval() to determine module versions.
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::Logging::GoogleAdsLogger;
 
@@ -102,8 +100,8 @@ sub START {
 
 # Automatically called by Class::Std when an unknown method is invoked on an
 # instance of this class. It is used to handle creating singletons (local to
-# each Google::Ads::GoogleAds::GoogleAdsClient instance) of all the services.
-# The names of the services may change and shouldn't be hardcoded.
+# each Google::Ads::GoogleAds::Client instance) of all the services. The names
+# of the services may change and shouldn't be hardcoded.
 sub AUTOMETHOD {
   my ($self, $ident) = @_;
   my $service_name = $_;
@@ -216,13 +214,13 @@ sub get_oauth_2_applications_handler {
 
 =head1 NAME
 
-Google::Ads::GoogleAds::GoogleAdsClient
+Google::Ads::GoogleAds::Client
 
 =head1 SYNOPSIS
 
-  use Google::Ads::GoogleAds::GoogleAdsClient;
+  use Google::Ads::GoogleAds::Client;
 
-  my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({version => "V2"});
+  my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
 
   my $customer_id = "1234567890";
 
@@ -240,18 +238,18 @@ Google::Ads::GoogleAds::GoogleAdsClient
 
 =head1 DESCRIPTION
 
-Google::Ads::GoogleAds::GoogleAdsClient is the main interface to the Google Ads
-API. It takes care of handling your API credentials, and exposes all of the
-underlying services that make up the Google Ads API.
+Google::Ads::GoogleAds::Client is the main interface to the Google Ads API. It
+takes care of handling your API credentials, and exposes all of the underlying
+services that make up the Google Ads API.
 
-The C<Google::Ads::GoogleAds::GoogleAdsClient> module should be loaded before
-other C<Google::Ads::> modules. A warning will occur if modules are loaded in the
+The C<Google::Ads::GoogleAds::Client> module should be loaded before other
+C<Google::Ads::> modules. A warning will occur if modules are loaded in the
 wrong order.
 
 =head1 ATTRIBUTES
 
 Each of these attributes can be set via
-Google::Ads::GoogleAds::GoogleAdsClient->new().
+Google::Ads::GoogleAds::Client->new().
 
 Alternatively, there is a get_ and set_ method associated with each attribute
 for retrieving or setting them dynamically. For example, the set_login_customer_id()
@@ -314,7 +312,7 @@ The last HTTP response received by this client.
 
 =head2 new
 
-Initializes a new Google::Ads::GoogleAds::GoogleAdsClient object.
+Initializes a new Google::Ads::GoogleAds::Client object.
 
 =head3 Parameters
 
@@ -344,8 +342,7 @@ attribute that might be in the properties file.
 
 =head3 Returns
 
-A new Google::Ads::GoogleAds::GoogleAdsClient object with the appropriate
-attributes set.
+A new Google::Ads::GoogleAds::Client object with the appropriate attributes set.
 
 =head3 Exceptions
 
@@ -355,11 +352,11 @@ die() with an error message describing the failure.
 =head3 Example
 
   # Basic use case. Attributes will be read from ~/googleads.properties file.
-  my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new();
+  my $api_client = Google::Ads::GoogleAds::Client->new();
 
   # Most attributes from a custom properties file, but override login_customer_id.
   eval {
-    my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({
+    my $api_client = Google::Ads::GoogleAds::Client->new({
       properties_file   => "/path/to/googleads.properties",
       login_customer_id => "1234567890"
     });
@@ -369,7 +366,7 @@ die() with an error message describing the failure.
   }
 
   # Specify all attributes explicitly. The properties file will not override.
-  my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({
+  my $api_client = Google::Ads::GoogleAds::Client->new({
     developer_token   => "123xyzabc...",
     login_customer_id => "1234567890"
   });
@@ -408,7 +405,7 @@ The input parameter is returned.
 
 =head3 Example
 
-  # $api_client is a Google::Ads::GoogleAds::GoogleAdsClient.
+  # $api_client is a Google::Ads::GoogleAds::Client.
 
   # Enable die()ing on faults.
   $api_client->set_die_on_faults(1);
@@ -428,7 +425,7 @@ The input parameter is returned.
 
 =head3 Returns
 
-A true or false value indicating whether the L<Google::Ads::GoogleAds::GoogleAdsClient>
+A true or false value indicating whether the L<Google::Ads::GoogleAds::Client>
 instance is set to die() on API faults.
 
 =head2 {ServiceName}

@@ -30,7 +30,7 @@ use utf8;
 
 use FindBin qw($Bin);
 use lib "$Bin/../../lib";
-use Google::Ads::GoogleAds::GoogleAdsClient;
+use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 
 use Getopt::Long qw(:config auto_help);
@@ -170,7 +170,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client with the default API version.
-my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new();
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(

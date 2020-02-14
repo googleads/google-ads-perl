@@ -36,7 +36,7 @@ my $build_sc = Module::Build->subclass(
 );
 
 $build_sc->new(
-  module_name        => "Google::Ads::GoogleAds::GoogleAdsClient",
+  module_name        => "Google::Ads::GoogleAds::Client",
   license            => "apache",
   dist_author        => "Wang Fan",
   create_makefile_pl => "traditional",
@@ -93,7 +93,7 @@ $build_sc->new(
   },
   test_types => {
     small => [
-      "011_GoogleAdsClient.t",           "012_GoogleAdsException.t",
+      "011_Client.t",                    "012_GoogleAdsException.t",
       "013_OAuth2ApplicationsHandler.t", "014_GoogleAdsHelper.t",
       "015_SearchGoogleAdsIterator.t",   "016_FieldMasks.t",
       "017_PartialFailureUtils.t",       "018_MediaUtils.t",
