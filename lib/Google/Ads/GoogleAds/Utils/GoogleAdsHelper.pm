@@ -58,14 +58,14 @@ sub expand_path_template {
   my ($path_template, $args) = @_;
 
   # To support the {+customers} format template.
-  $path_template =~ s/{\+/{/g;
+  $path_template =~ s/\{\+/\{/g;
 
   if (not ref $args) {
-    $path_template =~ s/{\w+}/$args/ if defined $args;
+    $path_template =~ s/\{\w+}/$args/ if defined $args;
   } elsif (ref $args eq "ARRAY") {
-    $path_template =~ s/{\w+}/shift @$args if @$args/eg;
+    $path_template =~ s/\{\w+}/shift @$args if @$args/eg;
   } else {
-    $path_template =~ s/{(\w+)}/delete $args->{$1} if exists $args->{$1}/eg;
+    $path_template =~ s/\{(\w+)}/delete $args->{$1} if exists $args->{$1}/eg;
   }
 
   return $path_template;
@@ -176,7 +176,7 @@ given arguments.
 
 I<path_template>: the path template to expand. The format could be:
 'customers/{customer_id}/adGroups/{ad_group_id}' or
-'v2/customers/{+customersId}/adGroups:mutate'.
+'v2/customers/{+customerId}/adGroups:mutate'.
 
 =item *
 
