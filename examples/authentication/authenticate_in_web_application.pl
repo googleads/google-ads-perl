@@ -30,7 +30,7 @@ use utf8;
 
 use FindBin qw($Bin);
 use lib "$Bin/../../lib";
-use Google::Ads::GoogleAds::GoogleAdsClient;
+use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 
 use Getopt::Long qw(:config auto_help);
@@ -136,7 +136,8 @@ sub authenticate_in_web_application {
     } elsif ($state ne $main::state) {
       # Confirm that the state in the response matches the state token used to
       # generate the authorization URL.
-      print "\r\n<b>State in the callback does not match the expected value.<b>";
+      print
+        "\r\n<b>State in the callback does not match the expected value.<b>";
     } else {
       my $auth_handler = $self->{auth_handler};
       $auth_handler->issue_access_token($code);
@@ -169,7 +170,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client with the default API version.
-my $client = Google::Ads::GoogleAds::GoogleAdsClient->new();
+my $client = Google::Ads::GoogleAds::Client->new();
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(

@@ -1,6 +1,6 @@
 # Google Ads API Client Library for Perl
 
-This project hosts the client library for Perl for the [Google Ads
+This project hosts the Perl client library for the [Google Ads
 API](https://developers.google.com/google-ads/api/docs/start).
 
 ## Features
@@ -22,7 +22,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
 
         cd google-ads-perl
 
-    You'll see some files and sub directories:
+    You'll see some files and subdirectories:
 
     *   `Build.PL`: the Perl build file, which holds the dependencies and test
         types of this project.
@@ -39,7 +39,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
         perl Build.PL
         perl Build installdeps
 
-1.  Setup your OAuth2 credentials.
+1.  Set up your OAuth2 credentials.
 
     The Google Ads API uses [OAuth2](http://oauth.net/2/) as the authentication
     mechanism. Choose the appropriate option below based on your use case, and
@@ -117,9 +117,9 @@ API](https://developers.google.com/google-ads/api/docs/start).
 ## Basic usage
 
 To issue requests via the Google Ads API, you first need to create a
-[GoogleAdsClient](lib/Google/Ads/GoogleAds/GoogleAdsClient.pm). For convenience,
-you can store the required settings in a properties file (`googleads.properties`)
-with the following format:
+[API Client](lib/Google/Ads/GoogleAds/Client.pm). For convenience, you can store
+the required settings in a properties file (`googleads.properties`) with the
+following format:
 
     ### Google Ads ###
     developerToken=INSERT_DEVELOPER_TOKEN_HERE
@@ -139,7 +139,7 @@ If you have an `googleads.properties` configuration file in the above format in
 your home directory, you can instantiate the client with no arguments:
 
 ```perl
-my $client = Google::Ads::GoogleAds::GoogleAdsClient->new();
+my $client = Google::Ads::GoogleAds::Client->new();
 ```
 
 If your configuration file is not in your home directory, you can pass the file
@@ -148,17 +148,17 @@ location to the the `properties_file` property as follows:
 ```perl
 my $properties_file = "/path/to/googleads.properties";
 
-my $client = Google::Ads::GoogleAds::GoogleAdsClient->new({
+my $client = Google::Ads::GoogleAds::Client->new({
   properties_file => $properties_file
 });
 ```
 
 You can also get a [OAuth2ApplicationsHandler](lib/Google/Ads/GoogleAds/OAuth2ApplicationsHandler.pm)
-object from the `GoogleAdsClient`, and change the client ID, client secret and
+object from the `API Client`, and change the client ID, client secret and
 refresh token at runtime:
 
 ```perl
-my $client = Google::Ads::GoogleAds::GoogleAdsClient->new({
+my $client = Google::Ads::GoogleAds::Client->new({
   developer_token   => "INSERT_DEVELOPER_TOKEN_HERE",
   login_customer_id => "INSERT_LOGIN_CUSTOMER_ID_HERE"
 });
@@ -171,8 +171,8 @@ $oauth_2_applications_handler->set_refresh_token("INSERT_REFRESH_TOKEN");
 
 ### Get a service client
 
-Once you have an instance of `GoogleAdsClient`, you can obtain a service client
-for a particular service using one of the `...Service()` methods:
+Once you have an instance of `API Client`, you can obtain a service client for a
+particular service using one of the `...Service()` methods:
 
 ```perl
 my $campaign_serevice = $client->CampaignService();

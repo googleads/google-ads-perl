@@ -23,7 +23,7 @@ use utf8;
 
 use FindBin qw($Bin);
 use lib "$Bin/../../lib";
-use Google::Ads::GoogleAds::GoogleAdsClient;
+use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
   Google::Ads::GoogleAds::V1::Services::RecommendationService::ApplyRecommendationOperation;
@@ -41,7 +41,7 @@ use Cwd qw(abs_path);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id       = "INSERT_CUSTOMER_ID_HERE";
+my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 # Recommendation ID is the last alphanumeric portion of the value from the
 # resourceName field of a Recommendation, which has the format of
 # customers/<customer_id>/recommendations/<recommendation_id>.
@@ -92,7 +92,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $client = Google::Ads::GoogleAds::GoogleAdsClient->new({version => "V1"});
+my $client = Google::Ads::GoogleAds::Client->new({version => "V1"});
 
 # By default examples are set to die on any server returned fault.
 $client->set_die_on_faults(1);

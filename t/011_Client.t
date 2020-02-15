@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Unit (not functional) tests for the Google::Ads::GoogleAds::GoogleAdsClient
-# module. Functional tests of the various Google Ads API services will be
-# performed in a separate test.
+# Unit (not functional) tests for the Google::Ads::GoogleAds::Client module.
+# Functional tests of the various Google Ads API services will be performed in a
+# separate test.
 
 use strict;
 use warnings;
@@ -26,16 +26,16 @@ use File::Basename;
 use File::Spec;
 use Test::More (tests => 17);
 
-# Tests use Google::Ads::GoogleAds::GoogleAdsClient.
-use_ok("Google::Ads::GoogleAds::GoogleAdsClient")
-  or die "Cannot load 'Google::Ads::GoogleAds::GoogleAdsClient.'";
+# Tests use Google::Ads::GoogleAds::Client.
+use_ok("Google::Ads::GoogleAds::Client")
+  or die "Cannot load 'Google::Ads::GoogleAds::Client.'";
 
 # Tests client initialization, including reading from properties files.
 my $properties_file =
   File::Spec->catdir(dirname($0), qw(testdata googleads_mock.properties));
 my $login_customer_id = "login_customer_id_override";
 
-my $client = Google::Ads::GoogleAds::GoogleAdsClient->new({
+my $client = Google::Ads::GoogleAds::Client->new({
   login_customer_id => $login_customer_id,
   properties_file   => $properties_file
 });
@@ -83,11 +83,8 @@ $client->set_version(Google::Ads::GoogleAds::Constants->DEFAULT_API_VERSION);
 my @services = qw(CampaignBudgetService CampaignService);
 can_ok($client, @services);
 
-ok(
-  Google::Ads::GoogleAds::GoogleAdsClient->new
-    && Google::Ads::GoogleAds::GoogleAdsClient->new,
-  "Can construct more than one client object."
-);
+ok(Google::Ads::GoogleAds::Client->new && Google::Ads::GoogleAds::Client->new,
+  "Can construct more than one client object.");
 
 # Tests set auth properties.
 my $test_oauth2_refresh_token = "my_oauth2_refresh_token";

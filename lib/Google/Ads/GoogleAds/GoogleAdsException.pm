@@ -81,7 +81,7 @@ Google::Ads::GoogleAds::GoogleAdsException
 
 =head1 SYNOPSIS
 
-  my $client = Google::Ads::GoogleAds::GoogleAdsClient->new();
+  my $client = Google::Ads::GoogleAds::Client->new();
   $client->set_die_on_faults(0);
 
   my $response = $client->AdGroupAdService()->mutate($mutate_request);
