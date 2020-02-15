@@ -17,7 +17,7 @@ package TestUtils;
 use strict;
 use warnings;
 
-use Google::Ads::GoogleAds::GoogleAdsClient;
+use Google::Ads::GoogleAds::Client;
 
 use Exporter 'import';
 our @EXPORT = qw(get_test_client get_test_client_no_auth read_file_content
@@ -28,7 +28,7 @@ use File::Spec;
 use Config::Properties;
 use Test::MockObject::Extends;
 
-# Constructs a GoogleAdsClient instance using the configurations in the
+# Constructs a Google Ads Client instance using the configurations in the
 # 'testdata/googleads_test.properties' file.
 sub get_test_client {
   my $api_version = shift;
@@ -37,8 +37,7 @@ sub get_test_client {
     File::Spec->catdir(dirname($0), qw(testdata googleads_test.properties));
 
   my $api_client =
-    Google::Ads::GoogleAds::GoogleAdsClient->new(
-    {properties_file => $properties_file});
+    Google::Ads::GoogleAds::Client->new({properties_file => $properties_file});
 
   Google::Ads::GoogleAds::Logging::GoogleAdsLogger::enable_all_logging();
   if ($api_version) {
@@ -48,15 +47,14 @@ sub get_test_client {
   return $api_client;
 }
 
-# Constructs a GoogleAdsClient instance with a mocked OAuth2 handler, using
+# Constructs a Google Ads Client instance with a mocked OAuth2 handler, using
 # the configurations in the 'testdata/googleads_test.properties' file.
 sub get_test_client_no_auth {
   my $properties_file =
     File::Spec->catdir(dirname($0), qw(testdata googleads_test.properties));
 
   my $api_client =
-    Google::Ads::GoogleAds::GoogleAdsClient->new(
-    {properties_file => $properties_file});
+    Google::Ads::GoogleAds::Client->new({properties_file => $properties_file});
 
   $api_client = Test::MockObject::Extends->new($api_client);
   $api_client->mock("_get_auth_handler", sub { return undef; });
