@@ -117,8 +117,8 @@ API](https://developers.google.com/google-ads/api/docs/start).
 
 ## Basic usage
 
-To issue requests via the Google Ads API, you first need to create a
-[API Client](lib/Google/Ads/GoogleAds/Client.pm). For convenience, you can store
+To issue requests via the Google Ads API, you first need to create an
+[API client](lib/Google/Ads/GoogleAds/Client.pm). For convenience, you can store
 the required settings in a properties file (`googleads.properties`) with the
 following format:
 
@@ -155,7 +155,7 @@ my $api_client = Google::Ads::GoogleAds::Client->new({
 ```
 
 You can also get a [OAuth2ApplicationsHandler](lib/Google/Ads/GoogleAds/OAuth2ApplicationsHandler.pm)
-object from the `API Client`, and change the client ID, client secret and
+object from the `API client`, and change the client ID, client secret and
 refresh token at runtime:
 
 ```perl
@@ -172,7 +172,7 @@ $oauth_2_applications_handler->set_refresh_token("INSERT_REFRESH_TOKEN");
 
 ### Get a service client
 
-Once you have an instance of `API Client`, you can obtain a service client for a
+Once you have an instance of `API client`, you can obtain a service client for a
 particular service using one of the `...Service()` methods:
 
 ```perl
