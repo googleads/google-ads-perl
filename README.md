@@ -118,7 +118,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
 
 ## Basic usage
 
-To issue requests via the Google Ads API, you first need to create a
+To issue requests via the Google Ads API, you first need to create an
 [API Client](lib/Google/Ads/GoogleAds/Client.pm). For convenience, you can store
 the required settings in a properties file (`googleads.properties`) with the
 following format:
