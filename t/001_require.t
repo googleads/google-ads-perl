@@ -28,13 +28,13 @@ use Test::More qw(no_plan);
 my $lib_path = File::Spec->catdir(dirname($0), "..", "lib");
 push(@INC, $lib_path);
 
-require_ok "Google::Ads::GoogleAds::GoogleAdsClient";
+require_ok "Google::Ads::GoogleAds::Client";
 
 find(\&test_require, $lib_path);
 
 sub test_require {
   my $file_name = $File::Find::name;
-  return if $file_name =~ m{Google/Ads/GoogleAds/GoogleAdsClient\.pm$};
+  return if $file_name =~ m{Google/Ads/GoogleAds/Client\.pm$};
 
   if ($file_name =~ /\.pm$/) {
     local $SIG{__WARN__} = sub {

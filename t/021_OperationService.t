@@ -20,7 +20,7 @@ use strict;
 use warnings;
 
 use lib qw(lib);
-use Google::Ads::GoogleAds::GoogleAdsClient;
+use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Constants;
 use Google::Ads::GoogleAds::LongRunning::OperationService;
 
@@ -34,7 +34,7 @@ use_ok("Google::Ads::GoogleAds::LongRunning::OperationService");
 # Tests get OperationService from the API client.
 my $properties_file =
   File::Spec->catdir(dirname($0), qw(testdata googleads_mock.properties));
-my $api_client = Google::Ads::GoogleAds::GoogleAdsClient->new({
+my $api_client = Google::Ads::GoogleAds::Client->new({
   properties_file => $properties_file
 });
 

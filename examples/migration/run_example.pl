@@ -22,7 +22,7 @@ use utf8;
 
 use FindBin qw($Bin);
 use lib "$Bin/../../lib";
-use Google::Ads::GoogleAds::GoogleAdsClient;
+use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::AdWords::Client;
 
@@ -52,7 +52,7 @@ sub run_example {
     = @_;
 
   # Construct a Google Ads client to be used for Google Ads API calls.
-  my $google_ads_client = Google::Ads::GoogleAds::GoogleAdsClient->new({
+  my $google_ads_client = Google::Ads::GoogleAds::Client->new({
     developer_token   => $developer_token,
     login_customer_id => $login_customer_id
   });
