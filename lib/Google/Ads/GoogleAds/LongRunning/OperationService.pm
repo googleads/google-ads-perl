@@ -76,8 +76,8 @@ sub cancel {
     $response_type);
 }
 
-# Polls the specified long-running operation until it is done or reaches at
-# most a specified timeout.
+# Polls the specified long-running operation until it is done or reaches at most
+# a specified timeout.
 sub poll_until_done {
   my $self         = shift;
   my $request_body = shift;

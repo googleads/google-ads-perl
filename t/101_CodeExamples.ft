@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 71);
+use Test::More (tests => 73);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -133,6 +133,11 @@ ok(
     $api_client, $customer_id, $display_ad_group_id, 1.5
   ),
   "Test of add_ad_group_bid_modifier example."
+);
+require qw(examples/advanced_operations/add_app_campaign.pl);
+ok(
+  add_app_campaign($api_client, $customer_id),
+  "Test of add_app_campaign example."
 );
 require qw(examples/advanced_operations/add_dynamic_page_feed.pl);
 ok(
@@ -302,6 +307,15 @@ ok(
   ),
   "Test of set_ad_parameters example."
 );
+require
+  qw(examples/campaign_management/update_campaign_criterion_bid_modifier.pl);
+ok(
+  # Criterion ID 30002 is for Tablet platform.
+  update_campaign_criterion_bid_modifier(
+    $api_client, $customer_id, $search_campaign_id, 30002
+  ),
+  "Test of update_campaign_criterion_bid_modifier example."
+);
 require qw(examples/campaign_management/validate_text_ad.pl);
 ok(validate_text_ad($api_client, $customer_id, $search_ad_group_id),
   "Test of validate_text_ad example.");
@@ -445,6 +459,7 @@ ok(
 );
 
 # shopping_ads
+# NOTE: Skip the add_listing_scope.pl as it requires a merchant account.
 # NOTE: Skip the add_shopping_product_ad.pl as it requires a merchant account.
 # NOTE: Skip the add_shopping_product_listing_group_tree.pl as it requires a merchant account.
 # NOTE: Skip the add_shopping_smart_ad.pl as it requires a merchant account.

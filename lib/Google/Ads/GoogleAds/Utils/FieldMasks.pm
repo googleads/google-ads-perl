@@ -112,15 +112,15 @@ Google::Ads::GoogleAds::Utils::FieldMasks
 
 =head1 DESCRIPTION
 
-Utility for constructing field masks, which are necessary for update
-operations.
+Utility for constructing field masks, which are necessary for update operations.
 
 =head1 METHODS
 
 =head2 field_mask
 
-Compares two hash objects and computes a L<Google::Ads::GoogleAds::Common::FieldMask> object
-based on the differences between them. The field mask is necessary for update operations.
+Compares two hash objects and computes a L<Google::Ads::GoogleAds::Common::FieldMask>
+object based on the differences between them. The field mask is necessary for
+update operations.
 
 =head3 Parameters
 
@@ -138,13 +138,13 @@ I<modified>: the modified hash object.
 
 =head3 Returns
 
-A L<Google::Ads::GoogleAds::Common::FieldMask> object reflecting the changes between the
-original and modified objects.
+A L<Google::Ads::GoogleAds::Common::FieldMask> object reflecting the changes
+between the original and modified objects.
 
 =head2 all_set_fields_of
 
-Constructs a L<Google::Ads::GoogleAds::Common::FieldMask> object that captures the list of
-all set fields of an object.
+Constructs a L<Google::Ads::GoogleAds::Common::FieldMask> object that captures
+the list of all set fields of an object.
 
 =head3 Parameters
 
@@ -158,13 +158,13 @@ I<modified>: the modified hash object.
 
 =head3 Returns
 
-A L<Google::Ads::GoogleAds::Common::FieldMask> object that captures the list of all set
-fields of an object.
+A L<Google::Ads::GoogleAds::Common::FieldMask> object that captures the list of
+all set fields of an object.
 
 =head2 __compare
 
-The private method to compare a given field for two objects, and capture the differences between
-them recursively.
+The private method to compare a given field for two objects, and capture the
+differences between them recursively.
 
 =head3 Parameters
 

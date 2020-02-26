@@ -26,11 +26,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V2::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V2::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V3::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V3::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
 use
-  Google::Ads::GoogleAds::V2::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V3::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -53,9 +53,9 @@ sub update_keyword {
 
   # Create an ad group criterion with the proper resource name and any other changes.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V2::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V3::Resources::AdGroupCriterion->new({
       resourceName =>
-        Google::Ads::GoogleAds::V2::Utils::ResourceNames::ad_group_criterion(
+        Google::Ads::GoogleAds::V3::Utils::ResourceNames::ad_group_criterion(
         $customer_id, $ad_group_id, $criterion_id
         ),
       status => ENABLED,
@@ -67,7 +67,7 @@ sub update_keyword {
   # Create an ad group criterion operation for update, using the FieldMasks utility
   # to derive the update mask.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V2::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V3::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       update     => $ad_group_criterion,
       updateMask => all_set_fields_of($ad_group_criterion)});
@@ -90,7 +90,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

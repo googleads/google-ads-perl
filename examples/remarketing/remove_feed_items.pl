@@ -24,8 +24,8 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Services::FeedItemService::FeedItemOperation;
-use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V3::Services::FeedItemService::FeedItemOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -50,11 +50,11 @@ sub remove_feed_items {
   # Create the remove operations.
   for my $feed_item_id (@$feed_item_ids) {
     my $feed_item_resource_name =
-      Google::Ads::GoogleAds::V2::Utils::ResourceNames::feed_item($customer_id,
+      Google::Ads::GoogleAds::V3::Utils::ResourceNames::feed_item($customer_id,
       $feed_id, $feed_item_id);
 
     push @$feed_item_operations,
-      Google::Ads::GoogleAds::V2::Services::FeedItemService::FeedItemOperation
+      Google::Ads::GoogleAds::V3::Services::FeedItemService::FeedItemOperation
       ->new({
         remove => $feed_item_resource_name
       });
@@ -79,7 +79,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

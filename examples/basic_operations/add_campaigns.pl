@@ -24,16 +24,16 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V2::Resources::Campaign;
-use Google::Ads::GoogleAds::V2::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V2::Common::ManualCpc;
-use Google::Ads::GoogleAds::V2::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
-use Google::Ads::GoogleAds::V2::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V2::Enums::CampaignStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V3::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V3::Resources::Campaign;
+use Google::Ads::GoogleAds::V3::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V3::Common::ManualCpc;
+use Google::Ads::GoogleAds::V3::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V3::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V3::Enums::CampaignStatusEnum qw(PAUSED);
 use
-  Google::Ads::GoogleAds::V2::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V2::Services::CampaignService::CampaignOperation;
+  Google::Ads::GoogleAds::V3::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,7 +56,7 @@ sub add_campaigns {
 
   # Create a campaign budget, which can be shared by multiple campaigns.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V2::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V3::Resources::CampaignBudget->new({
       name           => "Interplanetary budget #" . uniqid(),
       deliveryMethod => STANDARD,
       amountMicros   => 500000
@@ -64,7 +64,7 @@ sub add_campaigns {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V2::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V3::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Add the campaign budget.
@@ -73,7 +73,7 @@ sub add_campaigns {
       operations => [$campaign_budget_operation]});
 
   # Create a campaign.
-  my $campaign = Google::Ads::GoogleAds::V2::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V3::Resources::Campaign->new({
       name                   => "Interplanetary Cruise #" . uniqid(),
       advertisingChannelType => SEARCH,
       # Recommendation: Set the campaign to PAUSED when creating it to stop
@@ -81,13 +81,13 @@ sub add_campaigns {
       # targeting and the ads are ready to serve.
       status => PAUSED,
       # Set the bidding strategy and budget.
-      manualCpc => Google::Ads::GoogleAds::V2::Common::ManualCpc->new(
+      manualCpc => Google::Ads::GoogleAds::V3::Common::ManualCpc->new(
         {enhancedCpcEnabled => "true"}
       ),
       campaignBudget => $campaign_budget_response->{results}[0]{resourceName},
       # Set the campaign network options.
       networkSettings =>
-        Google::Ads::GoogleAds::V2::Resources::NetworkSettings->new({
+        Google::Ads::GoogleAds::V3::Resources::NetworkSettings->new({
           targetGoogleSearch         => "true",
           targetSearchNetwork        => "true",
           targetContentNetwork       => "false",
@@ -102,7 +102,7 @@ sub add_campaigns {
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V2::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation->
     new({create => $campaign});
 
   # Add the campaign.
@@ -122,7 +122,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

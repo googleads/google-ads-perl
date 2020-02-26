@@ -25,15 +25,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
+use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
-  Google::Ads::GoogleAds::V2::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 use Cwd qw(abs_path);
-
-use constant PAGE_SIZE => 1000;
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -62,47 +60,48 @@ sub get_keyword_stats {
     "AND ad_group_criterion.status IN ('ENABLED', 'PAUSED') " .
     "ORDER BY metrics.impressions DESC LIMIT 50";
 
-  # Create a search Google Ads request that will retrieve all keyword statistics
-  # using pages of the specified page size.
-  my $search_request =
-    Google::Ads::GoogleAds::V2::Services::GoogleAdsService::SearchGoogleAdsRequest
+  # Create a search Google Ads stream request that will retrieve all keyword
+  # statistics.
+  my $search_stream_request =
+    Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
-      pageSize   => PAGE_SIZE
     });
 
   # Get the GoogleAdsService.
   my $google_ads_service = $api_client->GoogleAdsService();
 
-  my $iterator = Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator->new({
-    service => $google_ads_service,
-    request => $search_request
-  });
+  my $search_stream_handler =
+    Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
+      service => $google_ads_service,
+      request => $search_stream_request
+    });
 
-  # Iterate over all rows in all pages and print the requested field values for
-  # the keyword in each row.
-  while ($iterator->has_next) {
-    my $google_ads_row     = $iterator->next;
-    my $campaign           = $google_ads_row->{campaign};
-    my $ad_group           = $google_ads_row->{adGroup};
-    my $ad_group_criterion = $google_ads_row->{adGroupCriterion};
-    my $metrics            = $google_ads_row->{metrics};
+  # Issue a search request and process the stream response to print the requested
+  # field values for the keyword in each row.
+  $search_stream_handler->process_contents(
+    sub {
+      my $google_ads_row     = shift;
+      my $campaign           = $google_ads_row->{campaign};
+      my $ad_group           = $google_ads_row->{adGroup};
+      my $ad_group_criterion = $google_ads_row->{adGroupCriterion};
+      my $metrics            = $google_ads_row->{metrics};
 
-    printf "Keyword text '%s' with match type '%s' and ID %d in ad group" .
-      " '%s' with ID %d in campaign '%s' with ID %d had %d impression(s), " .
-      "%d click(s), and %d cost (in micros) during the last 7 days.\n",
-      $ad_group_criterion->{keyword}{text},
-      $ad_group_criterion->{keyword}{matchType},
-      $ad_group_criterion->{criterionId},
-      $ad_group->{name},
-      $ad_group->{id},
-      $campaign->{name},
-      $campaign->{id},
-      $metrics->{impressions},
-      $metrics->{clicks},
-      $metrics->{costMicros};
-  }
+      printf "Keyword text '%s' with match type '%s' and ID %d in ad group" .
+        " '%s' with ID %d in campaign '%s' with ID %d had %d impression(s), " .
+        "%d click(s), and %d cost (in micros) during the last 7 days.\n",
+        $ad_group_criterion->{keyword}{text},
+        $ad_group_criterion->{keyword}{matchType},
+        $ad_group_criterion->{criterionId},
+        $ad_group->{name},
+        $ad_group->{id},
+        $campaign->{name},
+        $campaign->{id},
+        $metrics->{impressions},
+        $metrics->{clicks},
+        $metrics->{costMicros};
+    });
 
   return 1;
 }
@@ -113,7 +112,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

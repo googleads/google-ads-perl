@@ -20,7 +20,7 @@ use strict;
 use warnings;
 
 use lib qw(lib);
-use Google::Ads::GoogleAds::V2::Resources::Campaign;
+use Google::Ads::GoogleAds::V3::Resources::Campaign;
 
 use Test::More(tests => 35);
 
@@ -79,17 +79,17 @@ is(trim($to_trim_str), $str,
 is(trim(undef), undef, "Test trim: with undefined arguments.");
 
 # Tests the expand_path_template() method.
-my $path_template = "v2/googleAdsFields:search";
+my $path_template = "v3/googleAdsFields:search";
 is(expand_path_template($path_template),
   $path_template, "Test expand_path_template(): no expand.");
 is(expand_path_template($path_template, undef),
   $path_template, "Test expand_path_template(): with undefined arguments.");
 
-$path_template = "v2/{+resourceName}";
+$path_template = "v3/{+resourceName}";
 my $resource_name = "customers/12345/campaigns/54321";
 is(
   expand_path_template($path_template, $resource_name),
-  "v2/customers/12345/campaigns/54321",
+  "v3/customers/12345/campaigns/54321",
   "Test expand_path_template(): normal expand with scalar."
 );
 
@@ -114,7 +114,7 @@ is(
   "Test expand_path_template(): expand with less array elements."
 );
 
-$path_template = "v2/customers/{+customerId}/adGroups:mutate";
+$path_template = "v3/customers/{+customerId}/adGroups:mutate";
 is(
   expand_path_template(
     $path_template,
@@ -122,11 +122,11 @@ is(
       customerId => $customer_id,
       operations => []}
   ),
-  "v2/customers/12345/adGroups:mutate",
+  "v3/customers/12345/adGroups:mutate",
   "Test expand_path_template(): normal expand with hash reference."
 );
 
-$path_template = "v2/{+resourceName}:listAsyncErrors";
+$path_template = "v3/{+resourceName}:listAsyncErrors";
 $args          = {
   resourceName => "customers/12345/campaignDrafts/98765",
   pageSize     => 1000,
@@ -134,14 +134,14 @@ $args          = {
 };
 is(
   expand_path_template($path_template, $args),
-  "v2/customers/12345/campaignDrafts/98765:listAsyncErrors",
+  "v3/customers/12345/campaignDrafts/98765:listAsyncErrors",
   "Test expand_path_template(): normal expand with args as hash reference."
 );
 is(scalar(keys %$args),
   2, "Test expand_path_template(): expand arg removed from hash.");
 
 # Tests the copy_from() method.
-my $original_campaign = Google::Ads::GoogleAds::V2::Resources::Campaign->new({
+my $original_campaign = Google::Ads::GoogleAds::V3::Resources::Campaign->new({
     name                   => "Interplanetary Cruise",
     advertisingChannelType => "SEARCH",
     status                 => "PAUSED",
@@ -162,7 +162,7 @@ is($original_campaign->{status},
 is($copied_campaign->{status},
   "ENABLED", "Test copy_from(): modify status - copied object.");
 
-$copied_campaign->{networkSettings}{targetSearchNetwort} = "false";
+$copied_campaign->{networkSettings}{targetSearchNetwork} = "false";
 ok(
   eq_hash(
     $original_campaign->{networkSettings},
@@ -181,7 +181,7 @@ ok(
       targetContentNetwork       => "true",
       targetGoogleSearch         => "true",
       targetPartnerSearchNetwork => "false",
-      targetSearchNetwort        => "false"
+      targetSearchNetwork        => "false"
     }
   ),
   "Test copy_from(): modify hash - copied object."
@@ -210,4 +210,3 @@ is(to_boolean(""),     "false", "Test to_boolean(): empty string.");
 is(to_boolean(0),      "false", "Test to_boolean(): 0.");
 is(to_boolean("abcd"), "true",  "Test to_boolean(): valid string.");
 is(to_boolean(1),      "true",  "Test to_boolean(): 1.");
-

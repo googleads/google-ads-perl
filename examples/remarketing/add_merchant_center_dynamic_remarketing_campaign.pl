@@ -27,30 +27,30 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V2::Resources::Campaign;
-use Google::Ads::GoogleAds::V2::Resources::ShoppingSetting;
-use Google::Ads::GoogleAds::V2::Resources::AdGroup;
-use Google::Ads::GoogleAds::V2::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V2::Resources::Ad;
-use Google::Ads::GoogleAds::V2::Resources::Asset;
-use Google::Ads::GoogleAds::V2::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V2::Common::ManualCpc;
-use Google::Ads::GoogleAds::V2::Common::ResponsiveDisplayAdInfo;
-use Google::Ads::GoogleAds::V2::Common::AdImageAsset;
-use Google::Ads::GoogleAds::V2::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V2::Common::ImageAsset;
-use Google::Ads::GoogleAds::V2::Common::UserListInfo;
-use Google::Ads::GoogleAds::V2::Enums::AdvertisingChannelTypeEnum qw(DISPLAY);
-use Google::Ads::GoogleAds::V2::Enums::CampaignStatusEnum;
-use Google::Ads::GoogleAds::V2::Enums::AdGroupStatusEnum;
-use Google::Ads::GoogleAds::V2::Enums::AssetTypeEnum qw(IMAGE);
-use Google::Ads::GoogleAds::V2::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V2::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V2::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V2::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V3::Resources::Campaign;
+use Google::Ads::GoogleAds::V3::Resources::ShoppingSetting;
+use Google::Ads::GoogleAds::V3::Resources::AdGroup;
+use Google::Ads::GoogleAds::V3::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V3::Resources::Ad;
+use Google::Ads::GoogleAds::V3::Resources::Asset;
+use Google::Ads::GoogleAds::V3::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V3::Common::ManualCpc;
+use Google::Ads::GoogleAds::V3::Common::ResponsiveDisplayAdInfo;
+use Google::Ads::GoogleAds::V3::Common::AdImageAsset;
+use Google::Ads::GoogleAds::V3::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V3::Common::ImageAsset;
+use Google::Ads::GoogleAds::V3::Common::UserListInfo;
+use Google::Ads::GoogleAds::V3::Enums::AdvertisingChannelTypeEnum qw(DISPLAY);
+use Google::Ads::GoogleAds::V3::Enums::CampaignStatusEnum;
+use Google::Ads::GoogleAds::V3::Enums::AdGroupStatusEnum;
+use Google::Ads::GoogleAds::V3::Enums::AssetTypeEnum qw(IMAGE);
+use Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V3::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V3::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V2::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V3::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -99,20 +99,20 @@ sub create_campaign {
   my ($api_client, $customer_id, $merchant_center_id, $campaign_budget_id) = @_;
 
   # Create a campaign.
-  my $campaign = Google::Ads::GoogleAds::V2::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V3::Resources::Campaign->new({
       name => "Shopping campaign #" . uniqid(),
       # Dynamic remarketing campaigns are only available on the Google Display Network.
       advertisingChannelType => DISPLAY,
-      status => Google::Ads::GoogleAds::V2::Enums::CampaignStatusEnum::PAUSED,
+      status => Google::Ads::GoogleAds::V3::Enums::CampaignStatusEnum::PAUSED,
       campaignBudget =>
-        Google::Ads::GoogleAds::V2::Utils::ResourceNames::campaign_budget(
+        Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign_budget(
         $customer_id, $campaign_budget_id
         ),
-      manualCpc => Google::Ads::GoogleAds::V2::Common::ManualCpc->new(),
+      manualCpc => Google::Ads::GoogleAds::V3::Common::ManualCpc->new(),
       # The settings for the shopping campaign.
       # This connects the campaign to the merchant center account.
       shoppingSetting =>
-        Google::Ads::GoogleAds::V2::Resources::ShoppingSetting->new({
+        Google::Ads::GoogleAds::V3::Resources::ShoppingSetting->new({
           campaignPriority => 0,
           merchantId       => $merchant_center_id,
           # Display Network campaigns do not support partition by country. The only
@@ -125,7 +125,7 @@ sub create_campaign {
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V2::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation->
     new({create => $campaign});
 
   # Add the campaign.
@@ -145,15 +145,15 @@ sub create_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
   # Create an ad group.
-  my $ad_group = Google::Ads::GoogleAds::V2::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
     name     => "Dynamic remarketing ad group",
     campaign => $campaign_resource_name,
-    status   => Google::Ads::GoogleAds::V2::Enums::AdGroupStatusEnum::ENABLED
+    status   => Google::Ads::GoogleAds::V3::Enums::AdGroupStatusEnum::ENABLED
   });
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V2::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
   # Add the ad group.
@@ -185,28 +185,28 @@ sub create_ad {
 
   # Create a responsive display ad info object.
   my $responsive_display_ad_info =
-    Google::Ads::GoogleAds::V2::Common::ResponsiveDisplayAdInfo->new({
+    Google::Ads::GoogleAds::V3::Common::ResponsiveDisplayAdInfo->new({
       marketingImages => [
-        Google::Ads::GoogleAds::V2::Common::AdImageAsset->new({
+        Google::Ads::GoogleAds::V3::Common::AdImageAsset->new({
             asset => $marketing_image_resource_name
           })
       ],
       squareMarketingImages => [
-        Google::Ads::GoogleAds::V2::Common::AdImageAsset->new({
+        Google::Ads::GoogleAds::V3::Common::AdImageAsset->new({
             asset => $logo_image_resource_name
           })
       ],
       headlines => [
-        Google::Ads::GoogleAds::V2::Common::AdTextAsset->new({
+        Google::Ads::GoogleAds::V3::Common::AdTextAsset->new({
             text => "Travel"
           })
       ],
-      longHeadline => Google::Ads::GoogleAds::V2::Common::AdTextAsset->new({
+      longHeadline => Google::Ads::GoogleAds::V3::Common::AdTextAsset->new({
           text => "Travel the World"
         }
       ),
       descriptions => [
-        Google::Ads::GoogleAds::V2::Common::AdTextAsset->new({
+        Google::Ads::GoogleAds::V3::Common::AdTextAsset->new({
             text => "Take to the air!"
           })
       ],
@@ -216,13 +216,13 @@ sub create_ad {
       callToActionText => "Apply Now",
       # Optional: Create a logo image and set it to the ad.
       # logoImages => [
-      #   Google::Ads::GoogleAds::V2::Common::AdImageAsset->new({
+      #   Google::Ads::GoogleAds::V3::Common::AdImageAsset->new({
       #       asset => $logo_image_resource_name
       #     })
       # ],
       # Optional: Create a square logo image and set it to the ad.
       squareLogoImages => [
-        Google::Ads::GoogleAds::V2::Common::AdImageAsset->new({
+        Google::Ads::GoogleAds::V3::Common::AdImageAsset->new({
             asset => $logo_image_resource_name
           })
       ],
@@ -242,16 +242,16 @@ sub create_ad {
     });
 
   # Create an ad group ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V2::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V3::Resources::AdGroupAd->new({
       adGroup => $ad_group_resource_name,
-      ad      => Google::Ads::GoogleAds::V2::Resources::Ad->new({
+      ad      => Google::Ads::GoogleAds::V3::Resources::Ad->new({
           responsiveDisplayAd => $responsive_display_ad_info,
           finalUrls           => "http://www.example.com/"
         })});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V2::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V3::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad.
@@ -270,16 +270,16 @@ sub upload_asset {
   my $image_data = get_base64_data_from_url($image_url);
 
   # Create an image asset;
-  my $asset = Google::Ads::GoogleAds::V2::Resources::Asset->new({
+  my $asset = Google::Ads::GoogleAds::V3::Resources::Asset->new({
       name       => $image_name,
       type       => IMAGE,
-      imageAsset => Google::Ads::GoogleAds::V2::Common::ImageAsset->new({
+      imageAsset => Google::Ads::GoogleAds::V3::Common::ImageAsset->new({
           data => $image_data
         })});
 
   # Create an asset operation.
   my $asset_operation =
-    Google::Ads::GoogleAds::V2::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V3::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 
@@ -301,17 +301,17 @@ sub attach_user_list {
 
   # Create an ad group criterion that targets the user list.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V2::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V3::Resources::AdGroupCriterion->new({
       adGroup  => $ad_group_resource_name,
-      userList => Google::Ads::GoogleAds::V2::Common::UserListInfo->new({
+      userList => Google::Ads::GoogleAds::V3::Common::UserListInfo->new({
           userList =>
-            Google::Ads::GoogleAds::V2::Utils::ResourceNames::user_list(
+            Google::Ads::GoogleAds::V3::Utils::ResourceNames::user_list(
             $customer_id, $user_list_id
             )})});
 
   # Create an ad group criterion operation.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V2::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V3::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({create => $ad_group_criterion});
 
   # Add the ad group criterion.
@@ -330,7 +330,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

@@ -25,10 +25,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V2::Resources::MediaFile;
-use Google::Ads::GoogleAds::V2::Resources::MediaBundle;
-use Google::Ads::GoogleAds::V2::Enums::MediaTypeEnum qw(MEDIA_BUNDLE);
-use Google::Ads::GoogleAds::V2::Services::MediaFileService::MediaFileOperation;
+use Google::Ads::GoogleAds::V3::Resources::MediaFile;
+use Google::Ads::GoogleAds::V3::Resources::MediaBundle;
+use Google::Ads::GoogleAds::V3::Enums::MediaTypeEnum qw(MEDIA_BUNDLE);
+use Google::Ads::GoogleAds::V3::Services::MediaFileService::MediaFileOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -53,16 +53,16 @@ sub upload_media_bundle {
   my $bundle_content = get_base64_data_from_url(BUNDLE_URL);
 
   # Create a media file.
-  my $media_file = Google::Ads::GoogleAds::V2::Resources::MediaFile->new({
+  my $media_file = Google::Ads::GoogleAds::V3::Resources::MediaFile->new({
       name        => "Ad Media Bundle",
       type        => MEDIA_BUNDLE,
-      mediaBundle => Google::Ads::GoogleAds::V2::Resources::MediaBundle->new({
+      mediaBundle => Google::Ads::GoogleAds::V3::Resources::MediaBundle->new({
           data => $bundle_content
         })});
 
   # Create a media file operation.
   my $media_file_operation =
-    Google::Ads::GoogleAds::V2::Services::MediaFileService::MediaFileOperation
+    Google::Ads::GoogleAds::V3::Services::MediaFileService::MediaFileOperation
     ->new({
       create => $media_file
     });
@@ -84,7 +84,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

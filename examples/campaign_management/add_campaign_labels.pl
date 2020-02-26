@@ -24,10 +24,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Resources::CampaignLabel;
+use Google::Ads::GoogleAds::V3::Resources::CampaignLabel;
 use
-  Google::Ads::GoogleAds::V2::Services::CampaignLabelService::CampaignLabelOperation;
-use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V3::Services::CampaignLabelService::CampaignLabelOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -49,7 +49,7 @@ sub add_campaign_labels {
   my ($api_client, $customer_id, $campaign_ids, $label_id) = @_;
 
   my $label_resource_name =
-    Google::Ads::GoogleAds::V2::Utils::ResourceNames::label($customer_id,
+    Google::Ads::GoogleAds::V3::Utils::ResourceNames::label($customer_id,
     $label_id);
 
   my $campaign_label_operations = [];
@@ -58,8 +58,8 @@ sub add_campaign_labels {
   foreach my $campaign_id (@$campaign_ids) {
     # Create a campaign label.
     my $campaign_label =
-      Google::Ads::GoogleAds::V2::Resources::CampaignLabel->new({
-        campaign => Google::Ads::GoogleAds::V2::Utils::ResourceNames::campaign(
+      Google::Ads::GoogleAds::V3::Resources::CampaignLabel->new({
+        campaign => Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
           $customer_id, $campaign_id
         ),
         label => $label_resource_name
@@ -67,7 +67,7 @@ sub add_campaign_labels {
 
     # Create a campaign label operation.
     my $campaign_label_operation =
-      Google::Ads::GoogleAds::V2::Services::CampaignLabelService::CampaignLabelOperation
+      Google::Ads::GoogleAds::V3::Services::CampaignLabelService::CampaignLabelOperation
       ->new({
         create => $campaign_label
       });
@@ -98,7 +98,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

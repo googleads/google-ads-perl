@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# Determines which resource fields are modified in an update operation.
 
 package Google::Ads::GoogleAds::Common::FieldMask;
 
@@ -43,7 +45,7 @@ Google::Ads::GoogleAds::Common::FieldMask
 
 =head1 DESCRIPTION
 
-Determines which resource fields are modified in an update operartion.
+Determines which resource fields are modified in an update operation.
 
 =head1 ATTRIBUTES
 

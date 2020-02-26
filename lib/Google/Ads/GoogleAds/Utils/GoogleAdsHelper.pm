@@ -52,8 +52,8 @@ sub trim {
   return $str;
 }
 
-# Expands a path template by replacing the parameters in braces with the
-# given arguments.
+# Expands a path template by replacing the parameters in braces with the given
+# arguments.
 sub expand_path_template {
   my ($path_template, $args) = @_;
 
@@ -128,8 +128,8 @@ I<args>: the arguments for the constructor of a Google Ads API entity.
 
 =head2 check_params
 
-Checks whether the parameters in the code sample are correctly specified. The values
-can either be set in the source code or passed in from the command line.
+Checks whether the parameters in the code sample are correctly specified. The
+values can either be set in the source code or passed in from the command line.
 
 =head3 Parameters
 
@@ -165,8 +165,8 @@ The trimmed string without leading and trailing white spaces.
 
 =head2 expand_path_template
 
-Expands a path template by replacing the parameters in braces with the
-given arguments.
+Expands a path template by replacing the parameters in braces with the given
+arguments.
 
 =head3 Parameters
 
@@ -176,7 +176,7 @@ given arguments.
 
 I<path_template>: the path template to expand. The format could be:
 'customers/{customer_id}/adGroups/{ad_group_id}' or
-'v2/customers/{+customerId}/adGroups:mutate'.
+'v3/customers/{+customerId}/adGroups:mutate'.
 
 =item *
 
@@ -208,7 +208,7 @@ A deeply copied object based on the C<original> hash reference.
 
 =head2 to_lower_underscore
 
-Convert a string to lower underscore case.
+Converts a string to lower underscore case.
 
 =head3 Parameters
 

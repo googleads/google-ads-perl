@@ -67,11 +67,11 @@ sub call {
   ##############################################################################
   if ($http_method eq GET) {
     # HTTP GET request scenarios:
-    #  GET: v2/customers:listAccessibleCustomers
-    #  GET: v2/{+resourceName}
-    #  GET: v2/{+resourceName}:listResults
-    #  GET: v2/customers/{+customerId}/paymentsAccounts
-    #  GET: v2/customers/{+customerId}/merchantCenterLinks
+    #  GET: v3/customers:listAccessibleCustomers
+    #  GET: v3/{+resourceName}
+    #  GET: v3/{+resourceName}:listResults
+    #  GET: v3/customers/{+customerId}/paymentsAccounts
+    #  GET: v3/customers/{+customerId}/merchantCenterLinks
     $request_path = expand_path_template($request_path, $request_body);
 
     # GET: When the $request_body is a hash reference, use the path parameters
@@ -86,13 +86,13 @@ sub call {
     }
   } elsif ($http_method eq POST) {
     # HTTP POST request scenarios:
-    #  POST: v2/geoTargetConstants:suggest
-    #  POST: v2/googleAdsFields:search
-    #  POST: v2/customers/{+customerId}/googleAds:search
-    #  POST: v2/customers/{+customerId}/campaigns:mutate
-    #  POST: v2/{+keywordPlan}:generateForecastMetrics
-    #  POST: v2/{+campaignDraft}:promote
-    #  POST: v2/{+resourceName}:addOperations
+    #  POST: v3/geoTargetConstants:suggest
+    #  POST: v3/googleAdsFields:search
+    #  POST: v3/customers/{+customerId}/googleAds:search
+    #  POST: v3/customers/{+customerId}/campaigns:mutate
+    #  POST: v3/{+keywordPlan}:generateForecastMetrics
+    #  POST: v3/{+campaignDraft}:promote
+    #  POST: v3/{+resourceName}:addOperations
 
     # POST: Retain the 'customerId' variable in the $request_body hash
     # reference after the $request_path is expanded.
@@ -103,7 +103,7 @@ sub call {
     $request_body->{customerId} = $customer_id if defined $customer_id;
   } else {
     # Other HTTP request scenarios:
-    #  DELETE: v2/{+name} for OperationService
+    #  DELETE: v3/{+name} for OperationService
     $request_path = expand_path_template($request_path, $request_body);
   }
 
@@ -256,13 +256,13 @@ AdGroupService, etc.
 
   use Google::Ads::GoogleAds::Client;
 
-  my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+  my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
   my $campaign_service = $api_client->CampaignService();
 
 =head1 ATTRIBUTES
 
-Each service instance is initialized by L<Google::Ads::GoogleAds::Client>,and
+Each service instance is initialized by L<Google::Ads::GoogleAds::Client>, and
 these attributes are set automatically.
 
 Alternatively, there is a get_ and set_ method associated with each attribute
@@ -291,23 +291,21 @@ I<http_method>: The HTTP request method, e.g. GET, POST.
 
 =item *
 
-I<request_path>: The relative request URL which may contains wildcard to expand,
+I<request_path>: The relative request URL which may contain wildcards to expand,
 e.g. {+resourceName}, {+customerId}.
 
 =item *
 
-I<path_params>: The parameter(s) to expand the {+resourceName} or any other
-expression in the request path, which might be a scalar or a hash reference.
-
-=item *
-
 I<request_body>: A Perl object representing the HTTP request payload, which will
-be encoded into JSON string for a HTTP POST request. Should be C<undef> for GET request.
+be used to expand the {+resourceName} or any other expression in the request path
+and encoded into JSON string for a HTTP POST request.
 
 =item *
 
-I<response_type>: The class name of the expected response. A instance of this class
+I<response_type>: The class name of the expected response. An instance of this class
 will be returned if the request succeeds.
+
+=item *
 
 I<content_callback>: The optional streaming content callback method.
 
@@ -315,24 +313,22 @@ I<content_callback>: The optional streaming content callback method.
 
 =head3 Returns
 
-A instance of the class defined by the C<response_type> argument, or a
-L<Google::Ads::GoogleAds::GoogleAdsException> object if an error has occurred at the
-server side by default. However if the C<die_on_faults> flag is set to true in
-L<Google::Ads::GoogleAds::Client>, the service will issue a die() with error
+An instance of the class defined by the C<response_type> parameter, or a
+L<Google::Ads::GoogleAds::GoogleAdsException> object if an error has occurred at
+the server side by default. However if the C<die_on_faults> flag is set to true
+in L<Google::Ads::GoogleAds::Client>, the service will issue a die() with error
 message on API errors.
 
 =head2 _get_http_headers
 
-Prepare the basic HTTP request headers including Content-Type, developer-token and
-login_customer_id - if needed. The headers will be consolidated with access token
-in the method of L<Google::Ads::GoogleAds::Common::OAuth2BaseHandler/prepare_request>.
+Prepare the basic HTTP request headers including Content-Type, user-agent,
+developer-token and login_customer_id - if needed. The headers will be consolidated
+with access token in the method of L<Google::Ads::GoogleAds::Common::OAuth2BaseHandler/prepare_request>.
 
 =head3 Returns
 
-The basic HTTP headers including Content-Type, developer-token and login_customer_id
-- if needed.
-
-=cut
+The basic HTTP headers including Content-Type, user-agent, developer-token and
+login_customer_id - if needed.
 
 =head1 LICENSE AND COPYRIGHT
 

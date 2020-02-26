@@ -118,7 +118,7 @@ Google::Ads::GoogleAds::Utils::PartialFailureUtils
         $ad_group_response->{partialFailureError});
 
       foreach my $google_ads_error (@$google_ads_errors) {
-        printf "Operation %d failed with error: %s\n", $operation_index,
+        printf "Operation %d failed with error: %s.\n", $operation_index,
           $google_ads_error->{message};
       }
     } else {
@@ -152,8 +152,8 @@ True, if the result is a partial failure. False, otherwise.
 
 =head2 get_google_ads_errors
 
-Returns a list of L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsError> instances for a
-given operation index.
+Returns a list of L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsError> instances
+for a given operation index.
 
 =head3 Parameters
 
@@ -165,20 +165,21 @@ I<operation_index>: the index of the operation, starting from 0.
 
 =item *
 
-I<partial_failure_error>: the B<partialFailureError> hash in the mutate response, with the
-detail list containing L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure> instances.
+I<partial_failure_error>: the B<partialFailureError> hash in the mutate response,
+with the detail list containing L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure>
+instances.
 
 =back
 
 =head3 Returns
 
-An array containing the L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsError> instances for
-the given operation index.
+An array containing the L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsError>
+instances for the given operation index.
 
 =head2 get_google_ads_failure
 
-Extracts the L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure> instance from a partial
-failure detail.
+Extracts the L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure> instance
+from a partial failure detail.
 
 =head3 Parameters
 
@@ -197,8 +198,8 @@ A L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure> object or undef if not
 =head2 __get_google_ads_errors
 
 The private method to extract a list of L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsError>
-instances from a L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure> instance for a given
-operation index.
+instances from a L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure> instance
+for a given operation index.
 
 =head3 Parameters
 
@@ -216,9 +217,9 @@ I<google_ads_failure>: the L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailur
 
 =head3 Returns
 
-An array containing the L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsError> instances from
-the L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure> instance for the given operation
-index.
+An array containing the L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsError>
+instances from the L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure>
+instance for the given operation index.
 
 =head1 LICENSE AND COPYRIGHT
 

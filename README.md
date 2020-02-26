@@ -1,5 +1,7 @@
 # Google Ads API Client Library for Perl
 
+[![CPAN version](https://badge.fury.io/pl/Google-Ads-GoogleAds-Client.svg)](https://badge.fury.io/pl/Google-Ads-GoogleAds-Client)
+
 This project hosts the Perl client library for the [Google Ads
 API](https://developers.google.com/google-ads/api/docs/start).
 

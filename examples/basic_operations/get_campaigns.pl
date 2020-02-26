@@ -24,15 +24,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
+use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
-  Google::Ads::GoogleAds::V2::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 use Cwd qw(abs_path);
-
-use constant PAGE_SIZE => 1000;
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -47,32 +45,32 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 sub get_campaigns {
   my ($api_client, $customer_id) = @_;
 
-  # Create a search Google Ads request that will retrieve all campaigns using pages
-  # of the specified page size.
-  my $search_request =
-    Google::Ads::GoogleAds::V2::Services::GoogleAdsService::SearchGoogleAdsRequest
+  # Create a search Google Ads stream request that will retrieve all campaigns.
+  my $search_stream_request =
+    Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query =>
-        "SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id",
-      pageSize => PAGE_SIZE
+        "SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id"
     });
 
   # Get the GoogleAdsService.
   my $google_ads_service = $api_client->GoogleAdsService();
 
-  my $iterator = Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator->new({
-    service => $google_ads_service,
-    request => $search_request
-  });
+  my $search_stream_handler =
+    Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
+      service => $google_ads_service,
+      request => $search_stream_request
+    });
 
-  # Iterate over all rows in all pages and print the requested field values for
-  # the campaign in each row.
-  while ($iterator->has_next) {
-    my $google_ads_row = $iterator->next;
-    printf "Campaign with ID %d and name '%s' was found.\n",
-      $google_ads_row->{campaign}{id}, $google_ads_row->{campaign}{name};
-  }
+  # Issue a search request and process the stream response to print the requested
+  # field values for the campaign in each row.
+  $search_stream_handler->process_contents(
+    sub {
+      my $google_ads_row = shift;
+      printf "Campaign with ID %d and name '%s' was found.\n",
+        $google_ads_row->{campaign}{id}, $google_ads_row->{campaign}{name};
+    });
 
   return 1;
 }
@@ -83,7 +81,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

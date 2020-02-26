@@ -62,8 +62,8 @@ Google::Ads::GoogleAds::Logging::SummaryStats
 
 =head1 DESCRIPTION
 
-Class that wraps API request statistics such as client customer ID,
-request id, API method and others.
+Class that wraps API request statistics such as client customer ID, request id,
+API method and others.
 
 =head1 ATTRIBUTES
 
@@ -73,7 +73,7 @@ The Google Ads API server endpoint.
 
 =head2 customer_id
 
-The client customer id against which the API call was made .
+The client customer id against which the API call was made.
 
 =head2 method
 

@@ -42,7 +42,7 @@ my %redirect_uri_of :
   ATTR(:name<redirect_uri> :default<urn:ietf:wg:oauth:2.0:oob>);
 my %additional_scopes_of : ATTR(:name<additional_scopes> :default<>);
 
-# Methods from Google::Ads::GoogleAds::Common::AuthHandlerInterface
+# Methods from Google::Ads::GoogleAds::Common::AuthHandlerInterface.
 sub initialize : CUMULATIVE(BASE FIRST) {
   my ($self, $api_client, $properties) = @_;
   my $ident = ident $self;
@@ -63,7 +63,7 @@ sub initialize : CUMULATIVE(BASE FIRST) {
     || $additional_scopes_of{$ident};
 }
 
-# Methods from Google::Ads::GoogleAds::Common::OAuthApplicationsHandlerInterface
+# Methods from Google::Ads::GoogleAds::Common::OAuthApplicationsHandlerInterface.
 sub get_authorization_url {
   my ($self, $state) = @_;
 
@@ -109,7 +109,7 @@ sub issue_access_token {
   return undef;
 }
 
-# Internal methods
+# Internal methods.
 #
 # Method to refresh the OAuth2 access token with client id, client secret and
 # refresh token, from Google::Ads::GoogleAds::Common::OAuth2BaseHandler.
@@ -151,6 +151,9 @@ sub _refresh_access_token {
   return 1;
 }
 
+# Method to be implemented by a concrete class, which should return the OAuth2
+# scopes as a list of encoded URLs separated by pluses. This is the format expected
+# when sending the OAuth2 request in a URL.
 sub _formatted_scopes {
   my $self = shift;
   die "Need to be implemented by subclass";
@@ -199,8 +202,8 @@ defaults to offline but it can be set to online.
 
 =head2 prompt
 
-OAuth2 prompt to be used when following the authorization flow. It
-defaults to consent.
+OAuth2 prompt to be used when following the authorization flow. It defaults to
+consent.
 
 =head2 redirect_uri
 
@@ -218,13 +221,13 @@ a request.
 =head2 refresh_token
 
 Stores an OAuth2 refresh token in case of an offline L</access_type> is
-requested. It is automatically used by the handler to request new access tokens
+requested. It is automatically used by the handler to request new access tokens,
 i.e. when they are expired or found invalid.
 
 =head2 additional_scopes
 
 Stores additional OAuth2 scopes as a comma-separated string.
-The scope defines which services the tokens are allowed to access
+These scopes define which services the tokens are allowed to access,
 e.g. https://www.googleapis.com/auth/analytics
 
 =head1 METHODS
@@ -250,7 +253,7 @@ A hash reference with the following keys:
   {
     clientId         => "client-id",
     clientSecret     => "client-secret",
-    accessTyoe       => "access-type",
+    accessType       => "access-type",
     approvalPrompt   => "approval-prompt",
     redirectUri      => "redirect-uri",
     accessToken      => "access-token",
@@ -260,7 +263,7 @@ A hash reference with the following keys:
 
 Refer to the documentation of the properties as L</client_id>, L</client_secret>,
 L</access_type>, L</prompt>, L</redirect_uri>,  L</access_token>, L</refresh_token>
-and </additional_scopes>.
+and L</additional_scopes>.
 
 =back
 

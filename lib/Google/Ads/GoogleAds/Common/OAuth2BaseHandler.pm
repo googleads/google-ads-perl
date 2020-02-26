@@ -39,14 +39,14 @@ my %access_token_of : ATTR(:init_arg<access_token> :default<>);
 my %access_token_expires_of : ATTR(:name<access_token_expires> :default<>);
 my %__lwp_agent_of : ATTR(:name<__lwp_agent> :default<>);
 
-# Constructor
+# Constructor.
 sub START {
   my ($self, $ident) = @_;
 
   $__lwp_agent_of{$ident} ||= LWP::UserAgent->new();
 }
 
-# Methods from Google::Ads::GoogleAds::Common::AuthHandlerInterface
+# Methods from Google::Ads::GoogleAds::Common::AuthHandlerInterface.
 sub initialize : CUMULATIVE(BASE FIRST) {
   my ($self, $api_client, $properties) = @_;
   my $ident = ident $self;
@@ -90,7 +90,7 @@ sub is_auth_enabled {
   return $self->get_access_token();
 }
 
-# Custom getters and setters for the access_token with logic to auto-refresh.
+# Custom getter and setter for the access_token with logic to auto-refresh.
 sub get_access_token {
   my $self  = shift;
   my $ident = ident $self;
@@ -113,12 +113,12 @@ sub set_access_token {
   $access_token_expires_of{ident $self} = undef;
 }
 
-# Internal methods
+# Internal methods.
 
 # Checks if:
 #   - the access token is set
 #   - if the token has no expiration set then assumes it was manually set and:
-#       - checks the token info, if it is valid then set its expiration
+#       - checks the token info, if it is valid then sets its expiration
 #       - checks the token scopes
 #   - checks the token has not expired
 sub _is_access_token_valid {
@@ -182,12 +182,15 @@ sub __parse_auth_response {
   return \%content_hash;
 }
 
-# To be implemented by concrete implementations.
+# Meant to be implemented by a concrete class, which should return the required
+# API scopes in an array for the OAuth2 protocol.
 sub _scope {
   my $self = shift;
   die "Need to be implemented by subclass";
 }
 
+# Method called to refresh the stored OAuth2 access token. Implementors will issue
+# an access token refresh request to the OAuth2 server.
 sub _refresh_access_token {
   die "Need to be implemented by subclass";
 }

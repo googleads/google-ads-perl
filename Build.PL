@@ -42,7 +42,7 @@ $build_sc->new(
   create_makefile_pl => "traditional",
   dist_abstract      => "Google Ads API Client Library for Perl",
   dist_name          => "Google-Ads-GoogleAds-Client",
-  dist_version       => "2.2.0",
+  dist_version       => "3.0.0",
   requires           => {
     "Class::Load"                  => 0,
     "Class::Std::Fast"             => 0,
@@ -98,7 +98,7 @@ $build_sc->new(
       "015_SearchGoogleAdsIterator.t",   "016_FieldMasks.t",
       "017_PartialFailureUtils.t",       "018_MediaUtils.t",
       "019_GoogleAdsLogger.t",           "020_ResourcesNames.t",
-      "021_OperationService.t"
+      "021_OperationService.t",          "022_SearchStreamHandler.t"
     ],
     medium           => ["001_require.t"],
     nondeterministic => [".ft"],

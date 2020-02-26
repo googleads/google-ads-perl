@@ -29,9 +29,9 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V2::Resources::FeedItemAttributeValue;
-use Google::Ads::GoogleAds::V2::Services::FeedItemService::FeedItemOperation;
-use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V3::Resources::FeedItemAttributeValue;
+use Google::Ads::GoogleAds::V3::Services::FeedItemService::FeedItemOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -60,7 +60,7 @@ sub update_feed_item_attribute_value {
 
   # Get the feed resource name.
   my $feed_resource_name =
-    Google::Ads::GoogleAds::V2::Utils::ResourceNames::feed($customer_id,
+    Google::Ads::GoogleAds::V3::Utils::ResourceNames::feed($customer_id,
     $feed_id);
 
   # Get a hash of the placeholder values and feed attributes.
@@ -73,7 +73,7 @@ sub update_feed_item_attribute_value {
 
   # Get the feed item resource name.
   my $feed_item_resource_name =
-    Google::Ads::GoogleAds::V2::Utils::ResourceNames::feed_item($customer_id,
+    Google::Ads::GoogleAds::V3::Utils::ResourceNames::feed_item($customer_id,
     $feed_id, $feed_item_id);
 
   # Retrieve the feed item and its associated attributes based on its resource name.
@@ -82,7 +82,7 @@ sub update_feed_item_attribute_value {
 
   # Create the updated FeedItemAttributeValue.
   my $feed_item_attribute_value =
-    Google::Ads::GoogleAds::V2::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V3::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $attribute_id,
       stringValue     => $attribute_value
     });
@@ -96,7 +96,7 @@ sub update_feed_item_attribute_value {
 
   # Create a feed item operation.
   my $feed_item_operation =
-    Google::Ads::GoogleAds::V2::Services::FeedItemService::FeedItemOperation->
+    Google::Ads::GoogleAds::V3::Services::FeedItemService::FeedItemOperation->
     new({
       update     => $feed_item,
       updateMask => all_set_fields_of($feed_item)});
@@ -158,7 +158,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

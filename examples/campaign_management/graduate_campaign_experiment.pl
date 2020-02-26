@@ -24,10 +24,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V2::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V3::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V3::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
 use
-  Google::Ads::GoogleAds::V2::Services::CampaignBudgetService::CampaignBudgetOperation;
+  Google::Ads::GoogleAds::V3::Services::CampaignBudgetService::CampaignBudgetOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,7 +52,7 @@ sub graduate_campaign_experiment {
   # for the base campaign has explicitly_shared set to false, the budget cannot
   # be shared with the campaign after it is made independent by graduation.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V2::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V3::Resources::CampaignBudget->new({
       name           => "Budget #" . uniqid(),
       amountMicros   => 50000000,
       deliveryMethod => STANDARD
@@ -60,7 +60,7 @@ sub graduate_campaign_experiment {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V2::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V3::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Add the campaign budget.
@@ -91,7 +91,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

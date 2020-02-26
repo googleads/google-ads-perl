@@ -18,12 +18,12 @@ use strict;
 use warnings;
 use base qw(Google::Ads::GoogleAds::Common::AuthHandlerInterface);
 
-# Method to retrieve an authorization URL for the user to put into a
-# browser and request for an authorization code.
+# Method to retrieve an authorization URL for the user to put into a browser and
+# request for an authorization code.
 # Meant to be implemented by a concrete class, which should issue an
 # authorization code and return a valid URL for the user to authorize.
-# A callback URL can be passed optionally to redirect the user after the
-# code is authorized.
+# A callback URL can be passed optionally to redirect the user after the code is
+# authorized.
 sub get_authorization_url {
   my ($self, $callback) = @_;
   die "Needs to be implemented by subclass";
@@ -61,8 +61,8 @@ the user to authorize the access to the API.
 
 =head3 Returns
 
-The URL for the user to authorize for an authorization code. The user must login to
-the account that he wants to grant access to.
+The URL for the user to authorize for an authorization code. The user must login
+to the account that he wants to grant access to.
 
 =head2 issue_access_token
 

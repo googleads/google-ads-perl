@@ -11,13 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# The main interface to the Google Ads API. It takes care of handling your API
+# credentials, and exposes all of the underlying services that make up the
+# Google Ads API.
 
 package Google::Ads::GoogleAds::Client;
 
 use strict;
 use warnings;
 use version;
-our $VERSION = qv("2.2.0");
+our $VERSION = qv("3.0.0");
 
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::Logging::GoogleAdsLogger;
@@ -220,19 +224,19 @@ Google::Ads::GoogleAds::Client
 
   use Google::Ads::GoogleAds::Client;
 
-  my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+  my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
   my $customer_id = "1234567890";
 
   my $query = "SELECT campaign.id, campaign.name FROM campaign";
 
-  my $result = $api_client->GoogleAdsService()->search({
+  my $response = $api_client->GoogleAdsService()->search({
     customer_id => $customer_id,
     query       => $query,
     pageSize    => PAGE_SIZE
   });
 
-  foreach my $row (@{$result->{results}}) {
+  foreach my $row (@{$response->{results}}) {
     # Do something with the results
   }
 
@@ -248,8 +252,7 @@ wrong order.
 
 =head1 ATTRIBUTES
 
-Each of these attributes can be set via
-Google::Ads::GoogleAds::Client->new().
+Each of these attributes can be set via Google::Ads::GoogleAds::Client->new().
 
 Alternatively, there is a get_ and set_ method associated with each attribute
 for retrieving or setting them dynamically. For example, the set_login_customer_id()
@@ -263,7 +266,7 @@ account.
 
 The value should be a character string assigned to you by Google. You can
 apply for a Developer Token by following the instructions at
-L<https://developers.google.com/google-ads/api/docs/first-call/dev-token>
+L<https://developers.google.com/google-ads/api/docs/first-call/dev-token>.
 
 =head2 login_customer_id
 
@@ -282,6 +285,10 @@ The user-agent request header used to identify this application.
 =head2 proxy
 
 The proxy server URL to be used for internet connectivity.
+
+=head2 http_timeout
+
+The HTTP timeout value in seconds.
 
 =head2 version
 
@@ -378,7 +385,7 @@ die() with an error message describing the failure.
 This module supports two approaches for handling API faults (i.e. errors
 returned by the underlying REST API service).
 
-One approach is to issue a die() with a description of the error when a API
+One approach is to issue a die() with a description of the error when an API
 fault occurs. This die() would ideally be contained within an eval { }; block,
 thereby emulating try { } / catch { } exception functionality in other
 languages.
@@ -395,7 +402,7 @@ The default value is false, i.e. you must explicitly check for faults.
 
 =head3 Parameters
 
-A true value will cause this module to die() when a API fault occurs.
+A true value will cause this module to die() when an API fault occurs.
 
 A false value will suppress this die(). This is the default behavior.
 
@@ -432,8 +439,8 @@ instance is set to die() on API faults.
 
 The client object contains a method for each service provided by the Google Ads
 API. For example it can be invoked as $api_client->AdGroupService() and it will
-return an object of type L<Google::Ads::GoogleAds::V2::Services::AdGroupService>
-when using version V2 of the API.
+return an object of type L<Google::Ads::GoogleAds::V3::Services::AdGroupService>
+when using version V3 of the API.
 
 For a list of all the available services please refer to
 L<https://developers.google.com/google-ads/api/docs> and for code samples on

@@ -25,13 +25,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V2::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V2::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V2::Enums::KeywordMatchTypeEnum qw(EXACT);
+use Google::Ads::GoogleAds::V3::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V3::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V3::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V3::Enums::KeywordMatchTypeEnum qw(EXACT);
 use
-  Google::Ads::GoogleAds::V2::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V3::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,19 +54,19 @@ sub add_keywords {
 
   # Create a keyword.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V2::Resources::AdGroupCriterion->new({
-      adGroup => Google::Ads::GoogleAds::V2::Utils::ResourceNames::ad_group(
+    Google::Ads::GoogleAds::V3::Resources::AdGroupCriterion->new({
+      adGroup => Google::Ads::GoogleAds::V3::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       status  => ENABLED,
-      keyword => Google::Ads::GoogleAds::V2::Common::KeywordInfo->new({
+      keyword => Google::Ads::GoogleAds::V3::Common::KeywordInfo->new({
           text      => $keyword,
           matchType => EXACT
         })});
 
   # Create an ad group criterion operation.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V2::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V3::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({create => $ad_group_criterion});
 
   # Add the keyword.
@@ -87,7 +87,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

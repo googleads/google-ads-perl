@@ -26,20 +26,20 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Common::GenderInfo;
-use Google::Ads::GoogleAds::V2::Common::DeviceInfo;
-use Google::Ads::GoogleAds::V2::Enums::ReachPlanAdLengthEnum
+use Google::Ads::GoogleAds::V3::Common::GenderInfo;
+use Google::Ads::GoogleAds::V3::Common::DeviceInfo;
+use Google::Ads::GoogleAds::V3::Enums::ReachPlanAdLengthEnum
   qw(FIFTEEN_OR_TWENTY_SECONDS);
-use Google::Ads::GoogleAds::V2::Enums::GenderTypeEnum qw(MALE FEMALE);
-use Google::Ads::GoogleAds::V2::Enums::DeviceEnum qw(DESKTOP MOBILE TABLET);
-use Google::Ads::GoogleAds::V2::Enums::ReachPlanAgeRangeEnum
+use Google::Ads::GoogleAds::V3::Enums::GenderTypeEnum qw(MALE FEMALE);
+use Google::Ads::GoogleAds::V3::Enums::DeviceEnum qw(DESKTOP MOBILE TABLET);
+use Google::Ads::GoogleAds::V3::Enums::ReachPlanAgeRangeEnum
   qw(AGE_RANGE_18_65_UP);
-use Google::Ads::GoogleAds::V2::Services::ReachPlanService::PlannedProduct;
-use Google::Ads::GoogleAds::V2::Services::ReachPlanService::Preferences;
-use Google::Ads::GoogleAds::V2::Services::ReachPlanService::CampaignDuration;
-use Google::Ads::GoogleAds::V2::Services::ReachPlanService::Targeting;
+use Google::Ads::GoogleAds::V3::Services::ReachPlanService::PlannedProduct;
+use Google::Ads::GoogleAds::V3::Services::ReachPlanService::Preferences;
+use Google::Ads::GoogleAds::V3::Services::ReachPlanService::CampaignDuration;
+use Google::Ads::GoogleAds::V3::Services::ReachPlanService::Targeting;
 use
-  Google::Ads::GoogleAds::V2::Services::ReachPlanService::GenerateReachForecastRequest;
+  Google::Ads::GoogleAds::V3::Services::ReachPlanService::GenerateReachForecastRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -138,14 +138,14 @@ sub forecast_manual_mix {
 
   # See list_plannable_products on ReachPlanService to retrieve a list of valid
   # plannable product codes for a given location:
-  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.googleads.v2.services#reachplanservice
+  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.googleads.v3.services#reachplanservice
   push @$product_mix,
-    Google::Ads::GoogleAds::V2::Services::ReachPlanService::PlannedProduct->new(
+    Google::Ads::GoogleAds::V3::Services::ReachPlanService::PlannedProduct->new(
     {
       plannableProductCode => "TRUEVIEW_IN_STREAM",
       budgetMicros         => int($budget_micros * $trueview_allocation)});
   push @$product_mix,
-    Google::Ads::GoogleAds::V2::Services::ReachPlanService::PlannedProduct->new(
+    Google::Ads::GoogleAds::V3::Services::ReachPlanService::PlannedProduct->new(
     {
       plannableProductCode => "BUMPER",
       budgetMicros         => int($budget_micros * $bumper_allocation)});
@@ -168,7 +168,7 @@ sub forecast_suggested_mix {
 
   # Note: If preferences are too restrictive, then the response will be empty.
   my $preferences =
-    Google::Ads::GoogleAds::V2::Services::ReachPlanService::Preferences->new({
+    Google::Ads::GoogleAds::V3::Services::ReachPlanService::Preferences->new({
       hasGuaranteedPrice => "true",
       startsWithSound    => "true",
       isSkippable        => "false",
@@ -187,7 +187,7 @@ sub forecast_suggested_mix {
   my $product_mix = [];
   foreach my $product (@{$mix_response->{productAllocation}}) {
     push @$product_mix,
-      Google::Ads::GoogleAds::V2::Services::ReachPlanService::PlannedProduct->
+      Google::Ads::GoogleAds::V3::Services::ReachPlanService::PlannedProduct->
       new({
         plannableProductCode => $product->{plannableProductCode},
         budgetMicros         => $product->{budgetMicros}});
@@ -206,35 +206,35 @@ sub build_reach_request {
 
   # Valid durations are between 1 and 90 days.
   my $duration =
-    Google::Ads::GoogleAds::V2::Services::ReachPlanService::CampaignDuration->
+    Google::Ads::GoogleAds::V3::Services::ReachPlanService::CampaignDuration->
     new({
       durationInDays => 28
     });
 
   my $genders = [
-    Google::Ads::GoogleAds::V2::Common::GenderInfo->new({
+    Google::Ads::GoogleAds::V3::Common::GenderInfo->new({
         type => FEMALE
       }
     ),
-    Google::Ads::GoogleAds::V2::Common::GenderInfo->new({
+    Google::Ads::GoogleAds::V3::Common::GenderInfo->new({
         type => MALE
       })];
 
   my $devices = [
-    Google::Ads::GoogleAds::V2::Common::DeviceInfo->new({
+    Google::Ads::GoogleAds::V3::Common::DeviceInfo->new({
         type => DESKTOP
       }
     ),
-    Google::Ads::GoogleAds::V2::Common::DeviceInfo->new({
+    Google::Ads::GoogleAds::V3::Common::DeviceInfo->new({
         type => MOBILE
       }
     ),
-    Google::Ads::GoogleAds::V2::Common::DeviceInfo->new({
+    Google::Ads::GoogleAds::V3::Common::DeviceInfo->new({
         type => TABLET
       })];
 
   my $targeting =
-    Google::Ads::GoogleAds::V2::Services::ReachPlanService::Targeting->new({
+    Google::Ads::GoogleAds::V3::Services::ReachPlanService::Targeting->new({
       plannableLocationId => $location_id,
       ageRange            => AGE_RANGE_18_65_UP,
       genders             => $genders,
@@ -242,9 +242,9 @@ sub build_reach_request {
     });
 
   # See the docs for defaults and valid ranges:
-  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.googleads.v2.services#google.ads.googleads.v2.services.GenerateReachForecastRequest
+  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.googleads.v3.services#google.ads.googleads.v3.services.GenerateReachForecastRequest
   return
-    Google::Ads::GoogleAds::V2::Services::ReachPlanService::GenerateReachForecastRequest
+    Google::Ads::GoogleAds::V3::Services::ReachPlanService::GenerateReachForecastRequest
     ->new({
       customerId            => $customer_id,
       currencyCode          => $currency_code,
@@ -283,7 +283,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

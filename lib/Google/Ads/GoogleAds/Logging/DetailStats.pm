@@ -80,8 +80,8 @@ Google::Ads::GoogleAds::Logging::DetailStats
 
 =head1 DESCRIPTION
 
-Class that wraps the detailed HTTP request and response like host,
-method, headers, payload.
+Class that wraps the detailed HTTP request and response like host, method,
+headers, payload.
 
 =head1 ATTRIBUTES
 

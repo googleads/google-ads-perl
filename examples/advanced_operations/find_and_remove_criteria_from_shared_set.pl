@@ -26,11 +26,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
-use Google::Ads::GoogleAds::V2::Enums::CriterionTypeEnum qw(KEYWORD);
+use Google::Ads::GoogleAds::V3::Enums::CriterionTypeEnum qw(KEYWORD);
 use
-  Google::Ads::GoogleAds::V2::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsRequest;
 use
-  Google::Ads::GoogleAds::V2::Services::SharedCriterionService::SharedCriterionOperation;
+  Google::Ads::GoogleAds::V3::Services::SharedCriterionService::SharedCriterionOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -61,7 +61,7 @@ sub find_and_remove_criteria_from_shared_set {
     "WHERE campaign.id = $campaign_id";
 
   my $search_request =
-    Google::Ads::GoogleAds::V2::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
@@ -99,7 +99,7 @@ sub find_and_remove_criteria_from_shared_set {
     join(',', @$shared_set_ids);
 
   $search_request =
-    Google::Ads::GoogleAds::V2::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
@@ -137,7 +137,7 @@ sub find_and_remove_criteria_from_shared_set {
   my $shared_criterion_operations = [];
   foreach my $criterion_resource_name (@$criterion_resource_names) {
     push @$shared_criterion_operations,
-      Google::Ads::GoogleAds::V2::Services::SharedCriterionService::SharedCriterionOperation
+      Google::Ads::GoogleAds::V3::Services::SharedCriterionService::SharedCriterionOperation
       ->new({
         remove => $criterion_resource_name
       });
@@ -164,7 +164,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

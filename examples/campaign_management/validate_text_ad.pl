@@ -25,12 +25,12 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V2::Resources::Ad;
-use Google::Ads::GoogleAds::V2::Common::ExpandedTextAdInfo;
-use Google::Ads::GoogleAds::V2::Enums::AdGroupAdStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V2::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V3::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V3::Resources::Ad;
+use Google::Ads::GoogleAds::V3::Common::ExpandedTextAdInfo;
+use Google::Ads::GoogleAds::V3::Enums::AdGroupAdStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V3::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -51,17 +51,19 @@ sub validate_text_ad {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
   # Create an ad group ad object.
-  my $ad_group_ad = Google::Ads::GoogleAds::V2::Resources::AdGroupAd->new({
-      adGroup => Google::Ads::GoogleAds::V2::Utils::ResourceNames::ad_group(
+  my $ad_group_ad = Google::Ads::GoogleAds::V3::Resources::AdGroupAd->new({
+      adGroup => Google::Ads::GoogleAds::V3::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       # Optional: Set the status.
       status => PAUSED,
-      ad     => Google::Ads::GoogleAds::V2::Resources::Ad->new({
+      ad     => Google::Ads::GoogleAds::V3::Resources::Ad->new({
           expandedTextAd =>
-            Google::Ads::GoogleAds::V2::Common::ExpandedTextAdInfo->new({
+            Google::Ads::GoogleAds::V3::Common::ExpandedTextAdInfo->new({
               description   => "Luxury Cruise to Mars",
               headlinePart1 => "Visit the Red Planet in style.",
+              # Add a headline that will trigger a policy violation to demonstrate
+              # error handling.
               headlinePart2 => "Low-gravity fun for everyone!!"
             }
             ),
@@ -69,7 +71,7 @@ sub validate_text_ad {
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V2::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V3::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad, while setting validateOnly to "true".
@@ -118,7 +120,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(0);

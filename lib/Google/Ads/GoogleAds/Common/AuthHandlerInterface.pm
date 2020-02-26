@@ -49,14 +49,14 @@ Google::Ads::GoogleAds::Common::AuthHandlerInterface
 =head1 DESCRIPTION
 
 Interface to be implemented by concrete authorization handlers. Defines the
-necessary subroutines to build authorized request against a Google API.
+necessary subroutines to build authorized requests against a Google API.
 
 =head1 METHODS
 
 =head2 initialize
 
-Initializes the handler with the the API client object and a given set of
-properties, such as: client_id, client_secret, etc.
+Initializes the handler with the API client object and a given set of properties,
+such as: client_id, client_secret, etc.
 
 =head3 Parameters
 

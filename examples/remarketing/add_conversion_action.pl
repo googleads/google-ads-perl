@@ -24,13 +24,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Resources::ConversionAction;
-use Google::Ads::GoogleAds::V2::Resources::ValueSettings;
-use Google::Ads::GoogleAds::V2::Enums::ConversionActionCategoryEnum qw(DEFAULT);
-use Google::Ads::GoogleAds::V2::Enums::ConversionActionTypeEnum qw(WEBPAGE);
-use Google::Ads::GoogleAds::V2::Enums::ConversionActionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V3::Resources::ConversionAction;
+use Google::Ads::GoogleAds::V3::Resources::ValueSettings;
+use Google::Ads::GoogleAds::V3::Enums::ConversionActionCategoryEnum qw(DEFAULT);
+use Google::Ads::GoogleAds::V3::Enums::ConversionActionTypeEnum qw(WEBPAGE);
+use Google::Ads::GoogleAds::V3::Enums::ConversionActionStatusEnum qw(ENABLED);
 use
-  Google::Ads::GoogleAds::V2::Services::ConversionActionService::ConversionActionOperation;
+  Google::Ads::GoogleAds::V3::Services::ConversionActionService::ConversionActionOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,21 +52,21 @@ sub add_conversion_action {
 
   # Create a conversion action.
   my $conversion_action =
-    Google::Ads::GoogleAds::V2::Resources::ConversionAction->new({
+    Google::Ads::GoogleAds::V3::Resources::ConversionAction->new({
       name     => "Earth to Mars Cruises Conversion #" . uniqid(),
       category => DEFAULT,
       type     => WEBPAGE,
       status   => ENABLED,
       viewThroughLookbackWindowDays => 15,
       valueSettings =>
-        Google::Ads::GoogleAds::V2::Resources::ValueSettings->new({
+        Google::Ads::GoogleAds::V3::Resources::ValueSettings->new({
           defaultValue          => 23.41,
           alwaysUseDefaultValue => "true"
         })});
 
   # Create a conversion action operation.
   my $conversion_action_operation =
-    Google::Ads::GoogleAds::V2::Services::ConversionActionService::ConversionActionOperation
+    Google::Ads::GoogleAds::V3::Services::ConversionActionService::ConversionActionOperation
     ->new({create => $conversion_action});
 
   # Add the conversion action.
@@ -87,7 +87,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

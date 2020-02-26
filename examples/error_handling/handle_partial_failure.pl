@@ -27,9 +27,9 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::PartialFailureUtils;
-use Google::Ads::GoogleAds::V2::Resources::AdGroup;
-use Google::Ads::GoogleAds::V2::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V3::Resources::AdGroup;
+use Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,36 +52,36 @@ sub handle_partial_failure {
 
   # This ad group should be created successfully - assuming the campaign
   # in the params exists.
-  my $ad_group1 = Google::Ads::GoogleAds::V2::Resources::AdGroup->new({
-      campaign => Google::Ads::GoogleAds::V2::Utils::ResourceNames::campaign(
+  my $ad_group1 = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
+      campaign => Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       name => "Valid AdGroup: " . uniqid()});
 
   # This ad group will always fail - campaign ID 0 in resource names is
   # never valid.
-  my $ad_group2 = Google::Ads::GoogleAds::V2::Resources::AdGroup->new({
-      campaign => Google::Ads::GoogleAds::V2::Utils::ResourceNames::campaign(
+  my $ad_group2 = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
+      campaign => Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
         $customer_id, 0
       ),
       name => "Broken AdGroup: " . uniqid()});
 
   # This ad group will always fail - duplicate ad group names are not allowed.
-  my $ad_group3 = Google::Ads::GoogleAds::V2::Resources::AdGroup->new({
-      campaign => Google::Ads::GoogleAds::V2::Utils::ResourceNames::campaign(
+  my $ad_group3 = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
+      campaign => Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       name => $ad_group1->{name}});
 
   # Create ad group operations.
   my $ad_group_operation1 =
-    Google::Ads::GoogleAds::V2::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group1});
   my $ad_group_operation2 =
-    Google::Ads::GoogleAds::V2::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group2});
   my $ad_group_operation3 =
-    Google::Ads::GoogleAds::V2::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group3});
 
   # Add the ad groups.
@@ -126,7 +126,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

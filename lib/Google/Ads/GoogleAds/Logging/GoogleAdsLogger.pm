@@ -251,25 +251,23 @@ Google::Ads::GoogleAds::Logging::GoogleAdsLogger
 
   Google::Ads::GoogleAds::Logging::GoogleAdsLogger::enable_all_logging(1);
 
-  Google::Ads::GoogleAds::Logging::GoogleAdsLogger::log_summary($http_request,
-    $http_response);
+  Google::Ads::GoogleAds::Logging::GoogleAdsLogger::log_summary($http_request, $http_response);
 
-  Google::Ads::GoogleAds::Logging::GoogleAdsLogger::log_detail($http_request,
-    $http_response);
+  Google::Ads::GoogleAds::Logging::GoogleAdsLogger::log_detail($http_request, $http_response);
 
 =head1 DESCRIPTION
 
-The class L<Google::Ads::GoogleAds::GoogleAdsLogger> allows logging of outgoing and
-incoming REST messages as executed API calls . It initializes the loggers based on a
-provided F<log4perl.conf> file or default parameters if the file is not found. It
-contains method to retrieve the summary and detail loggers.
+This class allows logging of outgoing and incoming REST messages as executed API
+calls. It initializes the loggers based on a provided F<log4perl.conf> file or
+default parameters if the file is not found. It contains methods to retrieve the
+summary and detail loggers.
 
 =head1 METHODS
 
 =head2 initialize_logging
 
-Initializes the loggers based on the default F<log4perl.conf> file or default parameters
-if the file is not found.
+Initializes the loggers based on the default F<log4perl.conf> file or default
+parameters if the file is not found.
 
 =head2 enable_summary_logging
 
@@ -290,6 +288,10 @@ Enables the logging for traffic detail of HTTP request and response.
 =head3 Parameters
 
 A boolean value of whether to include the DEBUG level messages.
+
+=head2 disable_detail_logging
+
+Disables the traffic detail logging.
 
 =head2 enable_all_logging
 
@@ -353,6 +355,8 @@ I<http_request>: The REST HTTP request sent to Google Ads API server.
 
 I<http_response>: The HTTP response received from Google Ads API server.
 
+=back
+
 =head2 __parse_host
 
 The private method to parse the hostname from a HTTP request.
@@ -373,15 +377,15 @@ The parsed hostname in the format of <scheme>://<domain>.
 
 =head2 __parse_fault_message
 
-The private method to parse the fault message from the HTTP response,
-if an error has occurred at the server side. This message can be used
-to construct a L<Google::Ads::GoogleAds::Logging::SummaryStats>.
+The private method to parse the fault message from the HTTP response, if an error
+has occurred at the server side. This message can be used to construct a
+L<Google::Ads::GoogleAds::Logging::SummaryStats>.
 
 =head2 __parse_faults
 
-The private method to parse all the faults from the HTTP response,
-and C<encode> them in the JSON format. These faults will be used to
-construct a L<Google::Ads::GoogleAds::Logging::DetailStats>;
+The private method to parse all the faults from the HTTP response, and C<encode>
+them in the JSON format. These faults will be used to construct a
+L<Google::Ads::GoogleAds::Logging::DetailStats>.
 
 =head1 LICENSE AND COPYRIGHT
 

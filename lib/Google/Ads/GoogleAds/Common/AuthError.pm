@@ -63,7 +63,7 @@ Holds the error message.
 
 =head2 code
 
-Holds the HTTP code associated to the error.
+Holds the HTTP code associated with the error.
 
 =head2 content
 

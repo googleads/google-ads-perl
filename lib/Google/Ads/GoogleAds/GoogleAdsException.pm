@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# The class representing the exception message from Google Ads API server.
+# The class represents the exception message from Google Ads API server.
 
 package Google::Ads::GoogleAds::GoogleAdsException;
 
@@ -89,12 +89,12 @@ Google::Ads::GoogleAds::GoogleAdsException
   if ($response->isa("Google::Ads::GoogleAds::GoogleAdsException")) {
     my $google_ads_failure = $response->get_google_ads_failure();
 
-    # Do something with thie GoogleAdsFailure object.
+    # Do something with the GoogleAdsFailure object.
   }
 
 =head1 DESCRIPTION
 
-The class representing the exception message from Google Ads API server.
+The class represents the exception message from Google Ads API server.
 
 =head1 ATTRIBUTES
 
@@ -114,7 +114,7 @@ The status code of this exception.
 
 =head2 details
 
-The details information of this exception, which may contains failure messages.
+The detailed information of this exception, which may contain failure messages.
 
 =head1 METHODS
 
@@ -126,5 +126,27 @@ L</details> attribute of the current exception object.
 =head3 Returns
 
 A L<Google::Ads::GoogleAds::VX::Errors::GoogleAdsFailure> object or undef if not found.
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright 2019 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+=head1 REPOSITORY INFORMATION
+
+ $Rev: $
+ $LastChangedBy: $
+ $Id: $
 
 =cut

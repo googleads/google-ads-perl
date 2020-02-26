@@ -25,10 +25,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Resources::CustomerNegativeCriterion;
-use Google::Ads::GoogleAds::V2::Common::ContentLabelInfo;
-use Google::Ads::GoogleAds::V2::Common::PlacementInfo;
-use Google::Ads::GoogleAds::V2::Enums::ContentLabelTypeEnum qw(TRAGEDY);
+use Google::Ads::GoogleAds::V3::Resources::CustomerNegativeCriterion;
+use Google::Ads::GoogleAds::V3::Common::ContentLabelInfo;
+use Google::Ads::GoogleAds::V3::Common::PlacementInfo;
+use Google::Ads::GoogleAds::V3::Enums::ContentLabelTypeEnum qw(TRAGEDY);
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -49,8 +49,8 @@ sub add_customer_negative_criteria {
 
   # Create a negative customer criterion excluding the content label type of 'TRAGEDY'.
   my $tragedy_criterion =
-    Google::Ads::GoogleAds::V2::Resources::CustomerNegativeCriterion->new({
-      contentLabel => Google::Ads::GoogleAds::V2::Common::ContentLabelInfo->new(
+    Google::Ads::GoogleAds::V3::Resources::CustomerNegativeCriterion->new({
+      contentLabel => Google::Ads::GoogleAds::V3::Common::ContentLabelInfo->new(
         {
           type => TRAGEDY
         })});
@@ -58,8 +58,8 @@ sub add_customer_negative_criteria {
   # Create a negative customer criterion excluding the placement with url
   # 'http://www.example.com'.
   my $placement_criterion =
-    Google::Ads::GoogleAds::V2::Resources::CustomerNegativeCriterion->new({
-      placement => Google::Ads::GoogleAds::V2::Common::PlacementInfo->new({
+    Google::Ads::GoogleAds::V3::Resources::CustomerNegativeCriterion->new({
+      placement => Google::Ads::GoogleAds::V3::Common::PlacementInfo->new({
           url => "http://example.com"
         })});
 
@@ -93,7 +93,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

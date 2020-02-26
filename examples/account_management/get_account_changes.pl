@@ -25,10 +25,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
-use Google::Ads::GoogleAds::V2::Enums::ChangeStatusResourceTypeEnum
+use Google::Ads::GoogleAds::V3::Enums::ChangeStatusResourceTypeEnum
   qw(AD_GROUP AD_GROUP_AD AD_GROUP_CRITERION CAMPAIGN CAMPAIGN_CRITERION);
 use
-  Google::Ads::GoogleAds::V2::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -66,7 +66,7 @@ sub get_account_changes {
   # Create a search Google Ads request that will retrieve all change statuses using
   # pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V2::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
@@ -125,7 +125,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

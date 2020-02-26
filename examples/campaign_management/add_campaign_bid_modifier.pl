@@ -25,12 +25,12 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V2::Resources::CampaignBidModifier;
-use Google::Ads::GoogleAds::V2::Common::InteractionTypeInfo;
-use Google::Ads::GoogleAds::V2::Enums::InteractionTypeEnum qw(CALLS);
+use Google::Ads::GoogleAds::V3::Resources::CampaignBidModifier;
+use Google::Ads::GoogleAds::V3::Common::InteractionTypeInfo;
+use Google::Ads::GoogleAds::V3::Enums::InteractionTypeEnum qw(CALLS);
 use
-  Google::Ads::GoogleAds::V2::Services::CampaignBidModifierService::CampaignBidModifierOperation;
-use Google::Ads::GoogleAds::V2::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V3::Services::CampaignBidModifierService::CampaignBidModifierOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,13 +54,13 @@ sub add_campaign_bid_modifier {
   # Create a campaign bid modifier for call interactions with the specified
   # campaign ID and bid modifier value.
   my $campaign_bid_modifier =
-    Google::Ads::GoogleAds::V2::Resources::CampaignBidModifier->new({
-      campaign => Google::Ads::GoogleAds::V2::Utils::ResourceNames::campaign(
+    Google::Ads::GoogleAds::V3::Resources::CampaignBidModifier->new({
+      campaign => Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       # Make the bid modifier apply to call interactions.
       interactionType =>
-        Google::Ads::GoogleAds::V2::Common::InteractionTypeInfo->new({
+        Google::Ads::GoogleAds::V3::Common::InteractionTypeInfo->new({
           type => CALLS
         }
         ),
@@ -70,7 +70,7 @@ sub add_campaign_bid_modifier {
 
   # Create a campaign bid modifier operation.
   my $campaign_bid_modifier_operation =
-    Google::Ads::GoogleAds::V2::Services::CampaignBidModifierService::CampaignBidModifierOperation
+    Google::Ads::GoogleAds::V3::Services::CampaignBidModifierService::CampaignBidModifierOperation
     ->new({
       create => $campaign_bid_modifier
     });
@@ -93,7 +93,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V2"});
+my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

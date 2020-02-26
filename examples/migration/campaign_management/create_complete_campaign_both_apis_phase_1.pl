@@ -30,10 +30,10 @@ use utf8;
 
 use FindBin qw($Bin);
 use lib "$Bin/../../../lib";
-use Google::Ads::GoogleAds::V2::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V2::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V3::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V3::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
 use
-  Google::Ads::GoogleAds::V2::Services::CampaignBudgetService::CampaignBudgetOperation;
+  Google::Ads::GoogleAds::V3::Services::CampaignBudgetService::CampaignBudgetOperation;
 use Google::Ads::AdWords::v201809::Campaign;
 use Google::Ads::AdWords::v201809::BiddingStrategyConfiguration;
 use Google::Ads::AdWords::v201809::Budget;
@@ -80,7 +80,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V2::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V3::Resources::CampaignBudget->new({
       name           => "Interplanetary Cruise Budget #" . uniqid(),
       deliveryMethod => STANDARD,
       amountMicros   => 500000
@@ -88,7 +88,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V2::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V3::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Issue a mutate request to add the campaign budget.

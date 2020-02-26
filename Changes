@@ -1,3 +1,11 @@
+3.0.0 - 2020-02-26
+- Added support for Google Ads API v3_0.
+- Added SearchStreamHandler to support the search stream API.
+- Added code examples: add_app_campaign, update_campaign_criterion_bid_modifier,
+  add_listing_scope.
+- Updated code examples get_campaigns and get_keyword_stats to use the search
+  stream API.
+
 2.2.0 - 2019-09-16
 - Added support for Google Ads API v2_2.
 - Added code examples: get_account_hierarchy, add_smart_display_ad, add_prices,

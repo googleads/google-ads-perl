@@ -54,7 +54,7 @@ method for each entity class to convert.
 
 =head3 Returns
 
-A scalar as the reference to the hash to convert based off current object.
+A scalar as the reference to the hash to convert based on the current object.
 
 =head1 LICENSE AND COPYRIGHT
 

@@ -20,11 +20,13 @@ use warnings;
 use Google::Ads::GoogleAds::Client;
 
 use Exporter 'import';
-our @EXPORT = qw(get_test_client get_test_client_no_auth read_file_content
-  read_client_properties);
+our @EXPORT =
+  qw(get_test_client get_mock_client_no_auth get_mock_client_with_auth
+  read_file_content read_client_properties);
 
 use File::Basename;
 use File::Spec;
+use HTTP::Request::Common;
 use Config::Properties;
 use Test::MockObject::Extends;
 
@@ -47,17 +49,35 @@ sub get_test_client {
   return $api_client;
 }
 
-# Constructs a Google Ads Client instance with a mocked OAuth2 handler, using
-# the configurations in the 'testdata/googleads_test.properties' file.
-sub get_test_client_no_auth {
+# Constructs a mock Google Ads Client instance without an OAuth2 handler, using
+# the configurations in the 'testdata/googleads_mock.properties' file.
+sub get_mock_client_no_auth {
   my $properties_file =
-    File::Spec->catdir(dirname($0), qw(testdata googleads_test.properties));
+    File::Spec->catdir(dirname($0), qw(testdata googleads_mock.properties));
 
   my $api_client =
     Google::Ads::GoogleAds::Client->new({properties_file => $properties_file});
 
   $api_client = Test::MockObject::Extends->new($api_client);
   $api_client->mock("_get_auth_handler", sub { return undef; });
+
+  return $api_client;
+}
+
+# Constructs a mock Google Ads Client instance with a mock OAuth2 handler, using
+# the configurations in the 'testdata/googleads_mock.properties' file.
+sub get_mock_client_with_auth {
+  my $properties_file =
+    File::Spec->catdir(dirname($0), qw(testdata googleads_mock.properties));
+
+  my $api_client =
+    Google::Ads::GoogleAds::Client->new({properties_file => $properties_file});
+
+  my $auth_handler = Test::MockObject->new();
+  $auth_handler->mock("prepare_request", sub { return HTTP::Request->new(); });
+
+  $api_client = Test::MockObject::Extends->new($api_client);
+  $api_client->mock("_get_auth_handler", sub { return $auth_handler; });
 
   return $api_client;
 }
@@ -84,7 +104,7 @@ sub read_client_properties() {
 sub __read_properties {
   my $properties_file = shift;
   open(PROPS, "< $properties_file") or die "Unable to read properties file.";
-  my $properties = new Config::Properties();
+  my $properties = Config::Properties->new();
   $properties->load(*PROPS);
   return $properties;
 }

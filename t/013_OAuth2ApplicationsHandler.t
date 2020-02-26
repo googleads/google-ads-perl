@@ -20,7 +20,7 @@ use strict;
 use warnings;
 
 use lib qw(lib t/utils);
-use TestUtils qw(get_test_client_no_auth);
+use TestUtils qw(get_mock_client_no_auth);
 
 use Test::More(tests => 31);
 use Test::MockObject;
@@ -29,14 +29,14 @@ use Test::MockObject;
 use_ok("Google::Ads::GoogleAds::OAuth2ApplicationsHandler");
 
 my $lwp_agent_mock = Test::MockObject->new();
-$lwp_agent_mock->mock(env_proxy => sub { });
+$lwp_agent_mock->mock("proxy");
 
 my $handler = Google::Ads::GoogleAds::OAuth2ApplicationsHandler->new(
   {__lwp_agent => $lwp_agent_mock});
 
-my $api_client = get_test_client_no_auth();
+my $api_client_mock = get_mock_client_no_auth();
 is(
-  $api_client->get_version(),
+  $api_client_mock->get_version(),
   Google::Ads::GoogleAds::Constants::DEFAULT_API_VERSION,
   "The default API version."
 );
@@ -62,7 +62,7 @@ is(
 );
 
 $handler->initialize(
-  $api_client,
+  $api_client_mock,
   {
     clientId         => "client-id",
     clientSecret     => "client-secret",
