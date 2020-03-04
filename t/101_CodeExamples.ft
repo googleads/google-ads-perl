@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 73);
+use Test::More (tests => 74);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -217,6 +217,11 @@ ok(get_expanded_text_ads($api_client, $customer_id, $search_ad_group_id),
 require qw(examples/basic_operations/get_keywords.pl);
 ok(get_keywords($api_client, $customer_id, $search_ad_group_id),
   "Test of get_keywords example.");
+require qw(examples/basic_operations/get_responsive_search_ads.pl);
+ok(
+  get_responsive_search_ads($api_client, $customer_id),
+  "Test of get_responsive_search_ads example."
+);
 require qw(examples/basic_operations/pause_ad.pl);
 ok(
   pause_ad($api_client, $customer_id, $search_ad_group_id, $search_text_ad_id),
@@ -403,8 +408,8 @@ ok(
 require qw(examples/planning/generate_keyword_ideas.pl);
 ok(
   generate_keyword_ideas(
-    $api_client, $customer_id, [21167,  20321],
-    1000,                      ["cars", "volvo"]
+    $api_client, $customer_id, [21167, 20321],
+    1000, ["cars", "volvo"]
   ),
   "Test of generate_keyword_ideas example."
 );
