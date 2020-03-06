@@ -14,11 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example updates a FeedItemAttributeValue in a flights feed. To
-# create a flights feed, run the add_flights_feed.pl example. This example
-# is specific to feeds of type DYNAMIC_FLIGHT. The attribute you are updating
-# must be present on the feed. This example is specifically for updating the
-# StringValue of an attribute.
+# Removes a feed item attribute value of a feed item in a flights feed. To create
+# a flights feed, run the add_flights_feed.pl example. This example is specific
+# to feeds of type DYNAMIC_FLIGHT. The attribute you are removing must be present
+# on the feed.
 
 use strict;
 use warnings;
@@ -47,15 +46,14 @@ require "$Bin/add_flights_feed.pl";
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id              = "INSERT_CUSTOMER_ID_HERE";
-my $feed_id                  = "INSERT_FEED_ID_HERE";
-my $feed_item_id             = "INSERT_FEED_ITEM_ID_HERE";
-my $flight_placeholder_field = "INSERT_FLIGHT_PLACEHOLDER_FIELD_HERE";
-my $attribute_value          = "INSERT_ATTRIBUTE_VALUE_HERE";
+my $customer_id                   = "INSERT_CUSTOMER_ID_HERE";
+my $feed_id                       = "INSERT_FEED_ID_HERE";
+my $feed_item_id                  = "INSERT_FEED_ITEM_ID_HERE";
+my $flight_placeholder_field_name = "INSERT_FLIGHT_PLACEHOLDER_FIELD_NAME_HERE";
 
-sub update_feed_item_attribute_value {
+sub remove_flights_feed_item_string_attribute_value {
   my ($api_client, $customer_id, $feed_id, $feed_item_id,
-    $flight_placeholder_field, $attribute_value)
+    $flight_placeholder_field_name)
     = @_;
 
   # Get the feed resource name.
@@ -67,32 +65,16 @@ sub update_feed_item_attribute_value {
   my $feed_attributes =
     get_feed($api_client, $customer_id, $feed_resource_name);
 
-  # Get the ID of the attribute to update. This is needed to specify which
-  # FeedItemAttributeValue will be updated in the given FeedItem.
-  my $attribute_id = $feed_attributes->{uc($flight_placeholder_field)}{id};
-
   # Get the feed item resource name.
   my $feed_item_resource_name =
     Google::Ads::GoogleAds::V3::Utils::ResourceNames::feed_item($customer_id,
     $feed_id, $feed_item_id);
 
-  # Retrieve the feed item and its associated attributes based on its resource name.
+  # Remove the attribute from the feed item.
   my $feed_item =
-    get_feed_item($api_client, $customer_id, $feed_item_resource_name);
-
-  # Create the updated FeedItemAttributeValue.
-  my $feed_item_attribute_value =
-    Google::Ads::GoogleAds::V3::Resources::FeedItemAttributeValue->new({
-      feedAttributeId => $attribute_id,
-      stringValue     => $attribute_value
-    });
-
-  # Get the index of the attribute value that will be updated.
-  my $attribute_index = get_attribute_index($feed_item, $attribute_id);
-
-  # Set the attribute value of the FeedItem given its index relative to other attributes
-  # in the FeedItem.
-  $feed_item->{attributeValues}[$attribute_index] = $feed_item_attribute_value;
+    remove_attribute_value_from_feed_item($api_client, $customer_id,
+    $feed_attributes, $feed_item_resource_name,
+    uc($flight_placeholder_field_name));
 
   # Create a feed item operation.
   my $feed_item_operation =
@@ -110,6 +92,30 @@ sub update_feed_item_attribute_value {
     $feed_item_response->{results}[0]{resourceName};
 
   return 1;
+}
+
+# Removes a feed item attribute value.
+sub remove_attribute_value_from_feed_item {
+  my ($api_client, $customer_id,
+    $feed_attributes, $feed_item_resource_name, $flight_placeholder_field_name)
+    = @_;
+
+  # Get the ID of the FeedAttribute for the placeholder field.
+  my $attribute_id = $feed_attributes->{$flight_placeholder_field_name}{id};
+
+  # Retrieve the feed item and its associated attributes based on its resource name.
+  my $feed_item =
+    get_feed_item($api_client, $customer_id, $feed_item_resource_name);
+
+  # Get the index of the attribute value that will be removed.
+  my $attribute_index = get_attribute_index($feed_item, $attribute_id);
+
+  # Return the feed item with the removed FeedItemAttributeValue. Any FeedItemAttributeValue
+  # that is not included in the updated FeedItem will be removed from the FeedItem, which is
+  # why you must create the FeedItem from the existing FeedItem and set the field(s) that will
+  # be removed.
+  splice @{$feed_item->{attributeValues}}, $attribute_index, 1;
+  return $feed_item;
 }
 
 # Retrieves a feed item and its attribute values given a resource name.
@@ -130,12 +136,12 @@ sub get_feed_item {
 }
 
 # Gets the index of the attribute value. This is needed to specify which
-# FeedItemAttributeValue will be updated in the given FeedItem.
+# FeedItemAttributeValue will be removed in the given FeedItem.
 sub get_attribute_index {
   my ($feed_item, $attribute_id) = @_;
 
   my $attribute_index = -1;
-  # Loop through attribute values to find the index of the FeedItemAttributeValue to update.
+  # Loop through attribute values to find the index of the FeedItemAttributeValue to remove.
   while (my ($index, $attribute_value) = each @{$feed_item->{attributeValues}})
   {
     if ($attribute_value->{feedAttributeId} == $attribute_id) {
@@ -165,45 +171,45 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"              => \$customer_id,
-  "feed_id=i"                  => \$feed_id,
-  "feed_item_id=i"             => \$feed_item_id,
-  "flight_placeholder_field=s" => \$flight_placeholder_field,
-  "attribute_value=s"          => \$attribute_value
+  "customer_id=s"                   => \$customer_id,
+  "feed_id=i"                       => \$feed_id,
+  "feed_item_id=i"                  => \$feed_item_id,
+  "flight_placeholder_field_name=s" => \$flight_placeholder_field_name
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
   if not check_params($customer_id, $feed_id, $feed_item_id,
-  $flight_placeholder_field, $attribute_value);
+  $flight_placeholder_field_name);
 
 # Call the example.
-update_feed_item_attribute_value($api_client, $customer_id =~ s/-//gr,
-  $feed_id, $feed_item_id, $flight_placeholder_field, $attribute_value);
+remove_flights_feed_item_string_attribute_value($api_client,
+  $customer_id =~ s/-//gr,
+  $feed_id, $feed_item_id, $flight_placeholder_field_name);
 
 =pod
 
 =head1 NAME
 
-update_feed_item_attribute_value
+remove_flights_feed_item_string_attribute_value
 
 =head1 DESCRIPTION
 
-This example updates a FeedItemAttributeValue in a flights feed. To create a
-flights feed, run the add_flights_feed.pl example. This example is specific to
-feeds of type DYNAMIC_FLIGHT. The attribute you are updating must be present on
-the feed. This example is specifically for updating the StringValue of an attribute.
+Removes a feed item attribute value of a feed item in a flights feed. To create
+a flights feed, run the add_flights_feed.pl example. This example is specific to
+feeds of type DYNAMIC_FLIGHT. The attribute you are removing must be present on
+the feed.
 
 =head1 SYNOPSIS
 
-update_feed_item_attribute_value.pl [options]
+remove_flights_feed_item_string_attribute_value.pl [options]
 
-    -help                           Show the help message.
-    -customer_id                    The Google Ads customer ID.
-    -feed_id                        The feed ID.
-    -feed_item_id                   The feed item ID.
-    -flight_placeholder_field       The placeholder type for the attribute to update.
-    -attribute_value                The string value with which to update the FeedAttributeValue.
+    -help                               Show the help message.
+    -customer_id                        The Google Ads customer ID.
+    -feed_id                            The feed ID.
+    -feed_item_id                       The feed item ID.
+    -flight_placeholder_field_name      The flight placeholder field name for the
+                                        attribute to be removed.
 
 =cut
