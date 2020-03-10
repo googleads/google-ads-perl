@@ -221,7 +221,7 @@ pod2usage(2)
 
 # Call the example.
 add_google_my_business_location_extensions(
-  $api_client,          $customer_id =~ s/-//gr, $gmb_email_address,
+  $api_client, $customer_id =~ s/-//gr, $gmb_email_address,
   $business_account_id, $gmb_access_token
 );
 
