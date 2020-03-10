@@ -103,8 +103,7 @@ sub upload_conversion_adjustment {
   # Print the result.
   my $uploaded_conversion_adjustment =
     $upload_conversion_adjustments_response->{results}[0];
-  printf "Uploaded conversion adjustment value of '%s' " .
-    "for Google Click ID '%s'.\n",
+  printf "Uploaded conversion adjustment of '%s' for Google Click ID '%s'.\n",
     $uploaded_conversion_adjustment->{conversionAction},
     $uploaded_conversion_adjustment->{gclidDateTimePair}{gclid};
 
@@ -142,7 +141,7 @@ pod2usage(2)
 # Call the example.
 upload_conversion_adjustment($api_client, $customer_id =~ s/-//gr,
   $conversion_action_id, $gclid,
-  $adjustment_type, $conversion_date_time, $adjustment_date_time,
+  $adjustment_type,      $conversion_date_time, $adjustment_date_time,
   $restatement_value);
 
 =pod
