@@ -99,7 +99,7 @@ sub get_account_changes {
   return 1;
 }
 
-## This method returns the resource name of the changed field based on the
+# This method returns the resource name of the changed field based on the
 # resource type. The changed field's parent is also populated but is not used.
 sub __get_resource_name_for_resource_type {
   my $change_status = shift;

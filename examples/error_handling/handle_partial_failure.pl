@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This code example shows how to deal with partial failures. There are
-# several ways of detecting partial failures. This example highlights
-# the top main detection options: empty results and error instances.
+# This example shows how to deal with partial failures. There are several ways
+# of detecting partial failures. This example highlights the top main detection
+# options: empty results and error instances.
 
 use strict;
 use warnings;
@@ -50,28 +50,42 @@ my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 sub handle_partial_failure {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
-  # This ad group should be created successfully - assuming the campaign
-  # in the params exists.
-  my $ad_group1 = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
-      campaign => Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
-        $customer_id, $campaign_id
-      ),
-      name => "Valid AdGroup: " . uniqid()});
+  my $ad_group_response =
+    create_ad_groups($api_client, $customer_id, $campaign_id);
+  check_if_partial_failure_error_exists($ad_group_response);
+  print_results($ad_group_response);
 
-  # This ad group will always fail - campaign ID 0 in resource names is
-  # never valid.
+  return 1;
+}
+
+# Creates ad groups by enabling partial failure mode.
+sub create_ad_groups {
+  my ($api_client, $customer_id, $campaign_id) = @_;
+
+  my $campaign_resource_name =
+    Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign($customer_id,
+    $campaign_id);
+
+  # This ad group should be created successfully - assuming the campaign in the
+  # params exists.
+  my $ad_group1 = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
+    name     => "Valid AdGroup: " . uniqid(),
+    campaign => $campaign_resource_name
+  });
+
+  # This ad group will always fail - campaign ID 0 in the resource name is never
+  # valid.
   my $ad_group2 = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
+      name     => "Broken AdGroup: " . uniqid(),
       campaign => Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
         $customer_id, 0
-      ),
-      name => "Broken AdGroup: " . uniqid()});
+      )});
 
   # This ad group will always fail - duplicate ad group names are not allowed.
   my $ad_group3 = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
-      campaign => Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
-        $customer_id, $campaign_id
-      ),
-      name => $ad_group1->{name}});
+    name     => $ad_group1->{name},
+    campaign => $campaign_resource_name
+  });
 
   # Create ad group operations.
   my $ad_group_operation1 =
@@ -84,7 +98,7 @@ sub handle_partial_failure {
     Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group3});
 
-  # Add the ad groups.
+  # Issue the mutate request, enabling partial failure mode.
   my $ad_group_response = $api_client->AdGroupService()->mutate({
     customerId => $customer_id,
     operations =>
@@ -92,14 +106,26 @@ sub handle_partial_failure {
     partialFailure => "true"
   });
 
-  # Check for existence of any partial failures in the response.
+  return $ad_group_response;
+}
+
+# Checks if partial failure error exists in the given mutate ad group response.
+sub check_if_partial_failure_error_exists {
+  my $ad_group_response = shift;
+
   if ($ad_group_response->{partialFailureError}) {
     print "Partial failures occurred. Details will be shown below.\n";
   } else {
     print
       "All operations completed successfully. No partial failures to show.\n";
-    return;
   }
+}
+
+# Prints results of the given mutate ad group response. For those that are partial
+# failure, prints all their errors with corresponding operation indices. For those
+# that succeeded, prints the resource names of created ad groups.
+sub print_results {
+  my $ad_group_response = shift;
 
   # Find the failed operations by looping through the results.
   while (my ($operation_index, $result) = each @{$ad_group_response->{results}})
@@ -113,11 +139,10 @@ sub handle_partial_failure {
           $google_ads_error->{message};
       }
     } else {
-      printf "Operation %d succeeded.\n", $operation_index;
+      printf "Operation %d succeeded: ad group with resource name '%s'.\n",
+        $operation_index, $result->{resourceName};
     }
   }
-
-  return 1;
 }
 
 # Don't run the example if the file is being included.
@@ -149,9 +174,9 @@ handle_partial_failure
 
 =head1 DESCRIPTION
 
-This code example shows how to deal with partial failures. There are several ways
-of detecting partial failures. This example highlights the top main detection options:
-empty results and error instances.
+This example shows how to deal with partial failures. There are several ways of
+detecting partial failures. This example highlights the top main detection
+options: empty results and error instances.
 
 =head1 SYNOPSIS
 
