@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example updates the status and network settings for a given campaign.
-# To get campaigns, run get_campaigns.pl.
+# This example updates the status and network settings for a given campaign. To
+# get campaigns, run get_campaigns.pl.
 
 use strict;
 use warnings;

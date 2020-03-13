@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example illustrates how to begin creation of a campaign experiment
-# from a draft and wait for it to complete.
+# This example illustrates how to begin creation of a campaign experiment from a
+# draft and wait for it to complete.
 
 use strict;
 use warnings;

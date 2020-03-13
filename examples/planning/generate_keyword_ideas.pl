@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example generates keyword ideas from a list of seed keywords or a
-# seed page URL.
+# This example generates keyword ideas from a list of seed keywords or a seed
+# page URL.
 
 use strict;
 use warnings;

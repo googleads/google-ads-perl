@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example gets expanded text ads for a customer or for a specific
-# ad group. To add expanded text ads, run add_expanded_text_ads.pl.
+# This example gets expanded text ads for a customer or for a specific ad group.
+# To add expanded text ads, run add_expanded_text_ads.pl.
 
 use strict;
 use warnings;

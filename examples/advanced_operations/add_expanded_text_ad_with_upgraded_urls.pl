@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds an expanded text ad that uses advanced features of
-# upgraded URLs.
+# This example adds an expanded text ad that uses advanced features of upgraded
+# URLs.
 
 use strict;
 use warnings;

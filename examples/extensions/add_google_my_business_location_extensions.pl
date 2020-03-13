@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a feed that syncs feed items from a Google My Business
-# (GMB) account and associates the feed with a customer.
+# This example adds a feed that syncs feed items from a Google My Business (GMB)
+# account and associates the feed with a customer.
 
 use strict;
 use warnings;

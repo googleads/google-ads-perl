@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example creates a shopping campaign associated with an existing
-# merchant center account, along with a related ad group and dynamic
-# display ad, and targets a user list for remarketing purposes.
+# This example creates a shopping campaign associated with an existing merchant
+# center account, along with a related ad group and dynamic display ad, and
+# targets a user list for remarketing purposes.
 
 use strict;
 use warnings;

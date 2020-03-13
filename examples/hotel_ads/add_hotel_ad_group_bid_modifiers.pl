@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example shows how to add ad group bid modifiers to a hotel ad group
-# based on hotel check-in day and hotel length of stay.
+# This example shows how to add ad group bid modifiers to a hotel ad group based
+# on hotel check-in day and hotel length of stay.
 
 use strict;
 use warnings;
@@ -154,8 +154,8 @@ add_hotel_ad_group_bid_modifiers
 
 =head1 DESCRIPTION
 
-This example shows how to add ad group bid modifiers to a hotel ad group based on hotel check-in
-day and hotel length of stay.
+This example shows how to add ad group bid modifiers to a hotel ad group based on
+hotel check-in day and hotel length of stay.
 
 =head1 SYNOPSIS
 

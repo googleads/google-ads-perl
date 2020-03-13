@@ -15,9 +15,9 @@
 # limitations under the License.
 #
 # This example demonstrates how to request an exemption for policy violations
-# of an expanded text ad. If the request somehow fails with exceptions that
-# are not policy finding errors, the example will stop instead of trying
-# sending an exemption request.
+# of an expanded text ad. If the request somehow fails with exceptions that are
+# not policy finding errors, the example will stop instead of trying sending an
+# exemption request.
 
 use strict;
 use warnings;

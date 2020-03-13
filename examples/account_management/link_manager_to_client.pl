@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example demonstrates how to link an existing Google Ads manager
-# customer account to an existing Google Ads client customer account.
+# This example demonstrates how to link an existing Google Ads manager customer
+# account to an existing Google Ads client customer account.
 
 use strict;
 use warnings;
@@ -179,8 +179,8 @@ link_manager_to_client
 
 =head1 DESCRIPTION
 
-This example demonstrates how to link an existing Google Ads manager customer account
-to an existing Google Ads client customer account.
+This example demonstrates how to link an existing Google Ads manager customer
+account to an existing Google Ads client customer account.
 
 =head1 SYNOPSIS
 

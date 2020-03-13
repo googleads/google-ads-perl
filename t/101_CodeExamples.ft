@@ -352,14 +352,14 @@ $api_client->set_die_on_faults(1);
 
 # extensions
 # NOTE: Skip the add_google_my_business_location_extensions.pl as it requires additional setup.
-require qw(examples/extensions/add_hotel_callout_extension.pl);
+require qw(examples/extensions/add_hotel_callout.pl);
 ok(
-  add_hotel_callout_extension(
+  add_hotel_callout(
     $api_client,          $customer_id,
     $search_campaign_id,  $search_ad_group_id,
     "hotel callout text", "en"
   ),
-  "Test of add_hotel_callout_extension example."
+  "Test of add_hotel_callout example."
 );
 require qw(examples/extensions/add_prices.pl);
 ok(add_prices($api_client, $customer_id, $search_campaign_id),

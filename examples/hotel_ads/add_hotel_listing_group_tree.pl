@@ -327,17 +327,18 @@ add_hotel_listing_group_tree
 
 =head1 DESCRIPTION
 
-This example shows how to add a hotel listing group tree, which has two levels. The first
-level is partitioned by the hotel class. The second level is partitioned by the country region.
+This example shows how to add a hotel listing group tree, which has two levels.
+The first level is partitioned by the hotel class. The second level is partitioned
+by the country region.
 
 Each level is composed of two types of nodes: `UNIT` and `SUBDIVISION`.
 `UNIT` nodes serve as a leaf node in a tree and can have bid amount set.
-`SUBDIVISION` nodes serve as an internal node where a subtree will be built. The `SUBDIVISION`
-node can't have bid amount set.
+`SUBDIVISION` nodes serve as an internal node where a subtree will be built. The
+`SUBDIVISION` node can't have bid amount set.
 See https://developers.google.com/google-ads/api/docs/hotel-ads/overview for more information.
 
-Note: Only one listing group tree can be added. Attempting to add another listing group tree
-to an ad group that already has one will fail.
+Note: Only one listing group tree can be added. Attempting to add another listing
+group tree to an ad group that already has one will fail.
 
 =head1 SYNOPSIS
 

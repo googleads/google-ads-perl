@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This sample gets all BillingSetup objects available for the specified
-# customer ID.
+# This sample gets all BillingSetup objects available for the specified customer
+# ID.
 
 use strict;
 use warnings;

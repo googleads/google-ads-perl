@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example demonstrates how to add a campaign-level bid modifier for
-# call interactions.
+# This example demonstrates how to add a campaign-level bid modifier for call
+# interactions.
 
 use strict;
 use warnings;

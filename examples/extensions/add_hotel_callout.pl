@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Adds a hotel callout extension to a specific account, campaign within the account,
-# and ad group within the campaign.
+# This example adds a hotel callout extension to a specific account, campaign
+# within the account, and ad group within the campaign.
 
 use strict;
 use warnings;
@@ -61,16 +61,20 @@ my $callout_text = "INSERT_CALLOUT_TEXT_HERE";
 # https://developers.google.com/hotels/hotel-ads/api-reference/language-codes.
 my $language_code = "INSERT_LANGUAGE_CODE_HERE";
 
-sub add_hotel_callout_extension {
+sub add_hotel_callout {
   my (
     $api_client,  $customer_id,  $campaign_id,
     $ad_group_id, $callout_text, $language_code
   ) = @_;
 
-  # Create the extension feed item.
+  # Create an extension feed item as hotel callout.
   my $extension_feed_item_resource_name =
     add_extension_feed_item($api_client, $customer_id, $callout_text,
     $language_code);
+
+  # Add the extension feed item to the account.
+  add_extension_to_account($api_client, $customer_id,
+    $extension_feed_item_resource_name);
 
   # Add the extension feed item to the campaign.
   add_extension_to_campaign($api_client, $customer_id, $campaign_id,
@@ -80,14 +84,10 @@ sub add_hotel_callout_extension {
   add_extension_to_ad_group($api_client, $customer_id, $ad_group_id,
     $extension_feed_item_resource_name);
 
-  # Add the extension feed item to the account.
-  add_extension_to_account($api_client, $customer_id,
-    $extension_feed_item_resource_name);
-
   return 1;
 }
 
-# Creates a new extension feed item for the callout.
+# Creates a new extension feed item for the callout extension.
 sub add_extension_feed_item {
   my ($api_client, $customer_id, $callout_text, $language_code) = @_;
 
@@ -98,7 +98,7 @@ sub add_extension_feed_item {
       languageCode => $language_code
     });
 
-  # Attache the callout feed item to an extension feed item.
+  # Create a feed item from the hotel callout extension.
   my $extension_feed_item =
     Google::Ads::GoogleAds::V3::Resources::ExtensionFeedItem->new({
       hotelCalloutFeedItem => $hotel_callout_feed_item
@@ -120,20 +120,51 @@ sub add_extension_feed_item {
   # Print out some information about the added extension feed item.
   my $extension_feed_item_resource_name =
     $extension_feed_item_response->{results}[0]{resourceName};
-  printf "Added an extension feed item with resource name: '%s'.\n",
+  printf "Created an extension feed item with resource name: '%s'.\n",
     $extension_feed_item_resource_name;
 
   return $extension_feed_item_resource_name;
 }
 
-# Adds the extension feed item to the campaign.
+# Adds the extension feed item to the customer account.
+sub add_extension_to_account {
+  my ($api_client, $customer_id, $extension_feed_item_resource_name) = @_;
+
+  # Create a customer extension setting, set its type to HOTEL_CALLOUT, and
+  # attache the feed item.
+  my $customer_extension_setting =
+    Google::Ads::GoogleAds::V3::Resources::CustomerExtensionSetting->new({
+      extensionType      => HOTEL_CALLOUT,
+      extensionFeedItems => [$extension_feed_item_resource_name]});
+
+  # Create a customer extension setting operation.
+  my $customer_extension_setting_operation =
+    Google::Ads::GoogleAds::V3::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation
+    ->new({
+      create => $customer_extension_setting
+    });
+
+  # Issue a mutate request to add the customer extension setting.
+  my $customer_extension_setting_response =
+    $api_client->CustomerExtensionSettingService()->mutate({
+      customerId => $customer_id,
+      operations => [$customer_extension_setting_operation]});
+
+  # Print out some information about the added customer extension setting.
+  my $customer_extension_setting_resource_name =
+    $customer_extension_setting_response->{results}[0]{resourceName};
+  printf "Created a customer extension setting with resource name: '%s'.\n",
+    $customer_extension_setting_resource_name;
+}
+
+# Adds the extension feed item to the specified campaign.
 sub add_extension_to_campaign {
   my ($api_client, $customer_id, $campaign_id,
     $extension_feed_item_resource_name)
     = @_;
 
-  # Create the campaign extension setting, set it to HOTEL_CALLOUT, and attache
-  # the feed item.
+  # Create a campaign extension setting, set its type to HOTEL_CALLOUT, and
+  # attache the feed item.
   my $campaign_extension_setting =
     Google::Ads::GoogleAds::V3::Resources::CampaignExtensionSetting->new({
       extensionType => HOTEL_CALLOUT,
@@ -158,20 +189,18 @@ sub add_extension_to_campaign {
   # Print out some information about the added campaign extension setting.
   my $campaign_extension_setting_resource_name =
     $campaign_extension_setting_response->{results}[0]{resourceName};
-  printf "Added a campaign extension setting with resource name: '%s'.\n",
+  printf "Created a campaign extension setting with resource name: '%s'.\n",
     $campaign_extension_setting_resource_name;
-
-  return $campaign_extension_setting_resource_name;
 }
 
-# Adds the extension feed item to the ad group.
+# Adds the extension feed item to the specified ad group.
 sub add_extension_to_ad_group {
   my ($api_client, $customer_id, $ad_group_id,
     $extension_feed_item_resource_name)
     = @_;
 
-  # Create the ad group extension setting, set it to HOTEL_CALLOUT, and attache
-  # the feed item.
+  # Create an ad group extension setting, set its type to HOTEL_CALLOUT, and
+  # attache the feed item.
   my $ad_group_extension_setting =
     Google::Ads::GoogleAds::V3::Resources::AdGroupExtensionSetting->new({
       extensionType => HOTEL_CALLOUT,
@@ -196,43 +225,8 @@ sub add_extension_to_ad_group {
   # Print out some information about the added ad group extension setting.
   my $ad_group_extension_setting_resource_name =
     $ad_group_extension_setting_response->{results}[0]{resourceName};
-  printf "Added an ad group extension setting with resource name: '%s'.\n",
+  printf "Created an ad group extension setting with resource name: '%s'.\n",
     $ad_group_extension_setting_resource_name;
-
-  return $ad_group_extension_setting_resource_name;
-}
-
-# Adds the extension feed item to the account.
-sub add_extension_to_account {
-  my ($api_client, $customer_id, $extension_feed_item_resource_name) = @_;
-
-  # Create the customer extension setting, set it to HOTEL_CALLOUT, and attache
-  # the feed item.
-  my $customer_extension_setting =
-    Google::Ads::GoogleAds::V3::Resources::CustomerExtensionSetting->new({
-      extensionType      => HOTEL_CALLOUT,
-      extensionFeedItems => [$extension_feed_item_resource_name]});
-
-  # Create a customer extension setting operation.
-  my $customer_extension_setting_operation =
-    Google::Ads::GoogleAds::V3::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation
-    ->new({
-      create => $customer_extension_setting
-    });
-
-  # Issue a mutate request to add the customer extension setting.
-  my $customer_extension_setting_response =
-    $api_client->CustomerExtensionSettingService()->mutate({
-      customerId => $customer_id,
-      operations => [$customer_extension_setting_operation]});
-
-  # Print out some information about the added customer extension setting.
-  my $customer_extension_setting_resource_name =
-    $customer_extension_setting_response->{results}[0]{resourceName};
-  printf "Added an account extension setting with resource name: '%s'.\n",
-    $customer_extension_setting_resource_name;
-
-  return $customer_extension_setting_resource_name;
 }
 
 # Don't run the example if the file is being included.
@@ -262,23 +256,23 @@ pod2usage(2)
   $language_code);
 
 # Call the example.
-add_hotel_callout_extension($api_client, $customer_id =~ s/-//gr,
+add_hotel_callout($api_client, $customer_id =~ s/-//gr,
   $campaign_id, $ad_group_id, $callout_text, $language_code);
 
 =pod
 
 =head1 NAME
 
-add_hotel_callout_extension
+add_hotel_callout
 
 =head1 DESCRIPTION
 
-Adds a hotel callout extension to a specific account, campaign within the account,
-and ad group within the campaign.
+This example adds a hotel callout extension to a specific account, campaign
+within the account, and ad group within the campaign.
 
 =head1 SYNOPSIS
 
-add_hotel_callout_extension.pl [options]
+add_hotel_callout.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.

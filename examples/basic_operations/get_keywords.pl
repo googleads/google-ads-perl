@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example gets keywords for a customer or for a specific ad group.
-# To add keywords, run add_keywords.pl.
+# This example gets keywords for a customer or for a specific ad group. To add
+# keywords, run add_keywords.pl.
 
 use strict;
 use warnings;

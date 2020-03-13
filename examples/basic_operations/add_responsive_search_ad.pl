@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a responsive search ad to a given ad group. To get ad
-# groups, run get_ad_groups.pl.
+# This example adds a responsive search ad to a given ad group. To get ad groups,
+# run get_ad_groups.pl.
 
 use strict;
 use warnings;

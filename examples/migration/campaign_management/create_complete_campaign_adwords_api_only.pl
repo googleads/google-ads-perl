@@ -14,15 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This code example is the first in a series of code examples that show
-# how to create a search campaign using the AdWords API, and then migrate
-# it to the Google Ads API one functionality at a time. See other examples
-# in this directory for code examples in various stages of migration.
+# This code example is the first in a series of code examples that show how to
+# create a search campaign using the AdWords API, and then migrate it to the
+# Google Ads API one functionality at a time. See other examples in this directory
+# for code examples in various stages of migration.
 #
-# This code example represents the initial state, where the AdWords API is
-# used to create a campaign budget, a search campaign, ad groups, keywords
-# and expanded text ads. None of the functionality has yet been migrated to
-# the Google Ads API.
+# This code example represents the initial state, where the AdWords API is used
+# to create a campaign budget, a search campaign, ad groups, keywords and expanded
+# text ads. None of the functionality has yet been migrated to the Google Ads API.
 
 use strict;
 use warnings;

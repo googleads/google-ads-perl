@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# The example adds a real estate feed, creates the feed mapping, and adds
-# items to the feed.
+# The example adds a real estate feed, creates the feed mapping, and adds items
+# to the feed.
 
 use strict;
 use warnings;

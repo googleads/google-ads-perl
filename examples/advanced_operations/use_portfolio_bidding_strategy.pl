@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a portfolio bidding strategy and uses it to construct
-# a campaign.
+# This example adds a portfolio bidding strategy and uses it to construct a
+# campaign.
 
 use strict;
 use warnings;

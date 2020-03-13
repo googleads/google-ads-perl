@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a flights feed, creates the associated feed mapping,
-# and adds a feed item.
+# This example adds a flights feed, creates the associated feed mapping, and
+# adds a feed item.
 
 use strict;
 use warnings;

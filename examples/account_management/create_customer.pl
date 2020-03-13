@@ -14,12 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example illustrates how to create a new customer under a given
-# manager account.
+# This example illustrates how to create a new customer under a given manager
+# account.
 #
-# Note: This example must be run using the credentials of a Google Ads
-# manager account. By default, the new account will only be accessible
-# via the manager account.
+# Note: This example must be run using the credentials of a Google Ads manager
+# account. By default, the new account will only be accessible via the manager
+# account.
 
 use strict;
 use warnings;

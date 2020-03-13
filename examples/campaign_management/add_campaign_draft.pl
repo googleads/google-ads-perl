@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a campaign draft for a campaign. Make sure you specify
-# a campaign that has a non-shared budget.
+# This example adds a campaign draft for a campaign. Make sure you specify a
+# campaign that has a non-shared budget.
 
 use strict;
 use warnings;

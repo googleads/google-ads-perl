@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example creates a standard shopping campaign, a shopping product
-# ad group and a shopping product ad.
+# This example creates a standard shopping campaign, a shopping product ad group
+# and a shopping product ad.
 #
 # Prerequisite: You need to have access to a Merchant Center account. You can
 # find instructions to create a Merchant Center account here:

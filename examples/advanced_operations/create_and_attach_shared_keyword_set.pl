@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example creates a shared list of negative broad match keywords.
-# It then attaches them to a campaign.
+# This example creates a shared list of negative broad match keywords. It then
+# attaches them to a campaign.
 
 use strict;
 use warnings;

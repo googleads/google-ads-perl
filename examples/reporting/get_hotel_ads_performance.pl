@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example gets Hotel-ads performance statistics for the 50 Hotel ad
-# groups with the most impressions over the last 7 days.
+# This example gets Hotel-ads performance statistics for the 50 Hotel ad groups
+# with the most impressions over the last 7 days.
 
 use strict;
 use warnings;
