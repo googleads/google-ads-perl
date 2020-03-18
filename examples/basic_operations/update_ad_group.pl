@@ -60,8 +60,8 @@ sub update_ad_group {
       cpcBidMicros => $bid_micro_amount
     });
 
-  # Create an ad group operation for update, using the FieldMasks utility
-  # to derive the update mask.
+  # Create an ad group operation for update, using the FieldMasks utility to
+  # derive the update mask.
   my $ad_group_operation =
     Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation->new(
     {

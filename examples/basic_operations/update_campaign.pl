@@ -62,8 +62,8 @@ sub update_campaign {
           targetSearchNetwork => "false"
         })});
 
-  # Create a campaign operation for update, using the FieldMasks utility
-  # to derive the update mask.
+  # Create a campaign operation for update, using the FieldMasks utility to
+  # derive the update mask.
   my $campaign_operation =
     Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation->
     new({

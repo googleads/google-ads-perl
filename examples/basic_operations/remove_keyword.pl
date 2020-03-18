@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example deletes a keyword as an ad group criterion. To get keywords,
-# run get_keywords.pl.
+# This example deletes a keyword as an ad group criterion. To get keywords, run
+# get_keywords.pl.
 
 use strict;
 use warnings;
