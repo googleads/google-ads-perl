@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 74);
+use Test::More (tests => 75);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -235,6 +235,9 @@ ok(update_ad_group($api_client, $customer_id, $search_ad_group_id, 600000),
 require qw(examples/basic_operations/update_campaign.pl);
 ok(update_campaign($api_client, $customer_id, $search_campaign_id),
   "Test of update_campaign example.");
+require qw(examples/basic_operations/update_expanded_text_ad.pl);
+ok(update_expanded_text_ad($api_client, $customer_id, $search_text_ad_id),
+  "Test of update_expanded_text_ad example.");
 require qw(examples/basic_operations/update_keyword.pl);
 ok(
   update_keyword(
