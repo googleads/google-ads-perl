@@ -63,8 +63,8 @@ sub upload_offline_conversion {
         $customer_id, $conversion_action_id
         ),
       gclid              => $gclid,
-      conversionValue    => $conversion_value,
       conversionDateTime => $conversion_date_time,
+      conversionValue    => $conversion_value,
       currencyCode       => "USD"
     });
 
@@ -105,7 +105,7 @@ GetOptions(
   "conversion_action_id=i" => \$conversion_action_id,
   "gclid=s"                => \$gclid,
   "conversion_date_time=s" => \$conversion_date_time,
-  "conversion_value=i"     => \$conversion_value
+  "conversion_value=f"     => \$conversion_value
 );
 
 # Print the help message if the parameters are not initialized in the code nor

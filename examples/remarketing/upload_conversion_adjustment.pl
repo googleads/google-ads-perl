@@ -129,7 +129,7 @@ GetOptions(
   "adjustment_type=s"      => \$adjustment_type,
   "conversion_date_time=s" => \$conversion_date_time,
   "adjustment_date_time=s" => \$adjustment_date_time,
-  "restatement_value=i"    => \$restatement_value
+  "restatement_value=f"    => \$restatement_value
 );
 
 # Print the help message if the parameters are not initialized in the code nor
