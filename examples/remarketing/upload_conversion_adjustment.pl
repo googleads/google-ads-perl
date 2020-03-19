@@ -100,12 +100,20 @@ sub upload_conversion_adjustment {
       partialFailure        => "true"
     });
 
-  # Print the result.
+  # Print any partial errors returned.
+  if ($upload_conversion_adjustments_response->{partialFailureError}) {
+    printf "Partial error encountered: '%s'.\n",
+      $upload_conversion_adjustments_response->{partialFailureError}{message};
+  }
+
+  # Print the result if valid.
   my $uploaded_conversion_adjustment =
     $upload_conversion_adjustments_response->{results}[0];
-  printf "Uploaded conversion adjustment of '%s' for Google Click ID '%s'.\n",
-    $uploaded_conversion_adjustment->{conversionAction},
-    $uploaded_conversion_adjustment->{gclidDateTimePair}{gclid};
+  if (%$uploaded_conversion_adjustment) {
+    printf "Uploaded conversion adjustment of '%s' for Google Click ID '%s'.\n",
+      $uploaded_conversion_adjustment->{conversionAction},
+      $uploaded_conversion_adjustment->{gclidDateTimePair}{gclid};
+  }
 
   return 1;
 }

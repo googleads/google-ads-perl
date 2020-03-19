@@ -76,14 +76,22 @@ sub upload_offline_conversion {
       partialFailure => "true"
     });
 
-  # Print the result.
+  # Print any partial errors returned.
+  if ($upload_click_conversions_response->{partialFailureError}) {
+    printf "Partial error encountered: '%s'.\n",
+      $upload_click_conversions_response->{partialFailureError}{message};
+  }
+
+  # Print the result if valid.
   my $uploaded_click_conversion =
     $upload_click_conversions_response->{results}[0];
-  printf "Uploaded conversion that occurred at '%s' " .
-    "from Google Click ID '%s' to '%s'.\n",
-    $uploaded_click_conversion->{conversionDateTime},
-    $uploaded_click_conversion->{gclid},
-    $uploaded_click_conversion->{conversionAction};
+  if (%$uploaded_click_conversion) {
+    printf "Uploaded conversion that occurred at '%s' " .
+      "from Google Click ID '%s' to '%s'.\n",
+      $uploaded_click_conversion->{conversionDateTime},
+      $uploaded_click_conversion->{gclid},
+      $uploaded_click_conversion->{conversionAction};
+  }
 
   return 1;
 }
