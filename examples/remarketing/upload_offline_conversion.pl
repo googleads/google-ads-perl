@@ -86,8 +86,9 @@ sub upload_offline_conversion {
   my $uploaded_click_conversion =
     $upload_click_conversions_response->{results}[0];
   if (%$uploaded_click_conversion) {
-    printf "Uploaded conversion that occurred at '%s' " .
-      "from Google Click ID '%s' to '%s'.\n",
+    printf
+      "Uploaded conversion that occurred at '%s' from Google Click ID '%s' " .
+      "to the conversion action with resource name '%s'.\n",
       $uploaded_click_conversion->{conversionDateTime},
       $uploaded_click_conversion->{gclid},
       $uploaded_click_conversion->{conversionAction};

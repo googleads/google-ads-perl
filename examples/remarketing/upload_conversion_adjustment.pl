@@ -110,7 +110,8 @@ sub upload_conversion_adjustment {
   my $uploaded_conversion_adjustment =
     $upload_conversion_adjustments_response->{results}[0];
   if (%$uploaded_conversion_adjustment) {
-    printf "Uploaded conversion adjustment of '%s' for Google Click ID '%s'.\n",
+    printf "Uploaded conversion adjustment of the conversion action " .
+      "with resource name '%s' for Google Click ID '%s'.\n",
       $uploaded_conversion_adjustment->{conversionAction},
       $uploaded_conversion_adjustment->{gclidDateTimePair}{gclid};
   }
