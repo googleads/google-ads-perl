@@ -88,7 +88,7 @@ sub upload_call_conversion {
     $upload_call_conversions_response->{results}[0];
   if (%$uploaded_call_conversion) {
     printf "Uploaded call conversion that occurred at '%s' " .
-      "for caller ID '%s' to '%s'.\n",
+      "for caller ID '%s' to the conversion action with resource name '%s'.\n",
       $uploaded_call_conversion->{callStartDateTime},
       $uploaded_call_conversion->{callerId},
       $uploaded_call_conversion->{conversionAction};
