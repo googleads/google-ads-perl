@@ -217,7 +217,7 @@ sub set_campaign_targeting_criteria {
   # Besides using location ID, you can also search by location names from
   # GeoTargetConstantService.suggest() method and directly apply
   # GeoTargetConstant.resourceName here. An example can be found in
-  # targeting/get_geo_target_constant_by_names.pl.
+  # targeting/get_geo_target_constants_by_names.pl.
   foreach my $location_id (21137, 2484) {
     my $campaign_criterion =
       Google::Ads::GoogleAds::V3::Resources::CampaignCriterion->new({

@@ -40,7 +40,7 @@ my $country_code = "FR";
 # The location names to get suggested geo target constants.
 my $location_names = ["Paris", "Quebec", "Spain", "Deutschland"];
 
-sub get_geo_target_constant_by_names {
+sub get_geo_target_constants_by_names {
   my ($api_client, $location_names, $locale, $country_code) = @_;
 
   my $suggest_response = $api_client->GeoTargetConstantService()->suggest({
@@ -84,14 +84,14 @@ my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 $api_client->set_die_on_faults(1);
 
 # Call the example.
-get_geo_target_constant_by_names($api_client, $location_names, $locale,
+get_geo_target_constants_by_names($api_client, $location_names, $locale,
   $country_code);
 
 =pod
 
 =head1 NAME
 
-get_geo_target_constant_by_names
+get_geo_target_constants_by_names
 
 =head1 DESCRIPTION
 
@@ -99,7 +99,7 @@ This example gets geo target constants by given location names.
 
 =head1 SYNOPSIS
 
-get_geo_target_constant_by_names.pl [options]
+get_geo_target_constants_by_names.pl [options]
 
     -help                       Show the help message.
 

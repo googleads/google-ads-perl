@@ -505,13 +505,13 @@ ok(
   ),
   "Test of get_campaign_targeting_criteria example."
 );
-require qw(examples/targeting/get_geo_target_constant_by_names.pl);
+require qw(examples/targeting/get_geo_target_constants_by_names.pl);
 ok(
-  get_geo_target_constant_by_names(
+  get_geo_target_constants_by_names(
     $api_client, ["Paris", "Quebec", "Spain", "Deutschland"],
     "en", "FR"
   ),
-  "Test of get_geo_target_constant_by_names example."
+  "Test of get_geo_target_constants_by_names example."
 );
 
 ###############################################################################
