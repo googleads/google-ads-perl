@@ -130,7 +130,7 @@ sub create_location_campaign_criterion_operation {
           # Besides using location ID, you can also search by location names
           # using GeoTargetConstantService::suggest() and directly apply
           # GeoTargetConstant->{resourceName} here. An example can be found
-          # in get_geo_target_constant_by_names.pl.
+          # in get_geo_target_constants_by_names.pl.
           geoTargetConstant =>
             Google::Ads::GoogleAds::V3::Utils::ResourceNames::geo_target_constant(
             $location_id)}
