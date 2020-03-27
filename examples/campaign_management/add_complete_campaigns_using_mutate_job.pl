@@ -135,8 +135,8 @@ sub add_all_mutate_job_operations {
     $add_mutate_job_operations_response->{nextSequenceToken};
 }
 
-# Requests the API to run the mutate job for executing all uploaded mutate
-# job operations.
+# Requests the API to run the mutate job for executing all uploaded mutate job
+# operations.
 sub run_mutate_job {
   my ($mutate_job_service, $mutate_job_resource_name) = @_;
 
@@ -150,8 +150,8 @@ sub run_mutate_job {
   return $mutate_job_lro;
 }
 
-# Polls the server until the mutate job execution finishes by setting the
-# initial poll delay time and the total time to wait before time-out.
+# Polls the server until the mutate job execution finishes by setting the initial
+# poll delay time and the total time to wait before time-out.
 sub poll_mutate_job {
   my ($operation_service, $mutate_job_lro) = @_;
 
@@ -167,8 +167,7 @@ sub fetch_and_print_results {
   my ($mutate_job_service, $mutate_job_resource_name) = @_;
 
   printf "Mutate job with resource name '%s' has finished. " .
-    "Now, printing its results...\n",
-    $mutate_job_resource_name;
+    "Now, printing its results...\n", $mutate_job_resource_name;
 
   # Get all the results from running mutate job and print their information.
   my $list_mutate_job_results_response = $mutate_job_service->list_results({
@@ -185,20 +184,20 @@ sub fetch_and_print_results {
       $mutate_job_result->{status} ? $mutate_job_result->{status}{message}
       : "N/A",
       $mutate_job_result->{mutateOperationResponse}
-      ? [values %{$mutate_job_result->{mutateOperationResponse}}]->[0]
+      ? [keys %{$mutate_job_result->{mutateOperationResponse}}]->[0]
       : "N/A";
   }
 }
 
-# Builds all operations for creating a complete campaign and return an array
-# of their corresponding mutate operations.
+# Builds all operations for creating a complete campaign and return an array of
+# their corresponding mutate operations.
 sub build_all_operations {
   my $customer_id = shift;
 
   my $mutate_operations = [];
 
   # Create a new campaign budget operation and add it to the array of mutate operations.
-  my $campaign_budget_operation = build_campaign_budge_operation($customer_id);
+  my $campaign_budget_operation = build_campaign_budget_operation($customer_id);
   push @$mutate_operations,
     Google::Ads::GoogleAds::V3::Services::GoogleAdsService::MutateOperation->
     new({
@@ -215,7 +214,8 @@ sub build_all_operations {
       })
   } @$campaign_operations;
 
-  # Create new campaign criterion operations and add them to the array of mutate operations.
+  # Create new campaign criterion operations and add them to the array of mutate
+  # operations.
   my $campaign_criterion_operations =
     build_campaign_criterion_operations($campaign_operations);
   push @$mutate_operations, map {
@@ -225,7 +225,7 @@ sub build_all_operations {
       })
   } @$campaign_criterion_operations;
 
-  # Creates new ad group operations and add them to the array of mutate operations.
+  # Create new ad group operations and add them to the array of mutate operations.
   my $ad_group_operations =
     build_ad_group_operations($customer_id, $campaign_operations);
   push @$mutate_operations, map {
@@ -260,7 +260,7 @@ sub build_all_operations {
 }
 
 # Builds a new campaign budget operation for the specified customer ID.
-sub build_campaign_budge_operation {
+sub build_campaign_budget_operation {
   my $customer_id = shift;
 
   # Create a campaign budget operation.
@@ -438,11 +438,12 @@ sub build_ad_group_ad_operations {
               }
               ),
             finalUrls => "http://www.example.com",
-          },
-          adGroup => $ad_group_operation->{create}{resourceName},
-          status =>
-            Google::Ads::GoogleAds::V3::Enums::AdGroupAdStatusEnum::PAUSED
-        )});
+          }
+        ),
+        adGroup => $ad_group_operation->{create}{resourceName},
+        status =>
+          Google::Ads::GoogleAds::V3::Enums::AdGroupAdStatusEnum::PAUSED
+      });
 
     # Create an ad group ad operation and add it to the operations list.
     push @$ad_group_ad_operations,

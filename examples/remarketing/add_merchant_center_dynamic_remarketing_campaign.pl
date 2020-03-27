@@ -43,6 +43,8 @@ use Google::Ads::GoogleAds::V3::Common::UserListInfo;
 use Google::Ads::GoogleAds::V3::Enums::AdvertisingChannelTypeEnum qw(DISPLAY);
 use Google::Ads::GoogleAds::V3::Enums::CampaignStatusEnum;
 use Google::Ads::GoogleAds::V3::Enums::AdGroupStatusEnum;
+use Google::Ads::GoogleAds::V3::Enums::DisplayAdFormatSettingEnum
+  qw(NON_NATIVE);
 use Google::Ads::GoogleAds::V3::Enums::AssetTypeEnum qw(IMAGE);
 use Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation;
 use Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation;
@@ -172,16 +174,13 @@ sub create_ad_group {
 sub create_ad {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
-  my $marketing_image_url  = "https://goo.gl/3b9Wfh";
-  my $marketing_image_name = "Marketing Image";
   my $marketing_image_resource_name =
-    upload_asset($api_client, $customer_id, $marketing_image_url,
-    $marketing_image_name);
+    upload_asset($api_client, $customer_id, "https://goo.gl/3b9Wfh",
+    "Marketing Image");
 
-  my $logo_image_url  = "https://goo.gl/mtt54n";
-  my $logo_image_name = "Square Marketing Image";
-  my $logo_image_resource_name =
-    upload_asset($api_client, $customer_id, $logo_image_url, $logo_image_name);
+  my $square_marketing_image_resource_name =
+    upload_asset($api_client, $customer_id, "https://goo.gl/mtt54n",
+    "Square Marketing Image");
 
   # Create a responsive display ad info object.
   my $responsive_display_ad_info =
@@ -193,7 +192,7 @@ sub create_ad {
       ],
       squareMarketingImages => [
         Google::Ads::GoogleAds::V3::Common::AdImageAsset->new({
-            asset => $logo_image_resource_name
+            asset => $square_marketing_image_resource_name
           })
       ],
       headlines => [
@@ -212,33 +211,27 @@ sub create_ad {
       ],
       businessName => "Interplanetary Cruises",
       # Optional: Call to action text.
-      # Valid texts: https://support.google.com/adwords/answer/7005917
+      # Valid texts: https://support.google.com/google-ads/answer/7005917
       callToActionText => "Apply Now",
+      # Optional: Set the ad colors.
+      mainColor   => "#0000ff",
+      accentColor => "#ffff00",
+      # Optional: Set to false to strictly render the ad using the colors.
+      allowFlexibleColor => "false",
+      # Optional: Set the format setting that the ad will be served in.
+      formatSetting => NON_NATIVE,
       # Optional: Create a logo image and set it to the ad.
       # logoImages => [
       #   Google::Ads::GoogleAds::V3::Common::AdImageAsset->new({
-      #       asset => $logo_image_resource_name
+      #       asset => "INSERT_LOGO_IMAGE_RESOURCE_NAME_HERE"
       #     })
       # ],
       # Optional: Create a square logo image and set it to the ad.
-      squareLogoImages => [
-        Google::Ads::GoogleAds::V3::Common::AdImageAsset->new({
-            asset => $logo_image_resource_name
-          })
-      ],
-      # Whitelisted accounts only: Set color settings using hexadecimal values.
-      # Set allowFlexibleColor to false if you want your ads to render by always
-      # using your colors strictly.
-      #
-      # mainColor => "#0000ff"
-      # accentColor => "#ffff00"
-      # allowFlexibleColor => "false"
-      #
-      # Whitelisted accounts only: Set the format setting that the ad will be
-      # served in.
-      #
-      # formatSetting => DisplayAdFormatSettingEnum::NON_NATIVE
-      #
+      # squareLogoImages => [
+      #   Google::Ads::GoogleAds::V3::Common::AdImageAsset->new({
+      #       asset => "INSERT_SQUARE_LOGO_IMAGE_RESOURCE_NAME_HERE"
+      #     })
+      # ]
     });
 
   # Create an ad group ad.
