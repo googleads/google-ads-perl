@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example illustrates how to search for language and mobile carrier constants
-# by names that are available for targeting.
+# This example illustrates how to search for language constants by name that
+# includes the specified keyword, and check to see if they're targetable. Then
+# it lists all the available mobile carrier constants with a given country code.
 
 use strict;
 use warnings;
@@ -41,23 +42,23 @@ use Cwd qw(abs_path);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id = "INSERT_CUSTOMER_ID_HERE";
-# A list of languages can be referenced here:
-# https://developers.google.com/adwords/api/docs/appendix/codes-formats#languages.
-my $language_name = "English";
-# A list of mobile carriers can be referenced here:
-# https://developers.google.com/adwords/api/docs/appendix/codes-formats#mobile-carriers.
-my $carrier_name = "Vodafone";
+my $customer_id           = "INSERT_CUSTOMER_ID_HERE";
+my $language_name_keyword = "eng";
+# A list of country codes can be referenced here:
+# https://developers.google.com/adwords/api/docs/appendix/geotargeting.
+my $carrier_country_code = "US";
 
 sub search_for_targetable_languages_and_carriers {
-  my ($api_client, $customer_id, $language_name, $carrier_name) = @_;
+  my ($api_client, $customer_id, $language_name_keyword, $carrier_country_code)
+    = @_;
 
-  # Create a query that retrieves the targetable language constants by name.
+  # Create a query that retrieves the language constants by the keyword included
+  # in the name.
   my $search_query =
     "SELECT language_constant.id, language_constant.code, " .
-    "language_constant.name FROM language_constant " .
-    "WHERE language_constant.name = '$language_name' " .
-    "AND language_constant.targetable  = 'true'";
+    "language_constant.name, language_constant.targetable " .
+    "FROM language_constant " .
+    "WHERE language_constant.name LIKE '%$language_name_keyword%'";
 
   # Create a search Google Ads stream request that will retrieve the language
   # constants.
@@ -82,18 +83,19 @@ sub search_for_targetable_languages_and_carriers {
   $search_stream_handler->process_contents(
     sub {
       my $google_ads_row = shift;
-      printf
-        "Language with ID %d, code '%s' and name '%s' was found.\n",
+      printf "Language with ID %d, code '%s', name '%s' " .
+        "and targetable '%s' was found.\n",
         $google_ads_row->{languageConstant}{id},
         $google_ads_row->{languageConstant}{code},
-        $google_ads_row->{languageConstant}{name};
+        $google_ads_row->{languageConstant}{name},
+        to_boolean($google_ads_row->{languageConstant}{targetable});
     });
 
-  # Create a query that retrieves the targetable carrier constants by name.
+  # Create a query that retrieves the targetable carrier constants by country code.
   $search_query =
     "SELECT carrier_constant.id, carrier_constant.name, " .
     "carrier_constant.country_code FROM carrier_constant " .
-    "WHERE carrier_constant.name = '$carrier_name'";
+    "WHERE carrier_constant.country_code = '$carrier_country_code'";
 
   # Create a search Google Ads stream request that will retrieve the carrier
   # constants.
@@ -138,18 +140,20 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"   => \$customer_id,
-  "language_name=s" => \$language_name,
-  "carrier_name=s"  => \$carrier_name,
+  "customer_id=s"           => \$customer_id,
+  "language_name_keyword=s" => \$language_name_keyword,
+  "carrier_country_code=s"  => \$carrier_country_code,
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($customer_id, $language_name, $carrier_name);
+pod2usage(2)
+  if
+  not check_params($customer_id, $language_name_keyword, $carrier_country_code);
 
 # Call the example.
 search_for_targetable_languages_and_carriers($api_client, $customer_id,
-  $language_name, $carrier_name);
+  $language_name_keyword, $carrier_country_code);
 
 =pod
 
@@ -159,8 +163,9 @@ search_for_targetable_languages_and_carriers
 
 =head1 DESCRIPTION
 
-This example illustrates how to search for language and mobile carrier constants
-by names that are available for targeting.
+This example illustrates how to search for language constants by name that
+includes the specified keyword, and check to see if they're targetable. Then
+it lists all the available mobile carrier constants with a given country code.
 
 =head1 SYNOPSIS
 
@@ -168,9 +173,9 @@ search_for_targetable_languages_and_carriers.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
-    -language_name              [optional] The name of the language to search for,
-                                e.g. "English", "Spanish", etc.
-    -carrier_name               [optional] The name of the mobile carrier to search
-                                for, e.g. "Sprint", "Vodafone", etc.
+    -language_name_keyword      [optional] The keyword included in the language
+                                name to search for.
+    -carrier_country_code       [optional] The code of the country where the mobile
+                                carriers are located, e.g. "US", "ES", etc.
 
 =cut
