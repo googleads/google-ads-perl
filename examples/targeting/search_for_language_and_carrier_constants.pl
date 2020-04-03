@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 # This example illustrates how to search for language constants by name that
-# includes the specified keyword, and check to see if they're targetable. Then
-# it lists all the available mobile carrier constants with a given country code.
+# includes the specified keyword. Then it searches for all the available mobile
+# carrier constants with a given country code.
 
 use strict;
 use warnings;
@@ -48,7 +48,7 @@ my $language_name_keyword = "eng";
 # https://developers.google.com/adwords/api/docs/appendix/geotargeting.
 my $carrier_country_code = "US";
 
-sub search_for_targetable_languages_and_carriers {
+sub search_for_language_and_carrier_constants {
   my ($api_client, $customer_id, $language_name_keyword, $carrier_country_code)
     = @_;
 
@@ -152,24 +152,24 @@ pod2usage(2)
   not check_params($customer_id, $language_name_keyword, $carrier_country_code);
 
 # Call the example.
-search_for_targetable_languages_and_carriers($api_client, $customer_id,
+search_for_language_and_carrier_constants($api_client, $customer_id,
   $language_name_keyword, $carrier_country_code);
 
 =pod
 
 =head1 NAME
 
-search_for_targetable_languages_and_carriers
+search_for_language_and_carrier_constants
 
 =head1 DESCRIPTION
 
 This example illustrates how to search for language constants by name that
-includes the specified keyword, and check to see if they're targetable. Then
-it lists all the available mobile carrier constants with a given country code.
+includes the specified keyword. Then it searches for all the available mobile
+carrier constants with a given country code.
 
 =head1 SYNOPSIS
 
-search_for_targetable_languages_and_carriers.pl [options]
+search_for_language_and_carrier_constants.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
