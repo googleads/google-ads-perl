@@ -52,6 +52,19 @@ sub search_for_language_and_carrier_constants {
   my ($api_client, $customer_id, $language_name_keyword, $carrier_country_code)
     = @_;
 
+  search_for_language_constants($api_client, $customer_id,
+    $language_name_keyword);
+
+  search_for_carrier_constants($api_client, $customer_id,
+    $carrier_country_code);
+
+  return 1;
+}
+
+# Searches for language constants by name that includes the specified keyword.
+sub search_for_language_constants {
+  my ($api_client, $customer_id, $language_name_keyword) = @_;
+
   # Create a query that retrieves the language constants by the keyword included
   # in the name.
   my $search_query =
@@ -69,12 +82,9 @@ sub search_for_language_and_carrier_constants {
       query      => $search_query
     });
 
-  # Get the GoogleAdsService.
-  my $google_ads_service = $api_client->GoogleAdsService();
-
   my $search_stream_handler =
     Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
-      service => $google_ads_service,
+      service => $api_client->GoogleAdsService(),
       request => $search_stream_request
     });
 
@@ -90,25 +100,30 @@ sub search_for_language_and_carrier_constants {
         $google_ads_row->{languageConstant}{name},
         to_boolean($google_ads_row->{languageConstant}{targetable});
     });
+}
+
+# Searches for all the available mobile carrier constants with a given country code.
+sub search_for_carrier_constants {
+  my ($api_client, $customer_id, $carrier_country_code) = @_;
 
   # Create a query that retrieves the targetable carrier constants by country code.
-  $search_query =
+  my $search_query =
     "SELECT carrier_constant.id, carrier_constant.name, " .
     "carrier_constant.country_code FROM carrier_constant " .
     "WHERE carrier_constant.country_code = '$carrier_country_code'";
 
   # Create a search Google Ads stream request that will retrieve the carrier
   # constants.
-  $search_stream_request =
+  my $search_stream_request =
     Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query
     });
 
-  $search_stream_handler =
+  my $search_stream_handler =
     Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
-      service => $google_ads_service,
+      service => $api_client->GoogleAdsService(),
       request => $search_stream_request
     });
 
@@ -123,8 +138,6 @@ sub search_for_language_and_carrier_constants {
         $google_ads_row->{carrierConstant}{name},
         $google_ads_row->{carrierConstant}{countryCode};
     });
-
-  return 1;
 }
 
 # Don't run the example if the file is being included.
