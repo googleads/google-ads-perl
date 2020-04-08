@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example illustrates how to search for language constants by name that
-# includes the specified keyword. Then it searches for all the available mobile
-# carrier constants with a given country code.
+# This example illustrates how to search for language constants where the name
+# includes a given string. Then it searches for all the available mobile carrier
+# constants with a given country code.
 
 use strict;
 use warnings;
@@ -42,18 +42,16 @@ use Cwd qw(abs_path);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id           = "INSERT_CUSTOMER_ID_HERE";
-my $language_name_keyword = "eng";
+my $customer_id   = "INSERT_CUSTOMER_ID_HERE";
+my $language_name = "eng";
 # A list of country codes can be referenced here:
 # https://developers.google.com/adwords/api/docs/appendix/geotargeting.
 my $carrier_country_code = "US";
 
 sub search_for_language_and_carrier_constants {
-  my ($api_client, $customer_id, $language_name_keyword, $carrier_country_code)
-    = @_;
+  my ($api_client, $customer_id, $language_name, $carrier_country_code) = @_;
 
-  search_for_language_constants($api_client, $customer_id,
-    $language_name_keyword);
+  search_for_language_constants($api_client, $customer_id, $language_name);
 
   search_for_carrier_constants($api_client, $customer_id,
     $carrier_country_code);
@@ -61,17 +59,17 @@ sub search_for_language_and_carrier_constants {
   return 1;
 }
 
-# Searches for language constants by name that includes the specified keyword.
+# Searches for language constants where the name includes a given string.
 sub search_for_language_constants {
-  my ($api_client, $customer_id, $language_name_keyword) = @_;
+  my ($api_client, $customer_id, $language_name) = @_;
 
-  # Create a query that retrieves the language constants by the keyword included
-  # in the name.
+  # Create a query that retrieves the language constants where the name includes
+  # a given string.
   my $search_query =
     "SELECT language_constant.id, language_constant.code, " .
     "language_constant.name, language_constant.targetable " .
     "FROM language_constant " .
-    "WHERE language_constant.name LIKE '%$language_name_keyword%'";
+    "WHERE language_constant.name LIKE '%$language_name%'";
 
   # Create a search Google Ads stream request that will retrieve the language
   # constants.
@@ -153,20 +151,19 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"           => \$customer_id,
-  "language_name_keyword=s" => \$language_name_keyword,
-  "carrier_country_code=s"  => \$carrier_country_code,
+  "customer_id=s"          => \$customer_id,
+  "language_name=s"        => \$language_name,
+  "carrier_country_code=s" => \$carrier_country_code,
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if
-  not check_params($customer_id, $language_name_keyword, $carrier_country_code);
+  if not check_params($customer_id, $language_name, $carrier_country_code);
 
 # Call the example.
 search_for_language_and_carrier_constants($api_client, $customer_id,
-  $language_name_keyword, $carrier_country_code);
+  $language_name, $carrier_country_code);
 
 =pod
 
@@ -176,9 +173,9 @@ search_for_language_and_carrier_constants
 
 =head1 DESCRIPTION
 
-This example illustrates how to search for language constants by name that
-includes the specified keyword. Then it searches for all the available mobile
-carrier constants with a given country code.
+This example illustrates how to search for language constants where the name
+includes a given string. Then it searches for all the available mobile carrier
+constants with a given country code.
 
 =head1 SYNOPSIS
 
@@ -186,7 +183,7 @@ search_for_language_and_carrier_constants.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
-    -language_name_keyword      [optional] The keyword included in the language
+    -language_name              [optional] The string included in the language
                                 name to search for.
     -carrier_country_code       [optional] The code of the country where the mobile
                                 carriers are located, e.g. "US", "ES", etc.
