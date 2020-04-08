@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example illustrates how to search for language constants where the name
-# includes a given string. Then it searches for all the available mobile carrier
-# constants with a given country code.
+# This example illustrates how to:
+# 1. Search for language constants where the name includes a given string.
+# 2. Search for all the available mobile carrier constants with a given country code.
 
 use strict;
 use warnings;
@@ -173,9 +173,9 @@ search_for_language_and_carrier_constants
 
 =head1 DESCRIPTION
 
-This example illustrates how to search for language constants where the name
-includes a given string. Then it searches for all the available mobile carrier
-constants with a given country code.
+This example illustrates how to:
+1. Search for language constants where the name includes a given string.
+2. Search for all the available mobile carrier constants with a given country code.
 
 =head1 SYNOPSIS
 
