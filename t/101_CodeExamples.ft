@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 75);
+use Test::More (tests => 76);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -512,6 +512,11 @@ ok(
     "en", "FR"
   ),
   "Test of get_geo_target_constants_by_names example."
+);
+require qw(examples/targeting/search_for_language_and_carrier_constants.pl);
+ok(
+  search_for_language_and_carrier_constants($api_client, $customer_id),
+  "Test of search_for_language_and_carrier_constants example."
 );
 
 ###############################################################################
