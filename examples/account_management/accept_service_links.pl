@@ -66,7 +66,7 @@ sub accept_service_links {
           status       => ENABLED
         });
 
-      # Create an Merchant Center link operation.
+      # Create a Merchant Center link operation.
       my $operation =
         Google::Ads::GoogleAds::V3::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
         ->new({
