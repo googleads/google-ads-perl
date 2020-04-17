@@ -14,10 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Gets the account hierarchy of the specified manager account and login customer
-# ID. If you don't specify manager ID and login customer ID, the example will
-# instead print the hierarchies of all accessible customer accounts for your
-# authenticated Google account.
+# Gets the account hierarchy of the specified manager customer ID and login customer
+# ID. If you don't specify them, the example will instead print the hierarchies
+# of all accessible customer accounts for your authenticated Google account.
 #
 # Note that if the list of accessible customers for your authenticated Google
 # account includes accounts within the same hierarchy, this example will retrieve
@@ -48,14 +47,14 @@ use Cwd qw(abs_path);
 #
 # Running the example with -h will print the command line usage.
 #
-# Optional: You may pass the manager ID on the command line or specify it here.
-# If neither are set, a null value will be passed to run the example, and the
-# example will print the hierarchies of all accessible customer IDs.
+# Optional: You may pass the manager customer ID on the command line or specify
+# it here. If neither are set, a null value will be passed to run the example,
+# and the example will print the hierarchies of all accessible customer IDs.
 my $manager_customer_id = undef;
 # Optional: You may pass the login customer ID on the command line or specify it
-# here if and only if the manager ID is set. If the login customer ID is set
-# neither on the command line nor below, a null value will be passed to run the
-# example, and the example will use each respective accessible customer ID as the
+# here if and only if the manager customer ID is set. If the login customer ID
+# is set neither on the command line nor below, a null value will be passed to
+# run the example, and the example will use each accessible customer ID as the
 # login customer ID.
 my $login_customer_id = undef;
 
@@ -66,24 +65,24 @@ my $root_customer_clients = {};
 sub get_account_hierarchy {
   my ($api_client, $manager_customer_id, $login_customer_id) = @_;
 
-  my $seed_customer_ids = [];
+  my $root_customer_ids = [];
   if (not $manager_customer_id) {
-    # Get the account hierarchies for all accessible customers..
-    $seed_customer_ids = get_accessible_customers($api_client);
+    # Get the account hierarchies for all accessible customers.
+    $root_customer_ids = get_accessible_customers($api_client);
   } else {
     # Only get the hierarchy for the provided manager customer ID if provided.
-    push @$seed_customer_ids, $manager_customer_id;
+    push @$root_customer_ids, $manager_customer_id;
   }
 
   my $all_hierarchies       = {};
   my $accounts_with_no_info = [];
   # Construct a map of account hierarchies.
-  foreach my $seed_customer_id (@$seed_customer_ids) {
+  foreach my $root_customer_id (@$root_customer_ids) {
     my $customer_client_to_hierarchy =
       create_customer_client_to_hierarchy($login_customer_id,
-      $seed_customer_id);
+      $root_customer_id);
     if (not $customer_client_to_hierarchy) {
-      push @$accounts_with_no_info, $seed_customer_id;
+      push @$accounts_with_no_info, $root_customer_id;
     } else {
       $all_hierarchies = {%$all_hierarchies, %$customer_client_to_hierarchy};
     }
@@ -93,7 +92,7 @@ sub get_account_hierarchy {
   if (scalar @$accounts_with_no_info > 0) {
     print "Unable to retrieve information for the following accounts " .
       "which are likely either test accounts or accounts with setup issues. " .
-      "Please check the logs for details.\n";
+      "Please check the logs for details:\n";
 
     foreach my $account_id (@$accounts_with_no_info) {
       print "$account_id\n";
@@ -103,11 +102,11 @@ sub get_account_hierarchy {
 
   # Print the hierarchy information for all accounts for which there is hierarchy
   # information available.
-  foreach my $root_customer_client_id (keys %$all_hierarchies) {
-    print "The hierarchy of customer ID %d is printed below:\n",
-      $root_customer_client_id;
-    print_account_hierarchy($root_customer_clients->{$root_customer_client_id},
-      $all_hierarchies->{$root_customer_client_id}, 0);
+  foreach my $root_customer_id (keys %$all_hierarchies) {
+    printf "The hierarchy of customer ID %d is printed below:\n",
+      $root_customer_id;
+    print_account_hierarchy($root_customer_clients->{$root_customer_id},
+      $all_hierarchies->{$root_customer_id}, 0);
     print "\n";
   }
 
@@ -118,11 +117,12 @@ sub get_account_hierarchy {
 sub get_accessible_customers {
   my $api_client = shift;
 
-  my $seed_customer_ids = [];
-  # Issue a request for listing all accessible customers by this authenticated
+  my $accessible_customer_ids = [];
+  # Issue a request for listing all customers accessible by this authenticated
   # Google account.
   my $accessible_customers =
     $api_client->CustomerService()->list_accessible_customers();
+
   print "No manager customer ID is specified. The example will print the " .
     "hierarchies of all accessible customer IDs:\n";
 
@@ -130,24 +130,22 @@ sub get_accessible_customers {
   {
     my $customer_id = $1 if $customer_resource_name =~ /(\d+)$/;
     print "$customer_id\n";
-    push @$seed_customer_ids, $customer_id;
+    push @$accessible_customer_ids, $customer_id;
   }
 
-  return $seed_customer_ids;
+  return $accessible_customer_ids;
 }
 
 # Creates a map between a customer client and each of its managers' mappings.
 sub create_customer_client_to_hierarchy() {
-  my ($login_customer_id, $seed_customer_id) = @_;
+  my ($login_customer_id, $root_customer_id) = @_;
 
   # Create a GoogleAdsClient with the specified login customer ID. See
   # https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid
   # for more information.
   my $api_client = Google::Ads::GoogleAds::Client->new({
     version           => "V3",
-    login_customer_id => $login_customer_id
-    ? $login_customer_id
-    : $seed_customer_id
+    login_customer_id => $login_customer_id || $root_customer_id
   });
 
   # Get the GoogleAdsService.
@@ -163,17 +161,17 @@ sub create_customer_client_to_hierarchy() {
     "FROM customer_client WHERE customer_client.level <= 1";
 
   my $root_customer_client = undef;
-  # Add the seed customer ID to the list of IDs to be processed.
-  my $manager_accounts_to_search = [$seed_customer_id];
+  # Add the root customer ID to the list of IDs to be processed.
+  my $manager_customer_ids_to_search = [$root_customer_id];
 
   # Perform a breadth-first search algorithm to build a mapping of managers to
   # their child accounts.
   my $customer_ids_to_child_accounts = {};
 
-  while (scalar @$manager_accounts_to_search > 0) {
-    my $customer_id_to_search_from = shift @$manager_accounts_to_search;
+  while (scalar @$manager_customer_ids_to_search > 0) {
+    my $customer_id_to_search = shift @$manager_customer_ids_to_search;
 
-    $customer_ids_to_child_accounts->{$customer_id_to_search_from} ||= [];
+    $customer_ids_to_child_accounts->{$customer_id_to_search} ||= [];
 
     my $search_stream_handler =
       Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
@@ -181,11 +179,11 @@ sub create_customer_client_to_hierarchy() {
         request =>
           Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
           ->new({
-            customerId => $customer_id_to_search_from,
+            customerId => $customer_id_to_search,
             query      => $search_query,
           })});
 
-    # Iterate over all rows to get all customer clients under the specified
+    # Iterate over all elements to get all customer clients under the specified
     # customer's hierarchy.
     $search_stream_handler->process_contents(
       sub {
@@ -193,23 +191,22 @@ sub create_customer_client_to_hierarchy() {
         my $customer_client = $google_ads_row->{customerClient};
 
         # Get the CustomerClient object for the root customer in the tree.
-        if ($customer_client->{id} == $seed_customer_id) {
+        if ($customer_client->{id} == $root_customer_id) {
           $root_customer_client = $customer_client;
-          $root_customer_clients->{$root_customer_client->{id}} =
-            $root_customer_client;
+          $root_customer_clients->{$root_customer_id} = $root_customer_client;
         }
 
         # The steps below map parent and children accounts. Return here so that
         # managers accounts exclude themselves from the list of their children
         # accounts.
-        if ($customer_client->{id} == $customer_id_to_search_from) {
+        if ($customer_client->{id} == $customer_id_to_search) {
           return;
         }
 
         # For all level-1 (direct child) accounts that are manager accounts, the
         # above query will be run against them to create a map of managers to their
         # child accounts for printing the hierarchy afterwards.
-        push @{$customer_ids_to_child_accounts->{$customer_id_to_search_from}},
+        push @{$customer_ids_to_child_accounts->{$customer_id_to_search}},
           $customer_client;
 
         # Check if the child account is a manager itself so that it can later be
@@ -221,16 +218,11 @@ sub create_customer_client_to_hierarchy() {
           my $already_visited =
             exists $customer_ids_to_child_accounts->{$customer_client->{id}};
           if (not $already_visited && $customer_client->{level} == 1) {
-            push @$manager_accounts_to_search, $customer_client->{id};
+            push @$manager_customer_ids_to_search, $customer_client->{id};
           }
         }
       });
 
-    # The $root_customer_client will be null if the account hierarchy was unable
-    # to be retrieved (e.g. the account is a test account or a client account with
-    # an incomplete billing setup). This method returns null in these cases to add
-    # the $seed_customer_id to the list of customer IDs for which the account
-    # hierarchy could not be retrieved.
     return $root_customer_client
       ? {$root_customer_client->{id} => $customer_ids_to_child_accounts}
       : undef;
@@ -250,7 +242,7 @@ sub print_account_hierarchy {
   printf
     " %d ('%s', '%s', '%s')\n",
     $customer_id,
-    $customer_client->{descriptiveName},
+    $customer_client->{descriptiveName} || "",
     $customer_client->{currencyCode},
     $customer_client->{timeZone};
 
@@ -304,10 +296,9 @@ get_account_hierarchy
 
 =head1 DESCRIPTION
 
-Gets the account hierarchy of the specified manager account and login customer
-ID. If you don't specify manager ID and login customer ID, the example will
-instead print the hierarchies of all accessible customer accounts for your
-authenticated Google account.
+Gets the account hierarchy of the specified manager customer ID and login customer
+ID. If you don't specify them, the example will instead print the hierarchies
+of all accessible customer accounts for your authenticated Google account.
 
 Note that if the list of accessible customers for your authenticated Google
 account includes accounts within the same hierarchy, this example will retrieve
