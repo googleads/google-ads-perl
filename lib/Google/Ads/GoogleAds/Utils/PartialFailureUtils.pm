@@ -115,7 +115,7 @@ Google::Ads::GoogleAds::Utils::PartialFailureUtils
   while (my ($operation_index, $result) = each @{$response->{results}}) {
     if (is_partial_failure_result($result)) {
       my $google_ads_errors = get_google_ads_errors($operation_index,
-        $ad_group_response->{partialFailureError});
+        $response->{partialFailureError});
 
       foreach my $google_ads_error (@$google_ads_errors) {
         printf "Operation %d failed with error: %s.\n", $operation_index,
