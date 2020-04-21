@@ -14,8 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This code example accepts all pending invitations from Google Merchant Center
-# accounts to your Google Ads account.
+# Demonstrates how to approve a Merchant Center link request.
+#
+# Prerequisite: You need to have access to a Merchant Center account. You can find
+# instructions to create a Merchant Center account here:
+# https://support.google.com/merchants/answer/188924.
+#
+# To run this example, you must use the Merchant Center UI or the Content API for
+# Shopping to send a link request between your Merchant Center and Google Ads accounts.
 
 use strict;
 use warnings;
@@ -44,17 +50,36 @@ use Cwd qw(abs_path);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id = "INSERT_CUSTOMER_ID_HERE";
+my $customer_id                = "INSERT_CUSTOMER_ID_HERE";
+my $merchant_center_account_id = "INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE";
 
-sub accept_service_links {
-  my ($api_client, $customer_id) = @_;
+sub approve_merchant_center_link {
+  my ($api_client, $customer_id, $merchant_center_account_id) = @_;
 
-  # Get the MerchantCenterLinkService.
+  # List all Merchant Center links of the specified customer ID.
   my $merchant_center_link_service = $api_client->MerchantCenterLinkService();
-
-  # Retrieve all the existing Merchant Center links.
   my $response =
     $merchant_center_link_service->list({customerId => $customer_id});
+  printf
+      "%d Merchant Center link(s) found with the following details:\n",
+      scalar @{$response->{merchantCenterLinks}};
+
+  foreach my $merchant_center_link (@{$response->{merchantCenterLinks}}) {
+    printf
+        "Link '%s' has status '%s'.\n",
+        $merchant_center_link->{resourceName},
+        $merchant_center_link->{status};
+
+    # Approve a pending link request for a Google Ads account with the specified
+    # customer ID from a Merchant Center account with the specified merchant center account ID.
+
+  }
+
+
+
+
+
+
 
   # Iterate the results, and filter for links with pending status.
   foreach my $merchant_center_link (@{$response->{merchantCenterLinks}}) {
@@ -107,24 +132,31 @@ GetOptions("customer_id=s" => \$customer_id);
 pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
-accept_service_links($api_client, $customer_id =~ s/-//gr);
+approve_merchant_center_link($api_client, $customer_id =~ s/-//gr);
 
 =pod
 
 =head1 NAME
 
-accept_service_links
+approve_merchant_center_link
 
 =head1 DESCRIPTION
 
-This code example accepts all pending invitations from Google Merchant Center
-accounts to your Google Ads account.
+Demonstrates how to approve a Merchant Center link request.
+
+Prerequisite: You need to have access to a Merchant Center account. You can find
+instructions to create a Merchant Center account here:
+https://support.google.com/merchants/answer/188924.
+
+To run this example, you must use the Merchant Center UI or the Content API for
+Shopping to send a link request between your Merchant Center and Google Ads accounts.
 
 =head1 SYNOPSIS
 
-accept_service_links.pl [options]
+approve_merchant_center_link.pl [options]
 
-    -help                       Show the help message.
-    -customer_id                The Google Ads customer ID.
+    -help                           Show the help message.
+    -customer_id                    The Google Ads customer ID.
+    -merchant_center_account_id     The Merchant Center account ID.
 
 =cut
