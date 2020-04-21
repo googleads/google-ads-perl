@@ -95,10 +95,10 @@ my $label_id = TestAPIUtils::create_label($api_client, $customer_id);
 ################################## Examples ##################################
 
 # account_management
-require qw(examples/account_management/accept_service_links.pl);
+require qw(examples/account_management/approve_merchant_center_link.pl);
 ok(
-  accept_service_links($api_client, $customer_id),
-  "Test of accept_service_links example."
+  approve_merchant_center_link($api_client, $customer_id),
+  "Test of approve_merchant_center_link example."
 );
 require qw(examples/account_management/create_customer.pl);
 ok(create_customer($api_client, $manager_customer_id),

@@ -56,61 +56,75 @@ my $merchant_center_account_id = "INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE";
 sub approve_merchant_center_link {
   my ($api_client, $customer_id, $merchant_center_account_id) = @_;
 
-  # List all Merchant Center links of the specified customer ID.
+  # List all Merchant Center Links of the specified customer ID.
   my $merchant_center_link_service = $api_client->MerchantCenterLinkService();
   my $response =
     $merchant_center_link_service->list({customerId => $customer_id});
   printf
-      "%d Merchant Center link(s) found with the following details:\n",
-      scalar @{$response->{merchantCenterLinks}};
+    "%d Merchant Center link(s) found with the following details:\n",
+    scalar @{$response->{merchantCenterLinks}};
 
   foreach my $merchant_center_link (@{$response->{merchantCenterLinks}}) {
     printf
-        "Link '%s' has status '%s'.\n",
-        $merchant_center_link->{resourceName},
-        $merchant_center_link->{status};
+      "Link '%s' has status '%s'.\n",
+      $merchant_center_link->{resourceName},
+      $merchant_center_link->{status};
 
     # Approve a pending link request for a Google Ads account with the specified
-    # customer ID from a Merchant Center account with the specified merchant center account ID.
+    # customer ID from a Merchant Center account with the specified Merchant
+    # Center account ID.
+    if ( $merchant_center_link->{id} == $merchant_center_account_id
+      && $merchant_center_link->{status} eq PENDING)
+    {
+      # Update the status of Merchant Center link to 'ENABLED' to approve the link.
+      update_merchant_center_link_status(
+        $merchant_center_link_service, $customer_id,
+        $merchant_center_link,         ENABLED
+      );
 
-  }
-
-
-
-
-
-
-
-  # Iterate the results, and filter for links with pending status.
-  foreach my $merchant_center_link (@{$response->{merchantCenterLinks}}) {
-    if ($merchant_center_link->{status} eq PENDING) {
-      # Enable the pending link.
-      my $link_to_update =
-        Google::Ads::GoogleAds::V3::Resources::MerchantCenterLink->new({
-          resourceName => $merchant_center_link->{resourceName},
-          status       => ENABLED
-        });
-
-      # Create a Merchant Center link operation.
-      my $operation =
-        Google::Ads::GoogleAds::V3::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
-        ->new({
-          update     => $link_to_update,
-          updateMask => all_set_fields_of($link_to_update)});
-
-      # Issue a mutate request to update the link.
-      my $mutate_response = $merchant_center_link_service->mutate({
-        customerId => $customer_id,
-        operation  => $operation
-      });
-
-      printf "Enabled a Merchant Center Link with resource name '%s' " .
-        "to Google Ads account : %d.\n",
-        $mutate_response->{result}{resourceName}, $customer_id;
+      # There is only one MerchantCenterLink object for a given Google Ads account
+      # and Merchant Center account, so we can break early.
+      last;
     }
   }
-
   return 1;
+}
+
+# Updates the status of a Merchant Center link with a specified Merchant Center
+# link status.
+sub update_merchant_center_link_status {
+  my (
+    $merchant_center_link_service, $customer_id,
+    $merchant_center_link,         $status
+  ) = @_;
+
+  # Create an updated MerchantCenterLink object derived from the original, but
+  # with the specified status.
+  my $merchant_center_link_to_update =
+    Google::Ads::GoogleAds::V3::Resources::MerchantCenterLink->new({
+      resourceName => $merchant_center_link->{resourceName},
+      status       => $status
+    });
+
+  # Construct an operation that will update the Merchant Center link, using the
+  # FieldMasks utility to derive the update mask. This mask tells the Google Ads
+  # API which attributes of the merchant center link you want to change.
+  my $merchant_center_link_operation =
+    Google::Ads::GoogleAds::V3::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
+    ->new({
+      update     => $merchant_center_link_to_update,
+      updateMask => all_set_fields_of($merchant_center_link_to_update)});
+
+  # Issue a mutate request to update the Merchant Center link and print some
+  # information.
+  my $response = $merchant_center_link_service->mutate({
+    customerId => $customer_id,
+    operation  => $merchant_center_link_operation
+  });
+
+  printf "Approved a Merchant Center Link with resource name '%s' " .
+    "to the Google Ads account : %d.\n",
+    $response->{result}{resourceName}, $customer_id;
 }
 
 # Don't run the example if the file is being included.
@@ -132,7 +146,8 @@ GetOptions("customer_id=s" => \$customer_id);
 pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
-approve_merchant_center_link($api_client, $customer_id =~ s/-//gr);
+approve_merchant_center_link($api_client, $customer_id =~ s/-//gr,
+  $merchant_center_account_id);
 
 =pod
 
