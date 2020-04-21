@@ -120,13 +120,14 @@ sub get_accessible_customers {
   my $accessible_customer_ids = [];
   # Issue a request for listing all customers accessible by this authenticated
   # Google account.
-  my $accessible_customers =
+  my $accessible_customer_resource_names =
     $api_client->CustomerService()->list_accessible_customers();
 
   print "No manager customer ID is specified. The example will print the " .
     "hierarchies of all accessible customer IDs:\n";
 
-  foreach my $customer_resource_name (@{$accessible_customers->{resourceNames}})
+  foreach my $customer_resource_name (
+    @{$accessible_customer_resource_names->{resourceNames}})
   {
     my $customer_id = $1 if $customer_resource_name =~ /(\d+)$/;
     print "$customer_id\n";
@@ -158,7 +159,8 @@ sub create_customer_client_to_hierarchy() {
     "customer_client.manager, customer_client.descriptive_name, " .
     "customer_client.currency_code, customer_client.time_zone, " .
     "customer_client.id " .
-    "FROM customer_client WHERE customer_client.level <= 1";
+    "FROM customer_client " .
+    "WHERE customer_client.level <= 1";
 
   my $root_customer_client = undef;
   # Add the root customer ID to the list of IDs to be processed.
@@ -197,7 +199,7 @@ sub create_customer_client_to_hierarchy() {
         }
 
         # The steps below map parent and children accounts. Return here so that
-        # managers accounts exclude themselves from the list of their children
+        # manager accounts exclude themselves from the list of their children
         # accounts.
         if ($customer_client->{id} == $customer_id_to_search) {
           return;
