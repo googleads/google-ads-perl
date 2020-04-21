@@ -120,14 +120,14 @@ sub get_accessible_customers {
   my $accessible_customer_ids = [];
   # Issue a request for listing all customers accessible by this authenticated
   # Google account.
-  my $accessible_customer_resource_names =
+  my $list_accessible_customers_response =
     $api_client->CustomerService()->list_accessible_customers();
 
   print "No manager customer ID is specified. The example will print the " .
     "hierarchies of all accessible customer IDs:\n";
 
   foreach my $customer_resource_name (
-    @{$accessible_customer_resource_names->{resourceNames}})
+    @{$list_accessible_customers_response->{resourceNames}})
   {
     my $customer_id = $1 if $customer_resource_name =~ /(\d+)$/;
     print "$customer_id\n";
