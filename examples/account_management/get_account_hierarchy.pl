@@ -141,7 +141,7 @@ sub get_accessible_customers {
 sub create_customer_client_to_hierarchy() {
   my ($login_customer_id, $root_customer_id) = @_;
 
-  # Create a GoogleAdsClient with the specified login customer ID. See
+  # Create a GoogleAdsClient with the specified login customer ID. Seec
   # https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid
   # for more information.
   my $api_client = Google::Ads::GoogleAds::Client->new({
@@ -159,8 +159,7 @@ sub create_customer_client_to_hierarchy() {
     "customer_client.manager, customer_client.descriptive_name, " .
     "customer_client.currency_code, customer_client.time_zone, " .
     "customer_client.id " .
-    "FROM customer_client " .
-    "WHERE customer_client.level <= 1";
+    "FROM customer_client " . "WHERE customer_client.level <= 1";
 
   my $root_customer_client = undef;
   # Add the root customer ID to the list of IDs to be processed.
