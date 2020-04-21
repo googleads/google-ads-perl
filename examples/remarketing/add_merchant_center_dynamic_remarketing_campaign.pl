@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example creates a shopping campaign associated with an existing merchant
-# center account, along with a related ad group and dynamic display ad, and
+# This example creates a shopping campaign associated with an existing Merchant
+# Center account, along with a related ad group and dynamic display ad, and
 # targets a user list for remarketing purposes.
 
 use strict;
@@ -77,7 +77,7 @@ sub add_merchant_center_dynamic_remarketing_campaign {
     $campaign_budget_id, $user_list_id)
     = @_;
 
-  # Create a shopping campaign associated with a given merchant center account.
+  # Create a shopping campaign associated with a given Merchant Center account.
   my $campaign_resource_name =
     create_campaign($api_client, $customer_id, $merchant_center_account_id,
     $campaign_budget_id);
@@ -114,7 +114,7 @@ sub create_campaign {
         ),
       manualCpc => Google::Ads::GoogleAds::V3::Common::ManualCpc->new(),
       # The settings for the shopping campaign.
-      # This connects the campaign to the merchant center account.
+      # This connects the campaign to the Merchant Center account.
       shoppingSetting =>
         Google::Ads::GoogleAds::V3::Resources::ShoppingSetting->new({
           campaignPriority => 0,
@@ -357,7 +357,7 @@ add_merchant_center_dynamic_remarketing_campaign
 
 =head1 DESCRIPTION
 
-This example creates a shopping campaign associated with an existing merchant center
+This example creates a shopping campaign associated with an existing Merchant Center
 account, along with a related ad group and dynamic display ad, and targets a user
 list for remarketing purposes.
 
