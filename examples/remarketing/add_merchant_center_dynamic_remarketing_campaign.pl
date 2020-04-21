@@ -67,19 +67,19 @@ use Data::Uniqid qw(uniqid);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id        = "INSERT_CUSTOMER_ID_HERE";
-my $merchant_center_id = "INSERT_MERCHANT_CENTER_ID_HERE";
-my $campaign_budget_id = "INSERT_CAMPAIGN_BUDGET_ID_HERE";
-my $user_list_id       = "INSERT_USER_LIST_ID_HERE";
+my $customer_id                = "INSERT_CUSTOMER_ID_HERE";
+my $merchant_center_account_id = "INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE";
+my $campaign_budget_id         = "INSERT_CAMPAIGN_BUDGET_ID_HERE";
+my $user_list_id               = "INSERT_USER_LIST_ID_HERE";
 
 sub add_merchant_center_dynamic_remarketing_campaign {
-  my ($api_client, $customer_id, $merchant_center_id, $campaign_budget_id,
-    $user_list_id)
+  my ($api_client, $customer_id, $merchant_center_account_id,
+    $campaign_budget_id, $user_list_id)
     = @_;
 
   # Create a shopping campaign associated with a given merchant center account.
   my $campaign_resource_name =
-    create_campaign($api_client, $customer_id, $merchant_center_id,
+    create_campaign($api_client, $customer_id, $merchant_center_account_id,
     $campaign_budget_id);
 
   # Create an ad group for the campaign.
@@ -98,7 +98,9 @@ sub add_merchant_center_dynamic_remarketing_campaign {
 
 # Creates a campaign linked to a Merchant Center product feed.
 sub create_campaign {
-  my ($api_client, $customer_id, $merchant_center_id, $campaign_budget_id) = @_;
+  my ($api_client, $customer_id, $merchant_center_account_id,
+    $campaign_budget_id)
+    = @_;
 
   # Create a campaign.
   my $campaign = Google::Ads::GoogleAds::V3::Resources::Campaign->new({
@@ -116,7 +118,7 @@ sub create_campaign {
       shoppingSetting =>
         Google::Ads::GoogleAds::V3::Resources::ShoppingSetting->new({
           campaignPriority => 0,
-          merchantId       => $merchant_center_id,
+          merchantId       => $merchant_center_account_id,
           # Display Network campaigns do not support partition by country. The only
           # supported value is "ZZ". This signals that products from all countries are
           # available in the campaign. The actual products which serve are based on
@@ -330,22 +332,22 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"        => \$customer_id,
-  "merchant_center_id=i" => \$merchant_center_id,
-  "campaign_budget_id=i" => \$campaign_budget_id,
-  "user_list_id=i"       => \$user_list_id
+  "customer_id=s"                => \$customer_id,
+  "merchant_center_account_id=i" => \$merchant_center_account_id,
+  "campaign_budget_id=i"         => \$campaign_budget_id,
+  "user_list_id=i"               => \$user_list_id
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params($customer_id, $merchant_center_id, $campaign_budget_id,
-  $user_list_id);
+  if not check_params($customer_id, $merchant_center_account_id,
+  $campaign_budget_id, $user_list_id);
 
 # Call the example.
 add_merchant_center_dynamic_remarketing_campaign($api_client,
   $customer_id =~ s/-//gr,
-  $merchant_center_id, $campaign_budget_id, $user_list_id);
+  $merchant_center_account_id, $campaign_budget_id, $user_list_id);
 
 =pod
 
@@ -363,10 +365,10 @@ list for remarketing purposes.
 
 add_merchant_center_dynamic_remarketing_campaign.pl [options]
 
-    -help                       Show the help message.
-    -customer_id                The Google Ads customer ID.
-    -merchant_center_id         The Merchant Center ID.
-    -campaign_budget_id         The campaign budget ID.
-    -user_list_id               The user list ID.
+    -help                           Show the help message.
+    -customer_id                    The Google Ads customer ID.
+    -merchant_center_account_id     The Merchant Center account ID.
+    -campaign_budget_id             The campaign budget ID.
+    -user_list_id                   The user list ID.
 
 =cut

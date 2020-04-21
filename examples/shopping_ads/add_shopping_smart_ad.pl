@@ -77,11 +77,11 @@ use Data::Uniqid qw(uniqid);
 #
 # Running the example with -h will print the command line usage.
 my $customer_id                  = "INSERT_CUSTOMER_ID_HERE";
-my $merchant_center_id           = "INSERT_MERCHANT_CENTER_ID_HERE";
+my $merchant_center_account_id   = "INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE";
 my $create_default_listing_group = undef;
 
 sub add_shopping_smart_ad {
-  my ($api_client, $customer_id, $merchant_center_id,
+  my ($api_client, $customer_id, $merchant_center_account_id,
     $create_default_listing_group)
     = @_;
 
@@ -91,7 +91,7 @@ sub add_shopping_smart_ad {
   # Create a smart shopping campaign.
   my $campaign_resource_name =
     add_smart_shopping_campaign($api_client, $customer_id,
-    $budget_resource_name, $merchant_center_id);
+    $budget_resource_name, $merchant_center_account_id);
 
   # Create a smart shopping ad group.
   my $ad_group_resource_name =
@@ -152,8 +152,9 @@ sub add_campaign_budget {
 # Creates a new shopping campaign for smart shopping ads in the specified
 # client account.
 sub add_smart_shopping_campaign {
-  my ($api_client, $customer_id, $budget_resource_name, $merchant_center_id) =
-    @_;
+  my ($api_client, $customer_id, $budget_resource_name,
+    $merchant_center_account_id)
+    = @_;
 
   # Create a smart shopping campaign.
   my $campaign = Google::Ads::GoogleAds::V3::Resources::Campaign->new({
@@ -164,7 +165,7 @@ sub add_smart_shopping_campaign {
       advertisingChannelSubType => SHOPPING_SMART_ADS,
       shoppingSetting =>
         Google::Ads::GoogleAds::V3::Resources::ShoppingSetting->new({
-          merchantId => $merchant_center_id,
+          merchantId => $merchant_center_account_id,
           # Set the sales country of products to include in the campaign.
           # Only products from Merchant Center targeting this country will
           # appear in the campaign.
@@ -328,19 +329,17 @@ $api_client->set_die_on_faults(1);
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
   "customer_id=s"                  => \$customer_id,
-  "merchant_center_id=i"           => \$merchant_center_id,
+  "merchant_center_account_id=i"   => \$merchant_center_account_id,
   "create_default_listing_group=s" => \$create_default_listing_group
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($customer_id, $merchant_center_id);
+pod2usage(2) if not check_params($customer_id, $merchant_center_account_id);
 
 # Call the example.
-add_shopping_smart_ad(
-  $api_client,         $customer_id =~ s/-//gr,
-  $merchant_center_id, $create_default_listing_group
-);
+add_shopping_smart_ad($api_client, $customer_id =~ s/-//gr,
+  $merchant_center_account_id, $create_default_listing_group);
 
 =pod
 
@@ -367,7 +366,7 @@ add_shopping_smart_ad.pl [options]
 
     -help                           Show the help message.
     -customer_id                    The Google Ads customer ID.
-    -merchant_center_id             The Merchant Center ID.
+    -merchant_center_account_id     The Merchant Center account ID.
     -create_default_listing_group   [optional] Create default listing group.
 
 =cut
