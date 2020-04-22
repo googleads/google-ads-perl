@@ -159,7 +159,7 @@ sub create_customer_client_to_hierarchy() {
     "customer_client.manager, customer_client.descriptive_name, " .
     "customer_client.currency_code, customer_client.time_zone, " .
     "customer_client.id " .
-    "FROM customer_client " . "WHERE customer_client.level <= 1";
+    "FROM customer_client WHERE customer_client.level <= 1";
 
   my $root_customer_client = undef;
   # Add the root customer ID to the list of IDs to be processed.
