@@ -22,6 +22,7 @@
 #
 # To run this example, you must use the Merchant Center UI or the Content API for
 # Shopping to send a link request between your Merchant Center and Google Ads accounts.
+# See https://support.google.com/merchants/answer/6159060 for details.
 
 use strict;
 use warnings;
@@ -56,7 +57,7 @@ my $merchant_center_account_id = "INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE";
 sub approve_merchant_center_link {
   my ($api_client, $customer_id, $merchant_center_account_id) = @_;
 
-  # List all Merchant Center Links of the specified customer ID.
+  # List all Merchant Center links of the specified customer ID.
   my $merchant_center_link_service = $api_client->MerchantCenterLinkService();
   my $response =
     $merchant_center_link_service->list({customerId => $customer_id});
@@ -81,7 +82,6 @@ sub approve_merchant_center_link {
         $merchant_center_link_service, $customer_id,
         $merchant_center_link,         ENABLED
       );
-
       # There is only one MerchantCenterLink object for a given Google Ads account
       # and Merchant Center account, so we can break early.
       last;
@@ -93,29 +93,28 @@ sub approve_merchant_center_link {
 # Updates the status of a Merchant Center link with a specified Merchant Center
 # link status.
 sub update_merchant_center_link_status {
-  my (
-    $merchant_center_link_service, $customer_id,
-    $merchant_center_link,         $status
-  ) = @_;
+  my ($merchant_center_link_service, $customer_id,
+    $merchant_center_link, $new_merchant_center_link_status)
+    = @_;
 
   # Create an updated MerchantCenterLink object derived from the original, but
   # with the specified status.
   my $merchant_center_link_to_update =
     Google::Ads::GoogleAds::V3::Resources::MerchantCenterLink->new({
       resourceName => $merchant_center_link->{resourceName},
-      status       => $status
+      status       => $new_merchant_center_link_status
     });
 
   # Construct an operation that will update the Merchant Center link, using the
   # FieldMasks utility to derive the update mask. This mask tells the Google Ads
-  # API which attributes of the merchant center link you want to change.
+  # API which attributes of the Merchant Center link you want to change.
   my $merchant_center_link_operation =
     Google::Ads::GoogleAds::V3::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
     ->new({
       update     => $merchant_center_link_to_update,
       updateMask => all_set_fields_of($merchant_center_link_to_update)});
 
-  # Issue a mutate request to update the Merchant Center link and print some
+  # Issue a mutate request to update the Merchant Center link and prints some
   # information.
   my $response = $merchant_center_link_service->mutate({
     customerId => $customer_id,
@@ -123,7 +122,7 @@ sub update_merchant_center_link_status {
   });
 
   printf "Approved a Merchant Center Link with resource name '%s' " .
-    "to the Google Ads account : %d.\n",
+    "to the Google Ads account '%s'.\n",
     $response->{result}{resourceName}, $customer_id;
 }
 
@@ -139,11 +138,14 @@ my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
 $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
-GetOptions("customer_id=s" => \$customer_id);
+GetOptions(
+  "customer_id=s"                => \$customer_id,
+  "merchant_center_account_id=i" => \$merchant_center_account_id,
+);
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($customer_id);
+pod2usage(2) if not check_params($customer_id, $merchant_center_account_id);
 
 # Call the example.
 approve_merchant_center_link($api_client, $customer_id =~ s/-//gr,
@@ -165,6 +167,7 @@ https://support.google.com/merchants/answer/188924.
 
 To run this example, you must use the Merchant Center UI or the Content API for
 Shopping to send a link request between your Merchant Center and Google Ads accounts.
+See https://support.google.com/merchants/answer/6159060 for details.
 
 =head1 SYNOPSIS
 
