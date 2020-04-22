@@ -223,11 +223,11 @@ sub create_customer_client_to_hierarchy() {
           }
         }
       });
-
-    return $root_customer_client
-      ? {$root_customer_client->{id} => $customer_ids_to_child_accounts}
-      : undef;
   }
+
+  return $root_customer_client
+    ? {$root_customer_client->{id} => $customer_ids_to_child_accounts}
+    : undef;
 }
 
 # Prints the specified account's hierarchy using recursion.
