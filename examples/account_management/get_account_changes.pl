@@ -26,7 +26,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use Google::Ads::GoogleAds::V3::Enums::ChangeStatusResourceTypeEnum
-  qw(AD_GROUP AD_GROUP_AD AD_GROUP_CRITERION CAMPAIGN CAMPAIGN_CRITERION);
+  qw(AD_GROUP AD_GROUP_AD AD_GROUP_CRITERION CAMPAIGN CAMPAIGN_CRITERION FEED FEED_ITEM AD_GROUP_FEED CAMPAIGN_FEED AD_GROUP_BID_MODIFIER);
 use
   Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
@@ -52,13 +52,18 @@ sub get_account_changes {
   # Create the search query.
   my $search_query =
     "SELECT change_status.resource_name, change_status.last_change_date_time, "
-    . "change_status.resource_type, "
-    . "change_status.campaign, "
-    . "change_status.ad_group, "
     . "change_status.resource_status, "
+    . "change_status.resource_type, "
+    . "change_status.ad_group, "
     . "change_status.ad_group_ad, "
+    . "change_status.ad_group_bid_modifier, "
     . "change_status.ad_group_criterion, "
-    . "change_status.campaign_criterion "
+    . "change_status.ad_group_feed, "
+    . "change_status.campaign, "
+    . "change_status.campaign_criterion, "
+    . "change_status.campaign_feed, "
+    . "change_status.feed, "
+    . "change_status.feed_item "
     . "FROM change_status "
     . "WHERE change_status.last_change_date_time DURING LAST_7_DAYS "
     . "ORDER BY change_status.last_change_date_time";
@@ -108,12 +113,22 @@ sub __get_resource_name_for_resource_type {
     return $change_status->{adGroup};
   } elsif ($resource_type eq AD_GROUP_AD) {
     return $change_status->{adGroupAd};
+  } elsif ($resource_type eq AD_GROUP_BID_MODIFIER) {
+    return $change_status->{adGroupBidModifier};
   } elsif ($resource_type eq AD_GROUP_CRITERION) {
     return $change_status->{adGroupCriterion};
+  } elsif ($resource_type eq AD_GROUP_FEED) {
+    return $change_status->{adGroupFeed};
   } elsif ($resource_type eq CAMPAIGN) {
     return $change_status->{campaign};
   } elsif ($resource_type eq CAMPAIGN_CRITERION) {
     return $change_status->{campaignCriterion};
+  } elsif ($resource_type eq CAMPAIGN_FEED) {
+    return $change_status->{campaignFeed};
+  } elsif ($resource_type eq FEED) {
+    return $change_status->{feed};
+  } elsif ($resource_type eq FEED_ITEM) {
+    return $change_status->{feedItem};
   } else {
     return "";
   }
