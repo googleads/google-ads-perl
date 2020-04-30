@@ -24,15 +24,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
+use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
-  Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 use Cwd qw(abs_path);
-
-use constant PAGE_SIZE => 1000;
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -54,6 +52,8 @@ sub get_account_budgets {
     "account_budget.approved_spending_limit_type, " .
     "account_budget.proposed_spending_limit_micros, " .
     "account_budget.proposed_spending_limit_type, " .
+    "account_budget.adjusted_spending_limit_micros, " .
+    "account_budget.adjusted_spending_limit_type, " .
     "account_budget.approved_start_date_time, " .
     "account_budget.proposed_start_date_time, " .
     "account_budget.approved_end_date_time, " .
@@ -61,65 +61,68 @@ sub get_account_budgets {
     "account_budget.proposed_end_date_time, " .
     "account_budget.proposed_end_time_type FROM account_budget";
 
-  # Create a search Google Ads request that will retrieve the account budgets
-  # using pages of the specified page size.
-  my $search_request =
-    Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsRequest
+  # Create a search Google Ads stream request that will retrieve the account
+  # budgets.
+  my $search_stream_request =
+    Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
-      pageSize   => PAGE_SIZE
     });
 
   # Get the GoogleAdsService.
   my $google_ads_service = $api_client->GoogleAdsService();
 
-  my $iterator = Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator->new({
-    service => $google_ads_service,
-    request => $search_request
-  });
+  my $search_stream_handler =
+    Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
+      service => $google_ads_service,
+      request => $search_stream_request
+    });
 
-  # Iterate over all rows in all pages and print the requested field values for
-  # the account budget in each row.
-  while ($iterator->has_next) {
-    my $google_ads_row = $iterator->next;
+  # Issue a search request and process the stream response to print the requested
+  # field values for the account budget in each row.
+  $search_stream_handler->process_contents(
+    sub {
+      my $google_ads_row = shift;
+      my $account_budget = $google_ads_row->{accountBudget};
 
-    my $account_budget = $google_ads_row->{accountBudget};
-
-    printf
-      "Found the account budget '%s' with status '%s', billing setup '%s', " .
-      "amount served %.2f, total adjustments %.2f,\n" .
-      "  approved spending limit '%s' (proposed '%s'),\n" .
-      "  approved start time '%s' (proposed '%s'),\n" .
-      "  approved end time '%s' (proposed '%s').\n",
-      $account_budget->{resourceName}, $account_budget->{status},
-      $account_budget->{billingSetup} ? $account_budget->{billingSetup}
-      : "none",
-      $account_budget->{amountServedMicros}
-      ? $account_budget->{amountServedMicros} / 1000000.0
-      : 0.0,
-      $account_budget->{totalAdjustmentsMicros}
-      ? $account_budget->{totalAdjustmentsMicros} / 1000000.0
-      : 0.0,
-      $account_budget->{approvedSpendingLimitMicros} ? sprintf "%.2f",
-      $account_budget->{approvedSpendingLimitMicros} / 1000000.0
-      : $account_budget->{approvedSpendingLimitType},
-      $account_budget->{proposedSpendingLimitMicros} ? sprintf "%.2f",
-      $account_budget->{proposedSpendingLimitMicros} / 1000000.0
-      : $account_budget->{proposedSpendingLimitType},
-      $account_budget->{approvedStartDateTime}
-      ? $account_budget->{approvedStartDateTime}
-      : "none",
-      $account_budget->{proposedStartDateTime}
-      ? $account_budget->{proposedStartDateTime}
-      : "none",
-      $account_budget->{approvedEndDateTime}
-      ? $account_budget->{approvedEndDateTime}
-      : $account_budget->{approvedEndTimeType},
-      $account_budget->{proposedEndDateTime}
-      ? $account_budget->{proposedEndDateTime}
-      : $account_budget->{proposedEndTimeType};
-  }
+      printf
+        "Found the account budget '%s' with status '%s', billing setup '%s', "
+        . "amount served %.2f, total adjustments %.2f,\n"
+        . "  approved spending limit '%s' (proposed '%s', adjusted '%s'),\n"
+        . "  approved start time '%s' (proposed '%s'),\n"
+        . "  approved end time '%s' (proposed '%s').\n",
+        $account_budget->{resourceName}, $account_budget->{status},
+        $account_budget->{billingSetup} ? $account_budget->{billingSetup}
+        : "none",
+        $account_budget->{amountServedMicros}
+        ? $account_budget->{amountServedMicros} / 1000000.0
+        : 0.0,
+        $account_budget->{totalAdjustmentsMicros}
+        ? $account_budget->{totalAdjustmentsMicros} / 1000000.0
+        : 0.0,
+        $account_budget->{approvedSpendingLimitMicros} ? sprintf "%.2f",
+        $account_budget->{approvedSpendingLimitMicros} / 1000000.0
+        : $account_budget->{approvedSpendingLimitType},
+        $account_budget->{proposedSpendingLimitMicros} ? sprintf "%.2f",
+        $account_budget->{proposedSpendingLimitMicros} / 1000000.0
+        : $account_budget->{proposedSpendingLimitType},
+        $account_budget->{adjustedSpendingLimitMicros} ? sprintf "%.2f",
+        $account_budget->{adjustedSpendingLimitMicros} / 1000000.0
+        : $account_budget->{adjustedSpendingLimitType},
+        $account_budget->{approvedStartDateTime}
+        ? $account_budget->{approvedStartDateTime}
+        : "none",
+        $account_budget->{proposedStartDateTime}
+        ? $account_budget->{proposedStartDateTime}
+        : "none",
+        $account_budget->{approvedEndDateTime}
+        ? $account_budget->{approvedEndDateTime}
+        : $account_budget->{approvedEndTimeType},
+        $account_budget->{proposedEndDateTime}
+        ? $account_budget->{proposedEndDateTime}
+        : $account_budget->{proposedEndTimeType};
+    });
 
   return 1;
 }
