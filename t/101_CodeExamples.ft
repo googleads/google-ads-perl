@@ -520,7 +520,9 @@ ok(
 );
 require qw(examples/targeting/search_for_language_and_carrier_constants.pl);
 ok(
-  search_for_language_and_carrier_constants($api_client, $customer_id),
+  search_for_language_and_carrier_constants(
+    $api_client, $customer_id, "eng", "US"
+  ),
   "Test of search_for_language_and_carrier_constants example."
 );
 
