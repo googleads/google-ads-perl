@@ -925,6 +925,17 @@ sub mutate_job {
   return expand_path_template($path_template, [$customer_id, $mutate_job_id]);
 }
 
+# Returns the offline_user_data_job resource name for the specified components.
+sub offline_user_data_job {
+  my ($customer_id, $offline_user_data_job_id) = @_;
+
+  my $path_template =
+    'customers/{customer_id}/offlineUserDataJobs/{offline_user_data_job_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $offline_user_data_job_id]);
+}
+
 # Returns the operating_system_version_constant resource name for the specified components.
 sub operating_system_version_constant {
   my ($criterion_id) = @_;

@@ -18,14 +18,28 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  DEFAULT     => "DEFAULT",
-  PAGE_VIEW   => "PAGE_VIEW",
-  PURCHASE    => "PURCHASE",
-  SIGNUP      => "SIGNUP",
-  LEAD        => "LEAD",
-  DOWNLOAD    => "DOWNLOAD"
+  UNSPECIFIED      => "UNSPECIFIED",
+  UNKNOWN          => "UNKNOWN",
+  DEFAULT          => "DEFAULT",
+  PAGE_VIEW        => "PAGE_VIEW",
+  PURCHASE         => "PURCHASE",
+  SIGNUP           => "SIGNUP",
+  LEAD             => "LEAD",
+  DOWNLOAD         => "DOWNLOAD",
+  ADD_TO_CART      => "ADD_TO_CART",
+  BEGIN_CHECKOUT   => "BEGIN_CHECKOUT",
+  SUBSCRIBE_PAID   => "SUBSCRIBE_PAID",
+  PHONE_CALL_LEAD  => "PHONE_CALL_LEAD",
+  IMPORTED_LEAD    => "IMPORTED_LEAD",
+  SUBMIT_LEAD_FORM => "SUBMIT_LEAD_FORM",
+  BOOK_APPOINTMENT => "BOOK_APPOINTMENT",
+  REQUEST_QUOTE    => "REQUEST_QUOTE",
+  GET_DIRECTIONS   => "GET_DIRECTIONS",
+  OUTBOUND_CLICK   => "OUTBOUND_CLICK",
+  CONTACT          => "CONTACT",
+  ENGAGEMENT       => "ENGAGEMENT",
+  STORE_VISIT      => "STORE_VISIT",
+  STORE_SALE       => "STORE_SALE"
 ];
 
 1;

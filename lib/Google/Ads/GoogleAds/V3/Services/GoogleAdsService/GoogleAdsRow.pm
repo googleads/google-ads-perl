@@ -104,6 +104,7 @@ sub new {
     mobileAppCategoryConstant      => $args->{mobileAppCategoryConstant},
     mobileDeviceConstant           => $args->{mobileDeviceConstant},
     mutateJob                      => $args->{mutateJob},
+    offlineUserDataJob             => $args->{offlineUserDataJob},
     operatingSystemVersionConstant => $args->{operatingSystemVersionConstant},
     paidOrganicSearchTermView      => $args->{paidOrganicSearchTermView},
     parentalStatusView             => $args->{parentalStatusView},

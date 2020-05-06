@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V3::Resources::PaymentsAccount;
+package Google::Ads::GoogleAds::V3::Common::UserIdentifier;
 
 use strict;
 use warnings;
@@ -23,13 +23,11 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    currencyCode               => $args->{currencyCode},
-    name                       => $args->{name},
-    payingManagerCustomer      => $args->{payingManagerCustomer},
-    paymentsAccountId          => $args->{paymentsAccountId},
-    paymentsProfileId          => $args->{paymentsProfileId},
-    resourceName               => $args->{resourceName},
-    secondaryPaymentsProfileId => $args->{secondaryPaymentsProfileId}};
+    addressInfo       => $args->{addressInfo},
+    hashedEmail       => $args->{hashedEmail},
+    hashedPhoneNumber => $args->{hashedPhoneNumber},
+    mobileId          => $args->{mobileId},
+    thirdPartyUserId  => $args->{thirdPartyUserId}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

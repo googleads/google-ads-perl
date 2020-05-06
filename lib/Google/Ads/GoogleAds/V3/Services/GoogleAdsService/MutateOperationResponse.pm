@@ -33,6 +33,7 @@ sub new {
     adGroupLabelResult              => $args->{adGroupLabelResult},
     adGroupResult                   => $args->{adGroupResult},
     adParameterResult               => $args->{adParameterResult},
+    adResult                        => $args->{adResult},
     assetResult                     => $args->{assetResult},
     biddingStrategyResult           => $args->{biddingStrategyResult},
     campaignBidModifierResult       => $args->{campaignBidModifierResult},

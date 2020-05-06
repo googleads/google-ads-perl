@@ -48,6 +48,7 @@ sub new {
     maximizeConversions         => $args->{maximizeConversions},
     name                        => $args->{name},
     networkSettings             => $args->{networkSettings},
+    optimizationScore           => $args->{optimizationScore},
     paymentMode                 => $args->{paymentMode},
     percentCpc                  => $args->{percentCpc},
     realTimeBiddingSetting      => $args->{realTimeBiddingSetting},

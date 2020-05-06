@@ -92,6 +92,14 @@ sub to_boolean {
   shift ? "true" : "false";
 }
 
+# Dies with a specified exit code.
+sub die_with_code {
+  my $exit_code = shift;
+  $! = $exit_code;
+
+  die @_;
+}
+
 1;
 
 =pod
@@ -241,6 +249,25 @@ The original input scalar value.
 =head3 Returns
 
 "true" if the input value is valid. "false", otherwise.
+
+=head2 die_with_code
+
+Dies with a specified exit code.
+
+=head3 Parameters
+
+=over
+
+=item *
+
+I<exit_code>: the exit code.
+
+=item *
+
+I<list>: list of one or more items, which will be stringified and concatenated
+to make the exception.
+
+=back
 
 =head1 LICENSE AND COPYRIGHT
 

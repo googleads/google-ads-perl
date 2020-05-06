@@ -33,6 +33,7 @@ sub new {
     adGroupFeedOperation         => $args->{adGroupFeedOperation},
     adGroupLabelOperation        => $args->{adGroupLabelOperation},
     adGroupOperation             => $args->{adGroupOperation},
+    adOperation                  => $args->{adOperation},
     adParameterOperation         => $args->{adParameterOperation},
     assetOperation               => $args->{assetOperation},
     biddingStrategyOperation     => $args->{biddingStrategyOperation},

@@ -22,7 +22,7 @@ use warnings;
 use lib qw(lib);
 use Google::Ads::GoogleAds::V3::Resources::Campaign;
 
-use Test::More(tests => 35);
+use Test::More(tests => 36);
 
 # Tests use Google::Ads::GoogleAds::Utils::GoogleAdsHelper.
 use_ok("Google::Ads::GoogleAds::Utils::GoogleAdsHelper");
@@ -210,3 +210,7 @@ is(to_boolean(""),     "false", "Test to_boolean(): empty string.");
 is(to_boolean(0),      "false", "Test to_boolean(): 0.");
 is(to_boolean("abcd"), "true",  "Test to_boolean(): valid string.");
 is(to_boolean(1),      "true",  "Test to_boolean(): 1.");
+
+# Tests the die_with_code() method.
+eval { die_with_code(-1, "die with -1."); };
+ok($@, "Test die_with_code(): die wih -1.");

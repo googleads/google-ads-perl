@@ -1,3 +1,11 @@
+3.1.0 - 2020-05-07
+- Added support for Google Ads API v3_1.
+- Added code examples: upload_conversion_adjustment, upload_call_conversion,
+  approve_merchant_center_link, search_for_language_and_carrier_constants,
+  add_customer_match_user_list, etc.
+- Improved code examples: add_complete_campaigns_using_mutate_job,
+  get_account_hierarchy, get_account_budgets.
+
 3.0.0 - 2020-02-26
 - Added support for Google Ads API v3_0.
 - Added SearchStreamHandler to support the search stream API.

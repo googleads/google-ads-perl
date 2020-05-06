@@ -206,7 +206,7 @@ sub call {
     return $response_body;
   } else {
     $api_client->get_die_on_faults()
-      ? die($response_content)
+      ? die_with_code(1, $response_content)
       : warn($response_content);
 
     return Google::Ads::GoogleAds::GoogleAdsException->new($response_body);

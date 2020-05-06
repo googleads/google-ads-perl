@@ -36,6 +36,7 @@ sub new {
     adSharingError                  => $args->{adSharingError},
     adxError                        => $args->{adxError},
     assetError                      => $args->{assetError},
+    assetLinkError                  => $args->{assetLinkError},
     authenticationError             => $args->{authenticationError},
     authorizationError              => $args->{authorizationError},
     biddingError                    => $args->{biddingError},
@@ -106,6 +107,7 @@ sub new {
     notEmptyError                   => $args->{notEmptyError},
     notWhitelistedError             => $args->{notWhitelistedError},
     nullError                       => $args->{nullError},
+    offlineUserDataJobError         => $args->{offlineUserDataJobError},
     operationAccessDeniedError      => $args->{operationAccessDeniedError},
     operatorError                   => $args->{operatorError},
     partialFailureError             => $args->{partialFailureError},
@@ -130,6 +132,7 @@ sub new {
     stringLengthError               => $args->{stringLengthError},
     timeZoneError                   => $args->{timeZoneError},
     urlFieldError                   => $args->{urlFieldError},
+    userDataError                   => $args->{userDataError},
     userListError                   => $args->{userListError},
     youtubeVideoRegistrationError   => $args->{youtubeVideoRegistrationError}};
 
