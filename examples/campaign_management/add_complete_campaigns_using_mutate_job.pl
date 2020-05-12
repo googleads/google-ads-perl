@@ -61,7 +61,7 @@ use Data::Uniqid qw(uniqid);
 
 use constant NUMBER_OF_CAMPAIGNS_TO_ADD => 2;
 use constant NUMBER_OF_AD_GROUPS_TO_ADD => 2;
-use constant NUMBER_OF_KEYWORDS_TO_ADD  => 5;
+use constant NUMBER_OF_KEYWORDS_TO_ADD  => 4;
 use constant POLL_FREQUENCY_SECONDS     => 1;
 use constant POLL_TIMEOUT_SECONDS       => 60;
 
@@ -129,7 +129,7 @@ sub add_all_mutate_job_operations {
     "%d mutate operations have been added so far.\n",
     $add_mutate_job_operations_response->{totalOperations};
 
-  # You can use this next sequence token for calling addMutateJobOperations() next time.
+  # You can use this next sequence token for calling add_operations() next time.
   printf
     "Next sequence token for adding next operations is '%s'.\n",
     $add_mutate_job_operations_response->{nextSequenceToken};
