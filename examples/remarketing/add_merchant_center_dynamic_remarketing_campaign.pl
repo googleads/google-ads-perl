@@ -102,7 +102,20 @@ sub create_campaign {
     $campaign_budget_id)
     = @_;
 
-  # Create a campaign.
+  # Configure the settings for the shopping campaign.
+  my $shopping_settings =
+    Google::Ads::GoogleAds::V3::Resources::ShoppingSetting->new({
+      campaignPriority => 0,
+      merchantId       => $merchant_center_account_id,
+      # Display Network campaigns do not support partition by country. The only
+      # supported value is "ZZ". This signals that products from all countries are
+      # available in the campaign. The actual products which serve are based on
+      # the products tagged in the user list entry.
+      salesCountry => "ZZ",
+      enableLocal  => "true"
+    });
+
+  # Create the campaign.
   my $campaign = Google::Ads::GoogleAds::V3::Resources::Campaign->new({
       name => "Shopping campaign #" . uniqid(),
       # Dynamic remarketing campaigns are only available on the Google Display Network.
@@ -113,32 +126,21 @@ sub create_campaign {
         $customer_id, $campaign_budget_id
         ),
       manualCpc => Google::Ads::GoogleAds::V3::Common::ManualCpc->new(),
-      # The settings for the shopping campaign.
       # This connects the campaign to the Merchant Center account.
-      shoppingSetting =>
-        Google::Ads::GoogleAds::V3::Resources::ShoppingSetting->new({
-          campaignPriority => 0,
-          merchantId       => $merchant_center_account_id,
-          # Display Network campaigns do not support partition by country. The only
-          # supported value is "ZZ". This signals that products from all countries are
-          # available in the campaign. The actual products which serve are based on
-          # the products tagged in the user list entry.
-          salesCountry => "ZZ",
-          enableLocal  => "true"
-        })});
+      shoppingSetting => $shopping_settings
+    });
 
   # Create a campaign operation.
   my $campaign_operation =
     Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation->
     new({create => $campaign});
 
-  # Add the campaign.
+  # Issue a mutate request to add the campaign.
   my $campaign_response = $api_client->CampaignService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_operation]});
 
   my $campaign_resource_name = $campaign_response->{results}[0]{resourceName};
-
   printf "Created campaign with resource name '%s'.\n", $campaign_resource_name;
 
   return $campaign_resource_name;
@@ -148,7 +150,7 @@ sub create_campaign {
 sub create_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
-  # Create an ad group.
+  # Create the ad group.
   my $ad_group = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
     name     => "Dynamic remarketing ad group",
     campaign => $campaign_resource_name,
@@ -160,13 +162,12 @@ sub create_ad_group {
     Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
-  # Add the ad group.
+  # Issue a mutate request to add the ad group.
   my $ad_group_response = $api_client->AdGroupService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_operation]});
 
   my $ad_group_resource_name = $ad_group_response->{results}[0]{resourceName};
-
   printf "Created ad group with resource name '%s'.\n", $ad_group_resource_name;
 
   return $ad_group_resource_name;
@@ -184,7 +185,7 @@ sub create_ad {
     upload_asset($api_client, $customer_id, "https://goo.gl/mtt54n",
     "Square Marketing Image");
 
-  # Create a responsive display ad info object.
+  # Create the responsive display ad info object.
   my $responsive_display_ad_info =
     Google::Ads::GoogleAds::V3::Common::ResponsiveDisplayAdInfo->new({
       marketingImages => [
@@ -241,15 +242,14 @@ sub create_ad {
       adGroup => $ad_group_resource_name,
       ad      => Google::Ads::GoogleAds::V3::Resources::Ad->new({
           responsiveDisplayAd => $responsive_display_ad_info,
-          finalUrls           => "http://www.example.com/"
-        })});
+          finalUrls           => ["http://www.example.com/"]})});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
     Google::Ads::GoogleAds::V3::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
-  # Add the ad group ad.
+  # Issue a mutate request to add the ad group ad.
   my $ad_group_ad_response = $api_client->AdGroupAdService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
@@ -258,15 +258,15 @@ sub create_ad {
     $ad_group_ad_response->{results}[0]{resourceName};
 }
 
-# Adds an image to the Google Ads account.
+# Adds an image asset to the Google Ads account.
 sub upload_asset {
-  my ($api_client, $customer_id, $image_url, $image_name) = @_;
+  my ($api_client, $customer_id, $image_url, $asset_name) = @_;
 
   my $image_data = get_base64_data_from_url($image_url);
 
-  # Create an image asset;
+  # Create an asset.
   my $asset = Google::Ads::GoogleAds::V3::Resources::Asset->new({
-      name       => $image_name,
+      name       => $asset_name,
       type       => IMAGE,
       imageAsset => Google::Ads::GoogleAds::V3::Common::ImageAsset->new({
           data => $image_data
@@ -278,23 +278,23 @@ sub upload_asset {
       create => $asset
     });
 
-  # Add the asset;
+  # Issue a mutate request to add the asset.
   my $asset_response = $api_client->AssetService()->mutate({
       customerId => $customer_id,
       operations => [$asset_operation]});
 
-  my $image_resource_name = $asset_response->{results}[0]{resourceName};
+  my $image_asset_resource_name = $asset_response->{results}[0]{resourceName};
+  printf "Created image asset with resource name '%s'.\n",
+    $image_asset_resource_name;
 
-  printf "Created image asset with resource name '%s'.\n", $image_resource_name;
-
-  return $image_resource_name;
+  return $image_asset_resource_name;
 }
 
 # Targets a user list.
 sub attach_user_list {
   my ($api_client, $customer_id, $ad_group_resource_name, $user_list_id) = @_;
 
-  # Create an ad group criterion that targets the user list.
+  # Create the ad group criterion that targets the user list.
   my $ad_group_criterion =
     Google::Ads::GoogleAds::V3::Resources::AdGroupCriterion->new({
       adGroup  => $ad_group_resource_name,
@@ -309,7 +309,7 @@ sub attach_user_list {
     Google::Ads::GoogleAds::V3::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({create => $ad_group_criterion});
 
-  # Add the ad group criterion.
+  # Issue a mutate request to add the ad group criterion.
   my $ad_group_criterion_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
@@ -357,9 +357,9 @@ add_merchant_center_dynamic_remarketing_campaign
 
 =head1 DESCRIPTION
 
-This example creates a shopping campaign associated with an existing Merchant Center
-account, along with a related ad group and dynamic display ad, and targets a user
-list for remarketing purposes.
+This example creates a shopping campaign associated with an existing Merchant
+Center account, along with a related ad group and dynamic display ad, and
+targets a user list for remarketing purposes.
 
 =head1 SYNOPSIS
 
