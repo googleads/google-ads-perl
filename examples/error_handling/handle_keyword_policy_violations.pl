@@ -56,7 +56,7 @@ use Cwd qw(abs_path);
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $ad_group_id = "INSERT_AD_GROUP_ID_HERE";
-my $keyword     = "abortion";
+my $keyword     = "medication";
 
 sub handle_keyword_policy_violations {
   my ($api_client, $customer_id, $ad_group_id, $keyword) = @_;
