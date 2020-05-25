@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 79);
+use Test::More (tests => 81);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -434,6 +434,21 @@ ok(
     1000, ["cars", "volvo"]
   ),
   "Test of generate_keyword_ideas example."
+);
+require qw(examples/planning/get_ad_group_criterion_cpc_bid_simulations.pl);
+ok(
+  get_ad_group_criterion_cpc_bid_simulations(
+    $api_client, $customer_id, $display_campaign_id
+  ),
+  "Test of get_ad_group_criterion_cpc_bid_simulations example."
+);
+require
+  qw(examples/planning/get_campaign_criterion_bid_modifier_simulations.pl);
+ok(
+  get_campaign_criterion_bid_modifier_simulations(
+    $api_client, $customer_id, $display_ad_group_id
+  ),
+  "Test of get_campaign_criterion_bid_modifier_simulations example."
 );
 
 # recommendations
