@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Adds sitelinks to a campaign using feed services. To create a campaign, run
-# add_campaigns.pl.
+# Adds sitelinks to a campaign using feed services. If an ad group ID is provided,
+# also creates the ad group targeting for the first feed item. To create a campaign,
+# run add_campaigns.pl.
 
 use strict;
 use warnings;
@@ -336,7 +337,7 @@ sub create_campaign_feed {
     $campaign_feed_response->{results}[0]{resourceName};
 }
 
-# Creates ad group targeting.
+# Creates ad group targeting for the first feed item.
 sub create_ad_group_targeting {
   my ($api_client, $customer_id, $feed_data, $ad_group_id) = @_;
 
@@ -402,8 +403,9 @@ add_sitelinks_using_feeds
 
 =head1 DESCRIPTION
 
-Adds sitelinks to a campaign using feed services. To create a campaign, run
-add_campaigns.pl.
+Adds sitelinks to a campaign using feed services. If an ad group ID is provided,
+also creates the ad group targeting for the first feed item. To create a campaign,
+run add_campaigns.pl.
 
 =head1 SYNOPSIS
 
