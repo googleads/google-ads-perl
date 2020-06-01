@@ -41,7 +41,9 @@ use Cwd qw(abs_path);
 # Running the example with -h will print the command line usage.
 my $customer_id   = "INSERT_CUSTOMER_ID_HERE";
 my $feed_id       = "INSERT_FEED_ID_HERE";
-my $feed_item_ids = "INSERT_FEED_ITEM_IDS_HERE";
+my $feed_item_id1 = "INSERT_FEED_ITEM_ID_1_HERE";
+my $feed_item_id2 = "INSERT_FEED_ITEM_ID_2_HERE";
+my $feed_item_ids = [];
 
 sub remove_feed_items {
   my ($api_client, $customer_id, $feed_id, $feed_item_ids) = @_;
@@ -88,17 +90,17 @@ $api_client->set_die_on_faults(1);
 GetOptions(
   "customer_id=s"   => \$customer_id,
   "feed_id=i"       => \$feed_id,
-  "feed_item_ids=s" => \$feed_item_ids
+  "feed_item_ids=s" => \@$feed_item_ids
 );
+$feed_item_ids = [$feed_item_id1, $feed_item_id2] unless @$feed_item_ids;
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2) if not check_params($customer_id, $feed_id, $feed_item_ids);
 
 # Call the example.
-remove_feed_items(
-  $api_client, $customer_id =~ s/-//gr,
-  $feed_id, [split(/[,\s]+/, $feed_item_ids)]);
+remove_feed_items($api_client, $customer_id =~ s/-//gr,
+  $feed_id, $feed_item_ids);
 
 =pod
 
@@ -117,6 +119,6 @@ remove_feed_items.pl [options]
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
     -feed_id                    The feed ID.
-    -feed_item_ids              The comma separated list of feed item IDs.
+    -feed_item_ids              The IDs of the feed items to remove.
 
 =cut

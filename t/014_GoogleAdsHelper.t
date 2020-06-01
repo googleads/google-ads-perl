@@ -22,7 +22,7 @@ use warnings;
 use lib qw(lib);
 use Google::Ads::GoogleAds::V3::Resources::Campaign;
 
-use Test::More(tests => 38);
+use Test::More(tests => 39);
 
 # Tests use Google::Ads::GoogleAds::Utils::GoogleAdsHelper.
 use_ok("Google::Ads::GoogleAds::Utils::GoogleAdsHelper");
@@ -78,6 +78,7 @@ ok(
   !check_params($valid_param, [$invalid_param]),
   "Test check_params(): invalid array param."
 );
+ok(!check_params($valid_param, []), "Test check_params(): empty array param.");
 
 # Tests the trim() method.
 my $str         = "string-value";
