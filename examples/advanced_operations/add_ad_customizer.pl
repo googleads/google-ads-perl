@@ -57,6 +57,8 @@ use POSIX qw(strftime mktime);
 
 # We're doing only searches by resource_name in this example, we can set page size = 1.
 use constant PAGE_SIZE => 1;
+# We're creating two different ad groups to be dynamically populated by the same feed.
+use constant NUMBER_OF_AD_GROUPS => 2;
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -69,9 +71,15 @@ use constant PAGE_SIZE => 1;
 my $customer_id   = "INSERT_CUSTOMER_ID_HERE";
 my $ad_group_id_1 = "INSERT_AD_GROUP_ID_1_HERE";
 my $ad_group_id_2 = "INSERT_AD_GROUP_ID_2_HERE";
+my $ad_group_ids  = [];
 
 sub add_ad_customizer {
-  my ($api_client, $customer_id, $ad_group_id_1, $ad_group_id_2) = @_;
+  my ($api_client, $customer_id, $ad_group_ids) = @_;
+
+  die sprintf
+    "Please pass exactly %d ad group IDs in the ad_group_ids parameter.\n",
+    NUMBER_OF_AD_GROUPS
+    if scalar @$ad_group_ids != NUMBER_OF_AD_GROUPS;
 
   my $feed_name = "Ad Customizer example feed " . uniqid();
 
@@ -99,13 +107,12 @@ sub add_ad_customizer {
   );
 
   # Set the feed to be used only with the specified ad groups.
-  create_feed_item_targets($api_client, $customer_id,
-    [$ad_group_id_1, $ad_group_id_2],
+  create_feed_item_targets($api_client, $customer_id, $ad_group_ids,
     $feed_item_resource_names);
 
   # Create ads that use the feed for customization.
-  create_ads_with_customizations($api_client, $customer_id,
-    [$ad_group_id_1, $ad_group_id_2], $feed_name);
+  create_ads_with_customizations($api_client, $customer_id, $ad_group_ids,
+    $feed_name);
 
   return 1;
 }
@@ -423,18 +430,17 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"   => \$customer_id,
-  "ad_group_id_1=i" => \$ad_group_id_1,
-  "ad_group_id_2=i" => \$ad_group_id_2
+  "customer_id=s"  => \$customer_id,
+  "ad_group_ids=i" => \@$ad_group_ids
 );
+$ad_group_ids = [$ad_group_id_1, $ad_group_id_2] unless @$ad_group_ids;
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($customer_id, $ad_group_id_1, $ad_group_id_2);
+pod2usage(2) if not check_params($customer_id, $ad_group_ids);
 
 # Call the example.
-add_ad_customizer($api_client, $customer_id =~ s/-//gr,
-  $ad_group_id_1, $ad_group_id_2);
+add_ad_customizer($api_client, $customer_id =~ s/-//gr, $ad_group_ids);
 
 =pod
 
@@ -453,7 +459,6 @@ add_ad_customizer.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
-    -ad_group_id_1              The ad group ID 1 to bind the feed items to.
-    -ad_group_id_2              The ad group ID 2 to bind the feed items to.
+    -ad_group_ids               The ad group IDs to bind the feed items to.
 
 =cut

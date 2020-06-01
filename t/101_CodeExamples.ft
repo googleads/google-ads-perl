@@ -128,7 +128,7 @@ ok(
 require qw(examples/advanced_operations/add_ad_customizer.pl);
 ok(
   add_ad_customizer(
-    $api_client, $customer_id, $search_ad_group_id, $display_ad_group_id
+    $api_client, $customer_id, [$search_ad_group_id, $display_ad_group_id]
   ),
   "Test of add_ad_customizer example."
 );

@@ -22,7 +22,7 @@ use warnings;
 use lib qw(lib);
 use Google::Ads::GoogleAds::V3::Resources::Campaign;
 
-use Test::More(tests => 36);
+use Test::More(tests => 38);
 
 # Tests use Google::Ads::GoogleAds::Utils::GoogleAdsHelper.
 use_ok("Google::Ads::GoogleAds::Utils::GoogleAdsHelper");
@@ -69,6 +69,14 @@ ok(
 ok(
   !check_params($valid_param, $undef_param),
   "Test check_params(): valid and undef params."
+);
+ok(
+  check_params([$valid_param, $valid_param]),
+  "Test check_params(): valid array param."
+);
+ok(
+  !check_params($valid_param, [$invalid_param]),
+  "Test check_params(): invalid array param."
 );
 
 # Tests the trim() method.

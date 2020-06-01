@@ -37,7 +37,9 @@ sub remove_unassigned_fields {
 sub check_params {
   my (@params) = @_;
   foreach my $param (@params) {
-    if (!defined $param || $param =~ /INSERT_.*_HERE/) {
+    if (ref $param eq "ARRAY") {
+      return 0 if !check_params(@$param);
+    } elsif (!defined $param || $param =~ /INSERT_.*_HERE/) {
       return 0;
     }
   }
