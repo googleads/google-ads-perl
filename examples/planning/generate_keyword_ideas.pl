@@ -52,6 +52,7 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 # https://developers.google.com/adwords/api/docs/appendix/geotargeting.
 my $location_id_1 = "INSERT_LOCATION_ID_1_HERE";
 my $location_id_2 = "INSERT_LOCATION_ID_2_HERE";
+my $location_ids  = [];
 
 # A language criterion ID. For example, specify 1000 for English. For more
 # information on determining this value, see
@@ -60,6 +61,7 @@ my $language_id = "INSERT_LANGUAGE_ID_HERE";
 
 my $keyword_text_1 = "INSERT_KEYWORD_TEXT_1_HERE";
 my $keyword_text_2 = "INSERT_KEYWORD_TEXT_2_HERE";
+my $keyword_texts  = [];
 
 # Optional: Specify a URL string related to your business to generate ideas.
 my $page_url = undef;
@@ -107,7 +109,7 @@ sub generate_keyword_ideas {
   # Create a list of geo target constants based on the resource name of specified
   # location IDs.
   my $geo_target_constants = [
-    map(
+    map (
       Google::Ads::GoogleAds::V3::Utils::ResourceNames::geo_target_constant($_),
       @$location_ids)];
 
@@ -155,30 +157,24 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"    => \$customer_id,
-  "location_id_1=i"  => \$location_id_1,
-  "location_id_2=i"  => \$location_id_2,
-  "language_id=i"    => \$language_id,
-  "keyword_text_1=s" => \$keyword_text_1,
-  "keyword_text_2=s" => \$keyword_text_2,
-  "page_url=s"       => \$page_url,
+  "customer_id=s"   => \$customer_id,
+  "location_ids=i"  => \@$location_ids,
+  "language_id=i"   => \$language_id,
+  "keyword_texts=s" => \@$keyword_texts,
+  "page_url=s"      => \$page_url,
 );
+$location_ids  = [$location_id_1,  $location_id_2]  unless @$location_ids;
+$keyword_texts = [$keyword_text_1, $keyword_text_2] unless @$keyword_texts;
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params(
-  $customer_id, $location_id_1,  $location_id_2,
-  $language_id, $keyword_text_1, $keyword_text_2
-  );
+  if
+  not check_params($customer_id, $location_ids, $language_id, $keyword_texts);
 
 # Call the example.
-generate_keyword_ideas(
-  $api_client,
-  $customer_id =~ s/-//gr,
-  [$location_id_1, $location_id_2],
-  $language_id, [$keyword_text_1, $keyword_text_2], $page_url
-);
+generate_keyword_ideas($api_client, $customer_id =~ s/-//gr,
+  $location_ids, $language_id, $keyword_texts, $page_url);
 
 =pod
 
@@ -196,11 +192,9 @@ generate_keyword_ideas.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
-    -location_id_1              The location criterion ID 1, e.g. specify 21167 for New York.
-    -location_id_2              The location criterion ID 2, e.g. specify 21167 for New York.
+    -location_ids               The location criterion IDs, e.g. specify 21167 for New York.
     -language_id                The language criterion ID, e.g. specify 1000 for English.
-    -keyword_text_1             The keyword text 1, as a seed for ideas.
-    -keyword_text_2             The keyword text 2, as a seed for ideas.
+    -keyword_texts              The keyword texts, as a seed for ideas.
     -page_url                   [optional] URL of a page related to your business.
 
 =cut
