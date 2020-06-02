@@ -28,6 +28,7 @@ use Google::Ads::GoogleAds::V3::Resources::CampaignBudget;
 use Google::Ads::GoogleAds::V3::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
 use
   Google::Ads::GoogleAds::V3::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -42,11 +43,11 @@ use Data::Uniqid qw(uniqid);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id                       = "INSERT_CUSTOMER_ID_HERE";
-my $campaign_experiment_resource_name = "INSERT_EXPERIMENT_RESOURCE_NAME_HERE";
+my $customer_id            = "INSERT_CUSTOMER_ID_HERE";
+my $campaign_experiment_id = "INSERT_CAMPAIGN_EXPERIMENT_ID_HERE";
 
 sub graduate_campaign_experiment {
-  my ($api_client, $customer_id, $campaign_experiment_resource_name) = @_;
+  my ($api_client, $customer_id, $campaign_experiment_id) = @_;
 
   # Graduating a campaign experiment requires a new budget. Since the budget
   # for the base campaign has explicitly_shared set to false, the budget cannot
@@ -75,9 +76,12 @@ sub graduate_campaign_experiment {
 
   # Graduate the campaign using the campaign budget created above.
   my $graduate_response = $api_client->CampaignExperimentService()->graduate({
-    campaignExperiment => $campaign_experiment_resource_name,
-    campaignBudget     => $campaign_budget_resource_name
-  });
+      campaignExperiment =>
+        Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign_experiment(
+        $customer_id, $campaign_experiment_id
+        ),
+      campaignBudget => $campaign_budget_resource_name
+    });
 
   printf "Campaign experiment '%s' is now graduated.\n",
     $graduate_response->{graduatedCampaign};
@@ -98,21 +102,18 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"                       => \$customer_id,
-  "campaign_experiment_resource_name=s" => \$campaign_experiment_resource_name
+  "customer_id=s"            => \$customer_id,
+  "campaign_experiment_id=i" => \$campaign_experiment_id
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params($customer_id, $campaign_experiment_resource_name);
+  if not check_params($customer_id, $campaign_experiment_id);
 
 # Call the example.
-graduate_campaign_experiment(
-  $api_client,
-  $customer_id =~ s/-//gr,
-  $campaign_experiment_resource_name
-);
+graduate_campaign_experiment($api_client, $customer_id =~ s/-//gr,
+  $campaign_experiment_id);
 
 =pod
 
@@ -130,6 +131,6 @@ graduate_campaign_experiment.pl [options]
 
     -help                                   Show the help message.
     -customer_id                            The Google Ads customer ID.
-    -campaign_experiment_resource_name      The campaign experiment resource name.
+    -campaign_experiment_id                 The campaign experiment ID.
 
 =cut
