@@ -28,6 +28,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::V3::Resources::CampaignExperiment;
 use Google::Ads::GoogleAds::V3::Enums::CampaignExperimentTrafficSplitTypeEnum
   qw(RANDOM_QUERY);
+use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -42,16 +43,20 @@ use Data::Uniqid qw(uniqid);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id                  = "INSERT_CUSTOMER_ID_HERE";
-my $campaign_draft_resource_name = "INSERT_CAMPAIGN_DRAFT_RESOURCE_NAME_HERE";
+my $customer_id      = "INSERT_CUSTOMER_ID_HERE";
+my $base_campaign_id = "INSERT_BASE_CAMPAIGN_ID_HERE";
+my $draft_id         = "INSERT_DRAFT_ID_HERE";
 
 sub create_campaign_experiment {
-  my ($api_client, $customer_id, $campaign_draft_resource_name) = @_;
+  my ($api_client, $customer_id, $base_campaign_id, $draft_id) = @_;
 
   # Create a campaign experiment.
   my $campaign_experiment =
     Google::Ads::GoogleAds::V3::Resources::CampaignExperiment->new({
-      campaignDraft       => $campaign_draft_resource_name,
+      campaignDraft =>
+        Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign_draft(
+        $customer_id, $base_campaign_id, $draft_id
+        ),
       name                => "Campaign Experiment #" . uniqid(),
       trafficSplitPercent => 50,
       trafficSplitType    => RANDOM_QUERY
@@ -106,17 +111,18 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"                  => \$customer_id,
-  "campaign_draft_resource_name=s" => \$campaign_draft_resource_name
+  "customer_id=s"      => \$customer_id,
+  "base_campaign_id=i" => \$base_campaign_id,
+  "draft_id=i"         => \$draft_id
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($customer_id, $campaign_draft_resource_name);
+pod2usage(2) if not check_params($customer_id, $base_campaign_id, $draft_id);
 
 # Call the example.
 create_campaign_experiment($api_client, $customer_id =~ s/-//gr,
-  $campaign_draft_resource_name);
+  $base_campaign_id, $draft_id);
 
 =pod
 
@@ -135,6 +141,7 @@ create_campaign_experiment.pl [options]
 
     -help                            Show the help message.
     -customer_id                     The Google Ads customer ID.
-    -campaign_draft_resource_name    The campaign draft resource name.
+    -base_campaign_id                The base campaign ID.
+    -draft_id                        The draft ID used to create an experiment
 
 =cut
