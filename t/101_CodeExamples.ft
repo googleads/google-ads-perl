@@ -351,7 +351,7 @@ ok(
   "Test of handle_keyword_policy_violations example."
 );
 require qw(examples/error_handling/handle_partial_failure.pl);
-ok(handle_partial_failure($api_client, $customer_id, $search_ad_group_id),
+ok(handle_partial_failure($api_client, $customer_id, $search_campaign_id),
   "Test of handle_partial_failure example.");
 require qw(examples/error_handling/handle_rate_exceeded_error.pl);
 ok(handle_rate_exceeded_error($api_client, $customer_id, $search_ad_group_id),
