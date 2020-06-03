@@ -390,6 +390,11 @@ ok(
   "Test of add_sitelinks_using_feeds example."
 );
 
+# feeds
+# NOTE: Skip the remove_feed_items.pl as it requires additional setup.
+# NOTE: Skip the remove_flights_feed_item_attribute_value.pl as it requires additional setup.
+# NOTE: Skip the update_flights_feed_item_string_attribute_value.pl as it requires additional setup.
+
 # hotel_ads
 # NOTE: Skip the ad_hotel_ad.pl as it requires additional setup.
 # NOTE: Skip the add_hotel_ad_group_bid_modifiers.pl as it requires additional setup.
@@ -483,9 +488,6 @@ ok(
   add_remarketing_action($api_client, $customer_id),
   "Test of add_remarketing_action example."
 );
-# NOTE: Skip the remove_feed_items.pl as it requires additional setup.
-# NOTE: Skip the remove_flights_feed_item_string_attribute_value.pl as it requires additional setup.
-# NOTE: Skip the update_flights_feed_item_string_attribute_value.pl as it requires additional setup.
 # NOTE: Skip the upload_call_conversion.pl as it requires additional setup.
 # NOTE: Skip the upload_conversion_adjustment.pl as it requires additional setup.
 # NOTE: Skip the upload_offline_conversion.pl as it requires additional setup.
