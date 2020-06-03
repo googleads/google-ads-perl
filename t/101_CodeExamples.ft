@@ -503,6 +503,7 @@ ok(
   get_keyword_stats($api_client, $customer_id),
   "Test of get_keyword_stats example."
 );
+# NOTE: Skip the parallel_report_download.pl as it conflicts with JSON::SL.
 
 # shopping_ads
 # NOTE: Skip the add_listing_scope.pl as it requires a merchant account.
