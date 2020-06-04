@@ -69,7 +69,7 @@ sub parallel_report_download {
   # are rate limits at the customer ID level which are much stricter than limits
   # at the developer token level.
   foreach my $search_query (@{+GAQL_QUERY_STRINGS}) {
-    # Uses a list of threads to make sure that we wait for this report to complete
+    # Use a list of threads to make sure that we wait for this report to complete
     # on all customer IDs before proceeding.
     my $threads = [];
 
@@ -107,8 +107,8 @@ sub download_report {
   my $numResults   = 0;
   my $errorMessage = undef;
 
-  # Ideally we should use search stream request here. But there's a tricky issue
-  # in the JSON::SL module which is a dependency of SearchStreamHandler, as:
+  # Ideally we should use the search stream request here. But there's a tricky
+  # issue in the JSON::SL module which is a dependency of SearchStreamHandler:
   #
   # This will most likely not work with threads, although one would wonder why
   # you would want to use this module across threads.
