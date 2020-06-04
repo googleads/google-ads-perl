@@ -346,7 +346,7 @@ ok(
 require qw(examples/error_handling/handle_keyword_policy_violations.pl);
 ok(
   handle_keyword_policy_violations(
-    $api_client, $customer_id, $search_ad_group_id, "abortion"
+    $api_client, $customer_id, $search_ad_group_id, "medication"
   ),
   "Test of handle_keyword_policy_violations example."
 );

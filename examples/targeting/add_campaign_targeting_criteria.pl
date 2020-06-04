@@ -51,14 +51,15 @@ use Cwd qw(abs_path);
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 # Specify the keyword text to be created as a negative campaign criterion.
-my $keyword = "jupiter cruise";
+my $keyword_text = "jupiter cruise";
 # Specify the location ID below.
 # For more information on determining LOCATION_ID value, see:
 # https://developers.google.com/adwords/api/docs/appendix/geotargeting.
 my $location_id = 21167;    # NEW YORK
 
 sub add_campaign_targeting_criteria {
-  my ($api_client, $customer_id, $campaign_id, $keyword, $location_id) = @_;
+  my ($api_client, $customer_id, $campaign_id, $keyword_text, $location_id) =
+    @_;
 
   my $campaign_resource_name =
     Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign($customer_id,
@@ -66,7 +67,7 @@ sub add_campaign_targeting_criteria {
 
   my $operations = [
     create_negative_keyword_campaign_criterion_operation(
-      $keyword, $campaign_resource_name
+      $keyword_text, $campaign_resource_name
     ),
     create_location_campaign_criterion_operation(
       $location_id, $campaign_resource_name
@@ -189,20 +190,20 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s" => \$customer_id,
-  "campaign_id=i" => \$campaign_id,
-  "keyword=s"     => \$keyword,
-  "location_id=i" => \$location_id
+  "customer_id=s"  => \$customer_id,
+  "campaign_id=i"  => \$campaign_id,
+  "keyword_text=s" => \$keyword_text,
+  "location_id=i"  => \$location_id
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params($customer_id, $campaign_id, $keyword, $location_id);
+  if not check_params($customer_id, $campaign_id, $keyword_text, $location_id);
 
 # Call the example.
 add_campaign_targeting_criteria($api_client, $customer_id =~ s/-//gr,
-  $campaign_id, $keyword, $location_id);
+  $campaign_id, $keyword_text, $location_id);
 
 =pod
 
@@ -222,7 +223,7 @@ add_campaign_targeting_criteria.pl [options]
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
     -campaign_id                The campaign ID.
-    -keyword                    [optional] The keyword to be created as a negative
+    -keyword_text               [optional] The keyword to be created as a negative
                                 campaign criterion.
     -location_id                [optional] The location ID.
 

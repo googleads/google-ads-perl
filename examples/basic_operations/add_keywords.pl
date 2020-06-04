@@ -45,12 +45,12 @@ use Cwd qw(abs_path);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id = "INSERT_CUSTOMER_ID_HERE";
-my $ad_group_id = "INSERT_AD_GROUP_ID_HERE";
-my $keyword     = "mars cruise";
+my $customer_id  = "INSERT_CUSTOMER_ID_HERE";
+my $ad_group_id  = "INSERT_AD_GROUP_ID_HERE";
+my $keyword_text = "mars cruise";
 
 sub add_keywords {
-  my ($api_client, $customer_id, $ad_group_id, $keyword) = @_;
+  my ($api_client, $customer_id, $ad_group_id, $keyword_text) = @_;
 
   # Create a keyword.
   my $ad_group_criterion =
@@ -60,7 +60,7 @@ sub add_keywords {
       ),
       status  => ENABLED,
       keyword => Google::Ads::GoogleAds::V3::Common::KeywordInfo->new({
-          text      => $keyword,
+          text      => $keyword_text,
           matchType => EXACT
         })});
 
@@ -94,17 +94,17 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s" => \$customer_id,
-  "ad_group_id=i" => \$ad_group_id,
-  "keyword=s"     => \$keyword
+  "customer_id=s"  => \$customer_id,
+  "ad_group_id=i"  => \$ad_group_id,
+  "keyword_text=s" => \$keyword_text
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($customer_id, $ad_group_id, $keyword);
+pod2usage(2) if not check_params($customer_id, $ad_group_id, $keyword_text);
 
 # Call the example.
-add_keywords($api_client, $customer_id =~ s/-//gr, $ad_group_id, $keyword);
+add_keywords($api_client, $customer_id =~ s/-//gr, $ad_group_id, $keyword_text);
 
 =pod
 
@@ -124,6 +124,6 @@ add_keywords.pl [options]
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
     -ad_group_id                The ad group ID.
-    -keyword                    [optional] The keyword to be added to the ad group.
+    -keyword_text               [optional] The keyword to be added to the ad group.
 
 =cut

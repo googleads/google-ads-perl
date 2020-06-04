@@ -54,16 +54,16 @@ use Cwd qw(abs_path);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id = "INSERT_CUSTOMER_ID_HERE";
-my $ad_group_id = "INSERT_AD_GROUP_ID_HERE";
-my $keyword     = "medication";
+my $customer_id  = "INSERT_CUSTOMER_ID_HERE";
+my $ad_group_id  = "INSERT_AD_GROUP_ID_HERE";
+my $keyword_text = "medication";
 
 sub handle_keyword_policy_violations {
-  my ($api_client, $customer_id, $ad_group_id, $keyword) = @_;
+  my ($api_client, $customer_id, $ad_group_id, $keyword_text) = @_;
 
   # Configure the keyword text and match type settings.
   my $keyword_info = Google::Ads::GoogleAds::V3::Common::KeywordInfo->new({
-    text      => $keyword,
+    text      => $keyword_text,
     matchType => EXACT
   });
 
@@ -191,18 +191,18 @@ $api_client->set_die_on_faults(0);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s" => \$customer_id,
-  "ad_group_id=i" => \$ad_group_id,
-  "keyword=s"     => \$keyword
+  "customer_id=s"  => \$customer_id,
+  "ad_group_id=i"  => \$ad_group_id,
+  "keyword_text=s" => \$keyword_text
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($customer_id, $ad_group_id, $keyword);
+pod2usage(2) if not check_params($customer_id, $ad_group_id, $keyword_text);
 
 # Call the example.
 handle_keyword_policy_violations($api_client, $customer_id =~ s/-//gr,
-  $ad_group_id, $keyword);
+  $ad_group_id, $keyword_text);
 
 =pod
 
@@ -229,6 +229,6 @@ handle_keyword_policy_violations.pl [options]
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
     -ad_group_id                The ad group ID.
-    -keyword                    [optional] The keyword to be added to the ad group.
+    -keyword_text               [optional] The keyword to be added to the ad group.
 
 =cut
