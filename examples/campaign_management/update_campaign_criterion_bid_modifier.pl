@@ -46,11 +46,12 @@ my $customer_id  = "INSERT_CUSTOMER_ID_HERE";
 my $campaign_id  = "INSERT_CAMPAIGN_ID_HERE";
 my $criterion_id = "INSERT_CRITERION_ID_HERE";
 # Specify the bid modifier value here or the default specified below will be used.
-my $bid_modifier = 1.5;
+my $bid_modifier_value = 1.5;
 
 sub update_campaign_criterion_bid_modifier {
-  my ($api_client, $customer_id, $campaign_id, $criterion_id, $bid_modifier) =
-    @_;
+  my ($api_client, $customer_id, $campaign_id, $criterion_id,
+    $bid_modifier_value)
+    = @_;
 
   # Create a campaign criterion with the specified resource name and updated bid
   # modifier value.
@@ -60,7 +61,7 @@ sub update_campaign_criterion_bid_modifier {
         Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign_criterion(
         $customer_id, $campaign_id, $criterion_id
         ),
-      bidModifier => $bid_modifier
+      bidModifier => $bid_modifier_value
     });
 
   # Create the campaign criterion operation.
@@ -96,20 +97,21 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"  => \$customer_id,
-  "campaign_id=i"  => \$campaign_id,
-  "criterion_id=i" => \$criterion_id,
-  "bid_modifier=f" => \$bid_modifier
+  "customer_id=s"        => \$customer_id,
+  "campaign_id=i"        => \$campaign_id,
+  "criterion_id=i"       => \$criterion_id,
+  "bid_modifier_value=f" => \$bid_modifier_value
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params($customer_id, $campaign_id, $criterion_id, $bid_modifier);
+  if not check_params($customer_id, $campaign_id, $criterion_id,
+  $bid_modifier_value);
 
 # Call the example.
 update_campaign_criterion_bid_modifier($api_client, $customer_id =~ s/-//gr,
-  $campaign_id, $criterion_id, $bid_modifier);
+  $campaign_id, $criterion_id, $bid_modifier_value);
 
 =pod
 
@@ -129,6 +131,6 @@ update_campaign_criterion_bid_modifier.pl [options]
     -customer_id                The Google Ads customer ID.
     -campaign_id                The campaign ID.
     -criterion_id               The ID of the campaign criterion to update.
-    -bid_modifier               [optional] The bid modifier value to set.
+    -bid_modifier_value         [optional] The bid modifier value to set.
 
 =cut
