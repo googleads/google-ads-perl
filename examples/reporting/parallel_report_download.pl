@@ -91,9 +91,9 @@ sub parallel_report_download {
     foreach my $result (@$results) {
       printf "Customer ID '%d' Number of results: %d IsSuccess? %s\n",
         $result->{customerId}, $result->{numResults},
-        !$result->{errorMessage}
-        ? "Yes!"
-        : "No :-( Why? " . $result->{errorMessage};
+        defined $result->{errorMessage}
+        ? "No :-( Why? " . $result->{errorMessage}
+        : "Yes!";
     }
   }
 
@@ -136,7 +136,7 @@ sub download_report {
     }
   };
   if ($@) {
-    $errorMessage = $1 if $@ =~ /"message": "([^"]+)"/;
+    $errorMessage = $@ =~ /"message": "([^"]+)"/ ? $1 : "";
   }
 
   return {
