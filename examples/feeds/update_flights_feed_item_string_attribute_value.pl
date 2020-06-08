@@ -201,7 +201,7 @@ example is specifically for updating the StringValue of an attribute.
 
 =head1 SYNOPSIS
 
-update_feed_item_attribute_value.pl [options]
+update_flights_feed_item_string_attribute_value.pl [options]
 
     -help                               Show the help message.
     -customer_id                        The Google Ads customer ID.
