@@ -50,12 +50,12 @@ my $customer_id                   = "INSERT_CUSTOMER_ID_HERE";
 my $feed_id                       = "INSERT_FEED_ID_HERE";
 my $feed_item_id                  = "INSERT_FEED_ITEM_ID_HERE";
 my $flight_placeholder_field_name = "INSERT_FLIGHT_PLACEHOLDER_FIELD_NAME_HERE";
-my $attribute_value               = "INSERT_ATTRIBUTE_VALUE_HERE";
+my $feed_item_attribute_value     = "INSERT_FEED_ITEM_ATTRIBUTE_VALUE_HERE";
 
 sub update_flights_feed_item_string_attribute_value {
   my ($api_client, $customer_id, $feed_id, $feed_item_id,
     $flight_placeholder_field_name,
-    $attribute_value)
+    $feed_item_attribute_value)
     = @_;
 
   # Get the feed resource name.
@@ -84,7 +84,7 @@ sub update_flights_feed_item_string_attribute_value {
   my $feed_item_attribute_value =
     Google::Ads::GoogleAds::V3::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $attribute_id,
-      stringValue     => $attribute_value
+      stringValue     => $feed_item_attribute_value
     });
 
   # Get the index of the attribute value that will be updated.
@@ -169,7 +169,7 @@ GetOptions(
   "feed_id=i"                       => \$feed_id,
   "feed_item_id=i"                  => \$feed_item_id,
   "flight_placeholder_field_name=s" => \$flight_placeholder_field_name,
-  "attribute_value=s"               => \$attribute_value
+  "feed_item_attribute_value=s"     => \$feed_item_attribute_value
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -177,13 +177,13 @@ GetOptions(
 pod2usage(2)
   if not check_params($customer_id, $feed_id, $feed_item_id,
   $flight_placeholder_field_name,
-  $attribute_value);
+  $feed_item_attribute_value);
 
 # Call the example.
 update_flights_feed_item_string_attribute_value(
   $api_client, $customer_id =~ s/-//gr,
   $feed_id, $feed_item_id, $flight_placeholder_field_name,
-  $attribute_value
+  $feed_item_attribute_value
 );
 
 =pod
@@ -209,7 +209,7 @@ update_feed_item_attribute_value.pl [options]
     -feed_item_id                       The feed item ID.
     -flight_placeholder_field_name      The flight placeholder field name for the
                                         attribute to be updated.
-    -attribute_value                    The string value with which to update the
+    -feed_item_attribute_value          The string value with which to update the
                                         FeedAttributeValue.
 
 =cut
