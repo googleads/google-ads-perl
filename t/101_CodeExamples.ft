@@ -443,7 +443,7 @@ ok(
 require qw(examples/planning/get_ad_group_criterion_cpc_bid_simulations.pl);
 ok(
   get_ad_group_criterion_cpc_bid_simulations(
-    $api_client, $customer_id, $display_campaign_id
+    $api_client, $customer_id, $display_ad_group_id
   ),
   "Test of get_ad_group_criterion_cpc_bid_simulations example."
 );
@@ -451,7 +451,7 @@ require
   qw(examples/planning/get_campaign_criterion_bid_modifier_simulations.pl);
 ok(
   get_campaign_criterion_bid_modifier_simulations(
-    $api_client, $customer_id, $display_ad_group_id
+    $api_client, $customer_id, $display_campaign_id
   ),
   "Test of get_campaign_criterion_bid_modifier_simulations example."
 );
