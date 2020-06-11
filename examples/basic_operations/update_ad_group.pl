@@ -43,12 +43,12 @@ use Cwd qw(abs_path);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id      = "INSERT_CUSTOMER_ID_HERE";
-my $ad_group_id      = "INSERT_AD_GROUP_ID_HERE";
-my $bid_micro_amount = "INSERT_BID_MICRO_AMOUNT_HERE";
+my $customer_id          = "INSERT_CUSTOMER_ID_HERE";
+my $ad_group_id          = "INSERT_AD_GROUP_ID_HERE";
+my $cpc_bid_micro_amount = "INSERT_CPC_BID_MICRO_AMOUNT_HERE";
 
 sub update_ad_group {
-  my ($api_client, $customer_id, $ad_group_id, $bid_micro_amount) = @_;
+  my ($api_client, $customer_id, $ad_group_id, $cpc_bid_micro_amount) = @_;
 
   # Create an ad group with the proper resource name and any other changes.
   my $ad_group = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
@@ -57,7 +57,7 @@ sub update_ad_group {
         $customer_id, $ad_group_id
         ),
       status       => PAUSED,
-      cpcBidMicros => $bid_micro_amount
+      cpcBidMicros => $cpc_bid_micro_amount
     });
 
   # Create an ad group operation for update, using the FieldMasks utility to
@@ -92,18 +92,19 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"      => \$customer_id,
-  "ad_group_id=i"      => \$ad_group_id,
-  "bid_micro_amount=i" => \$bid_micro_amount
+  "customer_id=s"          => \$customer_id,
+  "ad_group_id=i"          => \$ad_group_id,
+  "cpc_bid_micro_amount=i" => \$cpc_bid_micro_amount
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($customer_id, $ad_group_id, $bid_micro_amount);
+pod2usage(2)
+  if not check_params($customer_id, $ad_group_id, $cpc_bid_micro_amount);
 
 # Call the example.
 update_ad_group($api_client, $customer_id =~ s/-//gr,
-  $ad_group_id, $bid_micro_amount);
+  $ad_group_id, $cpc_bid_micro_amount);
 
 =pod
 
@@ -123,6 +124,6 @@ update_ad_group.pl [options]
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
     -ad_group_id                The ad group ID.
-    -bid_micro_amount           The CPC bid micro amount.
+    -cpc_bid_micro_amount       The CPC bid micro amount.
 
 =cut
