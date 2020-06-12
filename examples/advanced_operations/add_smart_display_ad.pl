@@ -307,7 +307,7 @@ sub create_responsive_display_ad {
 sub create_image_asset {
   my ($api_client, $customer_id, $image_url, $image_name) = @_;
 
-  # Create a media file.
+  # Create an asset.
   my $asset = Google::Ads::GoogleAds::V3::Resources::Asset->new({
       name       => $image_name,
       type       => IMAGE,
