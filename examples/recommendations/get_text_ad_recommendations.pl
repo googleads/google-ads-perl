@@ -47,7 +47,7 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 sub get_text_ad_recommendations {
   my ($api_client, $customer_id) = @_;
 
-  # Creates the searcyh query.
+  # Creates the search query.
   my $search_query =
     "SELECT recommendation.type, recommendation.campaign, " .
     "recommendation.text_ad_recommendation " .
