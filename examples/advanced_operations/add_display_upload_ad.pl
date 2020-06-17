@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This code example adds a display upload ad to a given ad group. To get ad groups,
-# run get_ad_groups.pl.
+# This code example adds a display upload ad to a given ad group.
+# To get ad groups, run get_ad_groups.pl.
 #
 # This feature is only available to allowlisted accounts.
 # See https://support.google.com/google-ads/answer/1722096 for more details.
@@ -66,8 +66,8 @@ my $ad_group_id = "INSERT_AD_GROUP_ID_HERE";
 sub add_display_upload_ad {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
-  # There are several types of display upload ads. For this example, we will create
-  # an HTML5 upload ad, which requires a media bundle.
+  # There are several types of display upload ads. For this example, we will
+  # create an HTML5 upload ad, which requires a media bundle.
   # The DisplayUploadProductType field lists the available display upload types:
   # https://developers.google.com/google-ads/api/reference/rpc/v3/DisplayUploadAdInfo
 
@@ -135,8 +135,8 @@ sub create_display_upload_ad_group_ad {
     name      => "Ad for HTML5",
     finalUrls => ["http://example.com/html5"],
     # Exactly one ad data field must be included to specify the ad type. See
-    # https://developers.google.com/google-ads/api/reference/rpc/v3/Ad for thefull
-    # list of available types.
+    # https://developers.google.com/google-ads/api/reference/rpc/v3/Ad for the
+    # full list of available types.
     displayUploadAd => $display_upload_ad_info,
   });
 
@@ -195,8 +195,8 @@ add_display_upload_ad
 
 =head1 DESCRIPTION
 
-This code example adds a display upload ad to a given ad group. To get ad groups,
-run get_ad_groups.pl
+This code example adds a display upload ad to a given ad group.
+To get ad groups, run get_ad_groups.pl
 
 This feature is only available to allowlisted accounts.
 See https://support.google.com/google-ads/answer/1722096 for more details.
