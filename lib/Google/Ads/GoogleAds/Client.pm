@@ -78,6 +78,9 @@ sub START {
   # parameters to new() nor in the properties file.
   $service_address_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_SERVICE_ADDRESS;
+  $service_address_of{$ident} .= "/"
+    if substr($service_address_of{$ident}, -1) ne "/";
+
   $http_timeout_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_HTTP_TIMEOUT;
   $version_of{$ident} ||=
