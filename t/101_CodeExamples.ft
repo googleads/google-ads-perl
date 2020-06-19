@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 81);
+use Test::More (tests => 80);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -95,11 +95,7 @@ my $label_id = TestAPIUtils::create_label($api_client, $customer_id);
 ################################## Examples ##################################
 
 # account_management
-require qw(examples/account_management/approve_merchant_center_link.pl);
-ok(
-  approve_merchant_center_link($api_client, $customer_id),
-  "Test of approve_merchant_center_link example."
-);
+# NOTE: Skip the approve_merchant_center_link.pl as it requires a merchant account.
 require qw(examples/account_management/create_customer.pl);
 ok(create_customer($api_client, $manager_customer_id),
   "Test of create_customer example.");
