@@ -140,6 +140,7 @@ ok(
   add_app_campaign($api_client, $customer_id),
   "Test of add_app_campaign example."
 );
+# NOTE: Skip the add_display_upload_ad.pl as it requires additional setup.
 require qw(examples/advanced_operations/add_dynamic_page_feed.pl);
 ok(
   add_dynamic_page_feed(
