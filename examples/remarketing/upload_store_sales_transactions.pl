@@ -28,7 +28,6 @@ use lib "$Bin/../../lib";
 
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-
 use Google::Ads::GoogleAds::V3::Resources::OfflineUserDataJob;
 use Google::Ads::GoogleAds::V3::Common::OfflineUserAddressInfo;
 use Google::Ads::GoogleAds::V3::Common::StoreSalesMetadata;
@@ -38,14 +37,7 @@ use Google::Ads::GoogleAds::V3::Common::UserData;
 use Google::Ads::GoogleAds::V3::Common::UserIdentifier;
 use Google::Ads::GoogleAds::V3::Enums::OfflineUserDataJobTypeEnum
   qw(STORE_SALES_UPLOAD_FIRST_PARTY STORE_SALES_UPLOAD_THIRD_PARTY);
-use Google::Ads::GoogleAds::V3::Errors::GoogleAdsError;
-use
-  Google::Ads::GoogleAds::V3::Services::OfflineUserDataJobService::AddOfflineUserDataJobOperationsResponse;
-use
-  Google::Ads::GoogleAds::V3::Services::OfflineUserDataJobService::CreateOfflineUserDataJobResponse;
-use
-  Google::Ads::GoogleAds::V3::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
-use Google::Ads::GoogleAds::V3::Services::OfflineUserDataJobService;
+use Google::Ads::GoogleAds::V3::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
 use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
@@ -92,7 +84,7 @@ sub upload_store_sales_transactions {
 
   my $offline_user_data_job_service = $api_client->OfflineUserDataJobService();
 
-  # Creates an offline user data job for uploading transactions.
+  # Create an offline user data job for uploading transactions.
   my $offline_user_data_job_resource_name = create_offline_user_data_job(
     $offline_user_data_job_service, $customer_id,
     $offline_user_data_job_type,    $external_id,
@@ -100,7 +92,7 @@ sub upload_store_sales_transactions {
     $partner_id
   );
 
-  # Adds transactions to the job.
+  # Add transactions to the job.
   add_transactions_to_offline_user_data_job(
     $offline_user_data_job_service,       $customer_id,
     $offline_user_data_job_resource_name, $conversion_action_id
@@ -135,8 +127,8 @@ sub upload_store_sales_transactions {
   return 1;
 }
 
-# Creates an offline user data job for uploading store sales transactions.
-# Returns the resource name of the created job.
+# Create an offline user data job for uploading store sales transactions.
+# Return the resource name of the created job.
 sub create_offline_user_data_job {
   my (
     $offline_user_data_job_service, $customer_id,
@@ -153,14 +145,14 @@ sub create_offline_user_data_job {
     # Please refer to https://support.google.com/google-ads/answer/7506124 for
     # additional details.
     Google::Ads::GoogleAds::V3::Common::StoreSalesMetadata->new({
-      # Sets the fraction of your overall sales that you (or the advertiser,
+      # Set the fraction of your overall sales that you (or the advertiser,
       # in the third party case) can associate with a customer (email, phone
       # number, address, etc.) in your database or loyalty program.
       # For example, set this to 0.7 if you have 100 transactions over 30
       # days, and out of those 100 transactions, you can identify 70 by an
       # email address or phone number.
       loyaltyFraction => 0.7,
-      # Sets the fraction of sales you're uploading out of the overall sales
+      # Set the fraction of sales you're uploading out of the overall sales
       # that you (or the advertiser, in the third party case) can associate
       # with a customer. In most cases, you will set this to 1.0.
       # Continuing the example above for loyalty fraction, a value of 1.0 here
@@ -170,25 +162,25 @@ sub create_offline_user_data_job {
     });
 
   if ($offline_user_data_job_type eq STORE_SALES_UPLOAD_THIRD_PARTY) {
-    # Creates additional metadata required for uploading third party data.
+    # Create additional metadata required for uploading third party data.
     my $store_sales_third_party_metadata =
       Google::Ads::GoogleAds::V3::Common::StoreSalesThirdPartyMetadata->new({
         # The date/time must be in the format "yyyy-MM-dd hh:mm:ss".
         advertiserUploadDateTime => $advertiser_upload_date_time,
 
-        # Sets the fraction of transactions you received from the advertiser
+        # Set the fraction of transactions you received from the advertiser
         # that have valid formatting and values. This captures any transactions
         # the advertiser provided to you but which you are unable to upload to
         # Google due to formatting errors or missing data.
         # In most cases, you will set this to 1.0.
         validTransactionFraction => 1.0,
-        # Sets the fraction of valid transactions (as defined above) you
+        # Set the fraction of valid transactions (as defined above) you
         # received from the advertiser that you (the third party) have matched
         # to an external user ID on your side.
         # In most cases, you will set this to 1.0.
         partnerMatchFraction => 1.0,
 
-        # Sets the fraction of transactions you (the third party) are uploading
+        # Set the fraction of transactions you (the third party) are uploading
         # out of the transactions you received from the advertiser that meet
         # both of the following criteria:
         # 1. Are valid in terms of formatting and values. See valid transaction
@@ -201,16 +193,16 @@ sub create_offline_user_data_job {
         # Please speak with your Google representative to get the values to use
         # for the bridge map version and partner IDs.
 
-        # Sets the version of partner IDs to be used for uploads.
+        # Set the version of partner IDs to be used for uploads.
         bridgeMapVersionId => $bridge_map_version_id,
-        # Sets the third party partner ID uploading the transactions.
+        # Set the third party partner ID uploading the transactions.
         partnerId => $partner_id,
       });
     $store_sales_metadata->{thirdPartyMetadata} =
       $store_sales_third_party_metadata;
   }
 
-  # Creates a new offline user data job.
+  # Create a new offline user data job.
   my $offline_user_data_job =
     Google::Ads::GoogleAds::V3::Resources::OfflineUserDataJob->new({
       type               => $offline_user_data_job_type,
@@ -232,7 +224,7 @@ sub create_offline_user_data_job {
   return $offline_user_data_job_resource_name;
 }
 
-# Adds operations to the job for a set of sample transactions.
+# Add operations to the job for a set of sample transactions.
 sub add_transactions_to_offline_user_data_job {
   my (
     $offline_user_data_job_service,       $customer_id,
@@ -247,7 +239,7 @@ sub add_transactions_to_offline_user_data_job {
         $customer_id, $conversion_action_id
       )});
 
-  # Prints the status message if any partial failure error is returned.
+  # Print the status message if any partial failure error is returned.
   # Note: The details of each partial failure error are not printed here, you
   # can refer to the example handle_partial_failure.pl to learn more.
   if ($response->{partialFailureError}) {
@@ -261,8 +253,8 @@ sub add_transactions_to_offline_user_data_job {
   print "The operations are added to the offline user data job.\n";
 }
 
-# Creates a list of offline user data job operations for sample transactions.
-# Returns a list of operations.
+# Create a list of offline user data job operations for sample transactions.
+# Return a list of operations.
 sub build_offline_user_data_job_operations {
   # Create the first transaction for upload based on an email address and state.
   my $user_data_with_email_address =
@@ -285,16 +277,16 @@ sub build_offline_user_data_job_operations {
             $customer_id, $conversion_action_id
             ),
           currencyCode => "USD",
-          # Converts the transaction amount from $200 USD to micros.
+          # Convert the transaction amount from $200 USD to micros.
           transactionAmountMicros => 200000000,
-          # Specifies the date and time of the transaction. This date and time
+          # Specify the date and time of the transaction. This date and time
           # will be interpreted by the API using the Google Ads customer's
           # time zone. The date/time must be in the format
           # "yyyy-MM-dd hh:mm:ss".
           transactionDateTime => "2020-05-01 23:52:12",
         })});
 
-  # Creates the second transaction for upload based on a physical address.
+  # Create the second transaction for upload based on a physical address.
   my $user_data_with_physical_address =
     Google::Ads::GoogleAds::V3::Common::UserData->new({
       userIdentifiers => [
@@ -317,9 +309,9 @@ sub build_offline_user_data_job_operations {
             $conversion_action_id
             ),
           currencyCode => "EUR",
-          # Converts the transaction amount from 450 EUR to micros.
+          # Convert the transaction amount from 450 EUR to micros.
           transactionAmountMicros => 450000000,
-          # Specifies the date and time of the transaction. This date and time
+          # Specify the date and time of the transaction. This date and time
           # will be interpreted by the API using the Google Ads customer's
           # time zone. The date/time must be in the format
           # "yyyy-MM-dd hh:mm:ss".
@@ -341,7 +333,7 @@ sub build_offline_user_data_job_operations {
   return $operations;
 }
 
-# Returns the result of normalizing and then hashing the string using the
+# Return the result of normalizing and then hashing the string using the
 # provided digest. Private customer data must be hashed during upload, as
 # described at https://support.google.com/google-ads/answer/7506124
 sub normalize_and_hash {
