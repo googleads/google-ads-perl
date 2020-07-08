@@ -488,6 +488,7 @@ ok(
 # NOTE: Skip the upload_call_conversion.pl as it requires additional setup.
 # NOTE: Skip the upload_conversion_adjustment.pl as it requires additional setup.
 # NOTE: Skip the upload_offline_conversion.pl as it requires additional setup.
+# NOTE: Skip the upload_store_sales_transactions.pl as it requires additional setup.
 
 # reporting
 require qw(examples/reporting/get_hotel_ads_performance.pl);
