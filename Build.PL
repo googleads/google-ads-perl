@@ -23,7 +23,7 @@ use warnings;
 
 use lib "lib";
 
-my $build_sc = Module::Build->subclass(
+my $builddd_sddc = Module::Build->subclass(
   code => q(
       sub ACTION_testsmall {shift->generic_test(type => "small");}
       sub ACTION_testmedium {shift->generic_test(type => "medium");}
@@ -35,7 +35,7 @@ my $build_sc = Module::Build->subclass(
     )
 );
 
-$build_sc->new(
+$buildddd_sc->new(
   module_name        => "Google::Ads::GoogleAds::Client",
   license            => "apache",
   dist_author        => "Wang Fan",
