@@ -67,11 +67,11 @@ sub call {
   ##############################################################################
   if ($http_method eq GET) {
     # HTTP GET request scenarios:
-    #  GET: v3/customers:listAccessibleCustomers
-    #  GET: v3/{+resourceName}
-    #  GET: v3/{+resourceName}:listResults
-    #  GET: v3/customers/{+customerId}/paymentsAccounts
-    #  GET: v3/customers/{+customerId}/merchantCenterLinks
+    #  GET: v4/customers:listAccessibleCustomers
+    #  GET: v4/{+resourceName}
+    #  GET: v4/{+resourceName}:listResults
+    #  GET: v4/customers/{+customerId}/paymentsAccounts
+    #  GET: v4/customers/{+customerId}/merchantCenterLinks
     $request_path = expand_path_template($request_path, $request_body);
 
     # GET: When the $request_body is a hash reference, use the path parameters
@@ -80,19 +80,19 @@ sub call {
     #
     #  GET: CampaignExperimentService.list_async_errors
     #  GET: CampaignDraftService.list_async_errors
-    #  GET: MutateJobService.list_results
+    #  GET: BatchJobService.list_results
     if (ref $request_body and (keys %$request_body) > 0) {
       $request_path .= ("?" . URI::Query->new($request_body));
     }
   } elsif ($http_method eq POST) {
     # HTTP POST request scenarios:
-    #  POST: v3/geoTargetConstants:suggest
-    #  POST: v3/googleAdsFields:search
-    #  POST: v3/customers/{+customerId}/googleAds:search
-    #  POST: v3/customers/{+customerId}/campaigns:mutate
-    #  POST: v3/{+keywordPlan}:generateForecastMetrics
-    #  POST: v3/{+campaignDraft}:promote
-    #  POST: v3/{+resourceName}:addOperations
+    #  POST: v4/geoTargetConstants:suggest
+    #  POST: v4/googleAdsFields:search
+    #  POST: v4/customers/{+customerId}/googleAds:search
+    #  POST: v4/customers/{+customerId}/campaigns:mutate
+    #  POST: v4/{+keywordPlan}:generateForecastMetrics
+    #  POST: v4/{+campaignDraft}:promote
+    #  POST: v4/{+resourceName}:addOperations
 
     # POST: Retain the 'customerId' variable in the $request_body hash
     # reference after the $request_path is expanded.
@@ -103,7 +103,7 @@ sub call {
     $request_body->{customerId} = $customer_id if defined $customer_id;
   } else {
     # Other HTTP request scenarios:
-    #  DELETE: v3/{+name} for OperationService
+    #  DELETE: v4/{+name} for OperationService
     $request_path = expand_path_template($request_path, $request_body);
   }
 
@@ -236,6 +236,10 @@ sub _get_http_headers {
   push @$headers, ("login-customer-id", $login_customer_id =~ s/-//gr)
     if $login_customer_id;
 
+  my $linked_customer_id = $api_client->get_linked_customer_id();
+  push @$headers, ("linked-customer-id", $linked_customer_id =~ s/-//gr)
+    if $linked_customer_id;
+
   return $headers;
 }
 
@@ -256,7 +260,7 @@ AdGroupService, etc.
 
   use Google::Ads::GoogleAds::Client;
 
-  my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+  my $api_client = Google::Ads::GoogleAds::Client->new();
 
   my $campaign_service = $api_client->CampaignService();
 
@@ -322,13 +326,14 @@ message on API errors.
 =head2 _get_http_headers
 
 Prepare the basic HTTP request headers including Content-Type, user-agent,
-developer-token and login_customer_id - if needed. The headers will be consolidated
-with access token in the method of L<Google::Ads::GoogleAds::Common::OAuth2BaseHandler/prepare_request>.
+developer-token, login-customer-id, linked-customer-id - if needed. The headers
+will be consolidated with access token in the method of
+L<Google::Ads::GoogleAds::Common::OAuth2BaseHandler/prepare_request>.
 
 =head3 Returns
 
-The basic HTTP headers including Content-Type, user-agent, developer-token and
-login_customer_id - if needed.
+The basic HTTP headers including Content-Type, user-agent, developer-token,
+login-customer-id, linked-customer-id - if needed.
 
 =head1 LICENSE AND COPYRIGHT
 

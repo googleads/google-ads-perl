@@ -25,10 +25,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V3::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V4::Resources::CampaignCriterion;
 use
-  Google::Ads::GoogleAds::V3::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,9 +56,9 @@ sub update_campaign_criterion_bid_modifier {
   # Create a campaign criterion with the specified resource name and updated bid
   # modifier value.
   my $campaign_criterion =
-    Google::Ads::GoogleAds::V3::Resources::CampaignCriterion->new({
+    Google::Ads::GoogleAds::V4::Resources::CampaignCriterion->new({
       resourceName =>
-        Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign_criterion(
+        Google::Ads::GoogleAds::V4::Utils::ResourceNames::campaign_criterion(
         $customer_id, $campaign_id, $criterion_id
         ),
       bidModifier => $bid_modifier_value
@@ -66,7 +66,7 @@ sub update_campaign_criterion_bid_modifier {
 
   # Create the campaign criterion operation.
   my $campaign_criterion_operation =
-    Google::Ads::GoogleAds::V3::Services::CampaignCriterionService::CampaignCriterionOperation
+    Google::Ads::GoogleAds::V4::Services::CampaignCriterionService::CampaignCriterionOperation
     ->new({
       update     => $campaign_criterion,
       updateMask => all_set_fields_of($campaign_criterion)});
@@ -90,7 +90,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

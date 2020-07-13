@@ -27,8 +27,8 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V3::Services::ConversionUploadService::CallConversion;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::ConversionUploadService::CallConversion;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,10 +56,10 @@ sub upload_call_conversion {
 
   # Create a call conversion by specifying currency as USD.
   my $call_conversion =
-    Google::Ads::GoogleAds::V3::Services::ConversionUploadService::CallConversion
+    Google::Ads::GoogleAds::V4::Services::ConversionUploadService::CallConversion
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V3::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V4::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       callerId           => $caller_id,
@@ -103,7 +103,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

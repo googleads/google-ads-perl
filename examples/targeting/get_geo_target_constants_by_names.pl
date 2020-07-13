@@ -25,7 +25,7 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V3::Services::GeoTargetConstantService::LocationNames;
+  Google::Ads::GoogleAds::V4::Services::GeoTargetConstantService::LocationNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -47,7 +47,7 @@ sub get_geo_target_constants_by_names {
       locale      => $locale,
       countryCode => $country_code,
       locationNames =>
-        Google::Ads::GoogleAds::V3::Services::GeoTargetConstantService::LocationNames
+        Google::Ads::GoogleAds::V4::Services::GeoTargetConstantService::LocationNames
         ->new({
           names => $location_names
         })});
@@ -78,7 +78,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

@@ -31,22 +31,22 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
-use Google::Ads::GoogleAds::V3::Resources::UserList;
-use Google::Ads::GoogleAds::V3::Resources::OfflineUserDataJob;
-use Google::Ads::GoogleAds::V3::Common::CrmBasedUserListInfo;
-use Google::Ads::GoogleAds::V3::Common::CustomerMatchUserListMetadata;
-use Google::Ads::GoogleAds::V3::Common::UserData;
-use Google::Ads::GoogleAds::V3::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V3::Common::OfflineUserAddressInfo;
-use Google::Ads::GoogleAds::V3::Enums::CustomerMatchUploadKeyTypeEnum
+use Google::Ads::GoogleAds::V4::Resources::UserList;
+use Google::Ads::GoogleAds::V4::Resources::OfflineUserDataJob;
+use Google::Ads::GoogleAds::V4::Common::CrmBasedUserListInfo;
+use Google::Ads::GoogleAds::V4::Common::CustomerMatchUserListMetadata;
+use Google::Ads::GoogleAds::V4::Common::UserData;
+use Google::Ads::GoogleAds::V4::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V4::Common::OfflineUserAddressInfo;
+use Google::Ads::GoogleAds::V4::Enums::CustomerMatchUploadKeyTypeEnum
   qw(CONTACT_INFO);
-use Google::Ads::GoogleAds::V3::Enums::OfflineUserDataJobTypeEnum
+use Google::Ads::GoogleAds::V4::Enums::OfflineUserDataJobTypeEnum
   qw(CUSTOMER_MATCH_USER_LIST);
-use Google::Ads::GoogleAds::V3::Services::UserListService::UserListOperation;
+use Google::Ads::GoogleAds::V4::Services::UserListService::UserListOperation;
 use
-  Google::Ads::GoogleAds::V3::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
+  Google::Ads::GoogleAds::V4::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
 use
-  Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -85,7 +85,7 @@ sub create_customer_match_user_list {
   my ($api_client, $customer_id) = @_;
 
   # Create the user list.
-  my $user_list = Google::Ads::GoogleAds::V3::Resources::UserList->new({
+  my $user_list = Google::Ads::GoogleAds::V4::Resources::UserList->new({
       name => "Customer Match list #" . uniqid(),
       description =>
         "A list of customers that originated from email and physical addresses",
@@ -94,13 +94,13 @@ sub create_customer_match_user_list {
       # Set the membership life span to 30 days.
       membershipLifeSpan => 30,
       crmBasedUserList =>
-        Google::Ads::GoogleAds::V3::Common::CrmBasedUserListInfo->new({
+        Google::Ads::GoogleAds::V4::Common::CrmBasedUserListInfo->new({
           uploadKeyType => CONTACT_INFO
         })});
 
   # Create the user list operation.
   my $user_list_operation =
-    Google::Ads::GoogleAds::V3::Services::UserListService::UserListOperation->
+    Google::Ads::GoogleAds::V4::Services::UserListService::UserListOperation->
     new({
       create => $user_list
     });
@@ -125,10 +125,10 @@ sub add_users_to_customer_match_user_list {
 
   # Create a new offline user data job.
   my $offline_user_data_job =
-    Google::Ads::GoogleAds::V3::Resources::OfflineUserDataJob->new({
+    Google::Ads::GoogleAds::V4::Resources::OfflineUserDataJob->new({
       type => CUSTOMER_MATCH_USER_LIST,
       customerMatchUserListMetadata =>
-        Google::Ads::GoogleAds::V3::Common::CustomerMatchUserListMetadata->new({
+        Google::Ads::GoogleAds::V4::Common::CustomerMatchUserListMetadata->new({
           userList => $user_list_resource_name
         })});
 
@@ -196,19 +196,19 @@ sub add_users_to_customer_match_user_list {
 sub build_offline_user_data_job_operations() {
   # Create a first user data based on an email address.
   my $user_data_with_email_address =
-    Google::Ads::GoogleAds::V3::Common::UserData->new({
+    Google::Ads::GoogleAds::V4::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V3::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V4::Common::UserIdentifier->new({
             # Hash normalized email addresses based on SHA-256 hashing algorithm.
             hashedEmail => normalize_and_hash('customer@example.com')})]});
 
   # Create a second user data based on a physical address.
   my $user_data_with_physical_address =
-    Google::Ads::GoogleAds::V3::Common::UserData->new({
+    Google::Ads::GoogleAds::V4::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V3::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V4::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V3::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V4::Common::OfflineUserAddressInfo->new({
                 # First and last name must be normalized and hashed.
                 hashedFirstName => normalize_and_hash("John"),
                 hashedLastName  => normalize_and_hash("Doe"),
@@ -219,12 +219,12 @@ sub build_offline_user_data_job_operations() {
 
   # Create the operations to add the two users.
   my $operations = [
-    Google::Ads::GoogleAds::V3::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V4::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_email_address
       }
       ),
-    Google::Ads::GoogleAds::V3::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V4::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_physical_address
       })];
@@ -244,7 +244,7 @@ sub print_customer_match_user_list_info {
 
   # Create a search Google Ads stream request that will retrieve the user list.
   my $search_stream_request =
-    Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
@@ -292,7 +292,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

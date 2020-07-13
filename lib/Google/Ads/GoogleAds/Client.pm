@@ -21,7 +21,7 @@ package Google::Ads::GoogleAds::Client;
 use strict;
 use warnings;
 use version;
-our $VERSION = qv("3.1.0");
+our $VERSION = qv("4.0.0");
 
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::Logging::GoogleAdsLogger;
@@ -35,6 +35,7 @@ use constant AUTH_HANDLERS_ORDER          => (OAUTH_2_APPLICATIONS_HANDLER);
 # These need to go in the same line for older Perl interpreters to understand.
 my %developer_token_of : ATTR(:name<developer_token> :default<>);
 my %login_customer_id_of : ATTR(:name<login_customer_id> :default<>);
+my %linked_customer_id_of : ATTR(:name<linked_customer_id> :default<>);
 my %service_address_of : ATTR(:name<service_address> :default<>);
 my %user_agent_of : ATTR(:name<user_agent> :default<>);
 my %proxy_of : ATTR(:name<proxy> :default<>);
@@ -67,11 +68,12 @@ sub START {
     # If there's a valid properties file to read from, parse it and use the
     # config values to fill in any missing attributes.
     %properties = __parse_properties_file($properties_file_of{$ident});
-    $developer_token_of{$ident}   ||= $properties{developerToken};
-    $login_customer_id_of{$ident} ||= $properties{loginCustomerId};
-    $service_address_of{$ident}   ||= $properties{serviceAddress};
-    $user_agent_of{$ident}        ||= $properties{userAgent};
-    $proxy_of{$ident}             ||= $properties{proxy};
+    $developer_token_of{$ident}    ||= $properties{developerToken};
+    $login_customer_id_of{$ident}  ||= $properties{loginCustomerId};
+    $linked_customer_id_of{$ident} ||= $properties{linkedCustomerId};
+    $service_address_of{$ident}    ||= $properties{serviceAddress};
+    $user_agent_of{$ident}         ||= $properties{userAgent};
+    $proxy_of{$ident}              ||= $properties{proxy};
   }
 
   # Provide default values for below attributes if they weren't set by
@@ -227,7 +229,7 @@ Google::Ads::GoogleAds::Client
 
   use Google::Ads::GoogleAds::Client;
 
-  my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+  my $api_client = Google::Ads::GoogleAds::Client->new();
 
   my $customer_id = "1234567890";
 
@@ -276,6 +278,14 @@ L<https://developers.google.com/google-ads/api/docs/first-call/dev-token>.
 This is the customer ID of the authorized customer to use in the request, without
 hyphens. If your access to the customer account is through a manager account,
 this attribute is required and must be set to the customer ID of the manager account.
+
+=head2 linked_customer_id
+
+This header is only required for methods that update the resources of an entity
+when permissioned via Linked Accounts in the Google Ads UI (AccountLink resource
+in the Google Ads API). Set this value to the customer ID of the data provider
+that updates the resources of the specified customer ID. It should be set without
+dashes.
 
 =head2 service_address
 
@@ -442,8 +452,8 @@ instance is set to die() on API faults.
 
 The client object contains a method for each service provided by the Google Ads
 API. For example it can be invoked as $api_client->AdGroupService() and it will
-return an object of type L<Google::Ads::GoogleAds::V3::Services::AdGroupService>
-when using version V3 of the API.
+return an object of type L<Google::Ads::GoogleAds::V4::Services::AdGroupService>
+when using version V4 of the API.
 
 For a list of all the available services please refer to
 L<https://developers.google.com/google-ads/api/docs> and for code samples on

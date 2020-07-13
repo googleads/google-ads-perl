@@ -25,12 +25,12 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V3::Resources::AdGroupBidModifier;
-use Google::Ads::GoogleAds::V3::Common::DeviceInfo;
-use Google::Ads::GoogleAds::V3::Enums::DeviceEnum qw(MOBILE);
+use Google::Ads::GoogleAds::V4::Resources::AdGroupBidModifier;
+use Google::Ads::GoogleAds::V4::Common::DeviceInfo;
+use Google::Ads::GoogleAds::V4::Enums::DeviceEnum qw(MOBILE);
 use
-  Google::Ads::GoogleAds::V3::Services::AdGroupBidModifierService::AdGroupBidModifierOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::AdGroupBidModifierService::AdGroupBidModifierOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -55,18 +55,18 @@ sub add_ad_group_bid_modifier {
   # Create an ad group bid modifier for mobile devices with the specified ad group ID and
   # bid modifier value.
   my $ad_group_bid_modifier =
-    Google::Ads::GoogleAds::V3::Resources::AdGroupBidModifier->new({
-      adGroup => Google::Ads::GoogleAds::V3::Utils::ResourceNames::ad_group(
+    Google::Ads::GoogleAds::V4::Resources::AdGroupBidModifier->new({
+      adGroup => Google::Ads::GoogleAds::V4::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       bidModifier => $bid_modifier_value,
-      device      => Google::Ads::GoogleAds::V3::Common::DeviceInfo->new({
+      device      => Google::Ads::GoogleAds::V4::Common::DeviceInfo->new({
           type => MOBILE
         })});
 
   # Create an ad group bid modifier operation.
   my $ad_group_bid_modifier_operation =
-    Google::Ads::GoogleAds::V3::Services::AdGroupBidModifierService::AdGroupBidModifierOperation
+    Google::Ads::GoogleAds::V4::Services::AdGroupBidModifierService::AdGroupBidModifierOperation
     ->new({
       create => $ad_group_bid_modifier
     });
@@ -89,7 +89,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

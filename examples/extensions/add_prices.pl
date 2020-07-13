@@ -26,25 +26,25 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V3::Resources::CustomerExtensionSetting;
-use Google::Ads::GoogleAds::V3::Resources::ExtensionFeedItem;
-use Google::Ads::GoogleAds::V3::Common::PriceFeedItem;
-use Google::Ads::GoogleAds::V3::Common::PriceOffer;
-use Google::Ads::GoogleAds::V3::Common::Money;
-use Google::Ads::GoogleAds::V3::Common::AdScheduleInfo;
-use Google::Ads::GoogleAds::V3::Enums::ExtensionTypeEnum qw(PRICE);
-use Google::Ads::GoogleAds::V3::Enums::PriceExtensionTypeEnum qw(SERVICES);
-use Google::Ads::GoogleAds::V3::Enums::PriceExtensionPriceQualifierEnum
+use Google::Ads::GoogleAds::V4::Resources::CustomerExtensionSetting;
+use Google::Ads::GoogleAds::V4::Resources::ExtensionFeedItem;
+use Google::Ads::GoogleAds::V4::Common::PriceFeedItem;
+use Google::Ads::GoogleAds::V4::Common::PriceOffer;
+use Google::Ads::GoogleAds::V4::Common::Money;
+use Google::Ads::GoogleAds::V4::Common::AdScheduleInfo;
+use Google::Ads::GoogleAds::V4::Enums::ExtensionTypeEnum qw(PRICE);
+use Google::Ads::GoogleAds::V4::Enums::PriceExtensionTypeEnum qw(SERVICES);
+use Google::Ads::GoogleAds::V4::Enums::PriceExtensionPriceQualifierEnum
   qw(FROM);
-use Google::Ads::GoogleAds::V3::Enums::PriceExtensionPriceUnitEnum
+use Google::Ads::GoogleAds::V4::Enums::PriceExtensionPriceUnitEnum
   qw(PER_HOUR PER_MONTH);
-use Google::Ads::GoogleAds::V3::Enums::DayOfWeekEnum qw(SATURDAY SUNDAY);
-use Google::Ads::GoogleAds::V3::Enums::MinuteOfHourEnum qw(ZERO);
+use Google::Ads::GoogleAds::V4::Enums::DayOfWeekEnum qw(SATURDAY SUNDAY);
+use Google::Ads::GoogleAds::V4::Enums::MinuteOfHourEnum qw(ZERO);
 use
-  Google::Ads::GoogleAds::V3::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation;
+  Google::Ads::GoogleAds::V4::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation;
 use
-  Google::Ads::GoogleAds::V3::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -71,13 +71,13 @@ sub add_prices {
   # Create a customer extension setting using the previously created extension
   # feed item. This associates the price extension to your account.
   my $customer_extension_setting =
-    Google::Ads::GoogleAds::V3::Resources::CustomerExtensionSetting->new({
+    Google::Ads::GoogleAds::V4::Resources::CustomerExtensionSetting->new({
       extensionType      => PRICE,
       extensionFeedItems => [$extension_feed_item]});
 
   # Create a customer extension setting operation.
   my $customer_extension_setting_operation =
-    Google::Ads::GoogleAds::V3::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation
+    Google::Ads::GoogleAds::V4::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation
     ->new({
       create => $customer_extension_setting
     });
@@ -99,7 +99,7 @@ sub create_extension_feed_item {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   # Create the price extension feed item.
-  my $price_feed_item = Google::Ads::GoogleAds::V3::Common::PriceFeedItem->new({
+  my $price_feed_item = Google::Ads::GoogleAds::V4::Common::PriceFeedItem->new({
     type => SERVICES,
     # Price qualifier is optional.
     priceQualifier      => FROM,
@@ -139,11 +139,11 @@ sub create_extension_feed_item {
 
   # Create an extension feed item from the price feed item.
   my $extension_feed_item =
-    Google::Ads::GoogleAds::V3::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V4::Resources::ExtensionFeedItem->new({
       extensionType => PRICE,
       priceFeedItem => $price_feed_item,
       targetedCampaign =>
-        Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
+        Google::Ads::GoogleAds::V4::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
         ),
       adSchedules => [
@@ -153,7 +153,7 @@ sub create_extension_feed_item {
 
   # Create an extension feed item operation.
   my $extension_feed_item_operation =
-    Google::Ads::GoogleAds::V3::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V4::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item
     });
@@ -178,11 +178,11 @@ sub create_price_offer {
     $currency_code, $unit)
     = @_;
 
-  my $price_offer = Google::Ads::GoogleAds::V3::Common::PriceOffer->new({
+  my $price_offer = Google::Ads::GoogleAds::V4::Common::PriceOffer->new({
       header      => $header,
       description => $description,
       finalUrls   => [$final_url],
-      price       => Google::Ads::GoogleAds::V3::Common::Money->new({
+      price       => Google::Ads::GoogleAds::V4::Common::Money->new({
           amountMicros => $price_in_micros,
           currencyCode => $currency_code
         }
@@ -200,7 +200,7 @@ sub create_price_offer {
 sub create_ad_schedule_info {
   my ($day, $start_hour, $start_minute, $end_hour, $end_minute) = @_;
 
-  return Google::Ads::GoogleAds::V3::Common::AdScheduleInfo->new({
+  return Google::Ads::GoogleAds::V4::Common::AdScheduleInfo->new({
     dayOfWeek   => $day,
     startHour   => $start_hour,
     startMinute => $start_minute,
@@ -215,7 +215,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

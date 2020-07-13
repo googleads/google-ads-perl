@@ -25,10 +25,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V3::Resources::CampaignExperiment;
-use Google::Ads::GoogleAds::V3::Enums::CampaignExperimentTrafficSplitTypeEnum
+use Google::Ads::GoogleAds::V4::Resources::CampaignExperiment;
+use Google::Ads::GoogleAds::V4::Enums::CampaignExperimentTrafficSplitTypeEnum
   qw(RANDOM_QUERY);
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,9 +52,9 @@ sub create_campaign_experiment {
 
   # Create a campaign experiment.
   my $campaign_experiment =
-    Google::Ads::GoogleAds::V3::Resources::CampaignExperiment->new({
+    Google::Ads::GoogleAds::V4::Resources::CampaignExperiment->new({
       campaignDraft =>
-        Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign_draft(
+        Google::Ads::GoogleAds::V4::Utils::ResourceNames::campaign_draft(
         $customer_id, $base_campaign_id, $draft_id
         ),
       name                => "Campaign Experiment #" . uniqid(),
@@ -104,7 +104,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

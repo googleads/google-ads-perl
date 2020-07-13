@@ -26,8 +26,8 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V3::Services::BillingSetupService::BillingSetupOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::BillingSetupService::BillingSetupOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -49,12 +49,12 @@ sub remove_billing_setup {
 
   # Create the resource name of a billing setup to remove.
   my $billing_setup_resource_name =
-    Google::Ads::GoogleAds::V3::Utils::ResourceNames::billing_setup(
+    Google::Ads::GoogleAds::V4::Utils::ResourceNames::billing_setup(
     $customer_id, $billing_setup_id);
 
   # Create a billing setup operation.
   my $billing_setup_operation =
-    Google::Ads::GoogleAds::V3::Services::BillingSetupService::BillingSetupOperation
+    Google::Ads::GoogleAds::V4::Services::BillingSetupService::BillingSetupOperation
     ->new({
       remove => $billing_setup_resource_name
     });
@@ -77,7 +77,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

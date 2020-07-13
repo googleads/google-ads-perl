@@ -152,7 +152,7 @@ sub __extract_summary_log_value {
 
   # The last key "FaultMessage" in the summary log.
   return $1 if $key eq "FaultMessage" and $log =~ /$key=(.+)/;
-  return $1 if $log =~ /$key=(\S+)/;
+  return $1 if $log                            =~ /$key=(\S+)/;
 }
 
 # The private method to extract the JSON object for a specific key in the detail log.

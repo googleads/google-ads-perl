@@ -295,10 +295,10 @@ ok(
   "Test of add_campaign_labels example."
 );
 require qw(
-  examples/campaign_management/add_complete_campaigns_using_mutate_job.pl);
+  examples/campaign_management/add_complete_campaigns_using_batch_job.pl);
 ok(
-  add_complete_campaigns_using_mutate_job($api_client, $customer_id),
-  "Test of add_complete_campaigns_using_mutate_job example."
+  add_complete_campaigns_using_batch_job($api_client, $customer_id),
+  "Test of add_complete_campaigns_using_batch_job example."
 );
 # NOTE: Skip the create_campaign_experiment.pl as it requires additional setup.
 require qw(

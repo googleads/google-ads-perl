@@ -25,10 +25,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V3::Resources::CampaignDraft;
+use Google::Ads::GoogleAds::V4::Resources::CampaignDraft;
 use
-  Google::Ads::GoogleAds::V3::Services::CampaignDraftService::CampaignDraftOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::CampaignDraftService::CampaignDraftOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -51,16 +51,16 @@ sub add_campaign_draft {
 
   # Create a campaign draft.
   my $campaign_draft =
-    Google::Ads::GoogleAds::V3::Resources::CampaignDraft->new({
+    Google::Ads::GoogleAds::V4::Resources::CampaignDraft->new({
       baseCampaign =>
-        Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
+        Google::Ads::GoogleAds::V4::Utils::ResourceNames::campaign(
         $customer_id, $base_campaign_id
         ),
       name => "Campaign Draft #" . uniqid()});
 
   # Create a campaign draft operation.
   my $campaign_draft_operation =
-    Google::Ads::GoogleAds::V3::Services::CampaignDraftService::CampaignDraftOperation
+    Google::Ads::GoogleAds::V4::Services::CampaignDraftService::CampaignDraftOperation
     ->new({
       create => $campaign_draft
     });
@@ -82,7 +82,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

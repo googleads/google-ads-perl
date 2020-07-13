@@ -65,7 +65,7 @@ sub as_str : STRINGIFY {
     $request_content, $json_coder->encode({%$response_headers}));
 
   $detail_message .= "Response: ${response_content}\n" if $response_content;
-  $detail_message .= "Fault: ${fault}\n" if $fault;
+  $detail_message .= "Fault: ${fault}\n"               if $fault;
 
   return $detail_message;
 }

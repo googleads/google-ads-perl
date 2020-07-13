@@ -32,7 +32,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
-  Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -145,7 +145,6 @@ sub create_customer_client_to_hierarchy() {
   # https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid
   # for more information.
   my $api_client = Google::Ads::GoogleAds::Client->new({
-    version           => "V3",
     login_customer_id => $login_customer_id || $root_customer_id
   });
 
@@ -178,7 +177,7 @@ sub create_customer_client_to_hierarchy() {
       Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
         service => $google_ads_service,
         request =>
-          Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+          Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
           ->new({
             customerId => $customer_id_to_search,
             query      => $search_query,
@@ -264,7 +263,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

@@ -34,18 +34,18 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V3::Resources::CampaignCriterion;
-use Google::Ads::GoogleAds::V3::Common::ListingDimensionInfo;
-use Google::Ads::GoogleAds::V3::Common::ProductBrandInfo;
-use Google::Ads::GoogleAds::V3::Common::ProductCustomAttributeInfo;
-use Google::Ads::GoogleAds::V3::Common::ProductTypeInfo;
-use Google::Ads::GoogleAds::V3::Common::ListingScopeInfo;
-use Google::Ads::GoogleAds::V3::Enums::ProductCustomAttributeIndexEnum
+use Google::Ads::GoogleAds::V4::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V4::Common::ListingDimensionInfo;
+use Google::Ads::GoogleAds::V4::Common::ProductBrandInfo;
+use Google::Ads::GoogleAds::V4::Common::ProductCustomAttributeInfo;
+use Google::Ads::GoogleAds::V4::Common::ProductTypeInfo;
+use Google::Ads::GoogleAds::V4::Common::ListingScopeInfo;
+use Google::Ads::GoogleAds::V4::Enums::ProductCustomAttributeIndexEnum
   qw(INDEX0);
-use Google::Ads::GoogleAds::V3::Enums::ProductTypeLevelEnum qw(LEVEL1 LEVEL2);
+use Google::Ads::GoogleAds::V4::Enums::ProductTypeLevelEnum qw(LEVEL1 LEVEL2);
 use
-  Google::Ads::GoogleAds::V3::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -67,8 +67,8 @@ sub add_listing_scope {
 
   # Create a campaign criterion to store the listing scope.
   my $campaign_criterion =
-    Google::Ads::GoogleAds::V3::Resources::CampaignCriterion->new({
-      campaign => Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
+    Google::Ads::GoogleAds::V4::Resources::CampaignCriterion->new({
+      campaign => Google::Ads::GoogleAds::V4::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       )});
 
@@ -81,45 +81,45 @@ sub add_listing_scope {
 
   # Create a ProductBrand dimension set to "google".
   push @$dimensions,
-    Google::Ads::GoogleAds::V3::Common::ListingDimensionInfo->new({
-      productBrand => Google::Ads::GoogleAds::V3::Common::ProductBrandInfo->new(
+    Google::Ads::GoogleAds::V4::Common::ListingDimensionInfo->new({
+      productBrand => Google::Ads::GoogleAds::V4::Common::ProductBrandInfo->new(
         {
           value => "google"
         })});
 
   # Create a ProductCustomAttribute dimension for INDEX0 set to "top_selling_products".
   push @$dimensions,
-    Google::Ads::GoogleAds::V3::Common::ListingDimensionInfo->new({
+    Google::Ads::GoogleAds::V4::Common::ListingDimensionInfo->new({
       productCustomAttribute =>
-        Google::Ads::GoogleAds::V3::Common::ProductCustomAttributeInfo->new({
+        Google::Ads::GoogleAds::V4::Common::ProductCustomAttributeInfo->new({
           index => INDEX0,
           value => "top_selling_products"
         })});
 
   # Create a ProductType dimension for LEVEL1 set to "electronics".
   push @$dimensions,
-    Google::Ads::GoogleAds::V3::Common::ListingDimensionInfo->new({
-      productType => Google::Ads::GoogleAds::V3::Common::ProductTypeInfo->new({
+    Google::Ads::GoogleAds::V4::Common::ListingDimensionInfo->new({
+      productType => Google::Ads::GoogleAds::V4::Common::ProductTypeInfo->new({
           level => LEVEL1,
           value => "electronics"
         })});
 
   # Create a ProductType dimension for LEVEL2 set to "smartphones".
   push @$dimensions,
-    Google::Ads::GoogleAds::V3::Common::ListingDimensionInfo->new({
-      productType => Google::Ads::GoogleAds::V3::Common::ProductTypeInfo->new({
+    Google::Ads::GoogleAds::V4::Common::ListingDimensionInfo->new({
+      productType => Google::Ads::GoogleAds::V4::Common::ProductTypeInfo->new({
           level => LEVEL2,
           value => "smartphones"
         })});
 
   $campaign_criterion->{listingScope} =
-    Google::Ads::GoogleAds::V3::Common::ListingScopeInfo->new({
+    Google::Ads::GoogleAds::V4::Common::ListingScopeInfo->new({
       dimensions => $dimensions
     });
 
   # Create a campaign criterion operation.
   my $campaign_criterion_operation =
-    Google::Ads::GoogleAds::V3::Services::CampaignCriterionService::CampaignCriterionOperation
+    Google::Ads::GoogleAds::V4::Services::CampaignCriterionService::CampaignCriterionOperation
     ->new({create => $campaign_criterion});
 
   # Add the campaign criterion containing the listing scope on the campaign.
@@ -140,7 +140,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

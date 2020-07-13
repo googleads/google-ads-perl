@@ -25,10 +25,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V3::Resources::Asset;
-use Google::Ads::GoogleAds::V3::Common::ImageAsset;
-use Google::Ads::GoogleAds::V3::Enums::AssetTypeEnum qw(IMAGE);
-use Google::Ads::GoogleAds::V3::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V4::Resources::Asset;
+use Google::Ads::GoogleAds::V4::Common::ImageAsset;
+use Google::Ads::GoogleAds::V4::Enums::AssetTypeEnum qw(IMAGE);
+use Google::Ads::GoogleAds::V4::Services::AssetService::AssetOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,20 +54,20 @@ sub upload_image_asset {
   my $image_content = get_base64_data_from_url(IMAGE_URL);
 
   # Create an asset.
-  my $asset = Google::Ads::GoogleAds::V3::Resources::Asset->new({
+  my $asset = Google::Ads::GoogleAds::V4::Resources::Asset->new({
       # Optional: Provide a unique friendly name to identify your asset.
       # If you specify the name field, then both the asset name and the image being
       # uploaded should be unique, and should not match another ACTIVE asset in this
       # customer account.
       # name       => "Jupiter Trip #" . uniqid(),
       type       => IMAGE,
-      imageAsset => Google::Ads::GoogleAds::V3::Common::ImageAsset->new({
+      imageAsset => Google::Ads::GoogleAds::V4::Common::ImageAsset->new({
           data => $image_content
         })});
 
   # Create an asset operation.
   my $asset_operation =
-    Google::Ads::GoogleAds::V3::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V4::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 
@@ -88,7 +88,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

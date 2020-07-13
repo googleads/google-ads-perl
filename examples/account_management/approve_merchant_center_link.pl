@@ -33,11 +33,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V3::Resources::MerchantCenterLink;
-use Google::Ads::GoogleAds::V3::Enums::MerchantCenterLinkStatusEnum
+use Google::Ads::GoogleAds::V4::Resources::MerchantCenterLink;
+use Google::Ads::GoogleAds::V4::Enums::MerchantCenterLinkStatusEnum
   qw(ENABLED PENDING);
 use
-  Google::Ads::GoogleAds::V3::Services::MerchantCenterLinkService::MerchantCenterLinkOperation;
+  Google::Ads::GoogleAds::V4::Services::MerchantCenterLinkService::MerchantCenterLinkOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -100,7 +100,7 @@ sub update_merchant_center_link_status {
   # Create an updated MerchantCenterLink object derived from the original, but
   # with the specified status.
   my $merchant_center_link_to_update =
-    Google::Ads::GoogleAds::V3::Resources::MerchantCenterLink->new({
+    Google::Ads::GoogleAds::V4::Resources::MerchantCenterLink->new({
       resourceName => $merchant_center_link->{resourceName},
       status       => $new_merchant_center_link_status
     });
@@ -109,7 +109,7 @@ sub update_merchant_center_link_status {
   # FieldMasks utility to derive the update mask. This mask tells the Google Ads
   # API which attributes of the Merchant Center link you want to change.
   my $merchant_center_link_operation =
-    Google::Ads::GoogleAds::V3::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
+    Google::Ads::GoogleAds::V4::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
     ->new({
       update     => $merchant_center_link_to_update,
       updateMask => all_set_fields_of($merchant_center_link_to_update)});
@@ -132,7 +132,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

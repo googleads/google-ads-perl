@@ -24,10 +24,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V3::Resources::AdParameter;
+use Google::Ads::GoogleAds::V4::Resources::AdParameter;
 use
-  Google::Ads::GoogleAds::V3::Services::AdParameterService::AdParameterOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::AdParameterService::AdParameterOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -49,13 +49,13 @@ sub set_ad_parameters {
   my ($api_client, $customer_id, $ad_group_id, $criterion_id) = @_;
 
   my $ad_group_criterion_resource_name =
-    Google::Ads::GoogleAds::V3::Utils::ResourceNames::ad_group_criterion(
+    Google::Ads::GoogleAds::V4::Utils::ResourceNames::ad_group_criterion(
     $customer_id, $ad_group_id, $criterion_id);
 
   # Create ad parameters.
   # There can be a maximum of two ad parameters per ad group criterion.
   # (One with parameter_index = 1 and one with parameter_index = 2.)
-  my $ad_parameter_1 = Google::Ads::GoogleAds::V3::Resources::AdParameter->new({
+  my $ad_parameter_1 = Google::Ads::GoogleAds::V4::Resources::AdParameter->new({
     adGroupCriterion => $ad_group_criterion_resource_name,
     # The unique index of this ad parameter. Must be either 1 or 2.
     parameterIndex => 1,
@@ -67,7 +67,7 @@ sub set_ad_parameters {
     insertionText => "100"
   });
 
-  my $ad_parameter_2 = Google::Ads::GoogleAds::V3::Resources::AdParameter->new({
+  my $ad_parameter_2 = Google::Ads::GoogleAds::V4::Resources::AdParameter->new({
     adGroupCriterion => $ad_group_criterion_resource_name,
     parameterIndex   => 2,
     insertionText    => "\$40"
@@ -75,11 +75,11 @@ sub set_ad_parameters {
 
   # Create ad parameter operations.
   my $ad_parameter_operation1 =
-    Google::Ads::GoogleAds::V3::Services::AdParameterService::AdParameterOperation
+    Google::Ads::GoogleAds::V4::Services::AdParameterService::AdParameterOperation
     ->new({create => $ad_parameter_1});
 
   my $ad_parameter_operation2 =
-    Google::Ads::GoogleAds::V3::Services::AdParameterService::AdParameterOperation
+    Google::Ads::GoogleAds::V4::Services::AdParameterService::AdParameterOperation
     ->new({create => $ad_parameter_2});
 
   # Set the ad parameters.
@@ -103,7 +103,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

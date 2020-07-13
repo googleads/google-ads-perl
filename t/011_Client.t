@@ -25,7 +25,7 @@ use lib qw(lib);
 
 use File::Basename;
 use File::Spec;
-use Test::More (tests => 17);
+use Test::More (tests => 18);
 
 # Tests use Google::Ads::GoogleAds::Client.
 use_ok("Google::Ads::GoogleAds::Client")
@@ -44,6 +44,8 @@ my $api_client = Google::Ads::GoogleAds::Client->new({
 is($api_client->get_developer_token(), "dev-token", "Read of developer token.");
 is($api_client->get_login_customer_id(),
   $login_customer_id, "Override of login customer ID.");
+is($api_client->get_linked_customer_id(),
+  "linked-customer-id", "Read of linked customer ID.");
 is(
   $api_client->get_service_address(),
   "https://alternate.googleapis.com:443/",

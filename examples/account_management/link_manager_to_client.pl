@@ -26,14 +26,14 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V3::Resources::CustomerClientLink;
-use Google::Ads::GoogleAds::V3::Resources::CustomerManagerLink;
-use Google::Ads::GoogleAds::V3::Enums::ManagerLinkStatusEnum qw(PENDING ACTIVE);
+use Google::Ads::GoogleAds::V4::Resources::CustomerClientLink;
+use Google::Ads::GoogleAds::V4::Resources::CustomerManagerLink;
+use Google::Ads::GoogleAds::V4::Enums::ManagerLinkStatusEnum qw(PENDING ACTIVE);
 use
-  Google::Ads::GoogleAds::V3::Services::CustomerClientLinkService::CustomerClientLinkOperation;
+  Google::Ads::GoogleAds::V4::Services::CustomerClientLinkService::CustomerClientLinkOperation;
 use
-  Google::Ads::GoogleAds::V3::Services::CustomerManagerLinkService::CustomerManagerLinkOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::CustomerManagerLinkService::CustomerManagerLinkOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -64,16 +64,16 @@ sub link_manager_to_client {
 
   # Create a customer client link.
   my $api_client_link =
-    Google::Ads::GoogleAds::V3::Resources::CustomerClientLink->new({
+    Google::Ads::GoogleAds::V4::Resources::CustomerClientLink->new({
       clientCustomer =>
-        Google::Ads::GoogleAds::V3::Utils::ResourceNames::customer(
+        Google::Ads::GoogleAds::V4::Utils::ResourceNames::customer(
         $api_client_customer_id),
       status => PENDING
     });
 
   # Create a customer client link operation.
   my $api_client_link_operation =
-    Google::Ads::GoogleAds::V3::Services::CustomerClientLinkService::CustomerClientLinkOperation
+    Google::Ads::GoogleAds::V4::Services::CustomerClientLinkService::CustomerClientLinkOperation
     ->new({
       create => $api_client_link
     });
@@ -108,7 +108,7 @@ sub link_manager_to_client {
     $search_response->{results}[0]{customerClientLink}{managerLinkId};
 
   my $manager_link_resource_name =
-    Google::Ads::GoogleAds::V3::Utils::ResourceNames::customer_manager_link(
+    Google::Ads::GoogleAds::V4::Utils::ResourceNames::customer_manager_link(
     $api_client_customer_id, $manager_customer_id, $manager_link_id);
 
   # Step 3: Accept the manager customer's link invitation while authenticating
@@ -117,14 +117,14 @@ sub link_manager_to_client {
 
   # Create a customer manager link.
   my $manager_link =
-    Google::Ads::GoogleAds::V3::Resources::CustomerManagerLink->new({
+    Google::Ads::GoogleAds::V4::Resources::CustomerManagerLink->new({
       resourceName => $manager_link_resource_name,
       status       => ACTIVE
     });
 
   # Create a customer manager link operation.
   my $manager_link_operation =
-    Google::Ads::GoogleAds::V3::Services::CustomerManagerLinkService::CustomerManagerLinkOperation
+    Google::Ads::GoogleAds::V4::Services::CustomerManagerLinkService::CustomerManagerLinkOperation
     ->new({
       update     => $manager_link,
       updateMask => all_set_fields_of($manager_link)});
@@ -149,7 +149,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

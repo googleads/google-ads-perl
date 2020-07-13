@@ -25,14 +25,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V3::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V3::Resources::Ad;
-use Google::Ads::GoogleAds::V3::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V3::Common::ResponsiveSearchAdInfo;
-use Google::Ads::GoogleAds::V3::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
-use Google::Ads::GoogleAds::V3::Enums::AdGroupAdStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V3::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V4::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V4::Resources::Ad;
+use Google::Ads::GoogleAds::V4::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V4::Common::ResponsiveSearchAdInfo;
+use Google::Ads::GoogleAds::V4::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
+use Google::Ads::GoogleAds::V4::Enums::AdGroupAdStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V4::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,14 +56,14 @@ sub add_responsive_search_ad {
   # Set a pinning to always choose this asset for HEADLINE_1. Pinning is optional;
   # if no pinning is set, then headlines and descriptions will be rotated and the
   # ones that perform best will be used more often.
-  my $pinned_headline = Google::Ads::GoogleAds::V3::Common::AdTextAsset->new({
+  my $pinned_headline = Google::Ads::GoogleAds::V4::Common::AdTextAsset->new({
     text        => "Cruise to Mars #" . uniqid(),
     pinnedField => HEADLINE_1
   });
 
   # Create a responsive search ad info.
   my $responsive_search_ad_info =
-    Google::Ads::GoogleAds::V3::Common::ResponsiveSearchAdInfo->new({
+    Google::Ads::GoogleAds::V4::Common::ResponsiveSearchAdInfo->new({
       headlines => [
         $pinned_headline,
         create_ad_text_asset("Best Space Cruise Line"),
@@ -78,19 +78,19 @@ sub add_responsive_search_ad {
     });
 
   # Create an ad group ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V3::Resources::AdGroupAd->new({
-      adGroup => Google::Ads::GoogleAds::V3::Utils::ResourceNames::ad_group(
+  my $ad_group_ad = Google::Ads::GoogleAds::V4::Resources::AdGroupAd->new({
+      adGroup => Google::Ads::GoogleAds::V4::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       status => PAUSED,
-      ad     => Google::Ads::GoogleAds::V3::Resources::Ad->new({
+      ad     => Google::Ads::GoogleAds::V4::Resources::Ad->new({
           responsiveSearchAd => $responsive_search_ad_info,
           finalUrls          => "http://www.example.com"
         })});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V3::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V4::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad.
@@ -107,7 +107,7 @@ sub add_responsive_search_ad {
 # Creates an ad text asset from a given string.
 sub create_ad_text_asset {
   my $text = shift;
-  return Google::Ads::GoogleAds::V3::Common::AdTextAsset->new({
+  return Google::Ads::GoogleAds::V4::Common::AdTextAsset->new({
     text => $text
   });
 }
@@ -118,7 +118,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

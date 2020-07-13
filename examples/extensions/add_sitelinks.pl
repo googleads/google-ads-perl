@@ -24,22 +24,22 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V3::Resources::CampaignExtensionSetting;
-use Google::Ads::GoogleAds::V3::Resources::ExtensionFeedItem;
-use Google::Ads::GoogleAds::V3::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V3::Common::SitelinkFeedItem;
-use Google::Ads::GoogleAds::V3::Common::AdScheduleInfo;
-use Google::Ads::GoogleAds::V3::Enums::ExtensionTypeEnum qw(SITELINK);
-use Google::Ads::GoogleAds::V3::Enums::FeedItemTargetDeviceEnum qw(MOBILE);
-use Google::Ads::GoogleAds::V3::Enums::KeywordMatchTypeEnum qw(BROAD);
-use Google::Ads::GoogleAds::V3::Enums::DayOfWeekEnum
+use Google::Ads::GoogleAds::V4::Resources::CampaignExtensionSetting;
+use Google::Ads::GoogleAds::V4::Resources::ExtensionFeedItem;
+use Google::Ads::GoogleAds::V4::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V4::Common::SitelinkFeedItem;
+use Google::Ads::GoogleAds::V4::Common::AdScheduleInfo;
+use Google::Ads::GoogleAds::V4::Enums::ExtensionTypeEnum qw(SITELINK);
+use Google::Ads::GoogleAds::V4::Enums::FeedItemTargetDeviceEnum qw(MOBILE);
+use Google::Ads::GoogleAds::V4::Enums::KeywordMatchTypeEnum qw(BROAD);
+use Google::Ads::GoogleAds::V4::Enums::DayOfWeekEnum
   qw(MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY);
-use Google::Ads::GoogleAds::V3::Enums::MinuteOfHourEnum qw(ZERO);
+use Google::Ads::GoogleAds::V4::Enums::MinuteOfHourEnum qw(ZERO);
 use
-  Google::Ads::GoogleAds::V3::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
+  Google::Ads::GoogleAds::V4::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
 use
-  Google::Ads::GoogleAds::V3::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -61,7 +61,7 @@ sub add_sitelinks {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   my $campaign_resource_name =
-    Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign($customer_id,
+    Google::Ads::GoogleAds::V4::Utils::ResourceNames::campaign($customer_id,
     $campaign_id);
 
   # Create extension feed items as sitelinks.
@@ -71,7 +71,7 @@ sub add_sitelinks {
 
   # Create a campaign extension setting.
   my $campaign_extension_setting =
-    Google::Ads::GoogleAds::V3::Resources::CampaignExtensionSetting->new({
+    Google::Ads::GoogleAds::V4::Resources::CampaignExtensionSetting->new({
       campaign           => $campaign_resource_name,
       extensionType      => SITELINK,
       extensionFeedItems => $extension_feed_items
@@ -79,7 +79,7 @@ sub add_sitelinks {
 
   # Create a campaign extension setting operation.
   my $campaign_extension_setting_operation =
-    Google::Ads::GoogleAds::V3::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
+    Google::Ads::GoogleAds::V4::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
     ->new({
       create => $campaign_extension_setting
     });
@@ -107,7 +107,7 @@ sub create_extension_feed_items {
 
   # Create an extension feed item from the sitelink feed item.
   my $extension_feed_item_1 =
-    Google::Ads::GoogleAds::V3::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V4::Resources::ExtensionFeedItem->new({
       extensionType    => SITELINK,
       sitelinkFeedItem => $sitelink_feed_item_1,
       targetedCampaign => $campaign_resource_name
@@ -115,7 +115,7 @@ sub create_extension_feed_items {
 
   # Create an extension feed item operation and add it to the operations list.
   push @$operations,
-    Google::Ads::GoogleAds::V3::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V4::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item_1
     });
@@ -143,10 +143,10 @@ sub create_extension_feed_items {
   # A list of country codes can be referenced here:
   # https://developers.google.com/adwords/api/docs/appendix/geotargeting
   my $united_states =
-    Google::Ads::GoogleAds::V3::Utils::ResourceNames::geo_target_constant(2840);
+    Google::Ads::GoogleAds::V4::Utils::ResourceNames::geo_target_constant(2840);
 
   my $extension_feed_item_2 =
-    Google::Ads::GoogleAds::V3::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V4::Resources::ExtensionFeedItem->new({
       extensionType             => SITELINK,
       sitelinkFeedItem          => $sitelink_feed_item_2,
       targetedCampaign          => $campaign_resource_name,
@@ -156,7 +156,7 @@ sub create_extension_feed_items {
     });
 
   push @$operations,
-    Google::Ads::GoogleAds::V3::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V4::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item_2
     });
@@ -168,18 +168,18 @@ sub create_extension_feed_items {
   # mobile users.
   # Target this sitelink for the keyword "free wifi".
   my $extension_feed_item_3 =
-    Google::Ads::GoogleAds::V3::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V4::Resources::ExtensionFeedItem->new({
       extensionType    => SITELINK,
       sitelinkFeedItem => $sitelink_feed_item_3,
       targetedCampaign => $campaign_resource_name,
       device           => MOBILE,
-      targetedKeyword  => Google::Ads::GoogleAds::V3::Common::KeywordInfo->new({
+      targetedKeyword  => Google::Ads::GoogleAds::V4::Common::KeywordInfo->new({
           text      => "free wifi",
           matchType => BROAD
         })});
 
   push @$operations,
-    Google::Ads::GoogleAds::V3::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V4::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item_3
     });
@@ -190,7 +190,7 @@ sub create_extension_feed_items {
   # Set the feed item schedules to show the happy hours link only during Mon - Fri
   # 6PM to 9PM.
   my $extension_feed_item_4 =
-    Google::Ads::GoogleAds::V3::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V4::Resources::ExtensionFeedItem->new({
       extensionType    => SITELINK,
       sitelinkFeedItem => $sitelink_feed_item_4,
       targetedCampaign => $campaign_resource_name,
@@ -202,7 +202,7 @@ sub create_extension_feed_items {
         create_ad_schedule_info(FRIDAY,    18, ZERO, 21, ZERO)]});
 
   push @$operations,
-    Google::Ads::GoogleAds::V3::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V4::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item_4
     });
@@ -232,7 +232,7 @@ sub create_extension_feed_items {
 sub create_sitelink_feed_item {
   my ($sitelink_text, $sitelink_url) = @_;
 
-  return Google::Ads::GoogleAds::V3::Common::SitelinkFeedItem->new({
+  return Google::Ads::GoogleAds::V4::Common::SitelinkFeedItem->new({
     linkText  => $sitelink_text,
     finalUrls => $sitelink_url
   });
@@ -242,7 +242,7 @@ sub create_sitelink_feed_item {
 sub create_ad_schedule_info {
   my ($day, $start_hour, $start_minute, $end_hour, $end_minute) = @_;
 
-  return Google::Ads::GoogleAds::V3::Common::AdScheduleInfo->new({
+  return Google::Ads::GoogleAds::V4::Common::AdScheduleInfo->new({
     dayOfWeek   => $day,
     startHour   => $start_hour,
     startMinute => $start_minute,
@@ -257,7 +257,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

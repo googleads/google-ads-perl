@@ -26,7 +26,7 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 
 use Getopt::Long qw(:config auto_help);
@@ -58,7 +58,7 @@ sub get_campaign_criterion_bid_modifier_simulations {
     "AND campaign_criterion_simulation.campaign_id = $campaign_id";
 
   my $search_stream_request =
-    Google::Ads::GoogleAds::V3::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query
@@ -111,7 +111,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

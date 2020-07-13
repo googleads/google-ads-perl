@@ -26,11 +26,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V3::Resources::Campaign;
-use Google::Ads::GoogleAds::V3::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V3::Enums::CampaignStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V4::Resources::Campaign;
+use Google::Ads::GoogleAds::V4::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V4::Enums::CampaignStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V4::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -51,21 +51,21 @@ sub update_campaign {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   # Create a campaign with the proper resource name and any other changes.
-  my $campaign = Google::Ads::GoogleAds::V3::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V4::Resources::Campaign->new({
       resourceName =>
-        Google::Ads::GoogleAds::V3::Utils::ResourceNames::campaign(
+        Google::Ads::GoogleAds::V4::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
         ),
       status => PAUSED,
       networkSettings =>
-        Google::Ads::GoogleAds::V3::Resources::NetworkSettings->new({
+        Google::Ads::GoogleAds::V4::Resources::NetworkSettings->new({
           targetSearchNetwork => "false"
         })});
 
   # Create a campaign operation for update, using the FieldMasks utility to
   # derive the update mask.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V4::Services::CampaignService::CampaignOperation->
     new({
       update     => $campaign,
       updateMask => all_set_fields_of($campaign)});
@@ -87,7 +87,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);

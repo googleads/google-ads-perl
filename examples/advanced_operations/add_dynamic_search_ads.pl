@@ -25,34 +25,34 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V3::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V3::Resources::Campaign;
-use Google::Ads::GoogleAds::V3::Resources::DynamicSearchAdsSetting;
-use Google::Ads::GoogleAds::V3::Resources::AdGroup;
-use Google::Ads::GoogleAds::V3::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V3::Resources::Ad;
-use Google::Ads::GoogleAds::V3::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V3::Common::ManualCpc;
-use Google::Ads::GoogleAds::V3::Common::ExpandedDynamicSearchAdInfo;
-use Google::Ads::GoogleAds::V3::Common::WebpageInfo;
-use Google::Ads::GoogleAds::V3::Common::WebpageConditionInfo;
-use Google::Ads::GoogleAds::V3::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
-use Google::Ads::GoogleAds::V3::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V3::Enums::CampaignStatusEnum;
-use Google::Ads::GoogleAds::V3::Enums::AdGroupStatusEnum;
-use Google::Ads::GoogleAds::V3::Enums::AdGroupTypeEnum qw(SEARCH_DYNAMIC_ADS);
-use Google::Ads::GoogleAds::V3::Enums::AdGroupAdStatusEnum;
-use Google::Ads::GoogleAds::V3::Enums::AdGroupCriterionStatusEnum;
-use Google::Ads::GoogleAds::V3::Enums::WebpageConditionOperandEnum
+use Google::Ads::GoogleAds::V4::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V4::Resources::Campaign;
+use Google::Ads::GoogleAds::V4::Resources::DynamicSearchAdsSetting;
+use Google::Ads::GoogleAds::V4::Resources::AdGroup;
+use Google::Ads::GoogleAds::V4::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V4::Resources::Ad;
+use Google::Ads::GoogleAds::V4::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V4::Common::ManualCpc;
+use Google::Ads::GoogleAds::V4::Common::ExpandedDynamicSearchAdInfo;
+use Google::Ads::GoogleAds::V4::Common::WebpageInfo;
+use Google::Ads::GoogleAds::V4::Common::WebpageConditionInfo;
+use Google::Ads::GoogleAds::V4::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V4::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V4::Enums::CampaignStatusEnum;
+use Google::Ads::GoogleAds::V4::Enums::AdGroupStatusEnum;
+use Google::Ads::GoogleAds::V4::Enums::AdGroupTypeEnum qw(SEARCH_DYNAMIC_ADS);
+use Google::Ads::GoogleAds::V4::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V4::Enums::AdGroupCriterionStatusEnum;
+use Google::Ads::GoogleAds::V4::Enums::WebpageConditionOperandEnum
   qw(URL PAGE_TITLE);
 use
-  Google::Ads::GoogleAds::V3::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V3::Services::AdGroupAdService::AdGroupAdOperation;
+  Google::Ads::GoogleAds::V4::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V4::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V4::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V4::Services::AdGroupAdService::AdGroupAdOperation;
 use
-  Google::Ads::GoogleAds::V3::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V3::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V4::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -92,7 +92,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V3::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V4::Resources::CampaignBudget->new({
       name           => "Interplanetary Cruise Budget #" . uniqid(),
       deliveryMethod => STANDARD,
       amountMicros   => 50000000
@@ -100,7 +100,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V3::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V4::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Add the campaign budget.
@@ -120,15 +120,15 @@ sub create_campaign {
   my ($api_client, $customer_id, $campaign_budget_resource_name) = @_;
 
   # Create a campaign.
-  my $campaign = Google::Ads::GoogleAds::V3::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V4::Resources::Campaign->new({
       name                   => "Interplanetary Cruise #" . uniqid(),
       advertisingChannelType => SEARCH,
-      status => Google::Ads::GoogleAds::V3::Enums::CampaignStatusEnum::PAUSED,
-      manualCpc      => Google::Ads::GoogleAds::V3::Common::ManualCpc->new(),
+      status => Google::Ads::GoogleAds::V4::Enums::CampaignStatusEnum::PAUSED,
+      manualCpc      => Google::Ads::GoogleAds::V4::Common::ManualCpc->new(),
       campaignBudget => $campaign_budget_resource_name,
       # Enable the campaign for DSAs.
       dynamicSearchAdsSetting =>
-        Google::Ads::GoogleAds::V3::Resources::DynamicSearchAdsSetting->new({
+        Google::Ads::GoogleAds::V4::Resources::DynamicSearchAdsSetting->new({
           domainName   => "example.com",
           languageCode => "en"
         }
@@ -141,7 +141,7 @@ sub create_campaign {
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V3::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V4::Services::CampaignService::CampaignOperation->
     new({create => $campaign});
 
   # Add the campaign.
@@ -161,10 +161,10 @@ sub create_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
   # Construct an ad group and set an optional CPC value.
-  my $ad_group = Google::Ads::GoogleAds::V3::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V4::Resources::AdGroup->new({
     name     => "Earth to Mars Cruises #" . uniqid(),
     campaign => $campaign_resource_name,
-    status   => Google::Ads::GoogleAds::V3::Enums::AdGroupStatusEnum::PAUSED,
+    status   => Google::Ads::GoogleAds::V4::Enums::AdGroupStatusEnum::PAUSED,
     type     => SEARCH_DYNAMIC_ADS,
     trackingUrlTemplate =>
       "http://tracker.examples.com/traveltracker/{escapedlpurl}",
@@ -173,7 +173,7 @@ sub create_ad_group {
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V3::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V4::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
   # Add the ad group.
@@ -193,19 +193,19 @@ sub create_expanded_dsa {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
   # Create an ad group ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V3::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V4::Resources::AdGroupAd->new({
       adGroup => $ad_group_resource_name,
-      status  => Google::Ads::GoogleAds::V3::Enums::AdGroupAdStatusEnum::PAUSED,
-      ad      => Google::Ads::GoogleAds::V3::Resources::Ad->new({
+      status  => Google::Ads::GoogleAds::V4::Enums::AdGroupAdStatusEnum::PAUSED,
+      ad      => Google::Ads::GoogleAds::V4::Resources::Ad->new({
           expandedDynamicSearchAd =>
-            Google::Ads::GoogleAds::V3::Common::ExpandedDynamicSearchAdInfo->
+            Google::Ads::GoogleAds::V4::Common::ExpandedDynamicSearchAdInfo->
             new({
               description => "Buy tickets now!"
             })})});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V3::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V4::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad.
@@ -227,28 +227,28 @@ sub add_web_page_criterion {
 
   # Create an ad group criterion.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V3::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V4::Resources::AdGroupCriterion->new({
       adGroup => $ad_group_resource_name,
       status =>
-        Google::Ads::GoogleAds::V3::Enums::AdGroupCriterionStatusEnum::PAUSED,
+        Google::Ads::GoogleAds::V4::Enums::AdGroupCriterionStatusEnum::PAUSED,
       cpcBidMicros => 10000000,
-      webpage      => Google::Ads::GoogleAds::V3::Common::WebpageInfo->new({
+      webpage      => Google::Ads::GoogleAds::V4::Common::WebpageInfo->new({
           criterionName => "Special Offers",
           conditions    => [
-            Google::Ads::GoogleAds::V3::Common::WebpageConditionInfo->new({
+            Google::Ads::GoogleAds::V4::Common::WebpageConditionInfo->new({
                 operand  => URL,
                 argument => "/specialoffers"
 
               }
             ),
-            Google::Ads::GoogleAds::V3::Common::WebpageConditionInfo->new({
+            Google::Ads::GoogleAds::V4::Common::WebpageConditionInfo->new({
                 operand  => PAGE_TITLE,
                 argument => "Special Offers"
               })]})});
 
   # Create an ad group criterion operation.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V3::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V4::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({create => $ad_group_criterion});
 
   # Add the ad group criterion.
@@ -270,7 +270,7 @@ if (abs_path($0) ne abs_path(__FILE__)) {
 }
 
 # Get Google Ads Client, credentials will be read from ~/googleads.properties.
-my $api_client = Google::Ads::GoogleAds::Client->new({version => "V3"});
+my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);
