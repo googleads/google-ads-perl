@@ -257,6 +257,8 @@ sub add_transactions_to_offline_user_data_job {
 # Create a list of offline user data job operations for sample transactions.
 # Return a list of operations.
 sub build_offline_user_data_job_operations {
+  my ($customer_id, $conversion_action_id) = @_;
+
   # Create the first transaction for upload based on an email address and state.
   my $user_data_with_email_address =
     Google::Ads::GoogleAds::V4::Common::UserData->new({
