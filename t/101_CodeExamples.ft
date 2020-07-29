@@ -363,6 +363,7 @@ ok(
   ),
   "Test of add_affiliate_location_extensions example."
 );
+# NOTE: Skip the add_geo_target.pl as it requires additional setup.
 # NOTE: Skip the add_google_my_business_location_extensions.pl as it requires additional setup.
 require qw(examples/extensions/add_hotel_callout.pl);
 ok(
