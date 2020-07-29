@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 80);
+use Test::More (tests => 81);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -463,6 +463,11 @@ ok(
 );
 
 # remarketing
+require qw(examples/remarketing/add_combined_rule_user_list.pl);
+ok(
+  add_combined_rule_user_list($api_client, $customer_id),
+  "Test of add_combined_rule_user_list example."
+);
 require qw(examples/remarketing/add_conversion_action.pl);
 ok(
   add_conversion_action($api_client, $customer_id),
