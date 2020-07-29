@@ -109,7 +109,7 @@ GetOptions(
 pod2usage(2) if not check_params($customer_id, $feed_item_id);
 
 # Call the example.
-add_sitelinks(
+add_geo_target(
   $api_client,   $customer_id =~ s/-//gr,
   $feed_item_id, $geo_target_constant_id
 );
