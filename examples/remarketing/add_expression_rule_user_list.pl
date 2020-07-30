@@ -59,7 +59,7 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 sub add_expression_rule_user_list {
   my ($api_client, $customer_id) = @_;
 
-  # Create a rule targeting any user that visited a url that contains
+  # Create a rule targeting any user that visited a URL that contains
   # 'example.com/section1'.
   my $rule1 = Google::Ads::GoogleAds::V4::Common::UserListRuleItemInfo->new({
       # Use a built-in parameter to create a domain URL rule.
@@ -70,7 +70,7 @@ sub add_expression_rule_user_list {
           value    => "example.com/section1"
         })});
 
-  # Create a rule targeting any user that visited a url that contains
+  # Create a rule targeting any user that visited a URL that contains
   # 'example.com/section2'.
   my $rule2 = Google::Ads::GoogleAds::V4::Common::UserListRuleItemInfo->new({
       # Use a built-in parameter to create a domain URL rule.
