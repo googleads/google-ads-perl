@@ -60,7 +60,7 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 sub add_combined_rule_user_list {
   my ($api_client, $customer_id) = @_;
 
-  # Create a rule targeting any user that visited a url that equals
+  # Create a rule targeting any user that visited a URL that equals
   # 'http://example.com/example1'.
   my $user_visited_site1_rule =
     Google::Ads::GoogleAds::V4::Common::UserListRuleItemInfo->new({
@@ -79,7 +79,7 @@ sub add_combined_rule_user_list {
         Google::Ads::GoogleAds::V4::Common::UserListRuleItemGroupInfo->new({
           ruleItems => [$user_visited_site1_rule]})});
 
-  # Create a rule targeting any user that visited a url that equals
+  # Create a rule targeting any user that visited a URL that equals
   # 'http://example.com/example2'.
   my $user_visited_site2_rule =
     Google::Ads::GoogleAds::V4::Common::UserListRuleItemInfo->new({
