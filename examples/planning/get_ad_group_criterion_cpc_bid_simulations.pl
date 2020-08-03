@@ -25,9 +25,9 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
+use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
   Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
-use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
