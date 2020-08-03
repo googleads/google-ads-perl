@@ -250,6 +250,7 @@ ok(
 
 # billing
 # NOTE: Skip the add_account_budget_proposal.pl as it requires additional setup.
+# NOTE: Skip the add_billing_setup.pl as it requires additional setup.
 require qw(examples/billing/get_account_budget_proposals.pl);
 ok(
   get_account_budget_proposals($api_client, $customer_id),
