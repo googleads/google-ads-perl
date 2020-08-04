@@ -132,7 +132,7 @@ sub create_billing_setup {
 # customer's account to see if there are any approved billing setups. If there are
 # any, the new billing setup starting date time is set to one day after the last.
 # If not, the billing setup is set to start immediately. The ending date is set
-# to one day after the starting date time,
+# to one day after the starting date time.
 sub set_billing_setup_date_times {
   my ($api_client, $customer_id, $billing_setup) = @_;
 
