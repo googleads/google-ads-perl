@@ -139,8 +139,8 @@ sub add_combined_rule_user_list {
   my $user_list_response = $api_client->UserListService()->mutate({
       customerId => $customer_id,
       operations => [$user_list_operation]});
-  printf("Created user list with resource name '%s'.\n",
-    $user_list_response->{results}[0]{resourceName});
+  printf "Created user list with resource name '%s'.\n",
+    $user_list_response->{results}[0]{resourceName};
 
   return 1;
 }

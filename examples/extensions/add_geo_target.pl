@@ -80,8 +80,8 @@ sub add_geo_target {
 
   # Print the resource name of the updated extension feed item.
   my $updated_extension_feed_item = $extension_feed_item_response->{results}[0];
-  printf("Updated extension feed item with resource name: '%s'.\n",
-    $updated_extension_feed_item->{resourceName});
+  printf "Updated extension feed item with resource name: '%s'.\n",
+    $updated_extension_feed_item->{resourceName};
 
   return 1;
 }
