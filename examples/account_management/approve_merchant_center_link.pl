@@ -140,7 +140,7 @@ $api_client->set_die_on_faults(1);
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
   "customer_id=s"                => \$customer_id,
-  "merchant_center_account_id=i" => \$merchant_center_account_id,
+  "merchant_center_account_id=i" => \$merchant_center_account_id
 );
 
 # Print the help message if the parameters are not initialized in the code nor
