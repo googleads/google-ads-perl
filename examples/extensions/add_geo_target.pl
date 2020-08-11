@@ -132,6 +132,6 @@ add_geo_target.pl [options]
     -customer_id                    The Google Ads customer ID.
     -feed_item_id                   The feed item ID.
     -geo_target_constant_id         [optional] The geo target constant ID to add
-                                    to the extension feed item
+                                    to the extension feed item.
 
 =cut
