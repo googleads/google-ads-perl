@@ -119,6 +119,7 @@ ok(
   list_accessible_customers($api_client),
   "Test of list_accessible_customers example."
 );
+# NOTE: Skip the reject_merchant_center_link.pl as it requires a merchant account.
 
 # advanced_operations
 require qw(examples/advanced_operations/add_ad_customizer.pl);
