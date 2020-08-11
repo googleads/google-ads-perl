@@ -390,6 +390,7 @@ ok(
   "Test of add_sitelinks_using_feeds example."
 );
 # NOTE: Skip the update_sitelink.pl as it requires additional setup.
+# NOTE: Skip the update_sitelink_campaign_extension_setting.pl as it requires additional setup.
 
 # feeds
 # NOTE: Skip the remove_feed_items.pl as it requires additional setup.
