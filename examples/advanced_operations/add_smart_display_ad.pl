@@ -21,8 +21,8 @@
 # IMPORTANT: The AssetService requires you to reuse what you've uploaded previously.
 # Therefore, you cannot create an image asset with the exactly same bytes. In
 # case you want to run this example more than once, note down the created assets'
-# resource names and specify them as command-line arguments for marketing and
-# square marketing images.
+# IDs and specify them as command-line arguments for marketing and square marketing
+# images.
 #
 # Alternatively, you can modify the image URLs' constants directly to use other
 # images.
@@ -60,6 +60,7 @@ use Google::Ads::GoogleAds::V4::Services::CampaignService::CampaignOperation;
 use Google::Ads::GoogleAds::V4::Services::AdGroupService::AdGroupOperation;
 use Google::Ads::GoogleAds::V4::Services::AdGroupAdService::AdGroupAdOperation;
 use Google::Ads::GoogleAds::V4::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -80,18 +81,16 @@ use constant SQUARE_MARKETING_IMAGE_URL => "https://goo.gl/mtt54n";
 #
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
-# Optional: Specify the marketing image asset resource name and square marketing
-# image asset resource name below to be used to create a responsive display ad.
-# If none is specified, this example will create a new image assets.
-my $marketing_image_asset_resource_name        = undef;
-my $square_marketing_image_asset_resource_name = undef;
+# Optional: Specify the marketing image asset ID and square marketing image asset
+# ID below to be used to create a responsive display ad. If none is specified,
+# this example will create a new image assets.
+my $marketing_image_asset_id        = undef;
+my $square_marketing_image_asset_id = undef;
 
 sub add_smart_display_ad {
-  my (
-    $api_client, $customer_id,
-    $marketing_image_asset_resource_name,
-    $square_marketing_image_asset_resource_name
-  ) = @_;
+  my ($api_client, $customer_id, $marketing_image_asset_id,
+    $square_marketing_image_asset_id)
+    = @_;
 
   my $budget_resource_name = create_campaign_budget($api_client, $customer_id);
 
@@ -102,11 +101,9 @@ sub add_smart_display_ad {
   my $ad_group_resource_name =
     create_ad_group($api_client, $customer_id, $campaign_resource_name);
 
-  create_responsive_display_ad(
-    $api_client, $customer_id, $ad_group_resource_name,
-    $marketing_image_asset_resource_name,
-    $square_marketing_image_asset_resource_name
-  );
+  create_responsive_display_ad($api_client, $customer_id,
+    $ad_group_resource_name, $marketing_image_asset_id,
+    $square_marketing_image_asset_id);
 
   return 1;
 }
@@ -221,23 +218,25 @@ sub create_ad_group {
 # Creates a responsive display ad, which is a recommended ad type for Smart
 # Display campaigns.
 sub create_responsive_display_ad {
-  my (
-    $api_client, $customer_id, $ad_group_resource_name,
-    $marketing_image_asset_resource_name,
-    $square_marketing_image_asset_resource_name
-  ) = @_;
+  my ($api_client, $customer_id, $ad_group_resource_name,
+    $marketing_image_asset_id, $square_marketing_image_asset_id)
+    = @_;
 
   # Create a new image asset for marketing image and square marketing image if
   # there are no assets' resource names specified.
-  $marketing_image_asset_resource_name =
-    create_image_asset($api_client, $customer_id, MARKETING_IMAGE_URL,
-    "Marketing Image")
-    if not $marketing_image_asset_resource_name;
+  my $marketing_image_asset_resource_name =
+    defined $marketing_image_asset_id
+    ? Google::Ads::GoogleAds::V4::Utils::ResourceNames::asset($customer_id,
+    $marketing_image_asset_id)
+    : create_image_asset($api_client, $customer_id, MARKETING_IMAGE_URL,
+    "Marketing Image");
 
-  $square_marketing_image_asset_resource_name =
-    create_image_asset($api_client, $customer_id, SQUARE_MARKETING_IMAGE_URL,
-    "Square Marketing Image")
-    if not $square_marketing_image_asset_resource_name;
+  my $square_marketing_image_asset_resource_name =
+    defined $square_marketing_image_asset_id
+    ? Google::Ads::GoogleAds::V4::Utils::ResourceNames::asset($customer_id,
+    $square_marketing_image_asset_id)
+    : create_image_asset($api_client, $customer_id, SQUARE_MARKETING_IMAGE_URL,
+    "Square Marketing Image");
 
   # Create a responsive display ad info.
   my $responsive_display_ad_info =
@@ -346,11 +345,9 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s" => \$customer_id,
-  "marketing_image_asset_resource_name=s" =>
-    \$marketing_image_asset_resource_name,
-  "square_marketing_image_asset_resource_name=s" =>
-    \$square_marketing_image_asset_resource_name
+  "customer_id=s"                  => \$customer_id,
+  "marketing_image_asset_id=i"     => \$marketing_image_asset_id,
+  "square_marketing_image_asset=i" => \$square_marketing_image_asset_id
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -358,12 +355,8 @@ GetOptions(
 pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
-add_smart_display_ad(
-  $api_client,
-  $customer_id =~ s/-//gr,
-  $marketing_image_asset_resource_name,
-  $square_marketing_image_asset_resource_name
-);
+add_smart_display_ad($api_client, $customer_id =~ s/-//gr,
+  $marketing_image_asset_id, $square_marketing_image_asset_id);
 
 =pod
 
@@ -379,8 +372,8 @@ https://support.google.com/google-ads/answer/7020281.
 
 IMPORTANT: The AssetService requires you to reuse what you've uploaded previously.
 Therefore, you cannot create an image asset with the exactly same bytes. In case
-you want to run this example more than once, note down the created assets' resource
-names and specify them as command-line arguments for marketing and square marketing
+you want to run this example more than once, note down the created assets' IDs
+and specify them as command-line arguments for marketing and square marketing
 images.
 
 Alternatively, you can modify the image URLs' constants directly to use other images.
@@ -389,9 +382,9 @@ Alternatively, you can modify the image URLs' constants directly to use other im
 
 add_smart_display_ad.pl [options]
 
-    -help                                           Show the help message.
-    -customer_id                                    The Google Ads customer ID.
-    -marketing_image_asset_resource_name            [optional] The resource name of marketing image asset.
-    -square_marketing_image_asset_resource_name     [optional] The resource name of square marketing image asset.
+    -help                                Show the help message.
+    -customer_id                         The Google Ads customer ID.
+    -marketing_image_asset_id            [optional] The resource name of marketing image asset.
+    -square_marketing_image_asset_id     [optional] The resource name of square marketing image asset.
 
 =cut
