@@ -223,7 +223,7 @@ sub create_responsive_display_ad {
     = @_;
 
   # Create a new image asset for marketing image and square marketing image if
-  # there are no assets' resource names specified.
+  # there are no assets' IDs specified.
   my $marketing_image_asset_resource_name =
     defined $marketing_image_asset_id
     ? Google::Ads::GoogleAds::V4::Utils::ResourceNames::asset($customer_id,
@@ -384,7 +384,7 @@ add_smart_display_ad.pl [options]
 
     -help                                Show the help message.
     -customer_id                         The Google Ads customer ID.
-    -marketing_image_asset_id            [optional] The resource name of marketing image asset.
-    -square_marketing_image_asset_id     [optional] The resource name of square marketing image asset.
+    -marketing_image_asset_id            [optional] The ID of marketing image asset.
+    -square_marketing_image_asset_id     [optional] The ID of square marketing image asset.
 
 =cut
