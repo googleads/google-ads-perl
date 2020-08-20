@@ -88,8 +88,7 @@ sub create_bidding_strategy {
     Google::Ads::GoogleAds::V4::Resources::BiddingStrategy->new({
       name        => "Maximize Clicks #" . uniqid(),
       targetSpend => Google::Ads::GoogleAds::V4::Common::TargetSpend->new({
-          cpcBidCeilingMicros => 2000000,
-          targetSpendMicros   => 20000000
+          cpcBidCeilingMicros => 2000000
         }
       ),
     });
