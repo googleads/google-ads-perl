@@ -26,7 +26,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V5::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -58,11 +58,12 @@ sub get_all_image_assets {
   # Create a search Google Ads request that will retrieve all image assets
   # using pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V5::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
-      customerId => $customer_id,
-      query      => $search_query,
-      pageSize   => PAGE_SIZE
+      customerId              => $customer_id,
+      query                   => $search_query,
+      pageSize                => PAGE_SIZE,
+      returnTotalResultsCount => "true"
     });
 
   # Get the GoogleAdsService.
@@ -85,6 +86,10 @@ sub get_all_image_assets {
       $google_ads_row->{asset}{imageAsset}{fullSize}{widthPixels},
       $google_ads_row->{asset}{imageAsset}{fullSize}{heightPixels};
   }
+
+  printf
+    "Number of images found: %d.\n",
+    $iterator->get_current_response()->{totalResultsCount} || 0;
 
   return 1;
 }

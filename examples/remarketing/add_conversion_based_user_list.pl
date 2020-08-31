@@ -25,12 +25,12 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V4::Resources::UserList;
-use Google::Ads::GoogleAds::V4::Common::UserListActionInfo;
-use Google::Ads::GoogleAds::V4::Common::BasicUserListInfo;
-use Google::Ads::GoogleAds::V4::Enums::UserListMembershipStatusEnum qw(OPEN);
-use Google::Ads::GoogleAds::V4::Services::UserListService::UserListOperation;
-use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V5::Resources::UserList;
+use Google::Ads::GoogleAds::V5::Common::UserListActionInfo;
+use Google::Ads::GoogleAds::V5::Common::BasicUserListInfo;
+use Google::Ads::GoogleAds::V5::Enums::UserListMembershipStatusEnum qw(OPEN);
+use Google::Ads::GoogleAds::V5::Services::UserListService::UserListOperation;
+use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -59,21 +59,21 @@ sub add_conversion_based_user_list {
     # specifies the conversion action that, when triggered, will cause a user to
     # be added to a UserList.
     push @$user_list_action_info_list,
-      Google::Ads::GoogleAds::V4::Common::UserListActionInfo->new({
+      Google::Ads::GoogleAds::V5::Common::UserListActionInfo->new({
         conversionAction =>
-          Google::Ads::GoogleAds::V4::Utils::ResourceNames::conversion_action(
+          Google::Ads::GoogleAds::V5::Utils::ResourceNames::conversion_action(
           $customer_id, $conversion_action_id
           )});
   }
 
   # Create a basic user list info object with all of the conversion actions.
   my $basic_user_list_info =
-    Google::Ads::GoogleAds::V4::Common::BasicUserListInfo->new({
+    Google::Ads::GoogleAds::V5::Common::BasicUserListInfo->new({
       actions => $user_list_action_info_list
     });
 
   # Create the basic user list.
-  my $basic_user_list = Google::Ads::GoogleAds::V4::Resources::UserList->new({
+  my $basic_user_list = Google::Ads::GoogleAds::V5::Resources::UserList->new({
     name => "Example BasicUserList #" . uniqid(),
     description =>
       "A list of people who have triggered one or more conversion actions",
@@ -84,7 +84,7 @@ sub add_conversion_based_user_list {
 
   # Create the operation.
   my $user_list_operation =
-    Google::Ads::GoogleAds::V4::Services::UserListService::UserListOperation->
+    Google::Ads::GoogleAds::V5::Services::UserListService::UserListOperation->
     new({
       create => $basic_user_list
     });

@@ -25,22 +25,22 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V4::Resources::FeedAttribute;
-use Google::Ads::GoogleAds::V4::Resources::Feed;
-use Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping;
-use Google::Ads::GoogleAds::V4::Resources::FeedMapping;
-use Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue;
-use Google::Ads::GoogleAds::V4::Resources::FeedItem;
-use Google::Ads::GoogleAds::V4::Enums::FeedAttributeTypeEnum
+use Google::Ads::GoogleAds::V5::Resources::FeedAttribute;
+use Google::Ads::GoogleAds::V5::Resources::Feed;
+use Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping;
+use Google::Ads::GoogleAds::V5::Resources::FeedMapping;
+use Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue;
+use Google::Ads::GoogleAds::V5::Resources::FeedItem;
+use Google::Ads::GoogleAds::V5::Enums::FeedAttributeTypeEnum
   qw(STRING STRING_LIST URL URL_LIST);
-use Google::Ads::GoogleAds::V4::Enums::RealEstatePlaceholderFieldEnum
+use Google::Ads::GoogleAds::V5::Enums::RealEstatePlaceholderFieldEnum
   qw(LISTING_ID LISTING_NAME FINAL_URLS IMAGE_URL CONTEXTUAL_KEYWORDS);
-use Google::Ads::GoogleAds::V4::Enums::PlaceholderTypeEnum
+use Google::Ads::GoogleAds::V5::Enums::PlaceholderTypeEnum
   qw(DYNAMIC_REAL_ESTATE);
-use Google::Ads::GoogleAds::V4::Services::FeedService::FeedOperation;
+use Google::Ads::GoogleAds::V5::Services::FeedService::FeedOperation;
 use
-  Google::Ads::GoogleAds::V4::Services::FeedMappingService::FeedMappingOperation;
-use Google::Ads::GoogleAds::V4::Services::FeedItemService::FeedItemOperation;
+  Google::Ads::GoogleAds::V5::Services::FeedMappingService::FeedMappingOperation;
+use Google::Ads::GoogleAds::V5::Services::FeedItemService::FeedItemOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -88,37 +88,37 @@ sub create_feed {
 
   # Create a Listing ID attribute.
   my $listing_id_attribute =
-    Google::Ads::GoogleAds::V4::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedAttribute->new({
       type => STRING,
       name => "Listing ID"
     });
   # Create a Listing Name attribute.
   my $listing_name_attribute =
-    Google::Ads::GoogleAds::V4::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedAttribute->new({
       type => STRING,
       name => "Listing Name"
     });
   # Create a Final URLs attribute.
   my $final_urls_attribute =
-    Google::Ads::GoogleAds::V4::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedAttribute->new({
       type => URL_LIST,
       name => "Final URLs"
     });
   # Create an Image URL attribute.
   my $image_url_attribute =
-    Google::Ads::GoogleAds::V4::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedAttribute->new({
       type => URL,
       name => "Image URL"
     });
   # Create a Contextual Keywords attribute.
   my $contextual_keywords_attribute =
-    Google::Ads::GoogleAds::V4::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedAttribute->new({
       type => STRING_LIST,
       name => "Contextual Keywords"
     });
 
   # Create a feed.
-  my $feed = Google::Ads::GoogleAds::V4::Resources::Feed->new({
+  my $feed = Google::Ads::GoogleAds::V5::Resources::Feed->new({
       name       => "Real Estate Feed #" . uniqid(),
       attributes => [
         $listing_id_attribute, $listing_name_attribute,
@@ -128,7 +128,7 @@ sub create_feed {
 
   # Create a feed operation.
   my $feed_operation =
-    Google::Ads::GoogleAds::V4::Services::FeedService::FeedOperation->new(({
+    Google::Ads::GoogleAds::V5::Services::FeedService::FeedOperation->new(({
       create => $feed
     }));
 
@@ -204,36 +204,36 @@ sub create_feed_mapping {
   # the context of a real estate feed (e.g. a LISTING_ID or LISTING_NAME). The FeedMapping
   # associates the feed column by ID to this type and controls how the feed attributes are
   # presented in dynamic content.
-  # See https://developers.google.com/google-ads/api/reference/rpc/google.ads.googleads.v4.enums#google.ads.googleads.v4.enums.RealEstatePlaceholderFieldEnum.RealEstatePlaceholderField
+  # See https://developers.google.com/google-ads/api/reference/rpc/google.ads.googleads.v5.enums#google.ads.googleads.v5.enums.RealEstatePlaceholderFieldEnum.RealEstatePlaceholderField
   # for the full list of placeholder values.
   my $listing_id_mapping =
-    Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{LISTING_ID}{id},
       realEstateField => LISTING_ID
     });
   my $listing_name_mapping =
-    Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{LISTING_NAME}{id},
       realEstateField => LISTING_NAME
     });
   my $final_urls_mapping =
-    Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{FINAL_URLS}{id},
       realEstateField => FINAL_URLS
     });
   my $image_url_mapping =
-    Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{IMAGE_URL}{id},
       realEstateField => IMAGE_URL
     });
   my $contextual_keywords_mapping =
-    Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{CONTEXTUAL_KEYWORDS}{id},
       realEstateField => CONTEXTUAL_KEYWORDS
     });
 
   # Create a feed mapping.
-  my $feed_mapping = Google::Ads::GoogleAds::V4::Resources::FeedMapping->new({
+  my $feed_mapping = Google::Ads::GoogleAds::V5::Resources::FeedMapping->new({
       placeholderType        => DYNAMIC_REAL_ESTATE,
       feed                   => $feed_resource_name,
       attributeFieldMappings => [
@@ -244,7 +244,7 @@ sub create_feed_mapping {
 
   # Create a feed mapping operation.
   my $feed_mapping_operation =
-    Google::Ads::GoogleAds::V4::Services::FeedMappingService::FeedMappingOperation
+    Google::Ads::GoogleAds::V5::Services::FeedMappingService::FeedMappingOperation
     ->new({
       create => $feed_mapping
     });
@@ -264,19 +264,19 @@ sub create_feed_item {
 
   # Create the listing ID feed attribute value.
   my $listing_id =
-    Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{LISTING_ID}{id},
       stringValue     => "ABC123DEF"
     });
   # Create the listing name feed attribute value.
   my $listing_name =
-    Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{LISTING_NAME}{id},
       stringValue     => "Two bedroom with magnificent views"
     });
   # Create the final URLs feed attribute value.
   my $final_urls =
-    Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{FINAL_URLS}{id},
       stringValue     => "http://www.example.com/listings/"
     });
@@ -285,19 +285,19 @@ sub create_feed_item {
 
   # Create the image URL feed attribute value.
   my $image_url =
-    Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{IMAGE_URL}{id},
       stringValue =>
         "http://www.example.com/listings/images?listing_id=ABC123DEF"
     });
   # Create the contextual keywords feed attribute value.
   my $contextual_keywords =
-    Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{CONTEXTUAL_KEYWORDS}{id},
       stringValues    => ["beach community", "ocean view", "two bedroom"]});
 
   # Create a feed item, specifying the Feed ID and the attributes created above.
-  my $feed_item = Google::Ads::GoogleAds::V4::Resources::FeedItem->new({
+  my $feed_item = Google::Ads::GoogleAds::V5::Resources::FeedItem->new({
       feed            => $feed_resource_name,
       attributeValues => [
         $listing_id, $listing_name, $final_urls,
@@ -306,7 +306,7 @@ sub create_feed_item {
 
   # Create a feed item operation.
   my $feed_item_operation =
-    Google::Ads::GoogleAds::V4::Services::FeedItemService::FeedItemOperation->
+    Google::Ads::GoogleAds::V5::Services::FeedItemService::FeedItemOperation->
     new({
       create => $feed_item
     });

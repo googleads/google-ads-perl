@@ -25,9 +25,9 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
-use Google::Ads::GoogleAds::V4::Enums::PolicyApprovalStatusEnum qw(DISAPPROVED);
+use Google::Ads::GoogleAds::V5::Enums::PolicyApprovalStatusEnum qw(DISAPPROVED);
 use
-  Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V5::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -49,19 +49,22 @@ my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 sub get_all_disapproved_ads {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
-  # Create the search query.
+  # Create a query that retrieves all the disapproved ads of the specified campaign ID.
   my $search_query =
-    "SELECT ad_group_ad.ad.id, ad_group_ad.ad.type, ad_group_ad.policy_summary "
-    . "FROM ad_group_ad WHERE campaign.id = $campaign_id";
+    "SELECT ad_group_ad.ad.id, ad_group_ad.ad.type, " .
+    "ad_group_ad.policy_summary.approval_status, " .
+    "ad_group_ad.policy_summary.policy_topic_entries " .
+    "FROM ad_group_ad WHERE campaign.id = $campaign_id " .
+    "AND ad_group_ad.policy_summary.approval_status = DISAPPROVED";
 
-  # Create a search Google Ads request that will retrieve all ads using pages of
-  # the specified page size.
+  # Create a search Google Ads request.
   my $search_request =
-    Google::Ads::GoogleAds::V4::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V5::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
-      customerId => $customer_id,
-      query      => $search_query,
-      pageSize   => PAGE_SIZE
+      customerId              => $customer_id,
+      query                   => $search_query,
+      pageSize                => PAGE_SIZE,
+      returnTotalResultsCount => "true"
     });
 
   # Get the GoogleAdsService.
@@ -72,20 +75,12 @@ sub get_all_disapproved_ads {
     request => $search_request
   });
 
-  my $disapproved_ads_count = 0;
-
-  # Iterate over all ads in all rows returned and count disapproved ads
+  # Iterate over all rows in all pages and count disapproved ads.
   while ($iterator->has_next) {
     my $google_ads_row = $iterator->next;
     my $ad_group_ad    = $google_ads_row->{adGroupAd};
     my $ad             = $ad_group_ad->{ad};
     my $policy_summary = $ad_group_ad->{policySummary};
-
-    next
-      if not $policy_summary->{approvalStatus}
-      or $policy_summary->{approvalStatus} ne DISAPPROVED;
-
-    $disapproved_ads_count += 1;
 
     printf "Ad with ID %d and type '%s' was disapproved with the " .
       "following policy topic entries:\n", $ad->{id}, $ad->{type};
@@ -108,7 +103,8 @@ sub get_all_disapproved_ads {
     }
   }
 
-  printf "Number of disapproved ads found: %d.\n", $disapproved_ads_count;
+  printf "Number of disapproved ads found: %d.\n",
+    $iterator->get_current_response()->{totalResultsCount} || 0;
 
   return 1;
 }

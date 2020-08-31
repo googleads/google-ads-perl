@@ -1,3 +1,9 @@
+5.0.0 - 2020-08-31
+- Added support for Google Ads API v5_0.
+- Added code examples: add_logical_user_list, add_combined_rule_user_list,
+  add_expression_rule_user_list, add_conversion_based_user_list, add_geo_target,
+  add_billing_setup, etc.
+
 4.0.0 - 2020-07-13
 - Added support for Google Ads API v4_0.
 - Renamed MutateJobService to BatchJobService.

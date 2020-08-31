@@ -29,19 +29,19 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V4::Resources::Ad;
-use Google::Ads::GoogleAds::V4::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V4::Resources::Asset;
-use Google::Ads::GoogleAds::V4::Common::AdMediaBundleAsset;
-use Google::Ads::GoogleAds::V4::Common::DisplayUploadAdInfo;
-use Google::Ads::GoogleAds::V4::Common::MediaBundleAsset;
-use Google::Ads::GoogleAds::V4::Enums::AdGroupAdStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V4::Enums::DisplayUploadProductTypeEnum
+use Google::Ads::GoogleAds::V5::Resources::Ad;
+use Google::Ads::GoogleAds::V5::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V5::Resources::Asset;
+use Google::Ads::GoogleAds::V5::Common::AdMediaBundleAsset;
+use Google::Ads::GoogleAds::V5::Common::DisplayUploadAdInfo;
+use Google::Ads::GoogleAds::V5::Common::MediaBundleAsset;
+use Google::Ads::GoogleAds::V5::Enums::AdGroupAdStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V5::Enums::DisplayUploadProductTypeEnum
   qw(HTML5_UPLOAD_AD);
-use Google::Ads::GoogleAds::V4::Enums::AssetTypeEnum qw(MEDIA_BUNDLE);
-use Google::Ads::GoogleAds::V4::Services::AssetService::AssetOperation;
-use Google::Ads::GoogleAds::V4::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V5::Enums::AssetTypeEnum qw(MEDIA_BUNDLE);
+use Google::Ads::GoogleAds::V5::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V5::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -69,7 +69,7 @@ sub add_display_upload_ad {
   # There are several types of display upload ads. For this example, we will
   # create an HTML5 upload ad, which requires a media bundle.
   # The DisplayUploadProductType field lists the available display upload types:
-  # https://developers.google.com/google-ads/api/reference/rpc/V4/DisplayUploadAdInfo
+  # https://developers.google.com/google-ads/api/reference/rpc/V5/DisplayUploadAdInfo
 
   # Create a new media bundle asset and return the resource name.
   my $ad_asset_resource_name =
@@ -91,16 +91,16 @@ sub create_media_bundle_asset {
   my $bundle_content = get_base64_data_from_url(BUNDLE_URL);
 
   # Create an asset.
-  my $asset = Google::Ads::GoogleAds::V4::Resources::Asset->new({
+  my $asset = Google::Ads::GoogleAds::V5::Resources::Asset->new({
       type => MEDIA_BUNDLE,
       mediaBundleAsset =>
-        Google::Ads::GoogleAds::V4::Common::MediaBundleAsset->new({
+        Google::Ads::GoogleAds::V5::Common::MediaBundleAsset->new({
           data => $bundle_content
         })});
 
   # Create an asset operation.
   my $asset_operation =
-    Google::Ads::GoogleAds::V4::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V5::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 
@@ -123,34 +123,34 @@ sub create_display_upload_ad_group_ad {
 
   # Create a display upload ad info.
   my $display_upload_ad_info =
-    Google::Ads::GoogleAds::V4::Common::DisplayUploadAdInfo->new({
+    Google::Ads::GoogleAds::V5::Common::DisplayUploadAdInfo->new({
       displayUploadProductType => HTML5_UPLOAD_AD,
       mediaBundle =>
-        Google::Ads::GoogleAds::V4::Common::AdMediaBundleAsset->new({
+        Google::Ads::GoogleAds::V5::Common::AdMediaBundleAsset->new({
           asset => $ad_asset_resource_name,
         })});
 
   # Create a display upload ad.
-  my $display_upload_ad = Google::Ads::GoogleAds::V4::Resources::Ad->new({
+  my $display_upload_ad = Google::Ads::GoogleAds::V5::Resources::Ad->new({
     name      => "Ad for HTML5",
     finalUrls => ["http://example.com/html5"],
     # Exactly one ad data field must be included to specify the ad type. See
-    # https://developers.google.com/google-ads/api/reference/rpc/V4/Ad for the
+    # https://developers.google.com/google-ads/api/reference/rpc/V5/Ad for the
     # full list of available types.
     displayUploadAd => $display_upload_ad_info,
   });
 
   # Create an ad group ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V4::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V5::Resources::AdGroupAd->new({
       ad      => $display_upload_ad,
       status  => PAUSED,
-      adGroup => Google::Ads::GoogleAds::V4::Utils::ResourceNames::ad_group(
+      adGroup => Google::Ads::GoogleAds::V5::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       )});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V4::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V5::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad.

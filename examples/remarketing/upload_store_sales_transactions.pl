@@ -28,18 +28,18 @@ use lib "$Bin/../../lib";
 
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V4::Resources::OfflineUserDataJob;
-use Google::Ads::GoogleAds::V4::Common::OfflineUserAddressInfo;
-use Google::Ads::GoogleAds::V4::Common::StoreSalesMetadata;
-use Google::Ads::GoogleAds::V4::Common::StoreSalesThirdPartyMetadata;
-use Google::Ads::GoogleAds::V4::Common::TransactionAttribute;
-use Google::Ads::GoogleAds::V4::Common::UserData;
-use Google::Ads::GoogleAds::V4::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V4::Enums::OfflineUserDataJobTypeEnum
+use Google::Ads::GoogleAds::V5::Resources::OfflineUserDataJob;
+use Google::Ads::GoogleAds::V5::Common::OfflineUserAddressInfo;
+use Google::Ads::GoogleAds::V5::Common::StoreSalesMetadata;
+use Google::Ads::GoogleAds::V5::Common::StoreSalesThirdPartyMetadata;
+use Google::Ads::GoogleAds::V5::Common::TransactionAttribute;
+use Google::Ads::GoogleAds::V5::Common::UserData;
+use Google::Ads::GoogleAds::V5::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V5::Enums::OfflineUserDataJobTypeEnum
   qw(STORE_SALES_UPLOAD_FIRST_PARTY STORE_SALES_UPLOAD_THIRD_PARTY);
 use
-  Google::Ads::GoogleAds::V4::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
-use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V5::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
+use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -145,7 +145,7 @@ sub create_offline_user_data_job {
   my $store_sales_metadata =
     # Please refer to https://support.google.com/google-ads/answer/7506124 for
     # additional details.
-    Google::Ads::GoogleAds::V4::Common::StoreSalesMetadata->new({
+    Google::Ads::GoogleAds::V5::Common::StoreSalesMetadata->new({
       # Set the fraction of your overall sales that you (or the advertiser,
       # in the third party case) can associate with a customer (email, phone
       # number, address, etc.) in your database or loyalty program.
@@ -165,7 +165,7 @@ sub create_offline_user_data_job {
   if ($offline_user_data_job_type eq STORE_SALES_UPLOAD_THIRD_PARTY) {
     # Create additional metadata required for uploading third party data.
     my $store_sales_third_party_metadata =
-      Google::Ads::GoogleAds::V4::Common::StoreSalesThirdPartyMetadata->new({
+      Google::Ads::GoogleAds::V5::Common::StoreSalesThirdPartyMetadata->new({
         # The date/time must be in the format "yyyy-MM-dd hh:mm:ss".
         advertiserUploadDateTime => $advertiser_upload_date_time,
 
@@ -205,7 +205,7 @@ sub create_offline_user_data_job {
 
   # Create a new offline user data job.
   my $offline_user_data_job =
-    Google::Ads::GoogleAds::V4::Resources::OfflineUserDataJob->new({
+    Google::Ads::GoogleAds::V5::Resources::OfflineUserDataJob->new({
       type               => $offline_user_data_job_type,
       storeSalesMetadata => $store_sales_metadata,
       external_id        => $external_id,
@@ -261,22 +261,22 @@ sub build_offline_user_data_job_operations {
 
   # Create the first transaction for upload based on an email address and state.
   my $user_data_with_email_address =
-    Google::Ads::GoogleAds::V4::Common::UserData->new({
+    Google::Ads::GoogleAds::V5::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V4::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V5::Common::UserIdentifier->new({
             # Hash normalized email addresses based on SHA-256 hashing algorithm.
             hashedEmail => normalize_and_hash('customer@example.com')}
         ),
-        Google::Ads::GoogleAds::V4::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V5::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V4::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V5::Common::OfflineUserAddressInfo->new({
                 state => "NY"
               })})
       ],
       transactionAttribute =>
-        Google::Ads::GoogleAds::V4::Common::TransactionAttribute->new({
+        Google::Ads::GoogleAds::V5::Common::TransactionAttribute->new({
           conversionAction =>
-            Google::Ads::GoogleAds::V4::Utils::ResourceNames::conversion_action(
+            Google::Ads::GoogleAds::V5::Utils::ResourceNames::conversion_action(
             $customer_id, $conversion_action_id
             ),
           currencyCode => "USD",
@@ -291,11 +291,11 @@ sub build_offline_user_data_job_operations {
 
   # Create the second transaction for upload based on a physical address.
   my $user_data_with_physical_address =
-    Google::Ads::GoogleAds::V4::Common::UserData->new({
+    Google::Ads::GoogleAds::V5::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V4::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V5::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V4::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V5::Common::OfflineUserAddressInfo->new({
                 # First and last name must be normalized and hashed.
                 hashedFirstName => normalize_and_hash("John"),
                 hashedLastName  => normalize_and_hash("Doe"),
@@ -305,9 +305,9 @@ sub build_offline_user_data_job_operations {
               })})
       ],
       transactionAttribute =>
-        Google::Ads::GoogleAds::V4::Common::TransactionAttribute->new({
+        Google::Ads::GoogleAds::V5::Common::TransactionAttribute->new({
           conversionAction =>
-            Google::Ads::GoogleAds::V4::Utils::ResourceNames::conversion_action(
+            Google::Ads::GoogleAds::V5::Utils::ResourceNames::conversion_action(
             $customer_id,
             $conversion_action_id
             ),
@@ -323,12 +323,12 @@ sub build_offline_user_data_job_operations {
 
   # Create the operations to add the two transactions.
   my $operations = [
-    Google::Ads::GoogleAds::V4::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V5::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_email_address
       }
       ),
-    Google::Ads::GoogleAds::V4::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V5::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_physical_address
       })];

@@ -25,7 +25,7 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -45,7 +45,7 @@ sub get_account_information {
   my ($api_client, $customer_id) = @_;
 
   my $resource_name =
-    Google::Ads::GoogleAds::V4::Utils::ResourceNames::customer($customer_id);
+    Google::Ads::GoogleAds::V5::Utils::ResourceNames::customer($customer_id);
 
   my $customer =
     $api_client->CustomerService()->get({resourceName => $resource_name});

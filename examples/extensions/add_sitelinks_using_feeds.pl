@@ -26,30 +26,30 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V4::Resources::Feed;
-use Google::Ads::GoogleAds::V4::Resources::FeedAttribute;
-use Google::Ads::GoogleAds::V4::Resources::FeedItem;
-use Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue;
-use Google::Ads::GoogleAds::V4::Resources::FeedMapping;
-use Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping;
-use Google::Ads::GoogleAds::V4::Resources::CampaignFeed;
-use Google::Ads::GoogleAds::V4::Resources::FeedItemTarget;
-use Google::Ads::GoogleAds::V4::Common::MatchingFunction;
-use Google::Ads::GoogleAds::V4::Enums::FeedOriginEnum qw(USER);
-use Google::Ads::GoogleAds::V4::Enums::FeedAttributeTypeEnum
+use Google::Ads::GoogleAds::V5::Resources::Feed;
+use Google::Ads::GoogleAds::V5::Resources::FeedAttribute;
+use Google::Ads::GoogleAds::V5::Resources::FeedItem;
+use Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue;
+use Google::Ads::GoogleAds::V5::Resources::FeedMapping;
+use Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping;
+use Google::Ads::GoogleAds::V5::Resources::CampaignFeed;
+use Google::Ads::GoogleAds::V5::Resources::FeedItemTarget;
+use Google::Ads::GoogleAds::V5::Common::MatchingFunction;
+use Google::Ads::GoogleAds::V5::Enums::FeedOriginEnum qw(USER);
+use Google::Ads::GoogleAds::V5::Enums::FeedAttributeTypeEnum
   qw(STRING URL_LIST);
-use Google::Ads::GoogleAds::V4::Enums::PlaceholderTypeEnum qw(SITELINK);
-use Google::Ads::GoogleAds::V4::Enums::SitelinkPlaceholderFieldEnum
+use Google::Ads::GoogleAds::V5::Enums::PlaceholderTypeEnum qw(SITELINK);
+use Google::Ads::GoogleAds::V5::Enums::SitelinkPlaceholderFieldEnum
   qw(TEXT FINAL_URLS LINE_1 LINE_2);
-use Google::Ads::GoogleAds::V4::Services::FeedService::FeedOperation;
-use Google::Ads::GoogleAds::V4::Services::FeedItemService::FeedItemOperation;
+use Google::Ads::GoogleAds::V5::Services::FeedService::FeedOperation;
+use Google::Ads::GoogleAds::V5::Services::FeedItemService::FeedItemOperation;
 use
-  Google::Ads::GoogleAds::V4::Services::FeedMappingService::FeedMappingOperation;
+  Google::Ads::GoogleAds::V5::Services::FeedMappingService::FeedMappingOperation;
 use
-  Google::Ads::GoogleAds::V4::Services::CampaignFeedService::CampaignFeedOperation;
+  Google::Ads::GoogleAds::V5::Services::CampaignFeedService::CampaignFeedOperation;
 use
-  Google::Ads::GoogleAds::V4::Services::FeedItemTargetService::FeedItemTargetOperation;
-use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V5::Services::FeedItemTargetService::FeedItemTargetOperation;
+use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -98,36 +98,36 @@ sub add_sitelinks_using_feeds {
 sub create_feed {
   my ($api_client, $customer_id) = @_;
 
-  my $feed = Google::Ads::GoogleAds::V4::Resources::Feed->new({
+  my $feed = Google::Ads::GoogleAds::V5::Resources::Feed->new({
       name   => "Sitelinks Feed ##" . uniqid(),
       origin => USER,
       # Specify the column name and data type. This is just raw data at this point,
       # and not yet linked to any particular purpose. The names are used to help us
       # remember what they are intended for later.
       attributes => [
-        Google::Ads::GoogleAds::V4::Resources::FeedAttribute->new({
+        Google::Ads::GoogleAds::V5::Resources::FeedAttribute->new({
             name => "Link Text",
             type => STRING
           }
         ),
-        Google::Ads::GoogleAds::V4::Resources::FeedAttribute->new({
+        Google::Ads::GoogleAds::V5::Resources::FeedAttribute->new({
             name => "Link Final URL",
             type => URL_LIST
           }
         ),
-        Google::Ads::GoogleAds::V4::Resources::FeedAttribute->new({
+        Google::Ads::GoogleAds::V5::Resources::FeedAttribute->new({
             name => "Line 1",
             type => STRING
           }
         ),
-        Google::Ads::GoogleAds::V4::Resources::FeedAttribute->new({
+        Google::Ads::GoogleAds::V5::Resources::FeedAttribute->new({
             name => "Line 2",
             type => STRING
           })]});
 
   # Create a feed operation.
   my $feed_operation =
-    Google::Ads::GoogleAds::V4::Services::FeedService::FeedOperation->new({
+    Google::Ads::GoogleAds::V5::Services::FeedService::FeedOperation->new({
       create => $feed
     });
 
@@ -163,32 +163,32 @@ sub new_feed_item_operation {
   my ($data, $text, $final_url, $line_1, $line_2) = @_;
 
   # Create the feed item.
-  my $feed_item = Google::Ads::GoogleAds::V4::Resources::FeedItem->new({
+  my $feed_item = Google::Ads::GoogleAds::V5::Resources::FeedItem->new({
       feed            => $data->{feed},
       attributeValues => [
-        Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue->new({
+        Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue->new({
             feedAttributeId => $data->{link_text_attribute_id},
             stringValue     => $text
           }
         ),
-        Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue->new({
+        Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue->new({
             feedAttributeId => $data->{final_url_attribute_id},
             stringValues    => $final_url
           }
         ),
-        Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue->new({
+        Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue->new({
             feedAttributeId => $data->{line_1_attribute_id},
             stringValues    => $line_1
           }
         ),
-        Google::Ads::GoogleAds::V4::Resources::FeedItemAttributeValue->new({
+        Google::Ads::GoogleAds::V5::Resources::FeedItemAttributeValue->new({
             feedAttributeId => $data->{line_2_attribute_id},
             stringValues    => $line_2
           })]});
 
   # Create a feed item operation.
   return
-    Google::Ads::GoogleAds::V4::Services::FeedItemService::FeedItemOperation->
+    Google::Ads::GoogleAds::V5::Services::FeedItemService::FeedItemOperation->
     new({
       create => $feed_item
     });
@@ -261,26 +261,26 @@ sub create_feed_items {
 sub create_feed_mapping {
   my ($api_client, $customer_id, $feed_data) = @_;
 
-  my $feed_mapping = Google::Ads::GoogleAds::V4::Resources::FeedMapping->new({
+  my $feed_mapping = Google::Ads::GoogleAds::V5::Resources::FeedMapping->new({
       placeholderType        => SITELINK,
       feed                   => $feed_data->{feed},
       attributeFieldMappings => [
-        Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping->new({
+        Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping->new({
             feedAttributeId => $feed_data->{link_text_attribute_id},
             sitelinkField   => TEXT
           }
         ),
-        Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping->new({
+        Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping->new({
             feedAttributeId => $feed_data->{final_url_attribute_id},
             sitelinkField   => FINAL_URLS
           }
         ),
-        Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping->new({
+        Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping->new({
             feedAttributeId => $feed_data->{line_1_attribute_id},
             sitelinkField   => LINE_1
           }
         ),
-        Google::Ads::GoogleAds::V4::Resources::AttributeFieldMapping->new({
+        Google::Ads::GoogleAds::V5::Resources::AttributeFieldMapping->new({
             feedAttributeId => $feed_data->{line_2_attribute_id},
             sitelinkField   => LINE_2
           }
@@ -289,7 +289,7 @@ sub create_feed_mapping {
 
   # Create a feed mapping operation.
   my $feed_mapping_operation =
-    Google::Ads::GoogleAds::V4::Services::FeedMappingService::FeedMappingOperation
+    Google::Ads::GoogleAds::V5::Services::FeedMappingService::FeedMappingOperation
     ->new({
       create => $feed_mapping
     });
@@ -307,14 +307,14 @@ sub create_feed_mapping {
 sub create_campaign_feed {
   my ($api_client, $customer_id, $campaign_id, $feed_data) = @_;
 
-  my $campaign_feed = Google::Ads::GoogleAds::V4::Resources::CampaignFeed->new({
+  my $campaign_feed = Google::Ads::GoogleAds::V5::Resources::CampaignFeed->new({
       placeholderTypes => SITELINK,
       feed             => $feed_data->{feed},
-      campaign => Google::Ads::GoogleAds::V4::Utils::ResourceNames::campaign(
+      campaign => Google::Ads::GoogleAds::V5::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       matchingFunction =>
-        Google::Ads::GoogleAds::V4::Common::MatchingFunction->new({
+        Google::Ads::GoogleAds::V5::Common::MatchingFunction->new({
           functionString => sprintf
             "AND(IN(FEED_ITEM_ID,{ %s }),EQUALS(CONTEXT.DEVICE,'Mobile'))",
           join(",", @{$feed_data->{feed_item_ids}})}
@@ -323,7 +323,7 @@ sub create_campaign_feed {
 
   # Create a campaign feed operation.
   my $campaign_feed_operation =
-    Google::Ads::GoogleAds::V4::Services::CampaignFeedService::CampaignFeedOperation
+    Google::Ads::GoogleAds::V5::Services::CampaignFeedService::CampaignFeedOperation
     ->new({
       create => $campaign_feed
     });
@@ -344,17 +344,17 @@ sub create_ad_group_targeting {
   my $feed_item = $feed_data->{feed_items}[0];
 
   my $feed_item_target =
-    Google::Ads::GoogleAds::V4::Resources::FeedItemTarget->new({
+    Google::Ads::GoogleAds::V5::Resources::FeedItemTarget->new({
       # You must set targeting on a per-feed-item basis. This will restrict the
       # first feed item we added to only serve for the given ad group.
       feedItem => $feed_item,
-      adGroup  => Google::Ads::GoogleAds::V4::Utils::ResourceNames::ad_group(
+      adGroup  => Google::Ads::GoogleAds::V5::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       )});
 
   # Create a feed item target operation.
   my $feed_item_target_operation =
-    Google::Ads::GoogleAds::V4::Services::FeedItemTargetService::FeedItemTargetOperation
+    Google::Ads::GoogleAds::V5::Services::FeedItemTargetService::FeedItemTargetOperation
     ->new({
       create => $feed_item_target
     });

@@ -25,29 +25,29 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V4::Resources::KeywordPlan;
-use Google::Ads::GoogleAds::V4::Resources::KeywordPlanForecastPeriod;
-use Google::Ads::GoogleAds::V4::Resources::KeywordPlanCampaign;
-use Google::Ads::GoogleAds::V4::Resources::KeywordPlanGeoTarget;
-use Google::Ads::GoogleAds::V4::Resources::KeywordPlanAdGroup;
-use Google::Ads::GoogleAds::V4::Resources::KeywordPlanAdGroupKeyword;
-use Google::Ads::GoogleAds::V4::Resources::KeywordPlanCampaignKeyword;
-use Google::Ads::GoogleAds::V4::Enums::KeywordPlanForecastIntervalEnum
+use Google::Ads::GoogleAds::V5::Resources::KeywordPlan;
+use Google::Ads::GoogleAds::V5::Resources::KeywordPlanForecastPeriod;
+use Google::Ads::GoogleAds::V5::Resources::KeywordPlanCampaign;
+use Google::Ads::GoogleAds::V5::Resources::KeywordPlanGeoTarget;
+use Google::Ads::GoogleAds::V5::Resources::KeywordPlanAdGroup;
+use Google::Ads::GoogleAds::V5::Resources::KeywordPlanAdGroupKeyword;
+use Google::Ads::GoogleAds::V5::Resources::KeywordPlanCampaignKeyword;
+use Google::Ads::GoogleAds::V5::Enums::KeywordPlanForecastIntervalEnum
   qw(NEXT_QUARTER);
-use Google::Ads::GoogleAds::V4::Enums::KeywordPlanNetworkEnum qw(GOOGLE_SEARCH);
-use Google::Ads::GoogleAds::V4::Enums::KeywordMatchTypeEnum
+use Google::Ads::GoogleAds::V5::Enums::KeywordPlanNetworkEnum qw(GOOGLE_SEARCH);
+use Google::Ads::GoogleAds::V5::Enums::KeywordMatchTypeEnum
   qw(BROAD PHRASE EXACT);
 use
-  Google::Ads::GoogleAds::V4::Services::KeywordPlanService::KeywordPlanOperation;
+  Google::Ads::GoogleAds::V5::Services::KeywordPlanService::KeywordPlanOperation;
 use
-  Google::Ads::GoogleAds::V4::Services::KeywordPlanCampaignService::KeywordPlanCampaignOperation;
+  Google::Ads::GoogleAds::V5::Services::KeywordPlanCampaignService::KeywordPlanCampaignOperation;
 use
-  Google::Ads::GoogleAds::V4::Services::KeywordPlanAdGroupService::KeywordPlanAdGroupOperation;
+  Google::Ads::GoogleAds::V5::Services::KeywordPlanAdGroupService::KeywordPlanAdGroupOperation;
 use
-  Google::Ads::GoogleAds::V4::Services::KeywordPlanAdGroupKeywordService::KeywordPlanAdGroupKeywordOperation;
+  Google::Ads::GoogleAds::V5::Services::KeywordPlanAdGroupKeywordService::KeywordPlanAdGroupKeywordOperation;
 use
-  Google::Ads::GoogleAds::V4::Services::KeywordPlanCampaignKeywordService::KeywordPlanCampaignKeywordOperation;
-use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V5::Services::KeywordPlanCampaignKeywordService::KeywordPlanCampaignKeywordOperation;
+use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -91,16 +91,16 @@ sub create_keyword_plan {
   my ($api_client, $customer_id) = @_;
 
   # Create a keyword plan.
-  my $keyword_plan = Google::Ads::GoogleAds::V4::Resources::KeywordPlan->new({
+  my $keyword_plan = Google::Ads::GoogleAds::V5::Resources::KeywordPlan->new({
       name => "Keyword plan for traffic estimate #" . uniqid(),
       forecastPeriod =>
-        Google::Ads::GoogleAds::V4::Resources::KeywordPlanForecastPeriod->new({
+        Google::Ads::GoogleAds::V5::Resources::KeywordPlanForecastPeriod->new({
           dateInterval => NEXT_QUARTER
         })});
 
   # Create a keyword plan operation.
   my $keyword_plan_operation =
-    Google::Ads::GoogleAds::V4::Services::KeywordPlanService::KeywordPlanOperation
+    Google::Ads::GoogleAds::V5::Services::KeywordPlanService::KeywordPlanOperation
     ->new({
       create => $keyword_plan
     });
@@ -121,7 +121,7 @@ sub create_keyword_plan_campaign {
 
   # Create a keyword plan campaign.
   my $keyword_plan_campaign =
-    Google::Ads::GoogleAds::V4::Resources::KeywordPlanCampaign->new({
+    Google::Ads::GoogleAds::V5::Resources::KeywordPlanCampaign->new({
       name               => "Keyword plan campaign #" . uniqid(),
       cpcBidMicros       => 1000000,
       keywordPlanNetwork => GOOGLE_SEARCH,
@@ -131,21 +131,21 @@ sub create_keyword_plan_campaign {
   # See https://developers.google.com/adwords/api/docs/appendix/geotargeting
   # for the list of geo target IDs.
   $keyword_plan_campaign->{geoTargets} = [
-    Google::Ads::GoogleAds::V4::Resources::KeywordPlanGeoTarget->new({
+    Google::Ads::GoogleAds::V5::Resources::KeywordPlanGeoTarget->new({
         # Geo target constant 2840 is for USA.
         geoTargetConstant =>
-          Google::Ads::GoogleAds::V4::Utils::ResourceNames::geo_target_constant(
+          Google::Ads::GoogleAds::V5::Utils::ResourceNames::geo_target_constant(
           2840)})];
 
   # See https://developers.google.com/adwords/api/docs/appendix/codes-formats#languages
   # for the list of language criteria IDs.
   $keyword_plan_campaign->{languageConstants} = [
     # Language criteria 1000 is for English.
-    Google::Ads::GoogleAds::V4::Utils::ResourceNames::language_constant(1000)];
+    Google::Ads::GoogleAds::V5::Utils::ResourceNames::language_constant(1000)];
 
   # Create a keyword plan campaign operation
   my $keyword_plan_campaign_operation =
-    Google::Ads::GoogleAds::V4::Services::KeywordPlanCampaignService::KeywordPlanCampaignOperation
+    Google::Ads::GoogleAds::V5::Services::KeywordPlanCampaignService::KeywordPlanCampaignOperation
     ->new({
       create => $keyword_plan_campaign
     });
@@ -169,7 +169,7 @@ sub create_keyword_plan_ad_group {
 
   # Create a keyword plan ad group.
   my $keyword_plan_ad_group =
-    Google::Ads::GoogleAds::V4::Resources::KeywordPlanAdGroup->new({
+    Google::Ads::GoogleAds::V5::Resources::KeywordPlanAdGroup->new({
       name                => "Keyword plan ad group #" . uniqid(),
       cpcBidMicros        => 2500000,
       keywordPlanCampaign => $keyword_plan_campaign_resource
@@ -177,7 +177,7 @@ sub create_keyword_plan_ad_group {
 
   # Create a keyword plan ad group operation.
   my $keyword_plan_ad_group_operation =
-    Google::Ads::GoogleAds::V4::Services::KeywordPlanAdGroupService::KeywordPlanAdGroupOperation
+    Google::Ads::GoogleAds::V5::Services::KeywordPlanAdGroupService::KeywordPlanAdGroupOperation
     ->new({
       create => $keyword_plan_ad_group
     });
@@ -201,7 +201,7 @@ sub create_keyword_plan_ad_group_keywords {
 
   # Create the ad group keywords for the keyword plan.
   my $keyword_plan_ad_group_keyword1 =
-    Google::Ads::GoogleAds::V4::Resources::KeywordPlanAdGroupKeyword->new({
+    Google::Ads::GoogleAds::V5::Resources::KeywordPlanAdGroupKeyword->new({
       text               => "mars cruise",
       cpcBidMicros       => 2000000,
       matchType          => BROAD,
@@ -209,7 +209,7 @@ sub create_keyword_plan_ad_group_keywords {
     });
 
   my $keyword_plan_ad_group_keyword2 =
-    Google::Ads::GoogleAds::V4::Resources::KeywordPlanAdGroupKeyword->new({
+    Google::Ads::GoogleAds::V5::Resources::KeywordPlanAdGroupKeyword->new({
       text               => "cheap cruise",
       cpcBidMicros       => 1500000,
       matchType          => PHRASE,
@@ -217,7 +217,7 @@ sub create_keyword_plan_ad_group_keywords {
     });
 
   my $keyword_plan_ad_group_keyword3 =
-    Google::Ads::GoogleAds::V4::Resources::KeywordPlanAdGroupKeyword->new({
+    Google::Ads::GoogleAds::V5::Resources::KeywordPlanAdGroupKeyword->new({
       text               => "jupiter cruise",
       cpcBidMicros       => 1990000,
       matchType          => EXACT,
@@ -227,7 +227,7 @@ sub create_keyword_plan_ad_group_keywords {
   # Create an array of keyword plan ad group keyword operations.
   my $operations = [
     map(
-      Google::Ads::GoogleAds::V4::Services::KeywordPlanAdGroupKeywordService::KeywordPlanAdGroupKeywordOperation
+      Google::Ads::GoogleAds::V5::Services::KeywordPlanAdGroupKeywordService::KeywordPlanAdGroupKeywordOperation
         ->new(
         {create => $_}
         ),
@@ -254,7 +254,7 @@ sub create_keyword_plan_negative_campaign_keywords {
 
   # Create a negative campaign keyword for the keyword plan.
   my $keyword_plan_campaign_keyword =
-    Google::Ads::GoogleAds::V4::Resources::KeywordPlanCampaignKeyword->new({
+    Google::Ads::GoogleAds::V5::Resources::KeywordPlanCampaignKeyword->new({
       text                => "moon walk",
       matchType           => BROAD,
       negative            => "true",
@@ -263,7 +263,7 @@ sub create_keyword_plan_negative_campaign_keywords {
 
   # Create a keyword plan campaign keyword operation.
   my $operation =
-    Google::Ads::GoogleAds::V4::Services::KeywordPlanCampaignKeywordService::KeywordPlanCampaignKeywordOperation
+    Google::Ads::GoogleAds::V5::Services::KeywordPlanCampaignKeywordService::KeywordPlanCampaignKeywordOperation
     ->new({
       create => $keyword_plan_campaign_keyword
     });

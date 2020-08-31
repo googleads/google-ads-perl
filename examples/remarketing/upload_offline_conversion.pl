@@ -28,8 +28,8 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V4::Services::ConversionUploadService::ClickConversion;
-use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V5::Services::ConversionUploadService::ClickConversion;
+use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,10 +56,10 @@ sub upload_offline_conversion {
 
   # Create a click conversion by specifying currency as USD.
   my $click_conversion =
-    Google::Ads::GoogleAds::V4::Services::ConversionUploadService::ClickConversion
+    Google::Ads::GoogleAds::V5::Services::ConversionUploadService::ClickConversion
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V4::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V5::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       gclid              => $gclid,

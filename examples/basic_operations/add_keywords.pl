@@ -25,13 +25,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V4::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V4::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V4::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V4::Enums::KeywordMatchTypeEnum qw(EXACT);
+use Google::Ads::GoogleAds::V5::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V5::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V5::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V5::Enums::KeywordMatchTypeEnum qw(EXACT);
 use
-  Google::Ads::GoogleAds::V4::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V4::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V5::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,19 +54,19 @@ sub add_keywords {
 
   # Create a keyword.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V4::Resources::AdGroupCriterion->new({
-      adGroup => Google::Ads::GoogleAds::V4::Utils::ResourceNames::ad_group(
+    Google::Ads::GoogleAds::V5::Resources::AdGroupCriterion->new({
+      adGroup => Google::Ads::GoogleAds::V5::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       status  => ENABLED,
-      keyword => Google::Ads::GoogleAds::V4::Common::KeywordInfo->new({
+      keyword => Google::Ads::GoogleAds::V5::Common::KeywordInfo->new({
           text      => $keyword_text,
           matchType => EXACT
         })});
 
   # Create an ad group criterion operation.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V4::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V5::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({create => $ad_group_criterion});
 
   # Add the keyword.
