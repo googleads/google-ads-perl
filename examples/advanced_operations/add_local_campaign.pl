@@ -87,10 +87,10 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 sub add_local_campaign {
   my ($api_client, $customer_id) = @_;
 
-  # Create the budget for the campaign.
+  # Create a budget for the campaign.
   my $budget_resource_name = create_campaign_budget($api_client, $customer_id);
 
-  # Create the campaign.
+  # Create a campaign.
   my $campaign_resource_name =
     create_campaign($api_client, $customer_id, $budget_resource_name);
 
