@@ -184,9 +184,9 @@ sub create_ad_group {
 
   # Create an ad group.
   # Note that the ad group type must not be set.
-  # Since the advertisingChannelSubType is LOCAL_CAMPAIGN,
-  #   1- you cannot override bid settings at the ad group level.
-  #   2- you cannot add ad group criteria.
+  # Since the advertisingChannelSubType is LOCAL_CAMPAIGN:
+  #   1. you cannot override bid settings at the ad group level.
+  #   2. you cannot add ad group criteria.
   my $ad_group = Google::Ads::GoogleAds::V5::Resources::AdGroup->new({
     name     => "Earth to Mars Cruises #" . uniqid(),
     status   => Google::Ads::GoogleAds::V5::Enums::AdGroupStatusEnum::ENABLED,
