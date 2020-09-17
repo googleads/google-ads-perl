@@ -29,12 +29,22 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
+use Google::Ads::GoogleAds::Utils::MediaUtils;
 use Google::Ads::GoogleAds::V5::Resources::CampaignBudget;
 use Google::Ads::GoogleAds::V5::Resources::Campaign;
 use Google::Ads::GoogleAds::V5::Resources::LocalCampaignSetting;
 use Google::Ads::GoogleAds::V5::Resources::OptimizationGoalSetting;
 use Google::Ads::GoogleAds::V5::Resources::AdGroup;
+use Google::Ads::GoogleAds::V5::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V5::Resources::Ad;
+use Google::Ads::GoogleAds::V5::Resources::Asset;
 use Google::Ads::GoogleAds::V5::Common::MaximizeConversionValue;
+use Google::Ads::GoogleAds::V5::Common::LocalAdInfo;
+use Google::Ads::GoogleAds::V5::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V5::Common::AdImageAsset;
+use Google::Ads::GoogleAds::V5::Common::AdVideoAsset;
+use Google::Ads::GoogleAds::V5::Common::ImageAsset;
+use Google::Ads::GoogleAds::V5::Common::YoutubeVideoAsset;
 use Google::Ads::GoogleAds::V5::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
 use Google::Ads::GoogleAds::V5::Enums::CampaignStatusEnum qw(PAUSED);
 use Google::Ads::GoogleAds::V5::Enums::AdvertisingChannelTypeEnum qw(LOCAL);
@@ -45,15 +55,24 @@ use Google::Ads::GoogleAds::V5::Enums::LocationSourceTypeEnum
 use Google::Ads::GoogleAds::V5::Enums::OptimizationGoalTypeEnum
   qw(CALL_CLICKS DRIVING_DIRECTIONS);
 use Google::Ads::GoogleAds::V5::Enums::AdGroupStatusEnum;
+use Google::Ads::GoogleAds::V5::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V5::Enums::AssetTypeEnum qw(IMAGE YOUTUBE_VIDEO);
 use
   Google::Ads::GoogleAds::V5::Services::CampaignBudgetService::CampaignBudgetOperation;
 use Google::Ads::GoogleAds::V5::Services::CampaignService::CampaignOperation;
 use Google::Ads::GoogleAds::V5::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V5::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V5::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 use Cwd qw(abs_path);
 use Data::Uniqid qw(uniqid);
+
+use constant MARKETING_IMAGE_URL => "https://goo.gl/3b9Wfh";
+use constant LOGO_IMAGE_URL      => "https://goo.gl/mtt54n";
+use constant YOUTUBE_VIDEO_ID    => "t1fDo0VyeEo";
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -78,6 +97,9 @@ sub add_local_campaign {
   # Create an ad group.
   my $ad_group_resource_name =
     create_ad_group($api_client, $customer_id, $campaign_resource_name);
+
+  # Create a Local ad.
+  create_local_ad($api_client, $customer_id, $ad_group_resource_name);
 
   return 1;
 }
@@ -211,6 +233,65 @@ sub create_ad_group {
   return $ad_group_resource_name;
 }
 
+# Creates an Local ad for a given ad group.
+sub create_local_ad {
+  my ($api_client, $customer_id, $ad_group_resource_name) = @_;
+
+  # Create an ad group ad.
+  my $ad_group_ad = Google::Ads::GoogleAds::V5::Resources::AdGroupAd->new({
+      adGroup => $ad_group_resource_name,
+      status => Google::Ads::GoogleAds::V5::Enums::AdGroupAdStatusEnum::ENABLED,
+      ad     => Google::Ads::GoogleAds::V5::Resources::Ad->new({
+          finalUrls => ["https://www.example.com"],
+          localAd   => Google::Ads::GoogleAds::V5::Common::LocalAdInfo->new({
+              headlines => [
+                create_ad_text_asset("Best Space Cruise Line"),
+                create_ad_text_asset("Experience the Stars")
+              ],
+              descriptions => [
+                create_ad_text_asset("Buy your tickets now"),
+                create_ad_text_asset("Visit the Red Planet")
+              ],
+              callToActions => [create_ad_text_asset("Shop Now")],
+              # Set the marketing image and logo image assets.
+              marketingImages => [
+                Google::Ads::GoogleAds::V5::Common::AdImageAsset->new({
+                    asset => create_image_asset(
+                      $api_client,         $customer_id,
+                      MARKETING_IMAGE_URL, "Marketing Image"
+                    )})
+              ],
+              logoImages => [
+                Google::Ads::GoogleAds::V5::Common::AdImageAsset->new({
+                    asset => create_image_asset(
+                      $api_client,    $customer_id,
+                      LOGO_IMAGE_URL, "Square Marketing Image"
+                    )})
+              ],
+              # Set the video assets.
+              videos => [
+                Google::Ads::GoogleAds::V5::Common::AdVideoAsset->new({
+                    asset => create_youtube_video_asset(
+                      $api_client,      $customer_id,
+                      YOUTUBE_VIDEO_ID, "Local Campaigns"
+                    )})]})})}
+
+  );
+
+  # Create an ad group ad operation.
+  my $ad_group_ad_operation =
+    Google::Ads::GoogleAds::V5::Services::AdGroupAdService::AdGroupAdOperation
+    ->new({create => $ad_group_ad});
+
+  # Issue a mutate request to add the ad group ad.
+  my $ad_group_ad_response = $api_client->AdGroupAdService()->mutate({
+      customerId => $customer_id,
+      operations => [$ad_group_ad_operation]});
+
+  printf "Created ad group ad with resource name: '%s'.\n",
+    $ad_group_ad_response->{results}[0]{resourceName};
+}
+
 # Creates an ad text asset.
 sub create_ad_text_asset {
   my ($text) = @_;
@@ -218,6 +299,68 @@ sub create_ad_text_asset {
   return Google::Ads::GoogleAds::V5::Common::AdTextAsset->new({
     text => $text
   });
+}
+
+# Creates an image asset.
+sub create_image_asset {
+  my ($api_client, $customer_id, $image_url, $image_name) = @_;
+
+  # Create an asset.
+  my $asset = Google::Ads::GoogleAds::V5::Resources::Asset->new({
+      name       => $image_name,
+      type       => IMAGE,
+      imageAsset => Google::Ads::GoogleAds::V5::Common::ImageAsset->new({
+          data => get_base64_data_from_url($image_url)})});
+
+  # Create an asset operation.
+  my $asset_operation =
+    Google::Ads::GoogleAds::V5::Services::AssetService::AssetOperation->new({
+      create => $asset
+    });
+
+  # Issue a mutate request to add the asset.
+  my $asset_response = $api_client->AssetService()->mutate({
+      customerId => $customer_id,
+      operations => [$asset_operation]});
+
+  # Print out information about the newly added asset.
+  my $asset_resource_name = $asset_response->{results}[0]{resourceName};
+  printf "A new image asset has been added with resource name: '%s'.\n",
+    $asset_resource_name;
+
+  return $asset_resource_name;
+}
+
+# Creates a YouTube video asset.
+sub create_youtube_video_asset {
+  my ($api_client, $customer_id, $youtube_video_id, $youtube_video_name) = @_;
+
+  # Create an asset.
+  my $asset = Google::Ads::GoogleAds::V5::Resources::Asset->new({
+      name => $youtube_video_name,
+      type => YOUTUBE_VIDEO,
+      youtubeVideoAsset =>
+        Google::Ads::GoogleAds::V5::Common::YoutubeVideoAsset->new({
+          youtubeVideoId => $youtube_video_id
+        })});
+
+  # Create an asset operation.
+  my $asset_operation =
+    Google::Ads::GoogleAds::V5::Services::AssetService::AssetOperation->new({
+      create => $asset
+    });
+
+  # Issue a mutate request to add the asset.
+  my $asset_response = $api_client->AssetService()->mutate({
+      customerId => $customer_id,
+      operations => [$asset_operation]});
+
+  # Print out information about the newly added asset.
+  my $asset_resource_name = $asset_response->{results}[0]{resourceName};
+  printf "A new YouTube video asset has been added with resource name: '%s'.\n",
+    $asset_resource_name;
+
+  return $asset_resource_name;
 }
 
 # Don't run the example if the file is being included.
