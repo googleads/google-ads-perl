@@ -174,8 +174,8 @@ sub create_campaign {
           locationSourceType => GOOGLE_MY_BUSINESS
         }
         ),
-      # Optimization goal setting is mandatory for Local campaigns. Select driving
-      # direction and/or call clicks to optimize for those actions in your campaign.
+      # Optimization goal setting is mandatory for Local campaigns. This example
+      # selects driving directions and call clicks as goals.
       optimizationGoalSetting =>
         Google::Ads::GoogleAds::V5::Resources::OptimizationGoalSetting->new({
           optimizationGoalTypes => [CALL_CLICKS, DRIVING_DIRECTIONS]})});
