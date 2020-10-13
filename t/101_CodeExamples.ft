@@ -439,7 +439,7 @@ require qw(examples/planning/generate_keyword_ideas.pl);
 ok(
   generate_keyword_ideas(
     $api_client, $customer_id, [21167, 20321],
-    1000, ["cars", "volvo"]
+    1000,        ["cars", "volvo"]
   ),
   "Test of generate_keyword_ideas example."
 );
@@ -503,6 +503,9 @@ ok(
   add_remarketing_action($api_client, $customer_id),
   "Test of add_remarketing_action example."
 );
+require qw(examples/remarketing/update_audience_target_restriction.pl);
+ok(add_remarketing_action($api_client, $customer_id, $search_ad_group_id),
+  "Test of update_audience_target_restriction example.");
 # NOTE: Skip the upload_call_conversion.pl as it requires additional setup.
 # NOTE: Skip the upload_conversion_adjustment.pl as it requires additional setup.
 # NOTE: Skip the upload_offline_conversion.pl as it requires additional setup.
@@ -563,7 +566,7 @@ require qw(examples/targeting/get_geo_target_constants_by_names.pl);
 ok(
   get_geo_target_constants_by_names(
     $api_client, ["Paris", "Quebec", "Spain", "Deutschland"],
-    "en", "FR"
+    "en",        "FR"
   ),
   "Test of get_geo_target_constants_by_names example."
 );
