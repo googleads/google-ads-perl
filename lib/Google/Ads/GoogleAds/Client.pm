@@ -21,7 +21,7 @@ package Google::Ads::GoogleAds::Client;
 use strict;
 use warnings;
 use version;
-our $VERSION = qv("5.0.0");
+our $VERSION = qv("6.0.0");
 
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::Logging::GoogleAdsLogger;
@@ -57,31 +57,38 @@ my %last_response_of : ATTR(:name<last_response> :default<>);
 sub START {
   my ($self, $ident) = @_;
 
-  my $default_properties_file =
+  # If the properties file path is not specified during instantiation, load it
+  # from the environment variable or set it to the default value.
+  $properties_file_of{$ident} ||=
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CONFIGURATION_FILE_PATH};
+  $properties_file_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_PROPERTIES_FILE;
-  if (not $properties_file_of{$ident} and -e $default_properties_file) {
-    $properties_file_of{$ident} = $default_properties_file;
-  }
 
   my %properties = ();
-  if ($properties_file_of{$ident}) {
-    # If there's a valid properties file to read from, parse it and use the
-    # config values to fill in any missing attributes.
+  # If there's a valid properties file, parse it and read the config values.
+  if ($properties_file_of{$ident} && -e $properties_file_of{$ident}) {
     %properties = __parse_properties_file($properties_file_of{$ident});
-    $developer_token_of{$ident}    ||= $properties{developerToken};
-    $login_customer_id_of{$ident}  ||= $properties{loginCustomerId};
-    $linked_customer_id_of{$ident} ||= $properties{linkedCustomerId};
-    $service_address_of{$ident}    ||= $properties{serviceAddress};
-    $user_agent_of{$ident}         ||= $properties{userAgent};
-    $proxy_of{$ident}              ||= $properties{proxy};
   }
+  # Override the config values with environment variables if set.
+  %properties = (%properties, __load_environment_variables());
 
-  # Provide default values for below attributes if they weren't set by
-  # parameters to new() nor in the properties file.
+  # Fill in the attributes that weren't set in the new() method.
+  $developer_token_of{$ident}    ||= $properties{developerToken};
+  $login_customer_id_of{$ident}  ||= $properties{loginCustomerId};
+  $linked_customer_id_of{$ident} ||= $properties{linkedCustomerId};
+  $service_address_of{$ident}    ||= $properties{serviceAddress};
+  $user_agent_of{$ident}         ||= $properties{userAgent};
+  $proxy_of{$ident}              ||= $properties{proxy};
+
+  # Provide default values for below attributes if they weren't set in the new()
+  # method, the properties file nor the environment variables.
   $service_address_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_SERVICE_ADDRESS;
   $service_address_of{$ident} .= "/"
     if substr($service_address_of{$ident}, -1) ne "/";
+
+  $user_agent_of{$ident} ||=
+    Google::Ads::GoogleAds::Constants::DEFAULT_USER_AGENT;
 
   $http_timeout_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_HTTP_TIMEOUT;
@@ -203,6 +210,42 @@ sub __parse_properties_file {
     die("Couldn't open properties file $properties_file for reading: $!\n");
   }
   return %properties;
+}
+
+# Private method to load environment variables. The key names in the returned
+# hash are consistent with the ones in the properties file.
+sub __load_environment_variables {
+  my %env_vars;
+
+  $env_vars{$_->[0]} = $_->[1]
+    for grep { defined $_->[1] } [
+    "developerToken",
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_DEVELOPER_TOKEN}
+    ],
+    [
+    "loginCustomerId",
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_LOGIN_CUSTOMER_ID}
+    ],
+    [
+    "linkedCustomerId",
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_LINKED_CUSTOMER_ID}
+    ],
+    [
+    "serviceAddress", $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_ENDPOINT}
+    ],
+    ["clientId", $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CLIENT_ID}],
+    [
+    "clientSecret",
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CLIENT_SECRET}
+    ],
+    [
+    "refreshToken",
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_REFRESH_TOKEN}
+    ],
+    ["userAgent", $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_USER_AGENT}],
+    ["proxy",     $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_PROXY}];
+
+  return %env_vars;
 }
 
 sub get_oauth_2_handler {
@@ -452,8 +495,8 @@ instance is set to die() on API faults.
 
 The client object contains a method for each service provided by the Google Ads
 API. For example it can be invoked as $api_client->AdGroupService() and it will
-return an object of type L<Google::Ads::GoogleAds::V5::Services::AdGroupService>
-when using version V5 of the API.
+return an object of type L<Google::Ads::GoogleAds::V6::Services::AdGroupService>
+when using version V6 of the API.
 
 For a list of all the available services please refer to
 L<https://developers.google.com/google-ads/api/docs> and for code samples on
@@ -491,6 +534,13 @@ A hash corresponding to the keys and values in the properties file.
 =head3 Exceptions
 
 Issues a die() with an error message if the properties file could not be read.
+
+=head2 __load_environment_variables (Private)
+
+=head3 Returns
+
+A hash corresponding to the loaded environment variables, where the key names are
+consistent with the ones in the properties file.
 
 =head2 _auth_handler (Protected)
 

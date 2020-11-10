@@ -28,7 +28,7 @@ use File::Spec;
 use HTTP::Request::Common;
 use JSON::XS;
 use Log::Log4perl qw(get_logger :levels);
-use Test::More(tests => 26);
+use Test::More(tests => 31);
 
 # Tests use Google::Ads::GoogleAds::Logging::GoogleAdsLogger.
 use_ok("Google::Ads::GoogleAds::Logging::GoogleAdsLogger");
@@ -146,6 +146,33 @@ is($request_headers->{"developer-token"},
 is($request_headers->{authorization},
   "REDACTED", "Test error logging: detail - authorization header REDACTED.");
 
+# Tests the redacted logging.
+$summary_string_appender->string("");
+$detail_string_appender->string("");
+
+Google::Ads::GoogleAds::Logging::GoogleAdsLogger::enable_all_logging(1);
+GoogleAdsLogger::Test::Service::test_logging(
+  $json_object->{redacted_logging}{request},
+  $json_object->{redacted_logging}{response});
+
+$summary_log = $summary_string_appender->string;
+$detail_log  = $detail_string_appender->string;
+
+ok($summary_log, "Test redacted logging: summary log is OK.");
+ok($detail_log,  "Test redacted logging: detail log is OK.");
+my $request = __extract_detail_log_json($detail_log, "Request");
+ok(
+  $request->{query} =~
+    /customer_user_access.inviter_user_email_address = 'REDACTED'/,
+  "Test redacted logging: detail - GAQL REDACTED."
+);
+my $response = __extract_detail_log_json($detail_log, "Response");
+is($response->{results}[0]{customerUserAccess}{emailAddress},
+  "REDACTED", "Test redacted logging: detail - emailAddress REDACTED.");
+is($response->{results}[1]{customerUserAccess}{inviterUserEmailAddress},
+  "REDACTED",
+  "Test redacted logging: detail - inviterUserEmailAddress REDACTED.");
+
 # The private method to extract the value for a specific key in the summary log.
 sub __extract_summary_log_value {
   my ($log, $key) = @_;
@@ -158,7 +185,7 @@ sub __extract_summary_log_value {
 # The private method to extract the JSON object for a specific key in the detail log.
 sub __extract_detail_log_json {
   my ($log, $key) = @_;
-  return decode_json($1) if $log =~ /$key: (\{[^{}]+})/;
+  return decode_json($1) if $log =~ /$key: (\{[\s\S]+?\n\})/;
 }
 
 # The GoogleAdsLogger::Test::Base and GoogleAdsLogger::Test::Service modules
@@ -202,15 +229,19 @@ sub __extract_detail_log_json {
   sub __wrap_http_request {
     my $request_body = shift;
     return HTTP::Request->new(
-      $request_body->{method},  $request_body->{url},
-      $request_body->{headers}, encode_json($request_body->{content}));
+      $request_body->{method},
+      $request_body->{url},
+      $request_body->{headers},
+      JSON::XS->new->pretty->encode($request_body->{content}));
   }
 
   # The private method to wrap a HTTP response from a JSON object.
   sub __wrap_http_response {
     my $response_body = shift;
     return HTTP::Response->new(
-      $response_body->{code},    $response_body->{url},
-      $response_body->{headers}, encode_json($response_body->{content}));
+      $response_body->{code},
+      $response_body->{url},
+      $response_body->{headers},
+      JSON::XS->new->pretty->encode($response_body->{content}));
   }
 }

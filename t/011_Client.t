@@ -22,10 +22,11 @@ use strict;
 use warnings;
 
 use lib qw(lib);
+use Google::Ads::GoogleAds::Constants;
 
 use File::Basename;
 use File::Spec;
-use Test::More (tests => 18);
+use Test::More (tests => 22);
 
 # Tests use Google::Ads::GoogleAds::Client.
 use_ok("Google::Ads::GoogleAds::Client")
@@ -110,3 +111,27 @@ $api_client->get_oauth_2_handler()
   ->set_client_secret($test_oauth2_client_secret);
 is($api_client->get_oauth_2_handler()->get_client_secret(),
   $test_oauth2_client_secret, "The get/set of client_secret.");
+
+# Tests client initialization with environment variables.
+my $env_login_customer_id = "env_login_customer_id";
+my $env_refresh_token     = "env_refresh_token";
+my $env_user_agent        = "env_user_agent";
+$ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CONFIGURATION_FILE_PATH} =
+  $properties_file;
+$ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_LOGIN_CUSTOMER_ID} =
+  $env_login_customer_id;
+$ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_REFRESH_TOKEN} =
+  $env_refresh_token;
+$ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_USER_AGENT} = $env_user_agent;
+
+$api_client = Google::Ads::GoogleAds::Client->new();
+
+is($api_client->get_developer_token(),
+  "dev-token", "Environment variable of properties file.");
+is($api_client->get_login_customer_id(),
+  $env_login_customer_id, "Environment variable of login customer ID.");
+is($api_client->get_oauth_2_handler()->get_refresh_token(),
+  $env_refresh_token, "Environment variable of refresh token.");
+is($api_client->get_user_agent(),
+  $env_user_agent, "Environment variable of user agent.");
+

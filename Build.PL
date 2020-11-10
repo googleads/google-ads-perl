@@ -42,7 +42,7 @@ $build_sc->new(
   create_makefile_pl => "traditional",
   dist_abstract      => "Google Ads API Client Library for Perl",
   dist_name          => "Google-Ads-GoogleAds-Client",
-  dist_version       => "5.0.0",
+  dist_version       => "6.0.0",
   requires           => {
     "Class::Load"                  => 0,
     "Class::Std::Fast"             => 0,

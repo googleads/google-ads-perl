@@ -26,8 +26,8 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V5::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V6::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -51,10 +51,10 @@ sub remove_keyword {
   # Create a single remove operation, specifying the keyword ad group criterion's
   # resource name.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V5::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V6::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       remove =>
-        Google::Ads::GoogleAds::V5::Utils::ResourceNames::ad_group_criterion(
+        Google::Ads::GoogleAds::V6::Utils::ResourceNames::ad_group_criterion(
         $customer_id, $ad_group_id, $criterion_id
         )});
 

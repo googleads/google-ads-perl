@@ -25,7 +25,7 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -48,7 +48,7 @@ sub generate_forecast_metrics {
   my $forecast_metrics_response =
     $api_client->KeywordPlanService()->generate_forecast_metrics({
       keywordPlan =>
-        Google::Ads::GoogleAds::V5::Utils::ResourceNames::keyword_plan(
+        Google::Ads::GoogleAds::V6::Utils::ResourceNames::keyword_plan(
         $customer_id, $keyword_plan_id
         )});
 

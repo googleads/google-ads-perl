@@ -2,14 +2,14 @@
   "success_logging": {
     "request": {
       "method": "POST",
-      "url": "https://googleads.googleapis.com/v5/customers/1234567890/campaignBudgets:mutate",
+      "url": "https://googleads.googleapis.com/v6/customers/1234567890/campaignBudgets:mutate",
       "headers": [
         "Content-Type",
         "application/json; charset=utf-8",
         "user-agent",
-        "gl-perl/5.24.0",
+        "gl-perl/5.24.1",
         "x-goog-api-client",
-        "gl-perl/5.24.0",
+        "gl-perl/5.24.1",
         "developer-token",
         "test-developer-token",
         "Authorization",
@@ -51,7 +51,7 @@
   "error_logging": {
     "request": {
       "method": "POST",
-      "url": "https://googleads.googleapis.com/v5/customers/1234567890/googleAds:search",
+      "url": "https://googleads.googleapis.com/v6/customers/1234567890/googleAds:search",
       "headers": [
         "Content-Type",
         "application/json; charset=utf-8",
@@ -90,7 +90,7 @@
           "status": "INVALID_ARGUMENT",
           "details": [
             {
-              "@type": "type.googleapis.com/google.ads.googleads.v5.errors.GoogleAdsFailure",
+              "@type": "type.googleapis.com/google.ads.googleads.v6.errors.GoogleAdsFailure",
               "errors": [
                 {
                   "errorCode": {
@@ -102,6 +102,65 @@
             }
           ]
         }
+      }
+    }
+  },
+  "redacted_logging": {
+    "request": {
+      "method": "POST",
+      "url": "https://googleads.googleapis.com/v6/customers/1234567890/googleAds:search",
+      "headers": [
+        "Content-Type",
+        "application/json; charset=utf-8",
+        "user-agent",
+        "gl-perl/5.24.1",
+        "x-goog-api-client",
+        "gl-perl/5.24.1",
+        "developer-token",
+        "test-developer-token",
+        "Authorization",
+        "Bearer test-acceess-token"
+      ],
+      "content": {
+        "customerId": "1234567890",
+        "query": "SELECT customer_user_access.user_id, customer_user_access.access_role, customer_user_access.email_address, customer_user_access.inviter_user_email_address FROM customer_user_access WHERE customer_user_access.inviter_user_email_address = 'inviter_user@google.com' "
+      }
+    },
+    "response": {
+      "code": 200,
+      "message": "OK",
+      "headers": [
+        "content-type",
+        "application/json; charset=UTF-8",
+        "client-date",
+        "Mon, 19 Oct 2020 13:26:46 GMT",
+        "date",
+        "Mon, 19 Oct 2020 13:26:46 GMT",
+        "request-id",
+        "2mxAhOphQUDQhJblLb78zw"
+      ],
+      "content": {
+        "results": [
+          {
+            "customerUserAccess": {
+              "resourceName": "customers/1234567890/customerUserAccesses/111111111",
+              "userId": "111111111",
+              "emailAddress": "user1@google.com",
+              "accessRole": "ADMIN",
+              "inviterUserEmailAddress": "inviter_user@google.com"
+            }
+          },
+          {
+            "customerUserAccess": {
+              "resourceName": "customers/1234567890/customerUserAccesses/222222222",
+              "userId": "222222222",
+              "emailAddress": "user2@google.com",
+              "accessRole": "STANDARD",
+              "inviterUserEmailAddress": "inviter_user@google.com"
+            }
+          }
+        ],
+        "fieldMask": "customerUserAccess.userId,customerUserAccess.accessRole,customerUserAccess.emailAddress,customerUserAccess.inviterUserEmailAddress"
       }
     }
   }

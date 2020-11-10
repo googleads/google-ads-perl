@@ -26,8 +26,8 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V5::Services::RecommendationService::ApplyRecommendationOperation;
-use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V6::Services::RecommendationService::ApplyRecommendationOperation;
+use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,12 +52,12 @@ sub apply_recommendation {
   my ($api_client, $customer_id, $recommendation_id) = @_;
 
   my $recommendation_resource_name =
-    Google::Ads::GoogleAds::V5::Utils::ResourceNames::recommendation(
+    Google::Ads::GoogleAds::V6::Utils::ResourceNames::recommendation(
     $customer_id, $recommendation_id);
 
   # Create an apply recommendation operation.
   my $apply_recommendation_operation =
-    Google::Ads::GoogleAds::V5::Services::RecommendationService::ApplyRecommendationOperation
+    Google::Ads::GoogleAds::V6::Services::RecommendationService::ApplyRecommendationOperation
     ->new({
       resourceName => $recommendation_resource_name
     });
@@ -65,13 +65,13 @@ sub apply_recommendation {
   # Each recommendation type has optional parameters to override the recommended values.
   # This is an example to override a recommended ad when a TextAdRecommendation is applied.
   # For details, please read
-  # https://developers.google.com/google-ads/api/reference/rpc/google.ads.googleads.v5.services#google.ads.googleads.v5.services.ApplyRecommendationOperation.
+  # https://developers.google.com/google-ads/api/reference/rpc/latest/ApplyRecommendationOperation.
   #
-  # my $overriding_ad = Google::Ads::GoogleAds::V5::Resources::Ad->new({
+  # my $overriding_ad = Google::Ads::GoogleAds::V6::Resources::Ad->new({
   #   id => "INSERT_AD_ID_AS_INTEGER_HERE"
   # });
   # my $text_ad_parameters =
-  #   Google::Ads::GoogleAds::V5::Services::RecommendationService::TextAdParameters
+  #   Google::Ads::GoogleAds::V6::Services::RecommendationService::TextAdParameters
   #   ->new({ad => $overriding_ad});
   # $apply_recommendation_operation->{textAd} = $text_ad_parameters;
 

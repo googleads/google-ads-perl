@@ -73,11 +73,11 @@ API](https://developers.google.com/google-ads/api/docs/start).
 
     *   Follow the instructions at
         https://developers.google.com/google-ads/api/docs/oauth/cloud-project
-        to create an OAuth2 client ID and secret for the **installed application**
+        to create an OAuth2 client ID and secret for the **Desktop app**
         OAuth2 flow.
 
     *   Run the
-        [authenticate_in_standalone_application](examples/authentication/authenticate_in_standalone_application.pl)
+        [authenticate_in_desktop_application](examples/authentication/authenticate_in_desktop_application.pl)
         example, by providing your OAuth2 client ID and secret as the parameters.
 
     *   Copy the output from the last step of the example into the
@@ -91,7 +91,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
 
     *   Follow the instructions at
         https://developers.google.com/google-ads/api/docs/oauth/cloud-project
-        to create an OAuth2 client ID and secret for the **web application**
+        to create an OAuth2 client ID and secret for the **Web application**
         OAuth2 flow.
 
     *   Run the

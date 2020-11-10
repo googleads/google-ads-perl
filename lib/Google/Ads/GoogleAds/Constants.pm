@@ -24,14 +24,14 @@ use File::HomeDir;
 use File::Spec::Functions;
 
 # Main version number that the rest of the modules pick up off of.
-our $VERSION = qv("5.0.0");
+our $VERSION = qv("6.0.0");
 
 use constant DEFAULT_PROPERTIES_FILE =>
   catfile(File::HomeDir->my_home, "googleads.properties");
 
 # Default Google Ads API version used if the API client is created without a
 # specified version.
-use constant DEFAULT_API_VERSION => "V5";
+use constant DEFAULT_API_VERSION => "V6";
 
 # Default OAuth2 scope for Google Ads API.
 use constant DEFAULT_OAUTH2_SCOPE => "https://www.googleapis.com/auth/adwords";
@@ -52,7 +52,7 @@ use constant DEFAULT_USER_AGENT => "gl-perl/" . substr($^V, 1);
 use constant DEFAULT_HTTP_TIMEOUT => 3600;
 
 # The LongRunning.OperationSerivce version.
-use constant OPERATION_SERVICE_VERSION => "V5";
+use constant OPERATION_SERVICE_VERSION => "V6";
 
 # The LongRunning.OperationSerivce name.
 use constant OPERATION_SERVICE_NAME => "OperationService";
@@ -72,6 +72,19 @@ use constant GOOGLE_ADS_FAILURE_CLASS_NAME =>
 # The GoogleAdsError class name template.
 use constant GOOGLE_ADS_ERROR_CLASS_NAME =>
   "Google::Ads::GoogleAds::V%d::Errors::GoogleAdsError";
+
+# The environment variables that override the loaded config values if set.
+use constant ENV_VAR_CONFIGURATION_FILE_PATH =>
+  "GOOGLE_ADS_CONFIGURATION_FILE_PATH";
+use constant ENV_VAR_DEVELOPER_TOKEN    => "GOOGLE_ADS_DEVELOPER_TOKEN";
+use constant ENV_VAR_LOGIN_CUSTOMER_ID  => "GOOGLE_ADS_LOGIN_CUSTOMER_ID";
+use constant ENV_VAR_LINKED_CUSTOMER_ID => "GOOGLE_ADS_LINKED_CUSTOMER_ID";
+use constant ENV_VAR_ENDPOINT           => "GOOGLE_ADS_ENDPOINT";
+use constant ENV_VAR_CLIENT_ID          => "GOOGLE_ADS_CLIENT_ID";
+use constant ENV_VAR_CLIENT_SECRET      => "GOOGLE_ADS_CLIENT_SECRET";
+use constant ENV_VAR_REFRESH_TOKEN      => "GOOGLE_ADS_REFRESH_TOKEN";
+use constant ENV_VAR_USER_AGENT         => "GOOGLE_ADS_PERL_USER_AGENT";
+use constant ENV_VAR_PROXY              => "GOOGLE_ADS_PERL_PROXY";
 
 1;
 

@@ -28,12 +28,13 @@ use Google::Ads::GoogleAds::Common::FieldMask;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 
 use Exporter 'import';
-our @EXPORT = qw(field_mask all_set_fields_of);
+our @EXPORT = qw(field_mask all_set_fields_of get_field_value);
 
 use Data::Compare;
 
 # Compares two hash objects and computes a FieldMask object based on the differences
-# between them. The field mask is necessary for update operations.
+# between them. The field mask is necessary for update operations, and the field
+# paths in the field mask are in lower underscore format.
 sub field_mask {
   my ($original, $modified) = @_;
   my $paths = [];
@@ -43,9 +44,20 @@ sub field_mask {
 }
 
 # Constructs a FieldMask object that captures the list of all set fields of an object.
+# The field paths in the field mask are in lower underscore format.
 sub all_set_fields_of {
   my ($modified) = @_;
   return field_mask({}, $modified);
+}
+
+# Looks up the value of the field located at the given path on an object.
+sub get_field_value {
+  my ($object, $path) = @_;
+
+  my $value = $object;
+  $value = $value->{$_} for split(/\./, $path);
+
+  return $value;
 }
 
 # The private method to compare a given field for two objects, and capture the
@@ -120,7 +132,7 @@ Utility for constructing field masks, which are necessary for update operations.
 
 Compares two hash objects and computes a L<Google::Ads::GoogleAds::Common::FieldMask>
 object based on the differences between them. The field mask is necessary for
-update operations.
+update operations, and the field paths in the field mask are in lower underscore format.
 
 =head3 Parameters
 
@@ -144,7 +156,8 @@ between the original and modified objects.
 =head2 all_set_fields_of
 
 Constructs a L<Google::Ads::GoogleAds::Common::FieldMask> object that captures
-the list of all set fields of an object.
+the list of all set fields of an object. The field paths in the field mask are
+in lower underscore format.
 
 =head3 Parameters
 
@@ -160,6 +173,28 @@ I<modified>: the modified hash object.
 
 A L<Google::Ads::GoogleAds::Common::FieldMask> object that captures the list of
 all set fields of an object.
+
+=head2 get_field_value
+
+Looks up the value of the field located at the given path on an object.
+
+=head3 Parameters
+
+=over
+
+=item *
+
+I<object>: the object to search on.
+
+=item *
+
+I<path>: the path of the field.
+
+=back
+
+=head3 Returns
+
+The value of the field located at the give path on the object.
 
 =head2 __compare
 

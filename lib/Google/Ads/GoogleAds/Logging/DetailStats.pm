@@ -26,8 +26,24 @@ use Class::Std::Fast;
 use JSON::XS;
 use Encode qw( encode_utf8 decode_utf8 );
 
-# A list of HTTP headers that need to be scrubbed before logging due to sensitive content.
+# A list of fields in HTTP headers, content and GAQL that need to be scrubbed
+# before logging for privacy reasons.
+use constant REDACTED_STRING  => "REDACTED";
 use constant SCRUBBED_HEADERS => qw(developer-token Authorization);
+# Below fields will be scrubbed in the HTTP request and response content.
+#   CustomerUserAccess.emailAddress
+#   CustomerUserAccess.inviterUserEmailAddress
+#   ChangeEvent.userEmail
+#   PlacesLocationFeedData.emailAddress
+#   CreateCustomerClientRequest.emailAddress
+use constant SCRUBBED_CONTENT_FIELDS =>
+  qw(emailAddress inviterUserEmailAddress userEmail);
+# Below fields will be scrubbed in the GAQL statement of SearchGoogleAdsRequest
+# and SearchGoogleAdsStreamRequest.
+use constant SCRUBBED_GAQL_FIELDS => qw(customer_user_access\.email_address
+  customer_user_access\.inviter_user_email_address change_event\.user_email
+  feed\.places_location_feed_data\.email_address
+);
 
 my %host_of : ATTR(:name<host> :default<>);
 my %method_of : ATTR(:name<method> :default<>);
@@ -39,35 +55,63 @@ my %fault_of : ATTR(:name<fault> :default<>);
 
 sub as_str : STRINGIFY {
   my $self             = shift;
-  my $host             = $self->get_host() || "";
-  my $method           = $self->get_method() || "";
-  my $request_headers  = $self->get_request_headers() || {};
-  my $request_content  = $self->get_request_content() || "";
+  my $host             = $self->get_host()             || "";
+  my $method           = $self->get_method()           || "";
+  my $request_headers  = $self->get_request_headers()  || {};
+  my $request_content  = $self->get_request_content()  || "";
   my $response_headers = $self->get_response_headers() || {};
   my $response_content = $self->get_response_content();
   my $fault            = $self->get_fault();
 
   # Scrub the sensitive HTTP headers.
   foreach my $header (SCRUBBED_HEADERS) {
-    $request_headers->header($header => "REDACTED");
+    $request_headers->header($header => REDACTED_STRING);
   }
 
-  # Delete the unuseful "::std_case" header from request headers and response headers
+  # Delete the unuseful "::std_case" header from request headers and response headers.
   delete $request_headers->{"::std_case"};
   delete $response_headers->{"::std_case"};
+
+  # Scrub the sensitive fields in the HTTP request and response.
+  $request_content  = _scrub_content($request_content);
+  $request_content  = _scrub_gaql($request_content);
+  $response_content = _scrub_content($response_content) if $response_content;
 
   my $json_coder     = JSON::XS->new->utf8->pretty;
   my $detail_message = sprintf(
     "Request\n" .
       "-------\n" . "MethodName: %s\n" . "Host: %s\n" . "Headers: %s\n" .
       "Request: %s\n" . "\nResponse\n" . "-------\n" . "Headers: %s\n",
-    $method, $host, $json_coder->encode({%$request_headers}),
+    $method,          $host, $json_coder->encode({%$request_headers}),
     $request_content, $json_coder->encode({%$response_headers}));
 
   $detail_message .= "Response: ${response_content}\n" if $response_content;
   $detail_message .= "Fault: ${fault}\n"               if $fault;
 
   return $detail_message;
+}
+
+# Scrubs the sensitive fields in HTTP content.
+sub _scrub_content {
+  my $content = shift;
+  foreach my $field (SCRUBBED_CONTENT_FIELDS) {
+    $content =~ s/("$field"\s?:\s?)".+?"/$1"${\REDACTED_STRING}"/g;
+  }
+
+  return $content;
+}
+
+# Scrubs the sensitive fields in GAQL statement.
+sub _scrub_gaql {
+  my $content = shift;
+
+  return $content if $content !~ /"query"/;
+  foreach my $field (SCRUBBED_GAQL_FIELDS) {
+    $content =~
+      s/(SELECT.+WHERE.+$field.+?['"])\S+?(['"])/$1${\REDACTED_STRING}$2/i;
+  }
+
+  return $content;
 }
 
 return 1;

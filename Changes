@@ -1,3 +1,16 @@
+6.0.0 - 2020-11-11
+- Added support for Google Ads API v6_0.
+- Removed support for Google Ads API v2_0.
+- Added support of client configuration from environment variables.
+- Refactored GoogleAdsLogger to redact email addresses present in the requests
+  and responses.
+- Added new services: CustomerUserAccessService, CustomAudienceService,
+  CombinedAudienceService, FeedItemSetService, etc.
+- Added code examples: get_change_details, update_user_access, add_lead_form_extension,
+  update_audience_target_restriction, etc.
+- Renamed code example authenticate_in_standalone_application to
+  authenticate_in_desktop_application.
+
 5.0.0 - 2020-08-31
 - Added support for Google Ads API v5_0.
 - Added code examples: add_logical_user_list, add_combined_rule_user_list,

@@ -24,8 +24,8 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V5::Services::FeedItemService::FeedItemOperation;
-use Google::Ads::GoogleAds::V5::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V6::Services::FeedItemService::FeedItemOperation;
+use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,11 +52,11 @@ sub remove_feed_items {
   # Create the remove operations.
   for my $feed_item_id (@$feed_item_ids) {
     my $feed_item_resource_name =
-      Google::Ads::GoogleAds::V5::Utils::ResourceNames::feed_item($customer_id,
+      Google::Ads::GoogleAds::V6::Utils::ResourceNames::feed_item($customer_id,
       $feed_id, $feed_item_id);
 
     push @$feed_item_operations,
-      Google::Ads::GoogleAds::V5::Services::FeedItemService::FeedItemOperation
+      Google::Ads::GoogleAds::V6::Services::FeedItemService::FeedItemOperation
       ->new({
         remove => $feed_item_resource_name
       });

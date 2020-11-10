@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 83);
+use Test::More (tests => 85);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -99,11 +99,6 @@ my $label_id = TestAPIUtils::create_label($api_client, $customer_id);
 require qw(examples/account_management/create_customer.pl);
 ok(create_customer($api_client, $manager_customer_id),
   "Test of create_customer example.");
-require qw(examples/account_management/get_account_changes.pl);
-ok(
-  get_account_changes($api_client, $customer_id),
-  "Test of get_account_changes example."
-);
 require qw(examples/account_management/get_account_hierarchy.pl);
 ok(get_account_hierarchy($api_client, $manager_customer_id),
   "Test of get_account_hierarchy example.");
@@ -111,6 +106,16 @@ require qw(examples/account_management/get_account_information.pl);
 ok(
   get_account_information($api_client, $customer_id),
   "Test of get_account_information example."
+);
+require qw(examples/account_management/get_change_details.pl);
+ok(
+  get_change_details($api_client, $customer_id),
+  "Test of get_change_details example."
+);
+require qw(examples/account_management/get_change_summary.pl);
+ok(
+  get_change_summary($api_client, $customer_id),
+  "Test of get_change_summary example."
 );
 # NOTE: Skip the link_manager_to_client.pl since $customer_id and
 # $manager_customer_id might have already been linked together.
@@ -120,6 +125,7 @@ ok(
   "Test of list_accessible_customers example."
 );
 # NOTE: Skip the reject_merchant_center_link.pl as it requires a merchant account.
+# NOTE: Skip the update_user_access.pl as it requires a login email.
 
 # advanced_operations
 require qw(examples/advanced_operations/add_ad_customizer.pl);
@@ -377,6 +383,7 @@ ok(
   ),
   "Test of add_hotel_callout example."
 );
+# NOTE: Skip the add_lead_form_extension.pl as it requires additional setup.
 require qw(examples/extensions/add_prices.pl);
 ok(add_prices($api_client, $customer_id, $search_campaign_id),
   "Test of add_prices example.");
@@ -394,6 +401,9 @@ ok(
 # NOTE: Skip the update_sitelink_campaign_extension_setting.pl as it requires additional setup.
 
 # feeds
+# NOTE: Skip the create_feed_item_set.pl as it requires additional setup.
+# NOTE: Skip the get_feed_items_of_feed_item_set.pl as it requires additional setup.
+# NOTE: Skip the link_feed_item_set.pl as it requires additional setup.
 # NOTE: Skip the remove_feed_items.pl as it requires additional setup.
 # NOTE: Skip the remove_flights_feed_item_attribute_value.pl as it requires additional setup.
 # NOTE: Skip the update_flights_feed_item_string_attribute_value.pl as it requires additional setup.
@@ -480,6 +490,11 @@ ok(
   "Test of add_conversion_action example."
 );
 # NOTE: Skip the add_conversion_based_user_list.pl as it requires additional setup.
+require qw(examples/remarketing/add_custom_audience.pl);
+ok(
+  add_custom_audience($api_client, $customer_id),
+  "Test of add_custom_audience example."
+);
 # NOTE: Skip the add_customer_match_user_list.pl as it requires additional setup.
 require qw(examples/remarketing/add_expression_rule_user_list.pl);
 ok(

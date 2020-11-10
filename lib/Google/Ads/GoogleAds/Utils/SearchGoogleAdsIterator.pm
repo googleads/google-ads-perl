@@ -92,7 +92,7 @@ Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator
 =head1 SYNOPSIS
 
   my $search_request =
-    Google::Ads::GoogleAds::V5::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V6::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query => "SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id",

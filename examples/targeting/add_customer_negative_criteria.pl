@@ -25,10 +25,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V5::Resources::CustomerNegativeCriterion;
-use Google::Ads::GoogleAds::V5::Common::ContentLabelInfo;
-use Google::Ads::GoogleAds::V5::Common::PlacementInfo;
-use Google::Ads::GoogleAds::V5::Enums::ContentLabelTypeEnum qw(TRAGEDY);
+use Google::Ads::GoogleAds::V6::Resources::CustomerNegativeCriterion;
+use Google::Ads::GoogleAds::V6::Common::ContentLabelInfo;
+use Google::Ads::GoogleAds::V6::Common::PlacementInfo;
+use Google::Ads::GoogleAds::V6::Enums::ContentLabelTypeEnum qw(TRAGEDY);
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -49,8 +49,8 @@ sub add_customer_negative_criteria {
 
   # Create a negative customer criterion excluding the content label type of 'TRAGEDY'.
   my $tragedy_criterion =
-    Google::Ads::GoogleAds::V5::Resources::CustomerNegativeCriterion->new({
-      contentLabel => Google::Ads::GoogleAds::V5::Common::ContentLabelInfo->new(
+    Google::Ads::GoogleAds::V6::Resources::CustomerNegativeCriterion->new({
+      contentLabel => Google::Ads::GoogleAds::V6::Common::ContentLabelInfo->new(
         {
           type => TRAGEDY
         })});
@@ -58,8 +58,8 @@ sub add_customer_negative_criteria {
   # Create a negative customer criterion excluding the placement with url
   # 'http://www.example.com'.
   my $placement_criterion =
-    Google::Ads::GoogleAds::V5::Resources::CustomerNegativeCriterion->new({
-      placement => Google::Ads::GoogleAds::V5::Common::PlacementInfo->new({
+    Google::Ads::GoogleAds::V6::Resources::CustomerNegativeCriterion->new({
+      placement => Google::Ads::GoogleAds::V6::Common::PlacementInfo->new({
           url => "http://example.com"
         })});
 
