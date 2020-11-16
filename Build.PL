@@ -104,4 +104,10 @@ $build_sc->new(
     nondeterministic => [".ft"],
     functional       => [".ft"],
     smoke            => [".t"],
+  },
+  meta_merge => {
+     resources => {
+        repository => 'https://github.com/googleads/google-ads-perl',
+        bugtracker => 'https://github.com/googleads/google-ads-perl/issues'
+     }
   })->create_build_script();
