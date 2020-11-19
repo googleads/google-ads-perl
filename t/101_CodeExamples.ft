@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 87);
+use Test::More (tests => 88);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -396,6 +396,14 @@ ok(
     $api_client, $customer_id, $display_campaign_id, $display_ad_group_id
   ),
   "Test of add_sitelinks_using_feeds example."
+);
+require
+  qw(examples/extensions/remove_entire_sitelink_campaign_extension_setting.pl);
+ok(
+  remove_entire_sitelink_campaign_extension_setting(
+    $api_client, $customer_id, $search_campaign_id
+  ),
+  "Test of remove_entire_sitelink_campaign_extension_setting example."
 );
 # NOTE: Skip the update_sitelink.pl as it requires additional setup.
 # NOTE: Skip the update_sitelink_campaign_extension_setting.pl as it requires additional setup.

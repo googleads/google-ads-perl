@@ -56,12 +56,12 @@ use Cwd qw(abs_path);
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 
-sub update_sitelink {
+sub remove_entire_sitelink_campaign_extension_setting {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   my $mutate_operations = [];
 
-  # Create a mutate operation the contains the campaign extension setting operation
+  # Create a mutate operation that contains the campaign extension setting operation
   # to remove the specified sitelink campaign extension setting.
   push(
     @$mutate_operations,
@@ -174,7 +174,7 @@ sub get_all_sitelink_extension_feed_items {
       {
         push(@$extension_feed_item_resource_names,
           $extension_feed_item_resource_name);
-        printf "Extension feed item with resource name " . "'%s' was found.\n",
+        printf "Extension feed item with resource name '%s' was found.\n",
           $extension_feed_item_resource_name;
       }
     });
@@ -235,13 +235,14 @@ GetOptions(
 pod2usage(2) if not check_params($customer_id, $campaign_id);
 
 # Call the example.
-update_sitelink($api_client, $customer_id =~ s/-//gr, $campaign_id);
+remove_entire_sitelink_campaign_extension_setting($api_client,
+  $customer_id =~ s/-//gr, $campaign_id);
 
 =pod
 
 =head1 NAME
 
-update_sitelink
+remove_entire_sitelink_campaign_extension_setting
 
 =head1 DESCRIPTION
 
@@ -255,7 +256,7 @@ To make this example work with other types of extensions, find references to
 
 =head1 SYNOPSIS
 
-update_sitelink.pl [options]
+remove_entire_sitelink_campaign_extension_setting.pl [options]
 
     -help                           Show the help message.
     -customer_id                    The Google Ads customer ID.
