@@ -100,7 +100,7 @@ sub add_hotel_ad_group_bid_modifiers {
     });
 
   # 3) Add the ad group bid modifiers.
-  my $ad_group_bid_modifier_response =
+  my $ad_group_bid_modifiers_response =
     $api_client->AdGroupBidModifierService()->mutate({
       customerId => $customer_id,
       operations => [
@@ -110,7 +110,7 @@ sub add_hotel_ad_group_bid_modifiers {
 
   # Print out resource names of the added ad group bid modifiers.
   my $ad_group_bid_modifier_results =
-    $ad_group_bid_modifier_response->{results};
+    $ad_group_bid_modifiers_response->{results};
   printf "Added %d hotel ad group bid modifiers:\n",
     scalar @$ad_group_bid_modifier_results;
 

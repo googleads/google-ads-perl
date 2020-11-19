@@ -150,7 +150,7 @@ pod2usage(2)
 # Call the example.
 upload_conversion_adjustment($api_client, $customer_id =~ s/-//gr,
   $conversion_action_id, $gclid,
-  $adjustment_type,      $conversion_date_time, $adjustment_date_time,
+  $adjustment_type, $conversion_date_time, $adjustment_date_time,
   $restatement_value);
 
 =pod

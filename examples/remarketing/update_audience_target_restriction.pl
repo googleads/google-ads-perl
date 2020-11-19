@@ -177,13 +177,13 @@ sub update_targeting_setting {
 
   # Send the operation in a mutate request and print the resource name of the
   # updated resource.
-  my $ad_group_response = $api_client->AdGroupService()->mutate({
+  my $ad_groups_response = $api_client->AdGroupService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_operation]});
 
   printf "Updated targeting setting of ad group with resourceName " .
     "'%s'; set the AUDIENCE target restriction to 'Observation'.\n",
-    $ad_group_response->{results}[0]{resourceName};
+    $ad_groups_response->{results}[0]{resourceName};
 }
 
 # Don't run the example if the file is being included.

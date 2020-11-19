@@ -89,14 +89,14 @@ sub create_feed_item_set {
     });
 
   # Issue a mutate request to add the feed item set on the server.
-  my $feed_item_set_response = $api_client->FeedItemSetService()->mutate({
+  my $feed_item_sets_response = $api_client->FeedItemSetService()->mutate({
       customerId => $customer_id,
       operations => [$feed_item_set_operation]});
 
   # Print some information about the created feed item set.
   printf
     "Created a feed item set with resource name '%s'.\n",
-    $feed_item_set_response->{results}[0]{resourceName};
+    $feed_item_sets_response->{results}[0]{resourceName};
 
   return 1;
 }

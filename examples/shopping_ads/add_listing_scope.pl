@@ -123,13 +123,13 @@ sub add_listing_scope {
     ->new({create => $campaign_criterion});
 
   # Add the campaign criterion containing the listing scope on the campaign.
-  my $campaign_criterion_response =
+  my $campaign_criteria_response =
     $api_client->CampaignCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_criterion_operation]});
 
   printf "Added a campaign criteria with resource name: '%s'.\n",
-    $campaign_criterion_response->{results}[0]{resourceName};
+    $campaign_criteria_response->{results}[0]{resourceName};
 
   return 1;
 }

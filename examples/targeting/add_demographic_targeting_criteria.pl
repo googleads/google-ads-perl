@@ -90,13 +90,13 @@ sub add_demographic_targeting_criteria {
       })];
 
   # Issue a mutate request to add the ad group criteria and print out some information.
-  my $ad_group_criterion_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => $operations
     });
 
-  my $ad_group_criterion_results = $ad_group_criterion_response->{results};
+  my $ad_group_criterion_results = $ad_group_criteria_response->{results};
   printf "Added %d demographic ad group criteria:\n",
     scalar @$ad_group_criterion_results;
 

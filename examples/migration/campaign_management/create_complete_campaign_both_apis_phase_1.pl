@@ -92,13 +92,13 @@ sub create_campaign_budget {
     ->new({create => $campaign_budget});
 
   # Issue a mutate request to add the campaign budget.
-  my $campaign_budget_response =
+  my $campaign_budgets_response =
     $google_ads_client->CampaignBudgetService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_budget_operation]});
 
   my $campaign_budget_resource_name =
-    $campaign_budget_response->{results}[0]{resourceName};
+    $campaign_budgets_response->{results}[0]{resourceName};
 
   my $created_campaign_budget =
     get_campaign_buget($google_ads_client, $customer_id,

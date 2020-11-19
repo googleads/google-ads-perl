@@ -131,11 +131,11 @@ sub create_feed {
     }));
 
   # Add the feed.
-  my $feed_response = $api_client->FeedService()->mutate({
+  my $feeds_response = $api_client->FeedService()->mutate({
       customerId => $customer_id,
       operations => [$feed_operation]});
 
-  my $feed_resource_name = $feed_response->{results}[0]{resourceName};
+  my $feed_resource_name = $feeds_response->{results}[0]{resourceName};
 
   printf "Feed with resource name '%s' was created.\n", $feed_resource_name;
 
@@ -243,12 +243,12 @@ sub create_feed_mapping {
     });
 
   # Add the feed mapping.
-  my $feed_mapping_response = $api_client->FeedMappingService()->mutate({
+  my $feed_mappings_response = $api_client->FeedMappingService()->mutate({
       customerId => $customer_id,
       operations => [$feed_mapping_operation]});
 
   printf "Created feed mapping with resource name '%s'.\n",
-    $feed_mapping_response->{results}[0]{resourceName};
+    $feed_mappings_response->{results}[0]{resourceName};
 }
 
 # Adds a new item to the feed.
@@ -301,12 +301,12 @@ sub create_feed_item {
     });
 
   # Add the feed item.
-  my $feed_item_response = $api_client->FeedItemService()->mutate({
+  my $feed_items_response = $api_client->FeedItemService()->mutate({
       customerId => $customer_id,
       operations => [$feed_item_operation]});
 
   printf "Created feed item with resource name '%s'.\n",
-    $feed_item_response->{results}[0]{resourceName};
+    $feed_items_response->{results}[0]{resourceName};
 }
 
 # Don't run the example if the file is being included.

@@ -62,13 +62,13 @@ sub add_remarketing_action {
     });
 
   # Issue a mutate request to add the remarketing action and print out some information.
-  my $remarketing_action_response =
+  my $remarketing_actions_response =
     $api_client->RemarketingActionService()->mutate({
       customerId => $customer_id,
       operations => [$remarketing_action_operation]});
 
   my $remarketing_action_resource_name =
-    $remarketing_action_response->{results}[0]{resourceName};
+    $remarketing_actions_response->{results}[0]{resourceName};
   printf
     "Added remarketing action with resource name '%s'.\n",
     $remarketing_action_resource_name;

@@ -84,12 +84,12 @@ sub remove_flights_feed_item_attribute_value {
       updateMask => all_set_fields_of($feed_item)});
 
   # Update the feed item.
-  my $feed_item_response = $api_client->FeedItemService()->mutate({
+  my $feed_items_response = $api_client->FeedItemService()->mutate({
       customerId => $customer_id,
       operations => [$feed_item_operation]});
 
   printf "Updated feed item with resource name: '%s'.\n",
-    $feed_item_response->{results}[0]{resourceName};
+    $feed_items_response->{results}[0]{resourceName};
 
   return 1;
 }

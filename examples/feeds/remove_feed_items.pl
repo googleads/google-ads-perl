@@ -63,11 +63,11 @@ sub remove_feed_items {
   }
 
   # Remove the feed items.
-  my $feed_item_response = $api_client->FeedItemService()->mutate({
+  my $feed_items_response = $api_client->FeedItemService()->mutate({
       customerId => $customer_id,
       operations => [$feed_item_operations]});
 
-  foreach my $feed_item_result (@{$feed_item_response->{results}}) {
+  foreach my $feed_item_result (@{$feed_items_response->{results}}) {
     printf "Removed feed item with resource name '%s'.\n",
       $feed_item_result->{resourceName};
   }

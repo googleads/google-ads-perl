@@ -69,12 +69,12 @@ sub upload_image {
     });
 
   # Add the media file.
-  my $media_file_response = $api_client->MediaFileService()->mutate({
+  my $media_files_response = $api_client->MediaFileService()->mutate({
       customerId => $customer_id,
       operations => [$media_file_operation]});
 
   printf "Uploaded media file with resource name: '%s'.\n",
-    $media_file_response->{results}[0]{resourceName};
+    $media_files_response->{results}[0]{resourceName};
 
   return 1;
 }

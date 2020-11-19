@@ -89,13 +89,13 @@ sub add_hotel_listing_group_tree {
   add_level_2_nodes($customer_id, $ad_group_id, $other_hotel_resource_name,
     $operations, $percent_cpc_bid_micro_amount);
 
-  my $ad_group_criterion_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => $operations
     });
 
-  my $ad_group_criterion_results = $ad_group_criterion_response->{results};
+  my $ad_group_criterion_results = $ad_group_criteria_response->{results};
   printf "Added %d listing group info entities:\n",
     scalar @$ad_group_criterion_results;
 

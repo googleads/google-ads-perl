@@ -68,12 +68,12 @@ sub upload_media_bundle {
     });
 
   # Issue a mutate request to add the media file.
-  my $media_file_response = $api_client->MediaFileService()->mutate({
+  my $media_files_response = $api_client->MediaFileService()->mutate({
       customerId => $customer_id,
       operations => [$media_file_operation]});
 
   printf "The media bundle with resource name '%s' was added.\n",
-    $media_file_response->{results}[0]{resourceName};
+    $media_files_response->{results}[0]{resourceName};
 
   return 1;
 }

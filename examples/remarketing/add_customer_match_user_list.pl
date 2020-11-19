@@ -106,10 +106,11 @@ sub create_customer_match_user_list {
     });
 
   # Issue a mutate request to add the user list and print some information.
-  my $user_list_response = $api_client->UserListService()->mutate({
+  my $user_lists_response = $api_client->UserListService()->mutate({
       customerId => $customer_id,
       operations => [$user_list_operation]});
-  my $user_list_resource_name = $user_list_response->{results}[0]{resourceName};
+  my $user_list_resource_name =
+    $user_lists_response->{results}[0]{resourceName};
   printf "User list with resource name '%s' was created.\n",
     $user_list_resource_name;
 

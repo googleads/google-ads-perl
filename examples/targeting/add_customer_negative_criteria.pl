@@ -68,14 +68,14 @@ sub add_customer_negative_criteria {
     [{create => $tragedy_criterion}, {create => $placement_criterion}];
 
   # Add the negative customer criteria.
-  my $customer_negative_criterion_response =
+  my $customer_negative_criteria_response =
     $api_client->CustomerNegativeCriterionService()->mutate({
       customerId => $customer_id,
       operations => $operations
     });
 
   my $customer_negative_criterion_results =
-    $customer_negative_criterion_response->{results};
+    $customer_negative_criteria_response->{results};
 
   printf "Created %d new negative customer criteria.\n",
     scalar @$customer_negative_criterion_results;

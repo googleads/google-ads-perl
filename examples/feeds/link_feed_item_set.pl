@@ -73,7 +73,7 @@ sub link_feed_item_set {
     });
 
   # Issue a mutate request to add the feed item set link on the server.
-  my $feed_item_set_link_response =
+  my $feed_item_set_links_response =
     $api_client->FeedItemSetLinkService()->mutate({
       customerId => $customer_id,
       operations => [$feed_item_set_link_operation]});
@@ -81,7 +81,7 @@ sub link_feed_item_set {
   # Print some information about the created feed item set link.
   printf
     "Created a feed item set link with resource name '%s'.\n",
-    $feed_item_set_link_response->{results}[0]{resourceName};
+    $feed_item_set_links_response->{results}[0]{resourceName};
 
   return 1;
 }

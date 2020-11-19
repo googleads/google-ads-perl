@@ -90,12 +90,12 @@ sub add_custom_audience {
     ->new({create => $custom_audience});
 
   # Add the custom audience.
-  my $custom_audience_response = $api_client->CustomAudienceService()->mutate({
+  my $custom_audiences_response = $api_client->CustomAudienceService()->mutate({
       customerId => $customer_id,
       operations => [$custom_audience_operation]});
 
   printf "New custom audience added with resource name: '%s'.\n",
-    $custom_audience_response->{results}[0]{resourceName};
+    $custom_audiences_response->{results}[0]{resourceName};
 
   return 1;
 }

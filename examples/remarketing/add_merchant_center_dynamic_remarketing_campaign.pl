@@ -136,11 +136,11 @@ sub create_campaign {
     new({create => $campaign});
 
   # Issue a mutate request to add the campaign.
-  my $campaign_response = $api_client->CampaignService()->mutate({
+  my $campaigns_response = $api_client->CampaignService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_operation]});
 
-  my $campaign_resource_name = $campaign_response->{results}[0]{resourceName};
+  my $campaign_resource_name = $campaigns_response->{results}[0]{resourceName};
   printf "Created campaign with resource name '%s'.\n", $campaign_resource_name;
 
   return $campaign_resource_name;
@@ -163,11 +163,11 @@ sub create_ad_group {
     new({create => $ad_group});
 
   # Issue a mutate request to add the ad group.
-  my $ad_group_response = $api_client->AdGroupService()->mutate({
+  my $ad_groups_response = $api_client->AdGroupService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_operation]});
 
-  my $ad_group_resource_name = $ad_group_response->{results}[0]{resourceName};
+  my $ad_group_resource_name = $ad_groups_response->{results}[0]{resourceName};
   printf "Created ad group with resource name '%s'.\n", $ad_group_resource_name;
 
   return $ad_group_resource_name;
@@ -250,12 +250,12 @@ sub create_ad {
     ->new({create => $ad_group_ad});
 
   # Issue a mutate request to add the ad group ad.
-  my $ad_group_ad_response = $api_client->AdGroupAdService()->mutate({
+  my $ad_group_ads_response = $api_client->AdGroupAdService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
   printf "Created ad group ad with resource name '%s'.\n",
-    $ad_group_ad_response->{results}[0]{resourceName};
+    $ad_group_ads_response->{results}[0]{resourceName};
 }
 
 # Adds an image asset to the Google Ads account.
@@ -279,11 +279,11 @@ sub upload_asset {
     });
 
   # Issue a mutate request to add the asset.
-  my $asset_response = $api_client->AssetService()->mutate({
+  my $assets_response = $api_client->AssetService()->mutate({
       customerId => $customer_id,
       operations => [$asset_operation]});
 
-  my $image_asset_resource_name = $asset_response->{results}[0]{resourceName};
+  my $image_asset_resource_name = $assets_response->{results}[0]{resourceName};
   printf "Created image asset with resource name '%s'.\n",
     $image_asset_resource_name;
 
@@ -310,13 +310,13 @@ sub attach_user_list {
     ->new({create => $ad_group_criterion});
 
   # Issue a mutate request to add the ad group criterion.
-  my $ad_group_criterion_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
   printf "Created ad group criterion with resource name '%s'.\n",
-    $ad_group_criterion_response->{results}[0]{resourceName};
+    $ad_group_criteria_response->{results}[0]{resourceName};
 }
 
 # Don't run the example if the file is being included.

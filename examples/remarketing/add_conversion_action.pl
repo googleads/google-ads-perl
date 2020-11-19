@@ -70,13 +70,13 @@ sub add_conversion_action {
     ->new({create => $conversion_action});
 
   # Add the conversion action.
-  my $conversion_action_response =
+  my $conversion_actions_response =
     $api_client->ConversionActionService()->mutate({
       customerId => $customer_id,
       operations => [$conversion_action_operation]});
 
   printf "New conversion action added with resource name: '%s'.\n",
-    $conversion_action_response->{results}[0]{resourceName};
+    $conversion_actions_response->{results}[0]{resourceName};
 
   return 1;
 }

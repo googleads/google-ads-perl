@@ -168,7 +168,7 @@ pod2usage(2) if not check_params($manager_customer_id, $customer_id);
 link_manager_to_client(
   $api_client,
   $manager_customer_id =~ s/-//gr,
-  $customer_id =~ s/-//gr
+  $customer_id         =~ s/-//gr
 );
 
 =pod

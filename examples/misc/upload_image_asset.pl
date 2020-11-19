@@ -72,12 +72,12 @@ sub upload_image_asset {
     });
 
   # Issue a mutate request to add the asset.
-  my $asset_response = $api_client->AssetService()->mutate({
+  my $assets_response = $api_client->AssetService()->mutate({
       customerId => $customer_id,
       operations => [$asset_operation]});
 
   printf "The image asset with resource name '%s' was created.\n",
-    $asset_response->{results}[0]{resourceName};
+    $assets_response->{results}[0]{resourceName};
 
   return 1;
 }

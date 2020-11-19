@@ -225,7 +225,7 @@ sub add_shopping_product_listing_group_tree {
     });
 
   # Add the ad group criterion.
-  my $ad_group_criterion_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => $operations
@@ -233,9 +233,9 @@ sub add_shopping_product_listing_group_tree {
 
   printf "Added %d ad group criteria for listing group tree with the " .
     "following resource names:\n",
-    scalar @{$ad_group_criterion_response->{results}};
+    scalar @{$ad_group_criteria_response->{results}};
 
-  foreach my $result (@{$ad_group_criterion_response->{results}}) {
+  foreach my $result (@{$ad_group_criteria_response->{results}}) {
     print $result->{resourceName}, "\n";
   }
 
@@ -291,14 +291,14 @@ sub remove_listing_group_tree {
 
   if (scalar @$operations) {
     # Remove the ad group criterion that define the listing group tree.
-    my $ad_group_criterion_response =
+    my $ad_group_criteria_response =
       $api_client->AdGroupCriterionService()->mutate({
         customerId => $customer_id,
         operations => $operations
       });
 
     printf "Removed %d ad group criteria.\n",
-      scalar @{$ad_group_criterion_response->{results}};
+      scalar @{$ad_group_criteria_response->{results}};
   }
 }
 

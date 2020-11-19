@@ -75,13 +75,13 @@ sub add_campaign_targeting_criteria {
     create_proximity_campaign_criterion_operation($campaign_resource_name)];
 
   # Add the campaign criterion.
-  my $campaign_criterion_response =
+  my $campaign_criteria_response =
     $api_client->CampaignCriterionService()->mutate({
       customerId => $customer_id,
       operations => $operations
     });
 
-  my $campaign_criterion_results = $campaign_criterion_response->{results};
+  my $campaign_criterion_results = $campaign_criteria_response->{results};
   printf "Added %d campaign criteria:\n", scalar @$campaign_criterion_results;
 
   foreach my $campaign_criterion_result (@$campaign_criterion_results) {

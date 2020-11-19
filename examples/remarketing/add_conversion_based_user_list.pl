@@ -90,13 +90,13 @@ sub add_conversion_based_user_list {
     });
 
   # Issue a mutate request to add the user list and print some information.
-  my $user_list_response = $api_client->UserListService()->mutate({
+  my $user_lists_response = $api_client->UserListService()->mutate({
       customerId => $customer_id,
       operations => [$user_list_operation]});
 
   printf
     "Created basic user list with resource name '%s'.\n",
-    $user_list_response->{results}[0]{resourceName};
+    $user_lists_response->{results}[0]{resourceName};
 
   return 1;
 }
