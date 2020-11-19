@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 #
-# Copyright 2020, Google LLC
+# Copyright 2019, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,15 +15,16 @@
 # limitations under the License.
 #
 # Demonstrates various operations involved in remarketing, including:
-#   (a) creating a user list based on visitors to a website,
-#   (b) targeting a user list with an ad group criterion,
-#   (c) updating the bid modifier on an ad group criterion,
-#   (d) finding and removing all ad group criteria under a given campaign,
-#   (e) targeting a user list with a campaign criterion, and
-#   (f) updating the bid modifier on a campaign criterion.
+#   (a) Creating a user list based on visitors to a website.
+#   (b) Targeting a user list with an ad group criterion.
+#   (c) Updating the bid modifier on an ad group criterion.
+#   (d) Finding and removing all ad group criteria under a given campaign.
+#   (e) Targeting a user list with a campaign criterion.
+#   (f) Updating the bid modifier on a campaign criterion.
 # It is unlikely that users will need to perform all of these operations
 # consecutively, and all of the operations contained herein are meant of for
 # illustrative purposes.
+#
 # Note: you can use user lists to target at the campaign or ad group level, but
 # not both simultaneously. Consider removing or disabling any existing user
 # lists at the campaign level before running this example.
@@ -35,8 +36,8 @@ use utf8;
 use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
-use Google::Ads::GoogleAds::Utils::FieldMasks;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
+use Google::Ads::GoogleAds::Utils::FieldMasks;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use Google::Ads::GoogleAds::V6::Resources::AdGroupCriterion;
 use Google::Ads::GoogleAds::V6::Resources::CampaignCriterion;
@@ -75,14 +76,14 @@ use Data::Uniqid qw(uniqid);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id  = "INSERT_CUSTOMER_ID_HERE";
-my $ad_group_id  = "INSERT_AD_GROUP_ID_HERE";
-my $campaign_id  = "INSERT_CAMPAIGN_ID_HERE";
-my $bid_modifier = "BID_MODIFIER_VALUE";
+my $customer_id        = "INSERT_CUSTOMER_ID_HERE";
+my $ad_group_id        = "INSERT_AD_GROUP_ID_HERE";
+my $campaign_id        = "INSERT_CAMPAIGN_ID_HERE";
+my $bid_modifier_value = "INSERT_BID_MODIFIER_VALUE_HERE";
 
 sub setup_remarketing {
-  my ($api_client, $customer_id, $ad_group_id, $campaign_id, $bid_modifier) =
-    @_;
+  my ($api_client, $customer_id, $ad_group_id, $campaign_id,
+    $bid_modifier_value) = @_;
 
   # Create a new example user list.
   my $user_list_resource_name = create_user_list($api_client, $customer_id);
@@ -93,7 +94,7 @@ sub setup_remarketing {
     $ad_group_id, $user_list_resource_name);
   modify_ad_group_bids($api_client, $customer_id,
     $ad_group_criterion_resource_name,
-    $bid_modifier);
+    $bid_modifier_value);
 
   # Remove any existing user lists at the ad group level.
   remove_existing_list_criteria_from_ad_group($api_client, $customer_id,
@@ -105,7 +106,7 @@ sub setup_remarketing {
     $user_list_resource_name);
   modify_campaign_bids($api_client, $customer_id,
     $campaign_criterion_resource_name,
-    $bid_modifier);
+    $bid_modifier_value);
 
   return 1;
 }
@@ -137,7 +138,7 @@ sub create_user_list {
   my $rule_based_user_list_info =
     Google::Ads::GoogleAds::V6::Common::RuleBasedUserListInfo->new({
       # Optional: To include past users in the user list, set the
-      # prepopulation_status to REQUESTED.
+      # prepopulationStatus to REQUESTED.
       prepopulationStatus    => REQUESTED,
       expressionRuleUserList => $expression_rule_user_list_info
     });
@@ -159,12 +160,12 @@ sub create_user_list {
     });
 
   # Add the user list, then print and return the new list's resource name.
-  my $mutate_user_lists_response = $api_client->UserListService()->mutate({
+  my $user_lists_response = $api_client->UserListService()->mutate({
       customerId => $customer_id,
       operations => [$user_list_operation]});
 
   my $user_list_resource_name =
-    $mutate_user_lists_response->{results}[0]{resourceName};
+    $user_lists_response->{results}[0]{resourceName};
   printf "Created user list with resource name '%s'.\n",
     $user_list_resource_name;
 
@@ -193,31 +194,32 @@ sub target_ads_in_ad_group_to_user_list {
     });
 
   # Add the ad group criterion, then print and return the new criterion's resource name.
-  my $mutate_ad_group_criteria_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
   my $ad_group_criterion_resource_name =
-    $mutate_ad_group_criteria_response->{results}[0]{resourceName};
+    $ad_group_criteria_response->{results}[0]{resourceName};
   printf "Successfully created ad group criterion with resource name '%s' " .
-    "targeting user list with resource name '%s' with ad group with ID %s.\n",
+    "targeting user list with resource name '%s' with ad group with ID %d.\n",
     $ad_group_criterion_resource_name, $user_list_resource_name, $ad_group_id;
+
   return $ad_group_criterion_resource_name;
 }
 
 # Updates the bid modifier on an ad group criterion.
 sub modify_ad_group_bids {
   my ($api_client, $customer_id, $ad_group_criterion_resource_name,
-    $bid_modifier)
+    $bid_modifier_value)
     = @_;
 
-  # Create the ad group criterion with a bid modifier. You may alternatively set the bid
-  # for the ad group criterion directly.
+  # Create the ad group criterion with a bid modifier. You may alternatively set
+  # the bid for the ad group criterion directly.
   my $ad_group_criterion =
     Google::Ads::GoogleAds::V6::Resources::AdGroupCriterion->new({
       resourceName => $ad_group_criterion_resource_name,
-      bidModifier  => $bid_modifier
+      bidModifier  => $bid_modifier_value
     });
 
   # Create the update operation.
@@ -228,18 +230,17 @@ sub modify_ad_group_bids {
       updateMask => all_set_fields_of($ad_group_criterion)});
 
   # Update the ad group criterion and print the results.
-  my $mutate_ad_group_criteria_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
   printf "Successfully updated the bid for ad group criterion with resource " .
     "name '%s'.\n",
-    $mutate_ad_group_criteria_response->{results}[0]{resourceName};
+    $ad_group_criteria_response->{results}[0]{resourceName};
 }
 
-# Removes all ad group criteria targeting a user list under a given
-# campaign. This is a necessary step before targeting a user list at the
-# campaign level.
+# Removes all ad group criteria targeting a user list under a given campaign.
+# This is a necessary step before targeting a user list at the campaign level.
 sub remove_existing_list_criteria_from_ad_group {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -259,16 +260,16 @@ sub remove_existing_list_criteria_from_ad_group {
   }
 
   # Remove the ad group criteria and print the resource names of the removed criteria.
-  my $mutate_ad_group_criteria_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => $operations
     });
 
   printf "Removed %d ad group criteria.\n",
-    scalar @{$mutate_ad_group_criteria_response->{results}};
-  foreach my $result (@{$mutate_ad_group_criteria_response->{results}}) {
-    printf "Successfully removed ad group criterion with resource name %s.\n",
+    scalar @{$ad_group_criteria_response->{results}};
+  foreach my $result (@{$ad_group_criteria_response->{results}}) {
+    printf "Successfully removed ad group criterion with resource name '%s'.\n",
       $result->{resourceName};
   }
 }
@@ -277,10 +278,10 @@ sub remove_existing_list_criteria_from_ad_group {
 sub get_user_list_ad_group_criteria {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
-  my $user_list_criteria_resource_names = [];
+  my $user_list_criterion_resource_names = [];
 
-  # Create a search stream request with a query that will retrieve all of the
-  # ad group criteria under a campaign.
+  # Create a search stream request that will retrieve all of the user list ad
+  # group criteria under a campaign.
   my $search_stream_request =
     Google::Ads::GoogleAds::V6::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
@@ -288,7 +289,7 @@ sub get_user_list_ad_group_criteria {
       query      => sprintf(
         "SELECT ad_group_criterion.criterion_id " .
           "FROM ad_group_criterion " .
-          "WHERE campaign.id = %s AND ad_group_criterion.type = 'USER_LIST'",
+          "WHERE campaign.id = %d AND ad_group_criterion.type = 'USER_LIST'",
         $campaign_id
       )});
 
@@ -306,13 +307,13 @@ sub get_user_list_ad_group_criteria {
 
       my $ad_group_criterion_resource_name =
         $google_ads_row->{adGroupCriterion}{resourceName};
-      printf "Ad group criterion with resource name %s was found.\n",
+      printf "Ad group criterion with resource name '%s' was found.\n",
         $ad_group_criterion_resource_name;
-      push(@$user_list_criteria_resource_names,
+      push(@$user_list_criterion_resource_names,
         $ad_group_criterion_resource_name);
     });
 
-  return $user_list_criteria_resource_names;
+  return $user_list_criterion_resource_names;
 }
 
 # Creates a campaign criterion that targets a user list with a campaign.
@@ -337,15 +338,15 @@ sub target_ads_in_campaign_to_user_list {
     });
 
   # Add the campaign criterion and print the resulting criterion's resource name.
-  my $mutate_campaign_criteria_response =
+  my $campaign_criteria_response =
     $api_client->CampaignCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_criterion_operation]});
 
   my $campaign_criterion_resource_name =
-    $mutate_campaign_criteria_response->{results}[0]{resourceName};
+    $campaign_criteria_response->{results}[0]{resourceName};
   printf "Successfully created campaign criterion with resource name '%s' " .
-    "targeting user list with resource name '%s' with campaign with ID %s.\n",
+    "targeting user list with resource name '%s' with campaign with ID %d.\n",
     $campaign_criterion_resource_name, $user_list_resource_name, $campaign_id;
 
   return $campaign_criterion_resource_name;
@@ -354,14 +355,14 @@ sub target_ads_in_campaign_to_user_list {
 # Updates the bid modifier on a campaign criterion.
 sub modify_campaign_bids {
   my ($api_client, $customer_id, $campaign_criterion_resource_name,
-    $bid_modifier)
+    $bid_modifier_value)
     = @_;
 
   # Create the campaign criterion to update.
   my $campaign_criterion =
     Google::Ads::GoogleAds::V6::Resources::CampaignCriterion->new({
       resourceName => $campaign_criterion_resource_name,
-      bidModifier  => $bid_modifier
+      bidModifier  => $bid_modifier_value
     });
 
   # Create the update operation.
@@ -372,13 +373,13 @@ sub modify_campaign_bids {
       updateMask => all_set_fields_of($campaign_criterion)});
 
   # Update the campaign criterion and print the results.
-  my $mutate_campaign_criteria_response =
+  my $campaign_criteria_response =
     $api_client->CampaignCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_criterion_operation]});
   printf "Successfully updated the bid for campaign criterion with " .
     "resource name '%s'.\n",
-    $mutate_campaign_criteria_response->{results}[0]{resourceName};
+    $campaign_criteria_response->{results}[0]{resourceName};
 }
 
 # Don't run the example if the file is being included.
@@ -394,20 +395,21 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"  => \$customer_id,
-  "ad_group_id=i"  => \$ad_group_id,
-  "campaign_id=i"  => \$campaign_id,
-  "bid_modifier=f" => \$bid_modifier
+  "customer_id=s"        => \$customer_id,
+  "ad_group_id=i"        => \$ad_group_id,
+  "campaign_id=i"        => \$campaign_id,
+  "bid_modifier_value=f" => \$bid_modifier_value
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params($customer_id, $ad_group_id, $campaign_id, $bid_modifier);
+  if not check_params($customer_id, $ad_group_id, $campaign_id,
+  $bid_modifier_value);
 
 # Call the example.
 setup_remarketing($api_client, $customer_id =~ s/-//gr,
-  $ad_group_id, $campaign_id, $bid_modifier);
+  $ad_group_id, $campaign_id, $bid_modifier_value);
 
 =pod
 
@@ -418,22 +420,21 @@ setup_remarketing
 =head1 DESCRIPTION
 
 Demonstrates various operations involved in remarketing, including:
-=over 2
-  =item (a) creating a user list based on visitors to a website,
-  =item (b) targeting a user list with an ad group criterion,
-  =item (c) updating the bid modifier on an ad group criterion,
-  =item (d) finding and removing all ad group criteria under a given campaign,
-  =item (e) targeting a user list with a campaign criterion, and
-  =item (f) updating the bid modifier on a campaign criterion.
-=back
+
+   (a) Creating a user list based on visitors to a website.
+   (b) Targeting a user list with an ad group criterion.
+   (c) Updating the bid modifier on an ad group criterion.
+   (d) Finding and removing all ad group criteria under a given campaign.
+   (e) Targeting a user list with a campaign criterion.
+   (f) Updating the bid modifier on a campaign criterion.
 
 It is unlikely that users will need to perform all of these operations
 consecutively, and all of the operations contained herein are meant of for
 illustrative purposes.
 
 Note: you can use user lists to target at the campaign or ad group level, but
-not both simultaneously. Consider removing or disabling any existing user
-lists at the campaign level before running this example.
+not both simultaneously. Consider removing or disabling any existing user lists
+at the campaign level before running this example.
 
 =head1 SYNOPSIS
 

@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 85);
+use Test::More (tests => 86);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -517,6 +517,13 @@ require qw(examples/remarketing/add_remarketing_action.pl);
 ok(
   add_remarketing_action($api_client, $customer_id),
   "Test of add_remarketing_action example."
+);
+require qw(examples/remarketing/setup_remarketing.pl);
+ok(
+  setup_remarketing(
+    $api_client, $customer_id, $search_ad_group_id, $search_campaign_id, 1.5
+  ),
+  "Test of setup_remarketing example."
 );
 require qw(examples/remarketing/update_audience_target_restriction.pl);
 ok(add_remarketing_action($api_client, $customer_id, $search_ad_group_id),
