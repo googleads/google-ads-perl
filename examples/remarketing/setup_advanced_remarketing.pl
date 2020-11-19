@@ -27,23 +27,23 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::V6::Resources::UserList;
-use Google::Ads::GoogleAds::V6::Common::ExpressionRuleUserListInfo;
 use Google::Ads::GoogleAds::V6::Common::RuleBasedUserListInfo;
-use Google::Ads::GoogleAds::V6::Common::UserListDateRuleItemInfo;
-use Google::Ads::GoogleAds::V6::Common::UserListNumberRuleItemInfo;
+use Google::Ads::GoogleAds::V6::Common::ExpressionRuleUserListInfo;
 use Google::Ads::GoogleAds::V6::Common::UserListRuleInfo;
-use Google::Ads::GoogleAds::V6::Common::UserListRuleItemInfo;
 use Google::Ads::GoogleAds::V6::Common::UserListRuleItemGroupInfo;
+use Google::Ads::GoogleAds::V6::Common::UserListRuleItemInfo;
 use Google::Ads::GoogleAds::V6::Common::UserListStringRuleItemInfo;
+use Google::Ads::GoogleAds::V6::Common::UserListNumberRuleItemInfo;
+use Google::Ads::GoogleAds::V6::Common::UserListDateRuleItemInfo;
+use Google::Ads::GoogleAds::V6::Enums::UserListStringRuleItemOperatorEnum
+  qw(EQUALS);
+use Google::Ads::GoogleAds::V6::Enums::UserListNumberRuleItemOperatorEnum
+  qw(GREATER_THAN);
 use Google::Ads::GoogleAds::V6::Enums::UserListDateRuleItemOperatorEnum
   qw(AFTER BEFORE);
 use Google::Ads::GoogleAds::V6::Enums::UserListMembershipStatusEnum qw(OPEN);
-use Google::Ads::GoogleAds::V6::Enums::UserListNumberRuleItemOperatorEnum
-  qw(GREATER_THAN);
 use Google::Ads::GoogleAds::V6::Enums::UserListPrepopulationStatusEnum
   qw(REQUESTED);
-use Google::Ads::GoogleAds::V6::Enums::UserListStringRuleItemOperatorEnum
-  qw(EQUALS);
 use Google::Ads::GoogleAds::V6::Services::UserListService::UserListOperation;
 
 use Getopt::Long qw(:config auto_help);
@@ -87,8 +87,8 @@ sub setup_advanced_remarketing {
       name => "cart_size",
       numberRuleItem =>
         Google::Ads::GoogleAds::V6::Common::UserListNumberRuleItemInfo->new({
-          # Available UserListDateRuleItemOperators can be found at
-          # https://developers.google.com/google-ads/api/reference/rpc/latest/UserListDateRuleItemOperatorEnum.UserListDateRuleItemOperator
+          # Available UserListNumberRuleItemOperators can be found at
+          # https://developers.google.com/google-ads/api/reference/rpc/latest/UserListNumberRuleItemOperatorEnum.UserListNumberRuleItemOperator
           operator => GREATER_THAN,
           value    => 1.0
         })});
@@ -175,11 +175,11 @@ sub setup_advanced_remarketing {
     });
 
   # Issue a mutate request to add the user list and print some information.
-  my $user_list_response = $api_client->UserListService()->mutate({
+  my $user_lists_response = $api_client->UserListService()->mutate({
       customerId => $customer_id,
       operations => [$user_list_operation]});
   printf "Created user list with resource name '%s'.\n",
-    $user_list_response->{results}[0]{resourceName};
+    $user_lists_response->{results}[0]{resourceName};
 
   return 1;
 }
