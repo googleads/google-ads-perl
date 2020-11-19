@@ -72,7 +72,7 @@ sub update_sitelink {
       updateMask => all_set_fields_of($extension_feed_item)});
 
   # Issue a mutate request to update the extension feed item.
-  my $extension_feed_item_response =
+  my $extension_feed_items_response =
     $api_client->ExtensionFeedItemService()->mutate({
       customerId => $customer_id,
       operations => [$extension_feed_item_operation]});
@@ -80,7 +80,7 @@ sub update_sitelink {
   # Print the resource name of the updated extension feed item.
   printf
     "Updated extension feed item with resource name: '%s'.\n",
-    $extension_feed_item_response->{results}[0]{resourceName};
+    $extension_feed_items_response->{results}[0]{resourceName};
 
   return 1;
 }

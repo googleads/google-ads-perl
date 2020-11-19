@@ -85,13 +85,13 @@ sub add_sitelinks {
     });
 
   # Add the campaign extension setting.
-  my $campaign_extension_setting_response =
+  my $campaign_extension_settings_response =
     $api_client->CampaignExtensionSettingService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_extension_setting_operation]});
 
   printf "Created campaign extension setting with resource name '%s'.\n",
-    $campaign_extension_setting_response->{results}[0]{resourceName};
+    $campaign_extension_settings_response->{results}[0]{resourceName};
 
   return 1;
 }
@@ -208,13 +208,13 @@ sub create_extension_feed_items {
     });
 
   # Add the extension feed item.
-  my $extension_feed_item_response =
+  my $extension_feed_items_response =
     $api_client->ExtensionFeedItemService()->mutate({
       customerId => $customer_id,
       operations => $operations
     });
 
-  my $extension_feed_item_results = $extension_feed_item_response->{results};
+  my $extension_feed_item_results = $extension_feed_items_response->{results};
   printf "Added %d extension feed items:\n",
     scalar @$extension_feed_item_results;
 

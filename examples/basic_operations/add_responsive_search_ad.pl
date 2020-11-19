@@ -94,12 +94,12 @@ sub add_responsive_search_ad {
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad.
-  my $ad_group_ad_response = $api_client->AdGroupAdService()->mutate({
+  my $ad_group_ads_response = $api_client->AdGroupAdService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
   printf "Created responsive search ad '%s'.\n",
-    $ad_group_ad_response->{results}[0]{resourceName};
+    $ad_group_ads_response->{results}[0]{resourceName};
 
   return 1;
 }

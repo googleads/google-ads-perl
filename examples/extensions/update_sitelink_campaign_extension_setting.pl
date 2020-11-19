@@ -84,7 +84,7 @@ sub update_sitelink_campaign_extension_setting {
       updateMask => all_set_fields_of($campaign_extension_setting)});
 
   # Issue a mutate request to update the campaign extension setting.
-  my $campaign_extension_setting_response =
+  my $campaign_extension_settings_response =
     $api_client->CampaignExtensionSettingService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_extension_setting_operation]});
@@ -92,7 +92,7 @@ sub update_sitelink_campaign_extension_setting {
   # Print the resource name of the updated campaign extension setting.
   printf
     "Updated a campaign extension setting with resource name: '%s'.\n",
-    $campaign_extension_setting_response->{results}[0]{resourceName};
+    $campaign_extension_settings_response->{results}[0]{resourceName};
 
   return 1;
 }

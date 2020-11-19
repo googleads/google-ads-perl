@@ -161,7 +161,7 @@ sub request_mutate_and_display_result {
   my ($api_client, $customer_id, $operations) = @_;
 
   # Make a validateOnly mutate request.
-  my $ad_group_criterion_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId     => $customer_id,
       operations     => $operations,
@@ -171,17 +171,17 @@ sub request_mutate_and_display_result {
 
   # Display the results.
   if (
-    not $ad_group_criterion_response->isa(
+    not $ad_group_criteria_response->isa(
       "Google::Ads::GoogleAds::GoogleAdsException"))
   {
-    my $ad_group_criterion_results = $ad_group_criterion_response->{results};
+    my $ad_group_criterion_results = $ad_group_criteria_response->{results};
     printf "Added %d ad group criteria:\n", scalar @$ad_group_criterion_results;
     foreach my $ad_group_criterion_result (@$ad_group_criterion_results) {
       print $ad_group_criterion_result->{resourceName}, "\n";
     }
   }
 
-  return $ad_group_criterion_response;
+  return $ad_group_criteria_response;
 }
 
 # Don't run the example if the file is being included.

@@ -55,12 +55,12 @@ sub remove_ad {
       )});
 
   # Remove the ad group ad.
-  my $ad_group_ad_response = $api_client->AdGroupAdService()->mutate({
+  my $ad_group_ads_response = $api_client->AdGroupAdService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
   printf "Removed ad with resource name: '%s'.\n",
-    $ad_group_ad_response->{results}[0]{resourceName};
+    $ad_group_ads_response->{results}[0]{resourceName};
 
   return 1;
 }

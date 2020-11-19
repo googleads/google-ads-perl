@@ -69,12 +69,12 @@ sub create_and_attach_shared_keyword_set {
       create => $shared_set
     });
 
-  my $shared_set_response = $api_client->SharedSetService()->mutate({
+  my $shared_sets_response = $api_client->SharedSetService()->mutate({
       customerId => $customer_id,
       operations => [$shared_set_operation]});
 
   my $shared_set_resource_name =
-    $shared_set_response->{results}[0]{resourceName};
+    $shared_sets_response->{results}[0]{resourceName};
   printf "Created shared set: '%s'.\n", $shared_set_resource_name;
 
   # Create shared set criterion.
@@ -100,13 +100,12 @@ sub create_and_attach_shared_keyword_set {
     push @$shared_criterion_operations, $shared_criterion_operation;
   }
 
-  my $shared_criterion_response =
-    $api_client->SharedCriterionService()->mutate({
-      customerId => $customer_id,
-      operations => $shared_criterion_operations
-    });
+  my $shared_criteria_response = $api_client->SharedCriterionService()->mutate({
+    customerId => $customer_id,
+    operations => $shared_criterion_operations
+  });
 
-  my $shared_criterion_results = $shared_criterion_response->{results};
+  my $shared_criterion_results = $shared_criteria_response->{results};
   printf "Added %d shared criterion:\n", scalar @$shared_criterion_results;
   foreach my $shared_criterion_result (@$shared_criterion_results) {
     printf "\t%s\n", $shared_criterion_result->{resourceName};
@@ -127,13 +126,13 @@ sub create_and_attach_shared_keyword_set {
       create => $campaign_shared_set
     });
 
-  my $campaign_shared_set_response =
+  my $campaign_shared_sets_response =
     $api_client->CampaignSharedSetService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_shared_set_operation]});
 
   printf "Created campaign shared set: '%s'.\n",
-    $campaign_shared_set_response->{results}[0]{resourceName};
+    $campaign_shared_sets_response->{results}[0]{resourceName};
   return 1;
 }
 

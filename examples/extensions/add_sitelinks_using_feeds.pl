@@ -132,11 +132,11 @@ sub create_feed {
     });
 
   # Issue a mutate request to add the feed.
-  my $feed_response = $api_client->FeedService()->mutate({
+  my $feeds_response = $api_client->FeedService()->mutate({
       customerId => $customer_id,
       operations => [$feed_operation]});
 
-  my $feed_resource_name = $feed_response->{results}[0]{resourceName};
+  my $feed_resource_name = $feeds_response->{results}[0]{resourceName};
   printf "Created feed with resource name: '%s'.\n", $feed_resource_name;
 
   # After we create the feed, we need to fetch it so we can determine the
@@ -238,12 +238,12 @@ sub create_feed_items {
     );
 
   # Issue a mutate request to add the feed items.
-  my $feed_item_response = $api_client->FeedItemService()->mutate({
+  my $feed_items_response = $api_client->FeedItemService()->mutate({
       customerId => $customer_id,
       operations => [$operations]});
 
   my $feed_items =
-    [map { $_->{resourceName} } @{$feed_item_response->{results}}];
+    [map { $_->{resourceName} } @{$feed_items_response->{results}}];
   print "Created the following feed items:\n";
   foreach my $feed_item (@$feed_items) {
     print "\t$feed_item\n";
@@ -295,12 +295,12 @@ sub create_feed_mapping {
     });
 
   # Issue a mutate request to add the feed mapping.
-  my $feed_mapping_response = $api_client->FeedMappingService()->mutate({
+  my $feed_mappings_response = $api_client->FeedMappingService()->mutate({
       customerId => $customer_id,
       operations => [$feed_mapping_operation]});
 
   printf "Created feed mapping with resource name: '%s'.\n",
-    $feed_mapping_response->{results}[0]{resourceName};
+    $feed_mappings_response->{results}[0]{resourceName};
 }
 
 # Creates a campaign feed.
@@ -329,12 +329,12 @@ sub create_campaign_feed {
     });
 
   # Issue a mutate request to add the campaign feed.
-  my $campaign_feed_response = $api_client->CampaignFeedService()->mutate({
+  my $campaign_feeds_response = $api_client->CampaignFeedService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_feed_operation]});
 
   printf "Created campaign feed with resource name: '%s'.\n",
-    $campaign_feed_response->{results}[0]{resourceName};
+    $campaign_feeds_response->{results}[0]{resourceName};
 }
 
 # Creates ad group targeting for the first feed item.
@@ -360,12 +360,13 @@ sub create_ad_group_targeting {
     });
 
   # Issue a mutate request to add the feed item target.
-  my $feed_item_target_response = $api_client->FeedItemTargetService()->mutate({
+  my $feed_item_targets_response =
+    $api_client->FeedItemTargetService()->mutate({
       customerId => $customer_id,
       operations => [$feed_item_target_operation]});
 
   printf "Created feed item target '%s' for feed item '%s'.\n",
-    $feed_item_target_response->{results}[0]{resourceName},
+    $feed_item_targets_response->{results}[0]{resourceName},
     $feed_item;
 }
 

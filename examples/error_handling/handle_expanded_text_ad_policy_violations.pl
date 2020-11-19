@@ -162,13 +162,13 @@ sub request_exemption {
     Google::Ads::GoogleAds::V6::Common::PolicyValidationParameter->new(
     {ignorablePolicyTopics => $ignorable_policy_topics});
 
-  my $ad_group_ad_response = $api_client->AdGroupAdService()->mutate({
+  my $ad_group_ads_response = $api_client->AdGroupAdService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
   printf "Successfully added an expanded text ad with resource name '%s' by " .
     "requesting for policy violation exemption.\n",
-    $ad_group_ad_response->{results}[0]{resourceName};
+    $ad_group_ads_response->{results}[0]{resourceName};
 }
 
 # Don't run the example if the file is being included.

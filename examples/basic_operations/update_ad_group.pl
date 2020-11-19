@@ -69,12 +69,12 @@ sub update_ad_group {
       updateMask => all_set_fields_of($ad_group)});
 
   # Update the ad group.
-  my $ad_group_response = $api_client->AdGroupService()->mutate({
+  my $ad_groups_response = $api_client->AdGroupService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_operation]});
 
   printf "Updated ad group with resource name: '%s'.\n",
-    $ad_group_response->{results}[0]{resourceName};
+    $ad_groups_response->{results}[0]{resourceName};
 
   return 1;
 }

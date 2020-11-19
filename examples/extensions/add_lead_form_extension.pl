@@ -94,13 +94,13 @@ sub create_lead_form_extension {
       create => $campaign_asset
     });
 
-  my $campaign_asset_response = $api_client->CampaignAssetService()->mutate({
+  my $campaign_assets_response = $api_client->CampaignAssetService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_asset_operation]});
 
   printf
     "Created campaign asset with resource name = '%s' for campaign ID %d.\n",
-    $campaign_asset_response->{results}[0]{resourceName}, $campaign_id;
+    $campaign_assets_response->{results}[0]{resourceName}, $campaign_id;
 }
 
 # Creates the lead form asset.
@@ -181,12 +181,12 @@ sub create_lead_form_asset {
       create => $lead_form_asset
     });
 
-  my $asset_response = $api_client->AssetService()->mutate({
+  my $assets_response = $api_client->AssetService()->mutate({
       customerId => $customer_id,
       operations => [$asset_operation]});
 
   my $lead_form_asset_resource_name =
-    $asset_response->{results}[0]{resourceName};
+    $assets_response->{results}[0]{resourceName};
 
   # Display the result.
   printf "Asset with resource name = '%s' was created.\n",

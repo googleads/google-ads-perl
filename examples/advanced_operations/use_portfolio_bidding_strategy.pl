@@ -101,13 +101,13 @@ sub create_bidding_strategy {
     });
 
   # Add the bidding strategy.
-  my $bidding_strategy_response =
+  my $bidding_strategies_response =
     $api_client->BiddingStrategyService()->mutate({
       customerId => $customer_id,
       operations => [$bidding_strategy_operation]});
 
   my $bidding_strategy_resource_name =
-    $bidding_strategy_response->{results}[0]{resourceName};
+    $bidding_strategies_response->{results}[0]{resourceName};
 
   printf "Created portfolio bidding strategy with resource name: '%s'.\n",
     $bidding_strategy_resource_name;
@@ -136,12 +136,12 @@ sub create_shared_campaign_buget {
     ->new({create => $campaign_budget});
 
   # Add the campaign budget.
-  my $campaign_budget_response = $api_client->CampaignBudgetService()->mutate({
+  my $campaign_budgets_response = $api_client->CampaignBudgetService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_budget_operation]});
 
   my $campaign_budget_resource_name =
-    $campaign_budget_response->{results}[0]{resourceName};
+    $campaign_budgets_response->{results}[0]{resourceName};
 
   printf "Created a shared budget with resource name: '%s'.\n",
     $campaign_budget_resource_name;
@@ -184,11 +184,11 @@ sub create_campaign_with_bidding_strategy {
     new({create => $campaign});
 
   # Add the campaign.
-  my $campaign_response = $api_client->CampaignService()->mutate({
+  my $campaigns_response = $api_client->CampaignService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_operation]});
 
-  my $campaign_resource_name = $campaign_response->{results}[0]{resourceName};
+  my $campaign_resource_name = $campaigns_response->{results}[0]{resourceName};
 
   printf "Created a campaign with resource name: '%s'.\n",
     $campaign_resource_name;

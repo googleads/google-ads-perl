@@ -73,13 +73,13 @@ sub update_keyword {
       updateMask => all_set_fields_of($ad_group_criterion)});
 
   # Update the keyword criterion.
-  my $ad_group_criterion_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
   printf "Updated keyword criterion with resource name: '%s'.\n",
-    $ad_group_criterion_response->{results}[0]{resourceName};
+    $ad_group_criteria_response->{results}[0]{resourceName};
 
   return 1;
 }

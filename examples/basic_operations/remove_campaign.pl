@@ -54,12 +54,12 @@ sub remove_campaign {
       )});
 
   # Remove the campaign.
-  my $campaign_response = $api_client->CampaignService()->mutate({
+  my $campaigns_response = $api_client->CampaignService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_operation]});
 
   printf "Removed campaign with resource name: '%s'.\n",
-    $campaign_response->{results}[0]{resourceName};
+    $campaigns_response->{results}[0]{resourceName};
 
   return 1;
 }

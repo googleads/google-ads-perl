@@ -50,10 +50,10 @@ my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 sub handle_partial_failure {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
-  my $ad_group_response =
+  my $ad_groups_response =
     create_ad_groups($api_client, $customer_id, $campaign_id);
-  check_if_partial_failure_error_exists($ad_group_response);
-  print_results($ad_group_response);
+  check_if_partial_failure_error_exists($ad_groups_response);
+  print_results($ad_groups_response);
 
   return 1;
 }
@@ -99,21 +99,21 @@ sub create_ad_groups {
     new({create => $ad_group3});
 
   # Issue the mutate request, enabling partial failure mode.
-  my $ad_group_response = $api_client->AdGroupService()->mutate({
+  my $ad_groups_response = $api_client->AdGroupService()->mutate({
     customerId => $customer_id,
     operations =>
       [$ad_group_operation1, $ad_group_operation2, $ad_group_operation3],
     partialFailure => "true"
   });
 
-  return $ad_group_response;
+  return $ad_groups_response;
 }
 
 # Checks if partial failure error exists in the given mutate ad group response.
 sub check_if_partial_failure_error_exists {
-  my $ad_group_response = shift;
+  my $ad_groups_response = shift;
 
-  if ($ad_group_response->{partialFailureError}) {
+  if ($ad_groups_response->{partialFailureError}) {
     print "Partial failures occurred. Details will be shown below.\n";
   } else {
     print
@@ -125,14 +125,15 @@ sub check_if_partial_failure_error_exists {
 # failure, prints all their errors with corresponding operation indices. For those
 # that succeeded, prints the resource names of created ad groups.
 sub print_results {
-  my $ad_group_response = shift;
+  my $ad_groups_response = shift;
 
   # Find the failed operations by looping through the results.
-  while (my ($operation_index, $result) = each @{$ad_group_response->{results}})
+  while (my ($operation_index, $result) =
+    each @{$ad_groups_response->{results}})
   {
     if (is_partial_failure_result($result)) {
       my $google_ads_errors = get_google_ads_errors($operation_index,
-        $ad_group_response->{partialFailureError});
+        $ad_groups_response->{partialFailureError});
 
       foreach my $google_ads_error (@$google_ads_errors) {
         printf "Operation %d failed with error: %s\n", $operation_index,

@@ -168,14 +168,14 @@ sub request_exemption {
   $ad_group_criterion_operation->{exemptPolicyViolationKeys} =
     $exempt_policy_violation_keys;
 
-  my $ad_group_criterion_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
   printf "Successfully added a keyword with resource name '%s' by requesting " .
     "for policy violation exemption.\n",
-    $ad_group_criterion_response->{results}[0]{resourceName};
+    $ad_group_criteria_response->{results}[0]{resourceName};
 }
 
 # Don't run the example if the file is being included.

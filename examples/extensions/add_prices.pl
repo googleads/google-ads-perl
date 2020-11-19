@@ -83,13 +83,13 @@ sub add_prices {
     });
 
   # Add the customer extension setting.
-  my $customer_extension_setting_response =
+  my $customer_extension_settings_response =
     $api_client->CustomerExtensionSettingService()->mutate({
       customerId => $customer_id,
       operations => [$customer_extension_setting_operation]});
 
   printf "Created customer extension setting with resource name '%s'.\n",
-    $customer_extension_setting_response->{results}[0]{resourceName};
+    $customer_extension_settings_response->{results}[0]{resourceName};
 
   return 1;
 }
@@ -159,13 +159,13 @@ sub create_extension_feed_item {
     });
 
   # Add the extension feed item.
-  my $extension_feed_item_response =
+  my $extension_feed_items_response =
     $api_client->ExtensionFeedItemService()->mutate({
       customerId => $customer_id,
       operations => [$extension_feed_item_operation]});
 
   my $extension_feed_item_resource_name =
-    $extension_feed_item_response->{results}[0]{resourceName};
+    $extension_feed_items_response->{results}[0]{resourceName};
   printf "Created extension feed item with resource name '%s'.\n",
     $extension_feed_item_resource_name;
 

@@ -76,13 +76,13 @@ sub add_campaign_bid_modifier {
     });
 
   # Add the campaign bid modifier.
-  my $campaign_bid_modifier_response =
+  my $campaign_bid_modifiers_response =
     $api_client->CampaignBidModifierService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_bid_modifier_operation]});
 
   printf "Created campaign bid modifier '%s'.\n",
-    $campaign_bid_modifier_response->{results}[0]{resourceName};
+    $campaign_bid_modifiers_response->{results}[0]{resourceName};
 
   return 1;
 }

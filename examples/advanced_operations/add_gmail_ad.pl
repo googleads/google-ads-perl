@@ -101,12 +101,12 @@ sub add_gmail_ad {
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad.
-  my $ad_group_ad_response = $api_client->AdGroupAdService()->mutate({
+  my $ad_group_ads_response = $api_client->AdGroupAdService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
   printf "Created ad group ad with resource name: '%s'.\n",
-    $ad_group_ad_response->{results}[0]{resourceName};
+    $ad_group_ads_response->{results}[0]{resourceName};
 
   return 1;
 }
@@ -157,12 +157,12 @@ sub add_media_files {
     });
 
   # Add the media files.
-  my $media_file_response = $api_client->MediaFileService()->mutate({
+  my $media_files_response = $api_client->MediaFileService()->mutate({
       customerId => $customer_id,
       operations =>
         [$logo_media_file_operation, $marketing_media_file_operation]});
 
-  foreach my $result (@{$media_file_response->{results}}) {
+  foreach my $result (@{$media_files_response->{results}}) {
     printf "Created media file with resource name: '%s'.\n",
       $result->{resourceName};
   }
@@ -170,9 +170,9 @@ sub add_media_files {
   # Return the created media file resource names.
   return {
     logo_image_resource_name =>
-      $media_file_response->{results}[0]{resourceName},
+      $media_files_response->{results}[0]{resourceName},
     marketing_image_resource_name =>
-      $media_file_response->{results}[1]{resourceName}};
+      $media_files_response->{results}[1]{resourceName}};
 }
 
 # Don't run the example if the file is being included.

@@ -112,14 +112,14 @@ sub add_extension_feed_item {
     });
 
   # Issue a mutate request to add the extension feed item.
-  my $extension_feed_item_response =
+  my $extension_feed_items_response =
     $api_client->ExtensionFeedItemService()->mutate({
       customerId => $customer_id,
       operations => [$extension_feed_item_operation]});
 
   # Print out some information about the added extension feed item.
   my $extension_feed_item_resource_name =
-    $extension_feed_item_response->{results}[0]{resourceName};
+    $extension_feed_items_response->{results}[0]{resourceName};
   printf "Created an extension feed item with resource name: '%s'.\n",
     $extension_feed_item_resource_name;
 
@@ -145,14 +145,14 @@ sub add_extension_to_account {
     });
 
   # Issue a mutate request to add the customer extension setting.
-  my $customer_extension_setting_response =
+  my $customer_extension_settings_response =
     $api_client->CustomerExtensionSettingService()->mutate({
       customerId => $customer_id,
       operations => [$customer_extension_setting_operation]});
 
   # Print out some information about the added customer extension setting.
   my $customer_extension_setting_resource_name =
-    $customer_extension_setting_response->{results}[0]{resourceName};
+    $customer_extension_settings_response->{results}[0]{resourceName};
   printf "Created a customer extension setting with resource name: '%s'.\n",
     $customer_extension_setting_resource_name;
 }
@@ -181,14 +181,14 @@ sub add_extension_to_campaign {
     });
 
   # Issue a mutate request to add the campaign extension setting.
-  my $campaign_extension_setting_response =
+  my $campaign_extension_settings_response =
     $api_client->CampaignExtensionSettingService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_extension_setting_operation]});
 
   # Print out some information about the added campaign extension setting.
   my $campaign_extension_setting_resource_name =
-    $campaign_extension_setting_response->{results}[0]{resourceName};
+    $campaign_extension_settings_response->{results}[0]{resourceName};
   printf "Created a campaign extension setting with resource name: '%s'.\n",
     $campaign_extension_setting_resource_name;
 }
@@ -217,14 +217,14 @@ sub add_extension_to_ad_group {
     });
 
   # Issue a mutate request to add the ad group extension setting.
-  my $ad_group_extension_setting_response =
+  my $ad_group_extension_settings_response =
     $api_client->AdGroupExtensionSettingService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_extension_setting_operation]});
 
   # Print out some information about the added ad group extension setting.
   my $ad_group_extension_setting_resource_name =
-    $ad_group_extension_setting_response->{results}[0]{resourceName};
+    $ad_group_extension_settings_response->{results}[0]{resourceName};
   printf "Created an ad group extension setting with resource name: '%s'.\n",
     $ad_group_extension_setting_resource_name;
 }

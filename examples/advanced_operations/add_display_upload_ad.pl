@@ -105,12 +105,12 @@ sub create_media_bundle_asset {
     });
 
   # Issue a mutate request to add the asset.
-  my $asset_response = $api_client->AssetService()->mutate({
+  my $assets_response = $api_client->AssetService()->mutate({
       customerId => $customer_id,
       operations => [$asset_operation]});
 
   # Print out information about the newly added asset.
-  my $asset_resource_name = $asset_response->{results}[0]{resourceName};
+  my $asset_resource_name = $assets_response->{results}[0]{resourceName};
   printf "The media bundle asset has been added with resource name: '%s'.\n",
     $asset_resource_name;
 

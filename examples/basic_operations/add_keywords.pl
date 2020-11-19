@@ -70,13 +70,13 @@ sub add_keywords {
     ->new({create => $ad_group_criterion});
 
   # Add the keyword.
-  my $ad_group_criterion_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
   printf "Created keyword '%s'.\n",
-    $ad_group_criterion_response->{results}[0]{resourceName};
+    $ad_group_criteria_response->{results}[0]{resourceName};
 
   return 1;
 }

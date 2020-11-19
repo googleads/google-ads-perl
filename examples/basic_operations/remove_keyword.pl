@@ -59,13 +59,13 @@ sub remove_keyword {
         )});
 
   # Remove the keyword criterion.
-  my $ad_group_criterion_response =
+  my $ad_group_criteria_response =
     $api_client->AdGroupCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_criterion_operation]});
 
   printf "Removed keyword criterion with resource name: '%s'.\n",
-    $ad_group_criterion_response->{results}[0]{resourceName};
+    $ad_group_criteria_response->{results}[0]{resourceName};
 
   return 1;
 }

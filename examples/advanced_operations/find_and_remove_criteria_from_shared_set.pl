@@ -144,13 +144,12 @@ sub find_and_remove_criteria_from_shared_set {
   }
 
   # Send the operations in mutate request.
-  my $shared_criterion_response =
-    $api_client->SharedCriterionService()->mutate({
-      customerId => $customer_id,
-      operations => $shared_criterion_operations
-    });
+  my $shared_criteria_response = $api_client->SharedCriterionService()->mutate({
+    customerId => $customer_id,
+    operations => $shared_criterion_operations
+  });
 
-  foreach my $result (@{$shared_criterion_response->{results}}) {
+  foreach my $result (@{$shared_criteria_response->{results}}) {
     printf "Removed shared criterion with resource name: '%s'.\n",
       $result->{resourceName};
   }

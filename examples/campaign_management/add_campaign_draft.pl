@@ -66,12 +66,12 @@ sub add_campaign_draft {
     });
 
   # Add the campaign draft.
-  my $campaign_draft_response = $api_client->CampaignDraftService()->mutate({
+  my $campaign_drafts_response = $api_client->CampaignDraftService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_draft_operation]});
 
   printf "Added a campaign draft with resource name: '%s'.\n",
-    $campaign_draft_response->{results}[0]{resourceName};
+    $campaign_drafts_response->{results}[0]{resourceName};
 
   return 1;
 }

@@ -68,7 +68,7 @@ sub add_campaigns {
     ->new({create => $campaign_budget});
 
   # Add the campaign budget.
-  my $campaign_budget_response = $api_client->CampaignBudgetService()->mutate({
+  my $campaign_budgets_response = $api_client->CampaignBudgetService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_budget_operation]});
 
@@ -84,7 +84,7 @@ sub add_campaigns {
       manualCpc => Google::Ads::GoogleAds::V6::Common::ManualCpc->new(
         {enhancedCpcEnabled => "true"}
       ),
-      campaignBudget => $campaign_budget_response->{results}[0]{resourceName},
+      campaignBudget => $campaign_budgets_response->{results}[0]{resourceName},
       # Set the campaign network options.
       networkSettings =>
         Google::Ads::GoogleAds::V6::Resources::NetworkSettings->new({
@@ -106,12 +106,12 @@ sub add_campaigns {
     new({create => $campaign});
 
   # Add the campaign.
-  my $campaign_response = $api_client->CampaignService()->mutate({
+  my $campaigns_response = $api_client->CampaignService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_operation]});
 
   printf "Created campaign '%s'.\n",
-    $campaign_response->{results}[0]{resourceName};
+    $campaigns_response->{results}[0]{resourceName};
 
   return 1;
 }

@@ -72,14 +72,14 @@ sub update_campaign_criterion_bid_modifier {
       updateMask => all_set_fields_of($campaign_criterion)});
 
   # Issue a mutate request to update the bid modifier of campaign criterion.
-  my $campaign_criterion_response =
+  my $campaign_criteria_response =
     $api_client->CampaignCriterionService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_criterion_operation]});
 
   # Print the resource name of the updated campaign criterion.
   printf "Campaign criterion with resource name '%s' was modified.\n",
-    $campaign_criterion_response->{results}[0]{resourceName};
+    $campaign_criteria_response->{results}[0]{resourceName};
 
   return 1;
 }

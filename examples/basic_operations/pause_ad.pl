@@ -67,12 +67,12 @@ sub pause_ad {
       updateMask => all_set_fields_of($ad_group_ad)});
 
   # Update the ad group ad.
-  my $ad_group_ad_response = $api_client->AdGroupAdService()->mutate({
+  my $ad_group_ads_response = $api_client->AdGroupAdService()->mutate({
       customerId => $customer_id,
       operations => [$ad_group_ad_operation]});
 
   printf "Ad with resource name '%s' is paused.\n",
-    $ad_group_ad_response->{results}[0]{resourceName};
+    $ad_group_ads_response->{results}[0]{resourceName};
 
   return 1;
 }

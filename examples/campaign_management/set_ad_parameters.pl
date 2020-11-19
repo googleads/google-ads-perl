@@ -83,11 +83,11 @@ sub set_ad_parameters {
     ->new({create => $ad_parameter_2});
 
   # Set the ad parameters.
-  my $ad_parameter_response = $api_client->AdParameterService()->mutate({
+  my $ad_parameters_response = $api_client->AdParameterService()->mutate({
       customerId => $customer_id,
       operations => [$ad_parameter_operation1, $ad_parameter_operation2]});
 
-  my $ad_parameter_results = $ad_parameter_response->{results};
+  my $ad_parameter_results = $ad_parameters_response->{results};
   printf "Set %d ad parameters:\n", scalar @$ad_parameter_results;
 
   foreach my $ad_parameter_result (@$ad_parameter_results) {

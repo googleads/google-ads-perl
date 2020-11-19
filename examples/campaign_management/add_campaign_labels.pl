@@ -78,12 +78,12 @@ sub add_campaign_labels {
   }
 
   # Add the campaign labels to the campaigns.
-  my $campaign_label_response = $api_client->CampaignLabelService()->mutate({
+  my $campaign_labels_response = $api_client->CampaignLabelService()->mutate({
     customerId => $customer_id,
     operations => $campaign_label_operations
   });
 
-  my $campaign_label_results = $campaign_label_response->{results};
+  my $campaign_label_results = $campaign_labels_response->{results};
   printf "Added %d campaign labels:\n", scalar @$campaign_label_results;
 
   foreach my $campaign_label_result (@$campaign_label_results) {

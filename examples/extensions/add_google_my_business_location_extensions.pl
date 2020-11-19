@@ -105,11 +105,11 @@ sub add_google_my_business_location_extensions {
   # 1. Set up the FeedAttributes on the feed.
   # 2. Set up a FeedMapping that associates the FeedAttributes of the feed with the
   #    placeholder fields of the LOCATION placeholder type.
-  my $feed_response = $api_client->FeedService()->mutate({
+  my $feeds_response = $api_client->FeedService()->mutate({
       customerId => $customer_id,
       operations => [$feed_operation]});
 
-  my $feed_resource_name = $feed_response->{results}[0]{resourceName};
+  my $feed_resource_name = $feeds_response->{results}[0]{resourceName};
 
   printf "GMB feed created with resource name: '%s'.\n", $feed_resource_name;
 
@@ -148,7 +148,7 @@ sub add_google_my_business_location_extensions {
   while ($number_of_attempts < MAX_CUSTOMER_FEED_ADD_ATTEMPTS) {
     $number_of_attempts++;
 
-    my $customer_feed_response = eval {
+    my $customer_feeds_response = eval {
       $customer_feed_service->mutate({
         customerId => $customer_id,
         operations => [$customer_feed_operation],
@@ -172,7 +172,7 @@ sub add_google_my_business_location_extensions {
       sleep($sleep_seconds);
     } else {
       $customer_feed_resource_name =
-        $customer_feed_response->{results}[0]{resourceName};
+        $customer_feeds_response->{results}[0]{resourceName};
 
       printf "Customer feed created with resource name: '%s'.\n",
         $customer_feed_resource_name;
