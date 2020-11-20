@@ -102,6 +102,8 @@ sub make_server_streaming_call {
   };
   if ($@) {
     my $response_message = $api_client->get_last_response()->message;
+    # The LWP::UserAgent module returns a "read timeout" message in the HTTP
+    # response for request timeout.
     if ($response_message =~ m/${\HTTP_TIMEOUT_MESSAGE}/) {
       print "The server streaming call did not complete before the timeout.\n";
     } else {
@@ -151,6 +153,8 @@ sub make_unary_call {
   };
   if ($@) {
     my $response_message = $api_client->get_last_response()->message;
+    # The LWP::UserAgent module returns a "read timeout" message in the HTTP
+    # response for request timeout.
     if ($response_message =~ m/${\HTTP_TIMEOUT_MESSAGE}/) {
       print "The unary call did not complete before the timeout.\n";
     } else {
