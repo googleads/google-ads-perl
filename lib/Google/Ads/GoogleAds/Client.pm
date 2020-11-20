@@ -221,7 +221,7 @@ sub get_oauth_2_applications_handler {
 }
 
 # Loads the environment variables to configure this API client.
-sub configure_with_environment_variables {
+sub configure_from_environment_variables {
   my ($self) = @_;
   my $ident = ident $self;
 
@@ -512,7 +512,7 @@ attached to the client, for programmatically setting/overriding its properties.
 
 Refer to L<Google::Ads::GoogleAds::OAuth2ApplicationsHandler> for more details.
 
-=head2 configure_with_environment_variables
+=head2 configure_from_environment_variables
 
 Loads the environment variables to configure this API client.
 
