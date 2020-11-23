@@ -68,20 +68,16 @@ sub START {
   # If there's a valid properties file, parse it and read the config values.
   if ($properties_file_of{$ident} && -e $properties_file_of{$ident}) {
     %properties = __parse_properties_file($properties_file_of{$ident});
+    $developer_token_of{$ident}    ||= $properties{developerToken};
+    $login_customer_id_of{$ident}  ||= $properties{loginCustomerId};
+    $linked_customer_id_of{$ident} ||= $properties{linkedCustomerId};
+    $service_address_of{$ident}    ||= $properties{serviceAddress};
+    $user_agent_of{$ident}         ||= $properties{userAgent};
+    $proxy_of{$ident}              ||= $properties{proxy};
   }
-  # Override the config values with environment variables if set.
-  %properties = (%properties, __load_environment_variables());
 
-  # Fill in the attributes that weren't set in the new() method.
-  $developer_token_of{$ident}    ||= $properties{developerToken};
-  $login_customer_id_of{$ident}  ||= $properties{loginCustomerId};
-  $linked_customer_id_of{$ident} ||= $properties{linkedCustomerId};
-  $service_address_of{$ident}    ||= $properties{serviceAddress};
-  $user_agent_of{$ident}         ||= $properties{userAgent};
-  $proxy_of{$ident}              ||= $properties{proxy};
-
-  # Provide default values for below attributes if they weren't set in the new()
-  # method, the properties file nor the environment variables.
+  # Provide default values for below attributes if they weren't set by
+  # parameters to new() nor in the properties file.
   $service_address_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_SERVICE_ADDRESS;
   $service_address_of{$ident} .= "/"
@@ -212,42 +208,6 @@ sub __parse_properties_file {
   return %properties;
 }
 
-# Private method to load environment variables. The key names in the returned
-# hash are consistent with the ones in the properties file.
-sub __load_environment_variables {
-  my %env_vars;
-
-  $env_vars{$_->[0]} = $_->[1]
-    for grep { defined $_->[1] } [
-    "developerToken",
-    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_DEVELOPER_TOKEN}
-    ],
-    [
-    "loginCustomerId",
-    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_LOGIN_CUSTOMER_ID}
-    ],
-    [
-    "linkedCustomerId",
-    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_LINKED_CUSTOMER_ID}
-    ],
-    [
-    "serviceAddress", $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_ENDPOINT}
-    ],
-    ["clientId", $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CLIENT_ID}],
-    [
-    "clientSecret",
-    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CLIENT_SECRET}
-    ],
-    [
-    "refreshToken",
-    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_REFRESH_TOKEN}
-    ],
-    ["userAgent", $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_USER_AGENT}],
-    ["proxy",     $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_PROXY}];
-
-  return %env_vars;
-}
-
 sub get_oauth_2_handler {
   my ($self) = @_;
 
@@ -258,6 +218,41 @@ sub get_oauth_2_applications_handler {
   my ($self) = @_;
 
   return $self->get_auth_handlers()->{OAUTH_2_APPLICATIONS_HANDLER};
+}
+
+# Loads the environment variables to configure this API client.
+sub configure_from_environment_variables {
+  my ($self) = @_;
+  my $ident = ident $self;
+
+  $developer_token_of{$ident} =
+       $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_DEVELOPER_TOKEN}
+    || $developer_token_of{$ident};
+  $login_customer_id_of{$ident} =
+       $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_LOGIN_CUSTOMER_ID}
+    || $login_customer_id_of{$ident};
+  $linked_customer_id_of{$ident} =
+       $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_LINKED_CUSTOMER_ID}
+    || $linked_customer_id_of{$ident};
+  $service_address_of{$ident} =
+       $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_ENDPOINT}
+    || $service_address_of{$ident};
+  $user_agent_of{$ident} =
+       $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_USER_AGENT}
+    || $user_agent_of{$ident};
+  $proxy_of{$ident} =
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_PROXY} || $proxy_of{$ident};
+
+  my $auth2_handler = $self->get_oauth_2_handler();
+  my $client_id = $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CLIENT_ID};
+  my $client_secret =
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CLIENT_SECRET};
+  my $refresh_token =
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_REFRESH_TOKEN};
+
+  $auth2_handler->set_client_id($client_id)         if $client_id;
+  $auth2_handler->set_client_secret($client_secret) if $client_secret;
+  $auth2_handler->set_refresh_token($refresh_token) if $refresh_token;
 }
 
 1;
@@ -517,6 +512,10 @@ attached to the client, for programmatically setting/overriding its properties.
 
 Refer to L<Google::Ads::GoogleAds::OAuth2ApplicationsHandler> for more details.
 
+=head2 configure_from_environment_variables
+
+Loads the environment variables to configure this API client.
+
 =head2 __parse_properties_file (Private)
 
 =head3 Parameters
@@ -535,14 +534,7 @@ A hash corresponding to the keys and values in the properties file.
 
 Issues a die() with an error message if the properties file could not be read.
 
-=head2 __load_environment_variables (Private)
-
-=head3 Returns
-
-A hash corresponding to the loaded environment variables, where the key names are
-consistent with the ones in the properties file.
-
-=head2 _auth_handler (Protected)
+=head2 _get_auth_handler (Protected)
 
 Retrieves the active auth handler. All handlers are checked in the order.
 

@@ -125,6 +125,7 @@ $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_REFRESH_TOKEN} =
 $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_USER_AGENT} = $env_user_agent;
 
 $api_client = Google::Ads::GoogleAds::Client->new();
+$api_client->configure_from_environment_variables();
 
 is($api_client->get_developer_token(),
   "dev-token", "Environment variable of properties file.");
