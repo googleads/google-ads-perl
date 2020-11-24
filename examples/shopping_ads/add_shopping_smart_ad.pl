@@ -193,7 +193,7 @@ sub add_smart_shopping_campaign {
       # Set the budget.
       campaignBudget => $budget_resource_name
     });
-    # [END add_shopping_smart_ad_3]
+  # [END add_shopping_smart_ad_3]
 
   # Create a campaign operation.
   my $campaign_operation =

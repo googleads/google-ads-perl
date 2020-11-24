@@ -182,7 +182,7 @@ sub create_campaign_with_bidding_strategy {
       biddingStrategy => $bidding_strategy_resource_name,
       campaignBudget  => $campaign_budget_resource_name
     });
-    # [END use_portfolio_bidding_strategy_1]
+  # [END use_portfolio_bidding_strategy_1]
 
   # Create a campaign operation.
   my $campaign_operation =

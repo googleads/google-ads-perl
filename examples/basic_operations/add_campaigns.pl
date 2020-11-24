@@ -72,7 +72,7 @@ sub add_campaigns {
   my $campaign_budgets_response = $api_client->CampaignBudgetService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_budget_operation]});
-      # [END add_campaigns]
+  # [END add_campaigns]
 
   # [START add_campaigns_1]
   # Create a campaign.
@@ -102,7 +102,7 @@ sub add_campaigns {
       # Optional: Set the end date. The campaign runs for 30 days.
       endDate => strftime("%Y%m%d", localtime(time + 60 * 60 * 24 * 30)),
     });
-    # [END add_campaigns_1]
+  # [END add_campaigns_1]
 
   # Create a campaign operation.
   my $campaign_operation =

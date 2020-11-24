@@ -84,7 +84,6 @@ sub add_hotel_ad {
   # Create a budget to be used by the campaign that will be created below.
   my $budget_resource_name = add_campaign_budget($api_client, $customer_id);
 
-  # [START add_hotel_ad]
   # Create a hotel campaign.
   my $campaign_resource_name =
     add_hotel_campaign($api_client, $customer_id,
@@ -140,6 +139,7 @@ sub add_hotel_campaign {
     $hotel_center_account_id, $cpc_bid_ceiling_micro_amount)
     = @_;
 
+  # [START add_hotel_ad]
   # Create a hotel campaign.
   my $campaign = Google::Ads::GoogleAds::V6::Resources::Campaign->new({
       name => "Interplanetary Cruise Campaign #" . uniqid(),
@@ -168,7 +168,7 @@ sub add_hotel_campaign {
         Google::Ads::GoogleAds::V6::Resources::NetworkSettings->new({
           targetGoogleSearch => "true"
         })});
-        # [END add_hotel_ad]
+  # [END add_hotel_ad]
 
   # Create a campaign operation.
   my $campaign_operation =

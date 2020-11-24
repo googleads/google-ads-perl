@@ -82,7 +82,7 @@ sub add_remarketing_action {
     "remarketing_action.tag_snippets FROM remarketing_action " .
     "WHERE remarketing_action.resource_name = '%s'",
     $remarketing_action_resource_name;
-    # [END add_remarketing_action_1]
+  # [END add_remarketing_action_1]
 
   # Issue a search request by specifying page size.
   my $search_response = $api_client->GoogleAdsService()->search({
