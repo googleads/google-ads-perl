@@ -49,6 +49,7 @@ my $gclid                = "INSERT_GCLID_HERE";
 my $conversion_date_time = "INSERT_CONVERSION_DATE_TIME_HERE";
 my $conversion_value     = "INSERT_CONVERSION_VALUE_HERE";
 
+# [START upload_offline_conversion]
 sub upload_offline_conversion {
   my ($api_client, $customer_id, $conversion_action_id, $gclid,
     $conversion_date_time, $conversion_value)
@@ -96,6 +97,7 @@ sub upload_offline_conversion {
 
   return 1;
 }
+# [END upload_offline_conversion]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

@@ -102,6 +102,7 @@ sub add_complete_campaigns_using_batch_job {
 }
 
 # Creates a new batch job for the specified customer ID.
+# [START add_complete_campaigns_using_batch_job]
 sub create_batch_job {
   my ($batch_job_service, $customer_id) = @_;
 
@@ -121,10 +122,12 @@ sub create_batch_job {
 
   return $batch_job_resource_name;
 }
+# [END add_complete_campaigns_using_batch_job]
 
 # Adds all batch job operations to the batch job. As this is the first time for
 # this batch job, pass null as a sequence token. The response will contain the
 # next sequence token that you can use to upload more operations in the future.
+# [START add_complete_campaigns_using_batch_job_1]
 sub add_all_batch_job_operations {
   my ($batch_job_service, $customer_id, $batch_job_resource_name) = @_;
 
@@ -142,9 +145,11 @@ sub add_all_batch_job_operations {
     "Next sequence token for adding next operations is '%s'.\n",
     $add_batch_job_operations_response->{nextSequenceToken};
 }
+# [END add_complete_campaigns_using_batch_job_1]
 
 # Requests the API to run the batch job for executing all uploaded batch job
 # operations.
+# [START add_complete_campaigns_using_batch_job_2]
 sub run_batch_job {
   my ($batch_job_service, $batch_job_resource_name) = @_;
 
@@ -157,9 +162,11 @@ sub run_batch_job {
 
   return $batch_job_lro;
 }
+# [END add_complete_campaigns_using_batch_job_2]
 
 # Polls the server until the batch job execution finishes by setting the initial
 # poll delay time and the total time to wait before time-out.
+# [START add_complete_campaigns_using_batch_job_3]
 sub poll_batch_job {
   my ($operation_service, $batch_job_lro) = @_;
 
@@ -169,8 +176,10 @@ sub poll_batch_job {
     pollTimeoutSeconds   => POLL_TIMEOUT_SECONDS
   });
 }
+# [END add_complete_campaigns_using_batch_job_3]
 
 # Prints all the results from running the batch job.
+# [START add_complete_campaigns_using_batch_job_4]
 sub fetch_and_print_results {
   my ($batch_job_service, $batch_job_resource_name) = @_;
 
@@ -195,6 +204,7 @@ sub fetch_and_print_results {
       : "N/A";
   }
 }
+# [END add_complete_campaigns_using_batch_job_4]
 
 # Builds all operations for creating a complete campaign and return an array of
 # their corresponding mutate operations.

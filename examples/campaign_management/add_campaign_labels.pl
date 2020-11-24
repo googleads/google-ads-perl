@@ -47,6 +47,7 @@ my $campaign_id2 = "INSERT_CAMPAIGN_ID_2_HERE";
 my $campaign_ids = [];
 my $label_id     = "INSERT_LABEL_ID_HERE";
 
+# [START add_campaign_labels]
 sub add_campaign_labels {
   my ($api_client, $customer_id, $campaign_ids, $label_id) = @_;
 
@@ -93,6 +94,7 @@ sub add_campaign_labels {
 
   return 1;
 }
+# [END add_campaign_labels]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

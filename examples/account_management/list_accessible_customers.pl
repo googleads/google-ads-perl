@@ -32,6 +32,7 @@ use Google::Ads::GoogleAds::Client;
 use Getopt::Long qw(:config auto_help);
 use Cwd qw(abs_path);
 
+# [START list_accessible_customers]
 sub list_accessible_customers {
   my ($api_client) = @_;
 
@@ -49,6 +50,7 @@ sub list_accessible_customers {
 
   return 1;
 }
+# [END list_accessible_customers]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

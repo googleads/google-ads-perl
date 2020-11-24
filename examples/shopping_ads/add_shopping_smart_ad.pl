@@ -151,12 +151,14 @@ sub add_campaign_budget {
 
 # Creates a new shopping campaign for smart shopping ads in the specified
 # client account.
+# [START add_shopping_smart_ad]
 sub add_smart_shopping_campaign {
   my ($api_client, $customer_id, $budget_resource_name,
     $merchant_center_account_id)
     = @_;
 
   # Create a smart shopping campaign.
+  # [START add_shopping_smart_ad_3]
   my $campaign = Google::Ads::GoogleAds::V6::Resources::Campaign->new({
       name => "Interplanetary Cruise Campaign #" . uniqid(),
       # Configure settings related to shopping campaigns including advertising
@@ -191,6 +193,7 @@ sub add_smart_shopping_campaign {
       # Set the budget.
       campaignBudget => $budget_resource_name
     });
+    # [END add_shopping_smart_ad_3]
 
   # Create a campaign operation.
   my $campaign_operation =
@@ -207,8 +210,10 @@ sub add_smart_shopping_campaign {
 
   return $campaign_resource_name;
 }
+# [END add_shopping_smart_ad]
 
 # Creates a new ad group in the specified smart shopping campaign.
+# [START add_shopping_smart_ad_2]
 sub add_smart_shopping_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
@@ -238,8 +243,10 @@ sub add_smart_shopping_ad_group {
 
   return $ad_group_resource_name;
 }
+# [END add_shopping_smart_ad_2]
 
 # Creates a new ad group ad in the specified smart hopping ad group.
+# [START add_shopping_smart_ad_1]
 sub add_smart_shopping_ad_group_ad {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
@@ -270,6 +277,7 @@ sub add_smart_shopping_ad_group_ad {
 
   return $ad_group_ad_resource_name;
 }
+# [END add_shopping_smart_ad_1]
 
 # Creates a new Shopping listing group for the specified ad group. This is known
 # as a "product group" in the Google Ads user interface. The listing group will be

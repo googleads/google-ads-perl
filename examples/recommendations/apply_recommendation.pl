@@ -48,6 +48,7 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 # Its example can be retrieved from get_text_ad_recommendations.pl.
 my $recommendation_id = "INSERT_RECOMMENDATION_ID_HERE";
 
+# [START apply_recommendation]
 sub apply_recommendation {
   my ($api_client, $customer_id, $recommendation_id) = @_;
 
@@ -86,6 +87,7 @@ sub apply_recommendation {
 
   return 1;
 }
+# [END apply_recommendation]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

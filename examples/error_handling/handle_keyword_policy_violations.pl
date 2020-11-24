@@ -114,6 +114,7 @@ sub handle_keyword_policy_violations {
 
 # Collects all policy violation keys that can be exempted for sending a exemption
 # request later.
+# [START handle_keyword_policy_violations]
 sub fetch_exempt_policy_violation_keys {
   my $google_ads_exception = shift;
 
@@ -155,8 +156,10 @@ sub fetch_exempt_policy_violation_keys {
 
   return $exempt_policy_violation_keys;
 }
+# [END handle_keyword_policy_violations]
 
 # Sends exemption requests for creating a keyword.
+# [START handle_keyword_policy_violations_1]
 sub request_exemption {
   my ($api_client, $customer_id, $ad_group_criterion_operation,
     $exempt_policy_violation_keys)
@@ -177,6 +180,7 @@ sub request_exemption {
     "for policy violation exemption.\n",
     $ad_group_criteria_response->{results}[0]{resourceName};
 }
+# [END handle_keyword_policy_violations_1]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

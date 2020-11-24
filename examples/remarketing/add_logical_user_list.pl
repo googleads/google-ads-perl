@@ -51,6 +51,7 @@ my $user_list_id1 = "INSERT_USER_LIST_ID_1_HERE";
 my $user_list_id2 = "INSERT_USER_LIST_ID_2_HERE";
 my $user_list_ids = [];
 
+# [START add_logical_user_list]
 sub add_logical_user_list {
   my ($api_client, $customer_id, $user_list_ids) = @_;
 
@@ -100,6 +101,7 @@ sub add_logical_user_list {
 
   return 1;
 }
+# [END add_logical_user_list]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {
