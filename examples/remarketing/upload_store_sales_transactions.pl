@@ -68,6 +68,8 @@ my $offline_user_data_job_type = STORE_SALES_UPLOAD_FIRST_PARTY;
 # Optional: Specify an external ID below to identify the offline user data job.
 # If none is specified, this example will create an external ID.
 my $external_id = undef;
+# Optional: Specify the custom key if uploading data with custom key and values.
+my $custom_key = undef;
 # Optional: Specify an advertiser upload date time for third party data.
 my $advertiser_upload_date_time = undef;
 # Optional: Specify a bridge map version ID for third party data.
@@ -77,10 +79,11 @@ my $partner_id = undef;
 
 sub upload_store_sales_transactions {
   my (
-    $api_client,                 $customer_id,
-    $offline_user_data_job_type, $conversion_action_id,
-    $external_id,                $advertiser_upload_date_time,
-    $bridge_map_version_id,      $partner_id
+    $api_client,                  $customer_id,
+    $offline_user_data_job_type,  $conversion_action_id,
+    $external_id,                 $custom_key,
+    $advertiser_upload_date_time, $bridge_map_version_id,
+    $partner_id
   ) = @_;
 
   my $offline_user_data_job_service = $api_client->OfflineUserDataJobService();
@@ -89,8 +92,8 @@ sub upload_store_sales_transactions {
   my $offline_user_data_job_resource_name = create_offline_user_data_job(
     $offline_user_data_job_service, $customer_id,
     $offline_user_data_job_type,    $external_id,
-    $advertiser_upload_date_time,   $bridge_map_version_id,
-    $partner_id
+    $custom_key,                    $advertiser_upload_date_time,
+    $bridge_map_version_id,         $partner_id
   );
 
   # Add transactions to the job.
@@ -128,20 +131,19 @@ sub upload_store_sales_transactions {
   return 1;
 }
 
-# Create an offline user data job for uploading store sales transactions.
-# Return the resource name of the created job.
+# Creates an offline user data job for uploading store sales transactions.
+# Returns the resource name of the created job.
 sub create_offline_user_data_job {
   my (
     $offline_user_data_job_service, $customer_id,
     $offline_user_data_job_type,    $external_id,
-    $advertiser_upload_date_time,   $bridge_map_version_id,
-    $partner_id
+    $custom_key,                    $advertiser_upload_date_time,
+    $bridge_map_version_id,         $partner_id
   ) = @_;
 
   # TIP: If you are migrating from the AdWords API, please note that Google Ads
   # API uses the term "fraction" instead of "rate". For example, loyaltyRate in
   # the AdWords API is called loyaltyFraction in the Google Ads API.
-
   my $store_sales_metadata =
     # Please refer to https://support.google.com/google-ads/answer/7506124 for
     # additional details.
@@ -162,6 +164,8 @@ sub create_offline_user_data_job {
       transactionUploadFraction => 1.0
     });
 
+  $store_sales_metadata->{customKey} = $custom_key if $custom_key;
+
   if ($offline_user_data_job_type eq STORE_SALES_UPLOAD_THIRD_PARTY) {
     # Create additional metadata required for uploading third party data.
     my $store_sales_third_party_metadata =
@@ -175,9 +179,9 @@ sub create_offline_user_data_job {
         # Google due to formatting errors or missing data.
         # In most cases, you will set this to 1.0.
         validTransactionFraction => 1.0,
-        # Set the fraction of valid transactions (as defined above) you
-        # received from the advertiser that you (the third party) have matched
-        # to an external user ID on your side.
+        # Set the fraction of valid transactions (as defined above) you received
+        # from the advertiser that you (the third party) have matched to an
+        # external user ID on your side.
         # In most cases, you will set this to 1.0.
         partnerMatchFraction => 1.0,
 
@@ -225,7 +229,7 @@ sub create_offline_user_data_job {
   return $offline_user_data_job_resource_name;
 }
 
-# Add operations to the job for a set of sample transactions.
+# Adds operations to the job for a set of sample transactions.
 sub add_transactions_to_offline_user_data_job {
   my (
     $offline_user_data_job_service,       $customer_id,
@@ -254,8 +258,8 @@ sub add_transactions_to_offline_user_data_job {
   print "The operations are added to the offline user data job.\n";
 }
 
-# Create a list of offline user data job operations for sample transactions.
-# Return a list of operations.
+# Creates a list of offline user data job operations for sample transactions.
+# Returns a list of operations.
 sub build_offline_user_data_job_operations {
   my ($customer_id, $conversion_action_id) = @_;
 
@@ -288,6 +292,9 @@ sub build_offline_user_data_job_operations {
           # account's timezone as default. Examples: "2018-03-05 09:15:00"
           # or "2018-02-01 14:34:30+03:00".
           transactionDateTime => "2020-05-01 23:52:12",
+          # Optional: If uploading data with custom key and values, also specify
+          # the following value:
+          # customValue => "INSERT_CUSTOM_VALUE_HERE"
         })});
 
   # Create the second transaction for upload based on a physical address.
@@ -320,6 +327,9 @@ sub build_offline_user_data_job_operations {
           # time zone. The date/time must be in the format
           # "yyyy-MM-dd hh:mm:ss".
           transactionDateTime => "2020-05-14 19:07:02",
+          # Optional: If uploading data with custom key and values, also specify
+          # the following value:
+          # customValue => "INSERT_CUSTOM_VALUE_HERE"
         })});
 
   # Create the operations to add the two transactions.
@@ -337,7 +347,7 @@ sub build_offline_user_data_job_operations {
   return $operations;
 }
 
-# Return the result of normalizing and then hashing the string using the
+# Returns the result of normalizing and then hashing the string using the
 # provided digest. Private customer data must be hashed during upload, as
 # described at https://support.google.com/google-ads/answer/7506124
 sub normalize_and_hash {
@@ -364,6 +374,7 @@ GetOptions(
   "offline_user_data_job_type=s"  => \$offline_user_data_job_type,
   "conversion_action_id=i"        => \$conversion_action_id,
   "external_id=i"                 => \$external_id,
+  "custom_key=s"                  => \$custom_key,
   "advertiser_upload_date_time=s" => \$advertiser_upload_date_time,
   "bridge_map_version_id=i"       => \$bridge_map_version_id,
   "partner_id=i"                  => \$partner_id,
@@ -376,10 +387,11 @@ pod2usage(2)
 
 # Call the example.
 upload_store_sales_transactions(
-  $api_client,                 $customer_id =~ s/-//gr,
-  $offline_user_data_job_type, $conversion_action_id,
-  $external_id,                $advertiser_upload_date_time,
-  $bridge_map_version_id,      $partner_id,
+  $api_client,                  $customer_id =~ s/-//gr,
+  $offline_user_data_job_type,  $conversion_action_id,
+  $external_id,                 $custom_key,
+  $advertiser_upload_date_time, $bridge_map_version_id,
+  $partner_id,
 );
 
 =pod
@@ -406,6 +418,9 @@ upload_store_sales_transactions.pl [options]
                                     If you have an official store sales partnership with Google, use STORE_SALES_UPLOAD_THIRD_PARTY.
                                     Otherwise, use STORE_SALES_UPLOAD_FIRST_PARTY.
     -external_id                    [optional] (but recommended) external ID for the offline user data job.
+    -custom_key                     [optional] Only required after creating a custom key and custom values in the account. Custom key
+                                    and values are used to segment store sales conversions. This measurement can be used to provide
+                                    more advanced insights.
     -advertiser_upload_date_time    [optional] Date and time the advertiser uploaded data to the partner. Only required for third party uploads.
                                     The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. "2019-01-01 12:32:45-08:00".
     -bridge_map_version_id          [optional] Version of partner IDs to be used for uploads. Only required for third party uploads.
