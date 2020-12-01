@@ -109,6 +109,7 @@ sub add_smart_display_ad {
 }
 
 # Creates a campaign budget.
+# [START add_smart_display_ad]
 sub create_campaign_budget {
   my ($api_client, $customer_id) = @_;
 
@@ -139,8 +140,10 @@ sub create_campaign_budget {
 
   return $campaign_budget_resource_name;
 }
+# [END add_smart_display_ad]
 
 # Creates a Smart Display campaign.
+# [START add_smart_display_ad_1]
 sub create_smart_display_campaign {
   my ($api_client, $customer_id, $campaign_budget_resource_name) = @_;
 
@@ -183,8 +186,10 @@ sub create_smart_display_campaign {
 
   return $campaign_resource_name;
 }
+# [END add_smart_display_ad_1]
 
 # Creates an ad group.
+# [START add_smart_display_ad_2]
 sub create_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
@@ -214,9 +219,11 @@ sub create_ad_group {
 
   return $ad_group_resource_name;
 }
+# [END add_smart_display_ad_2]
 
 # Creates a responsive display ad, which is a recommended ad type for Smart
 # Display campaigns.
+# [START add_smart_display_ad_3]
 sub create_responsive_display_ad {
   my ($api_client, $customer_id, $ad_group_resource_name,
     $marketing_image_asset_id, $square_marketing_image_asset_id)
@@ -301,8 +308,10 @@ sub create_responsive_display_ad {
     $ad_group_ads_response->{results}[0]{resourceName};
   printf "Added ad group ad named '%s'.\n", $ad_group_ad_resource_name;
 }
+# [END add_smart_display_ad_3]
 
 # Creates an image asset to be used for creating ads.
+# [START add_smart_display_ad_4]
 sub create_image_asset {
   my ($api_client, $customer_id, $image_url, $image_name) = @_;
 
@@ -331,6 +340,7 @@ sub create_image_asset {
 
   return $asset_resource_name;
 }
+# [END add_smart_display_ad_4]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

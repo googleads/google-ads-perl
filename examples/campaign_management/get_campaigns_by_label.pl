@@ -45,6 +45,7 @@ use constant PAGE_SIZE => 1000;
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $label_id    = "INSERT_LABEL_ID_HERE";
 
+# [START get_campaigns_by_label]
 sub get_campaigns_by_label {
   my ($api_client, $customer_id, $label_id) = @_;
 
@@ -84,6 +85,7 @@ sub get_campaigns_by_label {
 
   return 1;
 }
+# [END get_campaigns_by_label]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

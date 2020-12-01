@@ -54,6 +54,7 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 sub add_campaigns {
   my ($api_client, $customer_id) = @_;
 
+  # [START add_campaigns]
   # Create a campaign budget, which can be shared by multiple campaigns.
   my $campaign_budget =
     Google::Ads::GoogleAds::V6::Resources::CampaignBudget->new({
@@ -71,7 +72,9 @@ sub add_campaigns {
   my $campaign_budgets_response = $api_client->CampaignBudgetService()->mutate({
       customerId => $customer_id,
       operations => [$campaign_budget_operation]});
+  # [END add_campaigns]
 
+  # [START add_campaigns_1]
   # Create a campaign.
   my $campaign = Google::Ads::GoogleAds::V6::Resources::Campaign->new({
       name                   => "Interplanetary Cruise #" . uniqid(),
@@ -99,6 +102,7 @@ sub add_campaigns {
       # Optional: Set the end date. The campaign runs for 30 days.
       endDate => strftime("%Y%m%d", localtime(time + 60 * 60 * 24 * 30)),
     });
+  # [END add_campaigns_1]
 
   # Create a campaign operation.
   my $campaign_operation =

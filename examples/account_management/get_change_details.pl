@@ -50,6 +50,7 @@ use constant PAGE_SIZE => 1000;
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 
+# [START get_change_details]
 sub get_change_details {
   my ($api_client, $customer_id) = @_;
 
@@ -150,6 +151,7 @@ sub __get_changed_resources_for_resource_type {
     print "Unknown change_resource_type $resource_type.\n";
   }
 }
+# [END get_change_details]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

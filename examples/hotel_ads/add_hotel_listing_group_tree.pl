@@ -124,6 +124,7 @@ sub add_root_node {
 }
 
 # Creates child nodes of level 1, partitioned by the hotel class info.
+# [START add_hotel_listing_group_tree]
 sub add_level_1_nodes {
   my ($customer_id, $ad_group_id, $root_resource_name, $operations,
     $percent_cpc_bid_micro_amount)
@@ -175,6 +176,7 @@ sub add_level_1_nodes {
 
   return $other_hotels_ad_group_criterion->{resourceName};
 }
+# [END add_hotel_listing_group_tree]
 
 # Creates child nodes of level 2, partitioned by the country region.
 sub add_level_2_nodes {

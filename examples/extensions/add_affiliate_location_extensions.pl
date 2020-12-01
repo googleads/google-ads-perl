@@ -260,6 +260,7 @@ sub create_affiliate_location_extension_feed {
 }
 
 # Waits for the affiliate location extension feed to be ready.
+# [START add_affiliate_location_extensions]
 sub wait_for_feed_to_be_ready {
   my ($api_client, $customer_id, $feed_resource_name) = @_;
 
@@ -294,6 +295,7 @@ sub wait_for_feed_to_be_ready {
     MAX_FEED_MAPPING_RETRIEVAL_ATTEMPTS
   );
 }
+# [END add_affiliate_location_extensions]
 
 # Gets the affiliate location extension feed mapping.
 sub get_affiliate_location_extension_feed_mapping {
@@ -321,6 +323,7 @@ sub get_affiliate_location_extension_feed_mapping {
 }
 
 # Create the campaign feed.
+# [START add_affiliate_location_extensions_1]
 sub create_campaign_feed {
   my ($api_client, $customer_id, $campaign_id, $feed_mapping,
     $feed_resource_name, $chain_id)
@@ -361,8 +364,10 @@ sub create_campaign_feed {
     "Campaign feed created with resource name: '%s'.\n",
     $response->{results}[0]{resourceName};
 }
+# [END add_affiliate_location_extensions_1]
 
 # Gets the feed attribute ID for the retail chain ID.
+# [START add_affiliate_location_extensions_2]
 sub get_attribute_id_for_chain_id {
   my ($feed_mapping) = @_;
 
@@ -374,6 +379,7 @@ sub get_attribute_id_for_chain_id {
 
   die "Affiliate location feed mapping isn't setup correctly.";
 }
+# [END add_affiliate_location_extensions_2]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

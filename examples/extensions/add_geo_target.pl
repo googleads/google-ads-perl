@@ -48,6 +48,7 @@ my $feed_item_id = "INSERT_FEED_ITEM_ID_HERE";
 # https://developers.google.com/adwords/api/docs/appendix/geotargeting
 my $geo_target_constant_id = 2840;    # US
 
+# [START add_geo_target]
 sub add_geo_target {
   my ($api_client, $customer_id, $feed_item_id, $geo_target_constant_id) = @_;
 
@@ -86,6 +87,7 @@ sub add_geo_target {
 
   return 1;
 }
+# [END add_geo_target]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

@@ -44,6 +44,7 @@ use constant PAGE_SIZE => 1000;
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 
+# [START get_text_ad_recommendations]
 sub get_text_ad_recommendations {
   my ($api_client, $customer_id) = @_;
 
@@ -107,6 +108,7 @@ sub get_text_ad_recommendations {
 
   return 1;
 }
+# [END get_text_ad_recommendations]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

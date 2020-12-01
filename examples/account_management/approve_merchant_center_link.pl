@@ -57,6 +57,7 @@ my $merchant_center_account_id = "INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE";
 sub approve_merchant_center_link {
   my ($api_client, $customer_id, $merchant_center_account_id) = @_;
 
+  # [START approve_merchant_center_link]
   # List all Merchant Center links of the specified customer ID.
   my $merchant_center_link_service = $api_client->MerchantCenterLinkService();
   my $response =
@@ -64,12 +65,16 @@ sub approve_merchant_center_link {
   printf
     "%d Merchant Center link(s) found with the following details:\n",
     scalar @{$response->{merchantCenterLinks}};
+  # [END approve_merchant_center_link]
 
+  # [START approve_merchant_center_link_2]
   foreach my $merchant_center_link (@{$response->{merchantCenterLinks}}) {
+    # [START approve_merchant_center_link_1]
     printf
       "Link '%s' has status '%s'.\n",
       $merchant_center_link->{resourceName},
       $merchant_center_link->{status};
+    # [END approve_merchant_center_link_1]
 
     # Approve a pending link request for a Google Ads account with the specified
     # customer ID from a Merchant Center account with the specified Merchant
@@ -87,6 +92,7 @@ sub approve_merchant_center_link {
       last;
     }
   }
+  # [END approve_merchant_center_link_2]
   return 1;
 }
 

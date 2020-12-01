@@ -47,6 +47,7 @@ use Cwd qw(abs_path);
 my $customer_id      = "INSERT_CUSTOMER_ID_HERE";
 my $billing_setup_id = "INSERT_BILLING_SETUP_ID_HERE";
 
+# [START add_account_budget_proposal]
 sub add_account_budget_proposal {
   my ($api_client, $customer_id, $billing_setup_id) = @_;
 
@@ -102,6 +103,7 @@ sub add_account_budget_proposal {
 
   return 1;
 }
+# [END add_account_budget_proposal]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {
