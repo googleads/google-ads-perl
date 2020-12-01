@@ -119,6 +119,9 @@ API](https://developers.google.com/google-ads/api/docs/start).
     code. To see a usage statement for an example, pass `-help` as a
     command-line argument.
 
+    **Note:** From the source code, you can ignore comments with `[START...]` and
+    `[END...]` in them-they are specifically used by Google.
+
 ## Basic usage
 
 To issue requests via the Google Ads API, you first need to create an
