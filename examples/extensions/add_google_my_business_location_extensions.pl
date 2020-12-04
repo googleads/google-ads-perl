@@ -67,6 +67,7 @@ sub add_google_my_business_location_extensions {
     $gmb_access_token)
     = @_;
 
+  # [START add_google_my_business_location_extensions]
   # Create a feed that will sync to the Google My Business account specified by
   # $gmb_email_address. Do not add FeedAttributes to this object as Google Ads
   # will add them automatically because this will be a system generated feed.
@@ -95,12 +96,14 @@ sub add_google_my_business_location_extensions {
       # origin to GOOGLE.
       origin => GOOGLE
     });
+  # [END add_google_my_business_location_extensions]
 
   # Create a feed operation.
   my $feed_operation =
     Google::Ads::GoogleAds::V6::Services::FeedService::FeedOperation->new(
     {create => $gmb_feed});
 
+  # [START add_google_my_business_location_extensions_1]
   # Add the feed. Since it is a system generated feed, Google Ads will automatically:
   # 1. Set up the FeedAttributes on the feed.
   # 2. Set up a FeedMapping that associates the FeedAttributes of the feed with the
@@ -112,6 +115,7 @@ sub add_google_my_business_location_extensions {
   my $feed_resource_name = $feeds_response->{results}[0]{resourceName};
 
   printf "GMB feed created with resource name: '%s'.\n", $feed_resource_name;
+  # [END add_google_my_business_location_extensions_1]
 
   # Add a CustomerFeed that associates the feed with this customer for the LOCATION
   # placeholder type.
@@ -137,6 +141,7 @@ sub add_google_my_business_location_extensions {
     Google::Ads::GoogleAds::V6::Services::CustomerFeedService::CustomerFeedOperation
     ->new({create => $customer_feed});
 
+  # [START add_google_my_business_location_extensions_3]
   # After the completion of the Feed ADD operation above the added feed will not be available
   # for usage in a CustomerFeed until the sync between the Google Ads and GMB accounts
   # completes. The loop below will retry adding the CustomerFeed up to ten times with an
@@ -180,6 +185,7 @@ sub add_google_my_business_location_extensions {
       last;
     }
   }
+  # [END add_google_my_business_location_extensions_3]
 
   printf "Could not create the CustomerFeed after %d attempts. " .
     "Please retry the CustomerFeed ADD operation later.",

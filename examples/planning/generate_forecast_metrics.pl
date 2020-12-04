@@ -42,6 +42,7 @@ use Cwd qw(abs_path);
 my $customer_id     = "INSERT_CUSTOMER_ID_HERE";
 my $keyword_plan_id = "INSERT_KEYWORD_PLAN_ID_HERE";
 
+# [START generate_forecast_metrics]
 sub generate_forecast_metrics {
   my ($api_client, $customer_id, $keyword_plan_id) = @_;
 
@@ -69,6 +70,7 @@ sub generate_forecast_metrics {
 
   return 1;
 }
+# [END generate_forecast_metrics]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

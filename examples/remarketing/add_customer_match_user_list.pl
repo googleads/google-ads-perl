@@ -119,6 +119,7 @@ sub create_customer_match_user_list {
 
 # Creates and executes an asynchronous job to add users to the Customer Match
 # user list.
+# [START add_customer_match_user_list]
 sub add_users_to_customer_match_user_list {
   my ($api_client, $customer_id, $user_list_resource_name) = @_;
 
@@ -191,6 +192,7 @@ sub add_users_to_customer_match_user_list {
       POLL_TIMEOUT_SECONDS;
   }
 }
+# [END add_customer_match_user_list]
 
 # Builds and returns offline user data job operations to add one user identified
 # by an email address and one user identified based on a physical address.

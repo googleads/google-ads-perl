@@ -222,6 +222,7 @@ sub remove_feeds {
 }
 
 # Creates the affiliate location extension feed.
+# [START add_affiliate_location_extensions_3]
 sub create_affiliate_location_extension_feed {
   my ($api_client, $customer_id, $chain_id) = @_;
 
@@ -258,6 +259,7 @@ sub create_affiliate_location_extension_feed {
 
   return $feed_resource_name;
 }
+# [END add_affiliate_location_extensions_3]
 
 # Waits for the affiliate location extension feed to be ready.
 # [START add_affiliate_location_extensions]
@@ -298,6 +300,7 @@ sub wait_for_feed_to_be_ready {
 # [END add_affiliate_location_extensions]
 
 # Gets the affiliate location extension feed mapping.
+# [START add_affiliate_location_extensions_4]
 sub get_affiliate_location_extension_feed_mapping {
   my ($api_client, $customer_id, $feed_resource_name) = @_;
 
@@ -321,6 +324,7 @@ sub get_affiliate_location_extension_feed_mapping {
     ? $response->{results}[0]{feedMapping}
     : undef;
 }
+# [END add_affiliate_location_extensions_4]
 
 # Create the campaign feed.
 # [START add_affiliate_location_extensions_1]
