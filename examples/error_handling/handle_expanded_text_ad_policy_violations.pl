@@ -107,6 +107,7 @@ sub handle_expanded_text_ad_policy_violations {
 
 # Collects all ignorable policy topics that will be sent for exemption request
 # later.
+# [START handle_expanded_text_ad_policy_violations]
 sub fetch_ignorable_policy_topics {
   my $google_ads_exception = shift;
 
@@ -147,8 +148,10 @@ sub fetch_ignorable_policy_topics {
 
   return $ignorable_policy_topics;
 }
+# [END handle_expanded_text_ad_policy_violations]
 
 # Sends exemption requests for creating an expanded text ad.
+# [START handle_expanded_text_ad_policy_violations_1]
 sub request_exemption {
   my ($api_client, $customer_id, $ad_group_ad_operation,
     $ignorable_policy_topics)
@@ -170,6 +173,7 @@ sub request_exemption {
     "requesting for policy violation exemption.\n",
     $ad_group_ads_response->{results}[0]{resourceName};
 }
+# [END handle_expanded_text_ad_policy_violations_1]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

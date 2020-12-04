@@ -44,6 +44,7 @@ use Cwd qw(abs_path);
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $ad_group_id = "INSERT_AD_GROUP_ID_HERE";
 
+# [START get_ad_group_criterion_cpc_bid_simulations]
 sub get_ad_group_criterion_cpc_bid_simulations {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
@@ -102,6 +103,7 @@ sub get_ad_group_criterion_cpc_bid_simulations {
 
   return 1;
 }
+# [END get_ad_group_criterion_cpc_bid_simulations]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

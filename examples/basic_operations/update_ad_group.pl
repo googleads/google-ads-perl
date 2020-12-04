@@ -47,6 +47,7 @@ my $customer_id          = "INSERT_CUSTOMER_ID_HERE";
 my $ad_group_id          = "INSERT_AD_GROUP_ID_HERE";
 my $cpc_bid_micro_amount = "INSERT_CPC_BID_MICRO_AMOUNT_HERE";
 
+# [START update_ad_group]
 sub update_ad_group {
   my ($api_client, $customer_id, $ad_group_id, $cpc_bid_micro_amount) = @_;
 
@@ -78,6 +79,7 @@ sub update_ad_group {
 
   return 1;
 }
+# [END update_ad_group]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

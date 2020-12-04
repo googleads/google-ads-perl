@@ -55,6 +55,7 @@ my $customer_id         = "INSERT_CUSTOMER_ID_HERE";
 # for each customer, then you may either update the client configuration or
 # instantiate two clients, one for each set of credentials. Always make sure
 # to update the configuration before fetching any services you need to use.
+# [START link_manager_to_client]
 sub link_manager_to_client {
   my ($api_client, $manager_customer_id, $api_client_customer_id) = @_;
 
@@ -142,6 +143,7 @@ sub link_manager_to_client {
 
   return 1;
 }
+# [END link_manager_to_client]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

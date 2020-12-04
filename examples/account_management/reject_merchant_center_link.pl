@@ -49,6 +49,7 @@ use Cwd qw(abs_path);
 my $customer_id                = "INSERT_CUSTOMER_ID_HERE";
 my $merchant_center_account_id = "INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE";
 
+# [START reject_merchant_center_link]
 sub reject_merchant_center_link {
   my ($api_client, $customer_id, $merchant_center_account_id) = @_;
 
@@ -83,6 +84,7 @@ sub reject_merchant_center_link {
   }
   return 1;
 }
+# [END reject_merchant_center_link]
 
 # Removes a Merchant Center link from a Google Ads client customer account.
 sub remove_merchant_center_link {

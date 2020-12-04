@@ -40,6 +40,7 @@ my $country_code = "FR";
 # The location names to get suggested geo target constants.
 my $location_names = ["Paris", "Quebec", "Spain", "Deutschland"];
 
+# [START get_geo_target_constants_by_names]
 sub get_geo_target_constants_by_names {
   my ($api_client, $location_names, $locale, $country_code) = @_;
 
@@ -71,6 +72,7 @@ sub get_geo_target_constants_by_names {
 
   return 1;
 }
+# [END get_geo_target_constants_by_names]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

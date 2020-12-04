@@ -57,6 +57,7 @@ use POSIX qw(strftime mktime);
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 
+# [START add_sitelinks_1]
 sub add_sitelinks {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -95,8 +96,10 @@ sub add_sitelinks {
 
   return 1;
 }
+# [END add_sitelinks_1]
 
 # Creates a list of extension feed items.
+# [START add_sitelinks]
 sub create_extension_feed_items {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
@@ -227,6 +230,7 @@ sub create_extension_feed_items {
 
   return $resource_names;
 }
+# [END add_sitelinks]
 
 # Creates a new sitelink feed item with the specified attributes.
 sub create_sitelink_feed_item {

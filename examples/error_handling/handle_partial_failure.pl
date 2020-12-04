@@ -59,6 +59,7 @@ sub handle_partial_failure {
 }
 
 # Creates ad groups by enabling partial failure mode.
+# [START handle_partial_failure]
 sub create_ad_groups {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -108,8 +109,10 @@ sub create_ad_groups {
 
   return $ad_groups_response;
 }
+# [END handle_partial_failure]
 
 # Checks if partial failure error exists in the given mutate ad group response.
+# [START handle_partial_failure_1]
 sub check_if_partial_failure_error_exists {
   my $ad_groups_response = shift;
 
@@ -120,10 +123,12 @@ sub check_if_partial_failure_error_exists {
       "All operations completed successfully. No partial failures to show.\n";
   }
 }
+# [END handle_partial_failure_1]
 
 # Prints results of the given mutate ad group response. For those that are partial
 # failure, prints all their errors with corresponding operation indices. For those
 # that succeeded, prints the resource names of created ad groups.
+# [START handle_partial_failure_2]
 sub print_results {
   my $ad_groups_response = shift;
 
@@ -145,6 +150,7 @@ sub print_results {
     }
   }
 }
+# [END handle_partial_failure_2]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

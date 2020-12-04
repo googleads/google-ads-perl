@@ -46,6 +46,7 @@ use Data::Uniqid qw(uniqid);
 # Running the example with -h will print the command line usage.
 my $manager_customer_id = "INSERT_MANAGER_CUSTOMER_ID_HERE";
 
+# [START create_customer]
 sub create_customer {
   my ($api_client, $manager_customer_id) = @_;
 
@@ -79,6 +80,7 @@ sub create_customer {
 
   return 1;
 }
+# [END create_customer]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

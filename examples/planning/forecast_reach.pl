@@ -98,6 +98,7 @@ sub show_plannable_locations {
 }
 
 # Lists plannable products for a given location.
+# [START forecast_reach_1]
 sub show_plannable_products {
   my ($reach_plan_service, $location_id) = @_;
 
@@ -123,8 +124,10 @@ sub show_plannable_products {
     }
   }
 }
+# [END forecast_reach_1]
 
 # Pulls a forecast for a budget split 15% and 85% between two products.
+# [START forecast_reach_2]
 sub forecast_manual_mix {
   my (
     $reach_plan_service, $customer_id, $location_id,
@@ -157,10 +160,12 @@ sub forecast_manual_mix {
 
   pull_reach_curve($reach_plan_service, $reach_request);
 }
+# [END forecast_reach_2]
 
 # Pulls a forecast for a product mix suggested based on preferences for whether
 # the ad would have a guaranteed price, play with sound, would be skippable, would
 # include top content, and a desired ad length.
+# [START forecast_reach]
 sub forecast_suggested_mix {
   my (
     $reach_plan_service, $customer_id, $location_id,
@@ -200,6 +205,7 @@ sub forecast_suggested_mix {
 
   pull_reach_curve($reach_plan_service, $reach_request);
 }
+# [END forecast_reach]
 
 # Create a base request to generate a reach forecast.
 sub build_reach_request {
@@ -258,6 +264,7 @@ sub build_reach_request {
 }
 
 # Pulls and prints the reach curve for the given request.
+# [START forecast_reach_3]
 sub pull_reach_curve {
   my ($reach_plan_service, $reach_request) = @_;
 
@@ -279,6 +286,7 @@ sub pull_reach_curve {
     print "]'\n";
   }
 }
+# [END forecast_reach_3]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

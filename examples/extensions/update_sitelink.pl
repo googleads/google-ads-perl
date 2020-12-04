@@ -47,6 +47,7 @@ my $customer_id   = "INSERT_CUSTOMER_ID_HERE";
 my $feed_item_id  = "INSERT_FEED_ITEM_ID_HERE";
 my $sitelink_text = "INSERT_SITELINK_TEXT_HERE";
 
+# [START update_sitelink]
 sub update_sitelink {
   my ($api_client, $customer_id, $feed_item_id, $sitelink_text) = @_;
 
@@ -84,6 +85,7 @@ sub update_sitelink {
 
   return 1;
 }
+# [END update_sitelink]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {
