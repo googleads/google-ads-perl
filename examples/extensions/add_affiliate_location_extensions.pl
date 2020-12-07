@@ -74,14 +74,13 @@ my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 # 1. Google Ads only allows one location extension feed per email address.
 # 2. A Google Ads account cannot have a location extension feed and an affiliate
 # location extension feed at the same time.
-my $should_delete_existing_feeds = 0;
+my $delete_existing_feeds = 0;
 
 sub add_affiliate_location_extensions {
   my ($api_client, $customer_id, $chain_id, $campaign_id,
-    $should_delete_existing_feeds)
-    = @_;
+    $delete_existing_feeds) = @_;
 
-  if ($should_delete_existing_feeds) {
+  if ($delete_existing_feeds) {
     delete_location_extension_feeds($api_client, $customer_id);
   }
 
@@ -398,10 +397,10 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"                  => \$customer_id,
-  "chain_id=i"                     => \$chain_id,
-  "campaign_id=i"                  => \$campaign_id,
-  "should_delete_existing_feeds=i" => \$should_delete_existing_feeds,
+  "customer_id=s"           => \$customer_id,
+  "chain_id=i"              => \$chain_id,
+  "campaign_id=i"           => \$campaign_id,
+  "delete_existing_feeds=i" => \$delete_existing_feeds,
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -411,7 +410,7 @@ pod2usage(2)
 
 # Call the example.
 add_affiliate_location_extensions($api_client, $customer_id =~ s/-//gr,
-  $chain_id, $campaign_id, $should_delete_existing_feeds);
+  $chain_id, $campaign_id, $delete_existing_feeds);
 
 =pod
 
@@ -434,7 +433,7 @@ add_affiliate_location_extensions.pl [options]
     -chain_id                           The retail chain ID.
     -campaign_id                        The campaign ID for which the affiliate
                                         location extensions are added.
-    -should_delete_existing_feeds       [optional] Non-zero if it should delete
+    -delete_existing_feeds              [optional] Non-zero if it should delete
                                         the existing feeds.
 
 =cut
