@@ -66,6 +66,7 @@ my $keyword_texts  = [];
 # Optional: Specify a URL string related to your business to generate ideas.
 my $page_url = undef;
 
+# [START generate_keyword_ideas]
 sub generate_keyword_ideas {
   my (
     $api_client,  $customer_id,   $location_ids,
@@ -143,6 +144,7 @@ sub generate_keyword_ideas {
 
   return 1;
 }
+# [END generate_keyword_ideas]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

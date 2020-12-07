@@ -52,6 +52,7 @@ my $feed_item_id1 = "INSERT_FEED_ITEM_ID1_HERE";
 my $feed_item_id2 = "INSERT_FEED_ITEM_ID2_HERE";
 my $feed_item_ids = [];
 
+# [START update_sitelink_campaign_extension_setting]
 sub update_sitelink_campaign_extension_setting {
   my ($api_client, $customer_id, $campaign_id, $feed_item_ids) = @_;
 
@@ -96,6 +97,7 @@ sub update_sitelink_campaign_extension_setting {
 
   return 1;
 }
+# [END update_sitelink_campaign_extension_setting]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

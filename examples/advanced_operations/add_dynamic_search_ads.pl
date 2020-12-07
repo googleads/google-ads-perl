@@ -116,6 +116,7 @@ sub create_campaign_budget {
 }
 
 # Creates a campaign.
+# [START add_dynamic_search_ads]
 sub create_campaign {
   my ($api_client, $customer_id, $campaign_budget_resource_name) = @_;
 
@@ -155,8 +156,10 @@ sub create_campaign {
 
   return $campaign_resource_name;
 }
+# [END add_dynamic_search_ads]
 
 # Creates an ad group.
+# [START add_dynamic_search_ads_1]
 sub create_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
@@ -187,8 +190,10 @@ sub create_ad_group {
 
   return $ad_group_resource_name;
 }
+# [END add_dynamic_search_ads_1]
 
 # Creates an expanded dynamic search ad.
+# [START add_dynamic_search_ads_2]
 sub create_expanded_dsa {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
@@ -220,6 +225,7 @@ sub create_expanded_dsa {
 
   return $ad_group_ad_resource_name;
 }
+# [END add_dynamic_search_ads_2]
 
 # Creates a webpage targeting criterion for the DSA.
 sub add_web_page_criterion {

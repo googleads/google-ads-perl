@@ -64,6 +64,7 @@ use Data::Uniqid qw(uniqid);
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 
+# [START add_keyword_plan]
 sub add_keyword_plan {
   my ($api_client, $customer_id) = @_;
 
@@ -276,6 +277,7 @@ sub create_keyword_plan_negative_campaign_keywords {
   printf "Created negative campaign keyword for keyword plan: '%s'.\n",
     $response->{results}[0]{resourceName};
 }
+# [END add_keyword_plan]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

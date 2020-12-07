@@ -47,6 +47,7 @@ use constant IMAGE_URL => "https://goo.gl/3b9Wfh";
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 
+# [START upload_image_asset]
 sub upload_image_asset {
   my ($api_client, $customer_id) = @_;
 
@@ -81,6 +82,7 @@ sub upload_image_asset {
 
   return 1;
 }
+# [END upload_image_asset]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

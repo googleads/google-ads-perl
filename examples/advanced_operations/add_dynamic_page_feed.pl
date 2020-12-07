@@ -254,6 +254,7 @@ sub create_feed_items {
 }
 
 # Updates a campaign to set the DSA feed.
+# [START add_dynamic_page_feed_1]
 sub update_campaign_dsa_setting {
   my ($api_client, $customer_id, $feed_details, $campaign_id) = @_;
 
@@ -289,9 +290,11 @@ sub update_campaign_dsa_setting {
   printf "Updated campaign with resource name: '%s'.\n",
     $campaigns_response->{results}[0]{resourceName};
 }
+# [END add_dynamic_page_feed_1]
 
 # Returns the DSA settings for a campaign. Dies if the campaign does not
 # exist or is not a DSA campaign.
+# [START add_dynamic_page_feed]
 sub get_dsa_setting {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -324,8 +327,10 @@ sub get_dsa_setting {
 
   return $dynamic_search_ads_setting;
 }
+# [END add_dynamic_page_feed]
 
 # Creates an ad group criterion targeting the DSA label.
+# [START add_dynamic_page_feed_2]
 sub add_dsa_target {
   my ($api_client, $customer_id, $ad_group_id, $dsa_page_url_label) = @_;
 
@@ -368,6 +373,7 @@ sub add_dsa_target {
   printf "Created ad group criterion with resource name: '%s'.\n",
     $ad_group_criteria_response->{results}[0]{resourceName};
 }
+# [END add_dynamic_page_feed_2]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

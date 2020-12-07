@@ -48,6 +48,7 @@ use Data::Uniqid qw(uniqid);
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $ad_group_id = "INSERT_AD_GROUP_ID_HERE";
 
+# [START add_expanded_text_ads]
 sub add_expanded_text_ads {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
@@ -87,6 +88,7 @@ sub add_expanded_text_ads {
 
   return 1;
 }
+# [END add_expanded_text_ads]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

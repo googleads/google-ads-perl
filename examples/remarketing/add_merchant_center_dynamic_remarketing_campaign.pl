@@ -72,6 +72,7 @@ my $merchant_center_account_id = "INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE";
 my $campaign_budget_id         = "INSERT_CAMPAIGN_BUDGET_ID_HERE";
 my $user_list_id               = "INSERT_USER_LIST_ID_HERE";
 
+# [START add_merchant_center_dynamic_remarketing_campaign]
 sub add_merchant_center_dynamic_remarketing_campaign {
   my ($api_client, $customer_id, $merchant_center_account_id,
     $campaign_budget_id, $user_list_id)
@@ -95,6 +96,7 @@ sub add_merchant_center_dynamic_remarketing_campaign {
 
   return 1;
 }
+# [END add_merchant_center_dynamic_remarketing_campaign]
 
 # Creates a campaign linked to a Merchant Center product feed.
 sub create_campaign {
