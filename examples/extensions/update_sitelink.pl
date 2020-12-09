@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Updates the sitelink extension feed item with the specified link text and URL.
+# Updates the sitelink extension feed item with the specified link text.
 
 use strict;
 use warnings;
@@ -121,7 +121,7 @@ update_sitelink
 
 =head1 DESCRIPTION
 
-Updates the sitelink extension feed item with the specified link text and URL.
+Updates the sitelink extension feed item with the specified link text.
 
 =head1 SYNOPSIS
 
