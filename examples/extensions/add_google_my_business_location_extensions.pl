@@ -117,6 +117,7 @@ sub add_google_my_business_location_extensions {
   printf "GMB feed created with resource name: '%s'.\n", $feed_resource_name;
   # [END add_google_my_business_location_extensions_1]
 
+  # [START add_google_my_business_location_extensions_2]
   # Add a CustomerFeed that associates the feed with this customer for the LOCATION
   # placeholder type.
   my $customer_feed = Google::Ads::GoogleAds::V6::Resources::CustomerFeed->new({
@@ -135,6 +136,7 @@ sub add_google_my_business_location_extensions {
           functionString => "IDENTITY(true)",
           operator       => IDENTITY
         })});
+  # [END add_google_my_business_location_extensions_2]
 
   # Create a customer feed operation.
   my $customer_feed_operation =
