@@ -1,3 +1,8 @@
+6.0.1 - 2020-12-09
+- Extended the FieldMasks utility to retrieve a field value given the fieldmask.
+- Made the update_user_access code example more robust by using 'LIKE' query
+  instead of '='.
+
 6.0.0 - 2020-11-11
 - Added support for Google Ads API v6_0.
 - Removed support for Google Ads API v2_0.
