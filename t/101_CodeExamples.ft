@@ -274,6 +274,7 @@ ok(
   get_billing_setup($api_client, $customer_id),
   "Test of get_billing_setup example."
 );
+# NOTE: Skip the get_invoices.pl as it requires additional setup.
 # NOTE: Skip the remove_billing_setup.pl as it requires additional setup.
 
 # campaign_management
