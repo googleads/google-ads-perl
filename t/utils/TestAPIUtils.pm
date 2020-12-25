@@ -260,7 +260,7 @@ sub delete_label {
 sub __get_api_package {
   my ($api_client, $type, $name, $import) = @_;
 
-  my $api_version       = $api_client->get_version();
+  my $api_version = $api_client->get_version();
   my $full_package_name = sprintf "Google::Ads::GoogleAds::%s::", $api_version;
 
   $full_package_name .= "Services::" if $type =~ /\S+Service$/;
