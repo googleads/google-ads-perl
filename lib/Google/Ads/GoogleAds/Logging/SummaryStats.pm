@@ -34,10 +34,10 @@ my %fault_message_of : ATTR(:name<fault_message> :default<>);
 
 sub as_str : STRINGIFY {
   my $self          = shift;
-  my $host          = $self->get_host() || "";
+  my $host          = $self->get_host()        || "";
   my $customer_id   = $self->get_customer_id() || "";
-  my $method        = $self->get_method() || "";
-  my $request_id    = $self->get_request_id() || "";
+  my $method        = $self->get_method()      || "";
+  my $request_id    = $self->get_request_id()  || "";
   my $is_fault      = $self->get_is_fault() ? "True" : "False";
   my $fault_message = $self->get_fault_message() || "";
 

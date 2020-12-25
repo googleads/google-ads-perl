@@ -33,7 +33,7 @@ use JSON::XS;
 
 # Module initialization.
 # This is the log4perl configuration format.
-my $logs_folder = File::Spec->catfile(File::HomeDir->my_home, "logs");
+my $logs_folder      = File::Spec->catfile(File::HomeDir->my_home, "logs");
 my $summary_log_file = File::Spec->catfile($logs_folder, "summary.log");
 my $detail_log_file  = File::Spec->catfile($logs_folder, "detail.log");
 my $default_conf     = <<TEXT;
@@ -66,6 +66,9 @@ sub initialize_logging {
     $log4perl_conf =
       File::Spec->catfile(File::HomeDir->my_home, "log4perl.conf")
       unless defined $log4perl_conf;
+
+    # Create the log files in rw-rw-rw- mode.
+    umask 0000;
     if (-r $log4perl_conf) {
       Log::Log4perl->init($log4perl_conf);
     } else {
@@ -153,7 +156,7 @@ sub log_summary {
     or (!$http_response->is_success and $summary_logger->is_warn);
 
   my $summary_stats = Google::Ads::GoogleAds::Logging::SummaryStats->new({
-      host        => __parse_host($http_request),
+      host => __parse_host($http_request),
       customer_id => $http_request->uri =~ /customers\/\d+/
       ? $http_request->uri =~ /customers\/(\d+)/
       : "",
