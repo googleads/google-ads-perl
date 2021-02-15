@@ -1,3 +1,10 @@
+6.1.0 - 2021-02-15
+- Added support for Google Ads API v6_1.
+- Removed support for Google Ads API v3.
+- Added support for authenticating with service accounts.
+- Added code examples: get_pending_invitations, invite_user_with_access_role,
+  add_image_extension, etc.
+
 6.0.1 - 2020-12-09
 - Extended the FieldMasks utility to retrieve a field value given the fieldmask.
 - Made the update_user_access code example more robust by using 'LIKE' query
@@ -5,7 +12,7 @@
 
 6.0.0 - 2020-11-11
 - Added support for Google Ads API v6_0.
-- Removed support for Google Ads API v2_0.
+- Removed support for Google Ads API v2.
 - Added support of client configuration from environment variables.
 - Refactored GoogleAdsLogger to redact email addresses present in the requests
   and responses.

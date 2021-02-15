@@ -23,7 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    conversionTrackingId => $args->{conversionTrackingId},
+    conversionTrackingId             => $args->{conversionTrackingId},
     crossAccountConversionTrackingId =>
       $args->{crossAccountConversionTrackingId}};
 

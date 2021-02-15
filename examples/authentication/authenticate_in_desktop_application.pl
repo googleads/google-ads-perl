@@ -47,7 +47,7 @@ my $additional_scopes = "INSERT_ADDITIONAL_SCOPES_HERE";
 sub authenticate_in_desktop_application {
   my ($api_client, $client_id, $client_secret, $additional_scopes) = @_;
 
-  my $auth_handler = $api_client->get_oauth_2_handler();
+  my $auth_handler = $api_client->get_oauth2_handler();
 
   $auth_handler->set_client_id($client_id);
   $auth_handler->set_client_secret($client_secret);
@@ -76,9 +76,9 @@ sub authenticate_in_desktop_application {
   # refresh token and reuse it for future calls, by either changing your
   # googleads.properties file or setting in the authorization handler as follows:
   #
-  # $api_client->get_oauth_2_handler()->set_client_id($client_id);
-  # $api_client->get_oauth_2_handler()->set_client_secret($client_secret);
-  # $api_client->get_oauth_2_handler()->set_refresh_token($refresh_token);
+  # $api_client->get_oauth2_handler()->set_client_id($client_id);
+  # $api_client->get_oauth2_handler()->set_client_secret($client_secret);
+  # $api_client->get_oauth2_handler()->set_refresh_token($refresh_token);
   printf
     "\nReplace the following keys and values in your googleads.properties " .
     "configuration file:\n\n" .

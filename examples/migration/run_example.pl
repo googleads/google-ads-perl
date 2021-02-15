@@ -57,7 +57,7 @@ sub run_example {
     login_customer_id => $login_customer_id
   });
 
-  my $oauth_handler = $google_ads_client->get_oauth_2_handler();
+  my $oauth_handler = $google_ads_client->get_oauth2_handler();
   $oauth_handler->set_client_id($client_id);
   $oauth_handler->set_client_secret($client_secret);
   $oauth_handler->set_refresh_token($refresh_token);
@@ -70,7 +70,7 @@ sub run_example {
     developer_token => $developer_token,
     client_id       => $customer_id
   });
-  $oauth_handler = $adwords_client->get_oauth_2_handler();
+  $oauth_handler = $adwords_client->get_oauth2_handler();
   $oauth_handler->set_client_id($client_id);
   $oauth_handler->set_client_secret($client_secret);
   $oauth_handler->set_refresh_token($refresh_token);

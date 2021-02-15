@@ -28,9 +28,6 @@ use HTTP::Request::Common;
 use LWP::UserAgent;
 use URI::Escape;
 
-use constant OAUTH2_TOKEN_INFO_URL =>
-  "https://www.googleapis.com/oauth2/v2/tokeninfo";
-
 # Class::Std-style attributes. Need to be kept in the same line.
 # These need to go in the same line for older Perl interpreters to understand.
 my %api_client_of : ATTR(:name<api_client> :default<>);
@@ -85,7 +82,7 @@ sub prepare_request {
 }
 
 sub is_auth_enabled {
-  my ($self) = @_;
+  my $self = shift;
 
   return $self->get_access_token();
 }
@@ -95,7 +92,7 @@ sub get_access_token {
   my $self  = shift;
   my $ident = ident $self;
 
-  if (!$self->_is_access_token_valid()) {
+  if (!$self->__is_access_token_valid()) {
     if (!$self->_refresh_access_token()) {
       return undef;
     }
@@ -121,7 +118,7 @@ sub set_access_token {
 #       - checks the token info, if it is valid then sets its expiration
 #       - checks the token scopes
 #   - checks the token has not expired
-sub _is_access_token_valid {
+sub __is_access_token_valid {
   my $self  = shift;
   my $ident = ident $self;
 
@@ -132,7 +129,8 @@ sub _is_access_token_valid {
 
   if (!$self->get_access_token_expires()) {
     my $url =
-      OAUTH2_TOKEN_INFO_URL . "?access_token=" . uri_escape($access_token);
+      Google::Ads::GoogleAds::Constants::OAUTH2_TOKEN_INFO_URL .
+      "?access_token=" . uri_escape($access_token);
     my $response = $self->get___lwp_agent()->request(GET $url);
     if (!$response->is_success()) {
       my $err_msg = $response->decoded_content();
@@ -230,14 +228,13 @@ A reference to the API client used to handle the API requests.
 
 =head2 client_id
 
-OAuth2 client id obtained from the Google APIs Console.
+OAuth2 client id obtained from the Google APIs console.
 
 =head2 access_token
 
 Stores an OAuth2 access token after the authorization flow is followed or for
-you to manually set it in case you had it previously stored.
-If this is manually set this handler will verify its validity before preparing
-a request.
+you to manually set it in case you had it previously stored. If this is manually
+set this handler will verify its validity before preparing a request.
 
 =head1 METHODS
 

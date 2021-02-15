@@ -18,10 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  FEED_ITEM_ID => "FEED_ITEM_ID",
-  DEVICE_NAME  => "DEVICE_NAME"
+  UNSPECIFIED      => "UNSPECIFIED",
+  UNKNOWN          => "UNKNOWN",
+  FEED_ITEM_ID     => "FEED_ITEM_ID",
+  DEVICE_NAME      => "DEVICE_NAME",
+  FEED_ITEM_SET_ID => "FEED_ITEM_SET_ID"
 ];
 
 1;

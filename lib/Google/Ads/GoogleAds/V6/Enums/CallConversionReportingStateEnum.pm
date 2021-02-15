@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  DISABLED    => "DISABLED",
+  UNSPECIFIED                              => "UNSPECIFIED",
+  UNKNOWN                                  => "UNKNOWN",
+  DISABLED                                 => "DISABLED",
   USE_ACCOUNT_LEVEL_CALL_CONVERSION_ACTION =>
     "USE_ACCOUNT_LEVEL_CALL_CONVERSION_ACTION",
   USE_RESOURCE_LEVEL_CALL_CONVERSION_ACTION =>

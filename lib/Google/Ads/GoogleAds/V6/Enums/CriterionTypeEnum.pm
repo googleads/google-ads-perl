@@ -50,7 +50,8 @@ use Const::Exporter enums => [
   CUSTOM_AFFINITY          => "CUSTOM_AFFINITY",
   CUSTOM_INTENT            => "CUSTOM_INTENT",
   LOCATION_GROUP           => "LOCATION_GROUP",
-  CUSTOM_AUDIENCE          => "CUSTOM_AUDIENCE"
+  CUSTOM_AUDIENCE          => "CUSTOM_AUDIENCE",
+  COMBINED_AUDIENCE        => "COMBINED_AUDIENCE"
 ];
 
 1;

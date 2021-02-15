@@ -38,7 +38,7 @@ sub new {
     pdfUrl                          => $args->{pdfUrl},
     regulatoryCostsSubtotalAmountMicros =>
       $args->{regulatoryCostsSubtotalAmountMicros},
-    regulatoryCostsTaxAmountMicros => $args->{regulatoryCostsTaxAmountMicros},
+    regulatoryCostsTaxAmountMicros   => $args->{regulatoryCostsTaxAmountMicros},
     regulatoryCostsTotalAmountMicros =>
       $args->{regulatoryCostsTotalAmountMicros},
     replacedInvoices     => $args->{replacedInvoices},

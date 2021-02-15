@@ -49,18 +49,19 @@ is($handler->get_prompt(),      "consent", "Default value of prompt.");
 is($handler->get_redirect_uri(),
   "urn:ietf:wg:oauth:2.0:oob", "Default value of redirect_uri.");
 is($handler->get_additional_scopes(),
-  undef, "Default value of additional_scope.");
+  undef, "Default value of additional_scopes.");
 is_deeply(
   $handler->_scope(),
   qw(https://www.googleapis.com/auth/adwords),
   "Default value of scope."
 );
 is(
-  $handler->_formatted_scopes(),
+  $handler->__formatted_scopes(),
   "https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords",
-  "Default value of escaped scope."
+  "Default value of escaped scopes."
 );
 
+# Tests auth handler initialization.
 $handler->initialize(
   $api_client_mock,
   {
@@ -85,7 +86,6 @@ $lwp_agent_mock->mock(
     return $response;
   });
 
-# Tests auth handler initialization.
 is($handler->get_client_id(),     "client-id",     "Initialize client_id.");
 is($handler->get_client_secret(), "client-secret", "Initialize client_secret.");
 is($handler->get_access_type(),   "access-type",   "Initialize access_type.");
@@ -103,7 +103,7 @@ my @expected_scope = qw(https://www.googleapis.com/auth/analytics
   https://www.googleapis.com/auth/adwords);
 ok(eq_array(\@current_scope, \@expected_scope), "Initialize auth scopes.");
 is(
-  $handler->_formatted_scopes(),
+  $handler->__formatted_scopes(),
   "https%3A%2F%2Fwww.googleapis.com%2F" .
     "auth%2Fanalytics+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords",
   "Initialize escaped auth scopes."
@@ -115,10 +115,10 @@ ok($handler->get_access_token_expires(),
 # Tests OAuth2 Flow methods.
 is(
   $handler->get_authorization_url("state"),
-  "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id="
-    . "client-id&redirect_uri=uri&scope=https%3A%2F%2Fwww.googleapis.com%2F"
-    . "auth%2Fanalytics+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords"
-    . "&access_type=access-type&prompt=approval-prompt&state=state",
+  "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=" .
+    "client-id&redirect_uri=uri&scope=https%3A%2F%2Fwww.googleapis.com%2F" .
+    "auth%2Fanalytics+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fadwords" .
+    "&access_type=access-type&prompt=approval-prompt&state=state",
   "Test authorization url."
 );
 
@@ -135,7 +135,7 @@ $lwp_agent_mock->mock(
     is($request->method, "POST", "Test token request HTTP method.");
     is(
       $request->url,
-      "https://www.googleapis.com/oauth2/v4/token",
+      "https://accounts.google.com/o/oauth2/token",
       "Test token request URL."
     );
 
@@ -166,7 +166,7 @@ $lwp_agent_mock->mock(
     is($request->method, "POST", "Test token request HTTP method.");
     is(
       $request->url,
-      "https://www.googleapis.com/oauth2/v4/token",
+      "https://accounts.google.com/o/oauth2/token",
       "Test token request URL."
     );
 

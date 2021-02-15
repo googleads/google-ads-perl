@@ -47,7 +47,7 @@ Google::Ads::GoogleAds::Common::OAuthApplicationsHandlerInterface
 
 =head1 DESCRIPTION
 
-Abstract interface for OAuth flows that require user interaction.
+Abstract interface for OAuth application flows that require user interaction.
 
 Meant to be implemented by concrete OAuth handlers that require user intervention
 for authorizing requests against the API.

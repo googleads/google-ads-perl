@@ -171,10 +171,10 @@ my $api_client = Google::Ads::GoogleAds::Client->new({
   login_customer_id => "INSERT_LOGIN_CUSTOMER_ID_HERE"
 });
 
-my $oauth_2_applications_handler = $api_client->get_oauth_2_applications_handler();
-$oauth_2_applications_handler->set_client_id("INSERT_CLIENT_ID");
-$oauth_2_applications_handler->set_client_secret("INSERT_CLIENT_SECRET");
-$oauth_2_applications_handler->set_refresh_token("INSERT_REFRESH_TOKEN");
+my $oauth2_applications_handler = $api_client->get_oauth2_applications_handler();
+$oauth2_applications_handler->set_client_id("INSERT_CLIENT_ID");
+$oauth2_applications_handler->set_client_secret("INSERT_CLIENT_SECRET");
+$oauth2_applications_handler->set_refresh_token("INSERT_REFRESH_TOKEN");
 ```
 
 ### Get a service client

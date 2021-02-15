@@ -28,6 +28,8 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::V6::Resources::CampaignBidModifier;
 use Google::Ads::GoogleAds::V6::Common::InteractionTypeInfo;
 use Google::Ads::GoogleAds::V6::Enums::InteractionTypeEnum qw(CALLS);
+use Google::Ads::GoogleAds::V6::Enums::ResponseContentTypeEnum
+  qw(MUTABLE_RESOURCE);
 use
   Google::Ads::GoogleAds::V6::Services::CampaignBidModifierService::CampaignBidModifierOperation;
 use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
@@ -75,14 +77,30 @@ sub add_campaign_bid_modifier {
       create => $campaign_bid_modifier
     });
 
-  # Add the campaign bid modifier.
+  # [START mutable_resource]
+  # Add the campaign bid modifier. Here we pass the optional parameter
+  # responseContentType => MUTABLE_RESOURCE so that the response contains the
+  # mutated object and not just its resource name.
   my $campaign_bid_modifiers_response =
     $api_client->CampaignBidModifierService()->mutate({
-      customerId => $customer_id,
-      operations => [$campaign_bid_modifier_operation]});
+      customerId          => $customer_id,
+      operations          => [$campaign_bid_modifier_operation],
+      responseContentType => MUTABLE_RESOURCE
+    });
 
-  printf "Created campaign bid modifier '%s'.\n",
-    $campaign_bid_modifiers_response->{results}[0]{resourceName};
+  # The resource returned in the response can be accessed directly in the
+  # results list. Its fields can be read directly, and it can also be mutated
+  # further and used in subsequent requests, without needing to make additional
+  # Get or Search requests.
+  my $mutable_resource =
+    $campaign_bid_modifiers_response->{results}[0]{campaignBidModifier};
+
+  printf
+    "Created campaign bid modifier with resource name '%s', criterion ID %d, "
+    . "and bid modifier value %s, under the campaign with resource name '%s'.\n",
+    $mutable_resource->{resourceName}, $mutable_resource->{criterionId},
+    $mutable_resource->{bidModifier},  $mutable_resource->{campaign};
+  # [END mutable_resource]
 
   return 1;
 }

@@ -23,7 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    recommendedTargetRoas => $args->{recommendedTargetRoas},
+    recommendedTargetRoas              => $args->{recommendedTargetRoas},
     requiredCampaignBudgetAmountMicros =>
       $args->{requiredCampaignBudgetAmountMicros}};
 

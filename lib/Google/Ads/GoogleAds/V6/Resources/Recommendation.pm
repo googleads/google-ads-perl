@@ -40,10 +40,12 @@ sub new {
       $args->{maximizeClicksOptInRecommendation},
     maximizeConversionsOptInRecommendation =>
       $args->{maximizeConversionsOptInRecommendation},
-    moveUnusedBudgetRecommendation => $args->{moveUnusedBudgetRecommendation},
+    moveUnusedBudgetRecommendation   => $args->{moveUnusedBudgetRecommendation},
     optimizeAdRotationRecommendation =>
       $args->{optimizeAdRotationRecommendation},
-    resourceName => $args->{resourceName},
+    resourceName                     => $args->{resourceName},
+    responsiveSearchAdRecommendation =>
+      $args->{responsiveSearchAdRecommendation},
     searchPartnersOptInRecommendation =>
       $args->{searchPartnersOptInRecommendation},
     sitelinkExtensionRecommendation => $args->{sitelinkExtensionRecommendation},

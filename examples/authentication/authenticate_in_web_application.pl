@@ -61,7 +61,7 @@ our $state = sha1_hex(uniqid);
 sub authenticate_in_web_application {
   my ($api_client, $client_id, $client_secret, $additional_scopes) = @_;
 
-  my $auth_handler = $api_client->get_oauth_2_handler();
+  my $auth_handler = $api_client->get_oauth2_handler();
 
   my $callback_url = sprintf("http://localhost:%d%s", PORT, OAUTH2_CALLBACK);
 
@@ -146,9 +146,9 @@ sub authenticate_in_web_application {
       # refresh token and reuse it for future calls, by either changing your
       # googleads.properties file or setting in the authorization handler as follows:
       #
-      # $api_client->get_oauth_2_handler()->set_client_id($client_id);
-      # $api_client->get_oauth_2_handler()->set_client_secret($client_secret);
-      # $api_client->get_oauth_2_handler()->set_refresh_token($refresh_token);
+      # $api_client->get_oauth2_handler()->set_client_id($client_id);
+      # $api_client->get_oauth2_handler()->set_client_secret($client_secret);
+      # $api_client->get_oauth2_handler()->set_refresh_token($refresh_token);
       print "\r\n<b>Authorization code was successfully retrieved.</b>";
       print "<p><b>Replace the following keys and values in your " .
         "googleads.properties configuration file:</b><p>";

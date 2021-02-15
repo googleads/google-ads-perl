@@ -25,11 +25,16 @@ sub new {
   my $self = {
     ad                 => $args->{ad},
     adGroup            => $args->{adGroup},
+    adGroupAd          => $args->{adGroupAd},
     adGroupBidModifier => $args->{adGroupBidModifier},
     adGroupCriterion   => $args->{adGroupCriterion},
+    adGroupFeed        => $args->{adGroupFeed},
     campaign           => $args->{campaign},
     campaignBudget     => $args->{campaignBudget},
-    campaignCriterion  => $args->{campaignCriterion}};
+    campaignCriterion  => $args->{campaignCriterion},
+    campaignFeed       => $args->{campaignFeed},
+    feed               => $args->{feed},
+    feedItem           => $args->{feedItem}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

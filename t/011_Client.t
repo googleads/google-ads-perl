@@ -58,11 +58,11 @@ is(
   "Read of proxy."
 );
 
-is($api_client->get_oauth_2_handler()->get_client_id(),
+is($api_client->get_oauth2_handler()->get_client_id(),
   "client_1+user\@domain.com", "Read of client ID.");
-is($api_client->get_oauth_2_handler()->get_client_secret(),
+is($api_client->get_oauth2_handler()->get_client_secret(),
   "oauth2-client-secret", "Read of client secret.");
-is($api_client->get_oauth_2_handler()->get_refresh_token(),
+is($api_client->get_oauth2_handler()->get_refresh_token(),
   "refresh-token", "Read of refresh token.");
 
 # Tests basic get/set methods.
@@ -96,20 +96,20 @@ ok(Google::Ads::GoogleAds::Client->new && Google::Ads::GoogleAds::Client->new,
 
 # Tests set auth properties.
 my $test_oauth2_refresh_token = "my_oauth2_refresh_token";
-$api_client->get_oauth_2_handler()
+$api_client->get_oauth2_handler()
   ->set_refresh_token($test_oauth2_refresh_token);
-is($api_client->get_oauth_2_handler()->get_refresh_token(),
+is($api_client->get_oauth2_handler()->get_refresh_token(),
   $test_oauth2_refresh_token, "The get/set of refresh token.");
 
 my $test_oauth2_client_id = "my_oauth2_client_id";
-$api_client->get_oauth_2_handler()->set_client_id($test_oauth2_client_id);
-is($api_client->get_oauth_2_handler()->get_client_id(),
+$api_client->get_oauth2_handler()->set_client_id($test_oauth2_client_id);
+is($api_client->get_oauth2_handler()->get_client_id(),
   $test_oauth2_client_id, "The get/set of client_id.");
 
 my $test_oauth2_client_secret = "my_oauth2_client_secret";
-$api_client->get_oauth_2_handler()
+$api_client->get_oauth2_handler()
   ->set_client_secret($test_oauth2_client_secret);
-is($api_client->get_oauth_2_handler()->get_client_secret(),
+is($api_client->get_oauth2_handler()->get_client_secret(),
   $test_oauth2_client_secret, "The get/set of client_secret.");
 
 # Tests client initialization with environment variables.
@@ -131,7 +131,7 @@ is($api_client->get_developer_token(),
   "dev-token", "Environment variable of properties file.");
 is($api_client->get_login_customer_id(),
   $env_login_customer_id, "Environment variable of login customer ID.");
-is($api_client->get_oauth_2_handler()->get_refresh_token(),
+is($api_client->get_oauth2_handler()->get_refresh_token(),
   $env_refresh_token, "Environment variable of refresh token.");
 is($api_client->get_user_agent(),
   $env_user_agent, "Environment variable of user agent.");

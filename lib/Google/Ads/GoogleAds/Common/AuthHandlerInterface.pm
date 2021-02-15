@@ -17,14 +17,14 @@ package Google::Ads::GoogleAds::Common::AuthHandlerInterface;
 use strict;
 use warnings;
 
-# Initializes the handler with the API client object and a given set
-# of properties.
+# Initializes the handler with the API client object and a given set of
+# properties.
 sub initialize {
   my ($self, $api_client, $properties) = @_;
   die "Needs to be implemented by subclass";
 }
 
-# Method that prepares an HTTP:Request with the relevant authorization
+# Method that prepares an HTTP::Request with the relevant authorization
 # data (i.e. headers, protected resource url, etc).
 sub prepare_request {
   my ($self, $http_method, $request_url, $http_headers, $request_content) = @_;
@@ -34,7 +34,7 @@ sub prepare_request {
 # Returns true if the handler can prepare request with the appropriate
 # authorization info.
 sub is_auth_enabled {
-  my ($self) = @_;
+  my $self = shift;
   die "Needs to be implemented by subclass";
 }
 
@@ -102,7 +102,7 @@ I<request_content>: a string as the payload to be sent in the request.
 
 =head2 is_auth_enabled
 
-Method called to check if the authorization has already been setup, so the
+Method called to check if the authorization has already been set up, so the
 L</prepare_request> method can be called.
 
 =head3 Returns

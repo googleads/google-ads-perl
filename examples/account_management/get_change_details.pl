@@ -30,7 +30,7 @@ use Google::Ads::GoogleAds::Utils::FieldMasks;
 use Google::Ads::GoogleAds::V6::Enums::ResourceChangeOperationEnum
   qw(CREATE UPDATE);
 use Google::Ads::GoogleAds::V6::Enums::ChangeEventResourceTypeEnum
-  qw(AD AD_GROUP AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER CAMPAIGN CAMPAIGN_BUDGET CAMPAIGN_CRITERION);
+  qw(AD AD_GROUP AD_GROUP_AD AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER CAMPAIGN CAMPAIGN_BUDGET CAMPAIGN_CRITERION AD_GROUP_FEED CAMPAIGN_FEED FEED FEED_ITEM);
 use
   Google::Ads::GoogleAds::V6::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
@@ -132,6 +132,9 @@ sub __get_changed_resources_for_resource_type {
   } elsif ($resource_type eq AD_GROUP) {
     return $change_event->{oldResource}{adGroup},
       $change_event->{newResource}{adGroup};
+  } elsif ($resource_type eq AD_GROUP_AD) {
+    return $change_event->{oldResource}{adGroupAd},
+      $change_event->{newResource}{adGroupAd};
   } elsif ($resource_type eq AD_GROUP_CRITERION) {
     return $change_event->{oldResource}{adGroupCriterion},
       $change_event->{newResource}{adGroupCriterion};
@@ -147,6 +150,18 @@ sub __get_changed_resources_for_resource_type {
   } elsif ($resource_type eq CAMPAIGN_CRITERION) {
     return $change_event->{oldResource}{campaignCriterion},
       $change_event->{newResource}{campaignCriterion};
+  } elsif ($resource_type eq AD_GROUP_FEED) {
+    return $change_event->{oldResource}{adGroupFeed},
+      $change_event->{newResource}{adGroupFeed};
+  } elsif ($resource_type eq CAMPAIGN_FEED) {
+    return $change_event->{oldResource}{campaignFeed},
+      $change_event->{newResource}{campaignFeed};
+  } elsif ($resource_type eq FEED) {
+    return $change_event->{oldResource}{feed},
+      $change_event->{newResource}{feed};
+  } elsif ($resource_type eq FEED_ITEM) {
+    return $change_event->{oldResource}{feedItem},
+      $change_event->{newResource}{feedItem};
   } else {
     print "Unknown change_resource_type $resource_type.\n";
   }

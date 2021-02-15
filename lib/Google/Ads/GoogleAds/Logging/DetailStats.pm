@@ -33,6 +33,7 @@ use constant SCRUBBED_HEADERS => qw(developer-token Authorization);
 # Below fields will be scrubbed in the HTTP request and response content.
 #   CustomerUserAccess.emailAddress
 #   CustomerUserAccess.inviterUserEmailAddress
+#   CustomerUserAccessInvitation.emailAddress
 #   ChangeEvent.userEmail
 #   PlacesLocationFeedData.emailAddress
 #   CreateCustomerClientRequest.emailAddress
@@ -41,8 +42,9 @@ use constant SCRUBBED_CONTENT_FIELDS =>
 # Below fields will be scrubbed in the GAQL statement of SearchGoogleAdsRequest
 # and SearchGoogleAdsStreamRequest.
 use constant SCRUBBED_GAQL_FIELDS => qw(customer_user_access\.email_address
-  customer_user_access\.inviter_user_email_address change_event\.user_email
-  feed\.places_location_feed_data\.email_address
+  customer_user_access\.inviter_user_email_address
+  customer_user_access_invitation\.email_address
+  change_event\.user_email feed\.places_location_feed_data\.email_address
 );
 
 my %host_of : ATTR(:name<host> :default<>);

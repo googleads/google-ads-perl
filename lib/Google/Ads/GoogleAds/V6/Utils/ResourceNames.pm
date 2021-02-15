@@ -287,6 +287,15 @@ sub billing_setup {
     [$customer_id, $billing_setup_id]);
 }
 
+# Returns the call_view resource name for the specified components.
+sub call_view {
+  my ($customer_id, $call_detail_id) = @_;
+
+  my $path_template = 'customers/{customer_id}/callViews/{call_detail_id}';
+
+  return expand_path_template($path_template, [$customer_id, $call_detail_id]);
+}
+
 # Returns the campaign resource name for the specified components.
 sub campaign {
   my ($customer_id, $campaign_id) = @_;
@@ -615,6 +624,16 @@ sub customer_user_access {
   my $path_template = 'customers/{customer_id}/customerUserAccesses/{user_id}';
 
   return expand_path_template($path_template, [$customer_id, $user_id]);
+}
+
+# Returns the customer_user_access_invitation resource name for the specified components.
+sub customer_user_access_invitation {
+  my ($customer_id, $invitation_id) = @_;
+
+  my $path_template =
+    'customers/{customer_id}/customerUserAccessInvitations/{invitation_id}';
+
+  return expand_path_template($path_template, [$customer_id, $invitation_id]);
 }
 
 # Returns the detail_placement_view resource name for the specified components.

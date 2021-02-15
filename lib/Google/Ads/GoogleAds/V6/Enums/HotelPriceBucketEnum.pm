@@ -18,10 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  LOWEST_TIED => "LOWEST_TIED",
-  NOT_LOWEST  => "NOT_LOWEST"
+  UNSPECIFIED        => "UNSPECIFIED",
+  UNKNOWN            => "UNKNOWN",
+  LOWEST_UNIQUE      => "LOWEST_UNIQUE",
+  LOWEST_TIED        => "LOWEST_TIED",
+  NOT_LOWEST         => "NOT_LOWEST",
+  ONLY_PARTNER_SHOWN => "ONLY_PARTNER_SHOWN"
 ];
 
 1;

@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 89);
+use Test::More (tests => 90);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -82,7 +82,7 @@ my $dsa_ad_group_id = TestAPIUtils::create_ad_group(
   $customer_id,
   $dsa_campaign_id,
   {
-    type => "SEARCH_DYNAMIC_ADS",
+    type                => "SEARCH_DYNAMIC_ADS",
     trackingUrlTemplate =>
       "http://tracker.examples.com/traveltracker/{escapedlpurl}",
   });
@@ -117,6 +117,13 @@ ok(
   get_change_summary($api_client, $customer_id),
   "Test of get_change_summary example."
 );
+require qw(examples/account_management/get_pending_invitations.pl);
+ok(
+  get_change_summary($api_client, $customer_id),
+  "Test of get_pending_invitations example."
+);
+# NOTE: Skip the invite_user_with_access_role.pl since it requires a new email
+# address for each execution.
 # NOTE: Skip the link_manager_to_client.pl since $customer_id and
 # $manager_customer_id might have already been linked together.
 require qw(examples/account_management/list_accessible_customers.pl);
@@ -384,6 +391,7 @@ ok(
   ),
   "Test of add_hotel_callout example."
 );
+# NOTE: Skip the add_image_extension.pl as it requires additional setup.
 # NOTE: Skip the add_lead_form_extension.pl as it requires additional setup.
 require qw(examples/extensions/add_prices.pl);
 ok(add_prices($api_client, $customer_id, $search_campaign_id),
@@ -463,7 +471,7 @@ require qw(examples/planning/generate_keyword_ideas.pl);
 ok(
   generate_keyword_ideas(
     $api_client, $customer_id, [21167, 20321],
-    1000,        ["cars", "volvo"]
+    1000, ["cars", "volvo"]
   ),
   "Test of generate_keyword_ideas example."
 );

@@ -215,7 +215,7 @@ sub call {
 
 # Protected method to generate the appropriate REST request headers.
 sub _get_http_headers {
-  my ($self) = @_;
+  my $self = shift;
 
   my $api_client = $self->get_api_client();
 

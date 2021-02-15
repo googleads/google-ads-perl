@@ -18,8 +18,8 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
+  UNSPECIFIED                           => "UNSPECIFIED",
+  UNKNOWN                               => "UNKNOWN",
   OPTIMIZE_INSTALLS_TARGET_INSTALL_COST =>
     "OPTIMIZE_INSTALLS_TARGET_INSTALL_COST",
   OPTIMIZE_IN_APP_CONVERSIONS_TARGET_INSTALL_COST =>

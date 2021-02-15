@@ -30,6 +30,8 @@ sub new {
     changeResourceType      => $args->{changeResourceType},
     changedFields           => $args->{changedFields},
     clientType              => $args->{clientType},
+    feed                    => $args->{feed},
+    feedItem                => $args->{feedItem},
     newResource             => $args->{newResource},
     oldResource             => $args->{oldResource},
     resourceChangeOperation => $args->{resourceChangeOperation},

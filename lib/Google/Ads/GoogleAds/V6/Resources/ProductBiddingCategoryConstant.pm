@@ -23,11 +23,11 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    countryCode   => $args->{countryCode},
-    id            => $args->{id},
-    languageCode  => $args->{languageCode},
-    level         => $args->{level},
-    localizedName => $args->{localizedName},
+    countryCode                          => $args->{countryCode},
+    id                                   => $args->{id},
+    languageCode                         => $args->{languageCode},
+    level                                => $args->{level},
+    localizedName                        => $args->{localizedName},
     productBiddingCategoryConstantParent =>
       $args->{productBiddingCategoryConstantParent},
     resourceName => $args->{resourceName},

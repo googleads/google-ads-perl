@@ -53,7 +53,7 @@ sub new {
 
 # Extracts the GoogleAdsFailure object from the details hash.
 sub get_google_ads_failure {
-  my ($self) = @_;
+  my $self = shift;
 
   foreach my $detail (@{$self->get_details}) {
     my $type = $detail->{"\@type"};

@@ -23,7 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    displayName => $args->{displayName},
+    displayName                       => $args->{displayName},
     dynamicAffiliateLocationSetFilter =>
       $args->{dynamicAffiliateLocationSetFilter},
     dynamicLocationSetFilter => $args->{dynamicLocationSetFilter},

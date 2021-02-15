@@ -23,9 +23,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    headerImage               => $args->{headerImage},
-    marketingImage            => $args->{marketingImage},
-    marketingImageDescription => $args->{marketingImageDescription},
+    headerImage                       => $args->{headerImage},
+    marketingImage                    => $args->{marketingImage},
+    marketingImageDescription         => $args->{marketingImageDescription},
     marketingImageDisplayCallToAction =>
       $args->{marketingImageDisplayCallToAction},
     marketingImageHeadline => $args->{marketingImageHeadline},

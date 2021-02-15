@@ -21,15 +21,19 @@ package Google::Ads::GoogleAds::Client;
 use strict;
 use warnings;
 use version;
-our $VERSION = qv("6.0.1");
+our $VERSION = qv("6.1.0");
 
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
+use Google::Ads::GoogleAds::OAuth2ServiceAccountsHandler;
 use Google::Ads::GoogleAds::Logging::GoogleAdsLogger;
 
 use Class::Std::Fast;
 
-use constant OAUTH_2_APPLICATIONS_HANDLER => "OAUTH_2_APPLICATIONS_HANDLER";
-use constant AUTH_HANDLERS_ORDER          => (OAUTH_2_APPLICATIONS_HANDLER);
+use constant OAUTH2_APPLICATIONS_HANDLER     => "OAUTH2_APPLICATIONS_HANDLER";
+use constant OAUTH2_SERVICE_ACCOUNTS_HANDLER =>
+  "OAUTH2_SERVICE_ACCOUNTS_HANDLER";
+use constant AUTH_HANDLERS_ORDER =>
+  (OAUTH2_APPLICATIONS_HANDLER, OAUTH2_SERVICE_ACCOUNTS_HANDLER);
 
 # Class::Std-style attributes. Most values are read from googleads.properties file.
 # These need to go in the same line for older Perl interpreters to understand.
@@ -96,7 +100,11 @@ sub START {
 
   my $auth_handler = Google::Ads::GoogleAds::OAuth2ApplicationsHandler->new();
   $auth_handler->initialize($self, \%properties);
-  $auth_handlers{OAUTH_2_APPLICATIONS_HANDLER} = $auth_handler;
+  $auth_handlers{OAUTH2_APPLICATIONS_HANDLER} = $auth_handler;
+
+  $auth_handler = Google::Ads::GoogleAds::OAuth2ServiceAccountsHandler->new();
+  $auth_handler->initialize($self, \%properties);
+  $auth_handlers{OAUTH2_SERVICE_ACCOUNTS_HANDLER} = $auth_handler;
 
   $auth_handlers_of{$ident} = \%auth_handlers;
 
@@ -162,7 +170,7 @@ sub AUTOMETHOD {
 
 # Protected method to retrieve the proper enabled authorization handler.
 sub _get_auth_handler {
-  my ($self) = @_;
+  my $self = shift;
 
   # Check if we have cached the enabled auth_handler.
   if ($self->get___enabled_auth_handler()) {
@@ -208,21 +216,27 @@ sub __parse_properties_file {
   return %properties;
 }
 
-sub get_oauth_2_handler {
-  my ($self) = @_;
+sub get_oauth2_handler {
+  my $self = shift;
 
-  return $self->get_auth_handlers()->{OAUTH_2_APPLICATIONS_HANDLER};
+  return $self->get_auth_handlers()->{OAUTH2_APPLICATIONS_HANDLER};
 }
 
-sub get_oauth_2_applications_handler {
+sub get_oauth2_applications_handler {
+  my $self = shift;
+
+  return $self->get_auth_handlers()->{OAUTH2_APPLICATIONS_HANDLER};
+}
+
+sub get_oauth2_service_accounts_handler {
   my ($self) = @_;
 
-  return $self->get_auth_handlers()->{OAUTH_2_APPLICATIONS_HANDLER};
+  return $self->get_auth_handlers()->{OAUTH2_SERVICE_ACCOUNTS_HANDLER};
 }
 
 # Loads the environment variables to configure this API client.
 sub configure_from_environment_variables {
-  my ($self) = @_;
+  my $self  = shift;
   my $ident = ident $self;
 
   $developer_token_of{$ident} =
@@ -243,16 +257,27 @@ sub configure_from_environment_variables {
   $proxy_of{$ident} =
     $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_PROXY} || $proxy_of{$ident};
 
-  my $auth2_handler = $self->get_oauth_2_handler();
-  my $client_id = $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CLIENT_ID};
+  my $auth_handler = $self->get_oauth2_applications_handler();
+  my $client_id    = $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CLIENT_ID};
   my $client_secret =
     $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_CLIENT_SECRET};
   my $refresh_token =
     $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_REFRESH_TOKEN};
 
-  $auth2_handler->set_client_id($client_id)         if $client_id;
-  $auth2_handler->set_client_secret($client_secret) if $client_secret;
-  $auth2_handler->set_refresh_token($refresh_token) if $refresh_token;
+  $auth_handler->set_client_id($client_id)         if $client_id;
+  $auth_handler->set_client_secret($client_secret) if $client_secret;
+  $auth_handler->set_refresh_token($refresh_token) if $refresh_token;
+
+  $auth_handler = $self->get_oauth2_service_accounts_handler();
+  my $json_key_file_path =
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_JSON_KEY_FILE_PATH};
+  my $impersonated_email =
+    $ENV{Google::Ads::GoogleAds::Constants::ENV_VAR_IMPERSONATED_EMAIL};
+
+  $auth_handler->set_json_key_file_path($json_key_file_path)
+    if $json_key_file_path;
+  $auth_handler->set_impersonated_email($impersonated_email)
+    if $impersonated_email;
 }
 
 1;
@@ -429,7 +454,7 @@ die() with an error message describing the failure.
     login_customer_id => "1234567890"
   });
 
-  $api_client->get_oauth_2_applications_handler()->set_refresh_token('1/Abc...');
+  $api_client->get_oauth2_applications_handler()->set_refresh_token('1/Abc...');
 
 =head2 set_die_on_faults
 
@@ -497,20 +522,31 @@ For a list of all the available services please refer to
 L<https://developers.google.com/google-ads/api/docs> and for code samples on
 how to invoke the services please refer to scripts in the examples folder.
 
-=head2 get_oauth_2_applications_handler
+=head2 get_oauth2_applications_handler
 
-Returns the OAuth2 authorization handler for Web/Installed applications
+Returns the OAuth2 authorization handler for Web/Desktop applications
 attached to the client, for programmatically setting/overriding its properties.
 
-  $api_client->get_oauth_2_applications_handler()->set_client_id('client-id');
-  $api_client->get_oauth_2_applications_handler()->set_client_secret('client-secret');
-  $api_client->get_oauth_2_applications_handler()->set_access_token('access-token');
-  $api_client->get_oauth_2_applications_handler()->set_refresh_token('refresh-token');
-  $api_client->get_oauth_2_applications_handler()->set_access_type('access-type');
-  $api_client->get_oauth_2_applications_handler()->set_prompt('prompt');
-  $api_client->get_oauth_2_applications_handler()->set_redirect_uri('redirect-url');
+  $api_client->get_oauth2_applications_handler()->set_client_id('client-id');
+  $api_client->get_oauth2_applications_handler()->set_client_secret('client-secret');
+  $api_client->get_oauth2_applications_handler()->set_access_token('access-token');
+  $api_client->get_oauth2_applications_handler()->set_refresh_token('refresh-token');
+  $api_client->get_oauth2_applications_handler()->set_access_type('access-type');
+  $api_client->get_oauth2_applications_handler()->set_prompt('prompt');
+  $api_client->get_oauth2_applications_handler()->set_redirect_uri('redirect-url');
 
 Refer to L<Google::Ads::GoogleAds::OAuth2ApplicationsHandler> for more details.
+
+=head2 get_oauth2_service_accounts_handler
+
+Returns the OAuth2 authorization handler for service accounts, for
+programmatically setting/overriding its properties.
+
+  $api_client->get_oauth2_service_accounts_handler()->set_json_key_file_path('json-key-file-path');
+  $api_client->get_oauth2_service_accounts_handler()->set_impersonated_email('impersonated-email');
+  $api_client->get_oauth2_service_accounts_handler()->set_access_token('access-token');
+
+Refer to L<Google::Ads::GoogleAds::OAuth2ServiceAccountsHandler> for more details.
 
 =head2 configure_from_environment_variables
 

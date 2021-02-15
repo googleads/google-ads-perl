@@ -35,6 +35,7 @@ sub new {
     fieldId                         => $args->{fieldId},
     flightField                     => $args->{flightField},
     hotelField                      => $args->{hotelField},
+    imageField                      => $args->{imageField},
     jobField                        => $args->{jobField},
     localField                      => $args->{localField},
     locationExtensionTargetingField => $args->{locationExtensionTargetingField},
