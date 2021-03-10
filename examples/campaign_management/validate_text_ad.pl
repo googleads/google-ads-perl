@@ -89,9 +89,7 @@ sub validate_text_ad {
     # This block will be hit if there is a validation error from the server.
     print "There were validation error(s) while adding expanded text ad.\n";
 
-    # Note: Depending on the ad type, you may get back policy violation errors as
-    # either PolicyFindingError or PolicyViolationError. ExpandedTextAds return
-    # errors as PolicyFindingError, so only this case is illustrated here. See
+    # Note: Policy violation errors are returned as PolicyFindingErrors. See
     # https://developers.google.com/google-ads/api/docs/policy-exemption/overview
     # for additional details.
     my $count = 1;
