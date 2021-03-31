@@ -221,7 +221,7 @@ sub remove_feeds {
 }
 
 # Creates the affiliate location extension feed.
-# [START add_affiliate_location_extensions_3]
+# [START add_affiliate_location_extensions]
 sub create_affiliate_location_extension_feed {
   my ($api_client, $customer_id, $chain_id) = @_;
 
@@ -258,10 +258,10 @@ sub create_affiliate_location_extension_feed {
 
   return $feed_resource_name;
 }
-# [END add_affiliate_location_extensions_3]
+# [END add_affiliate_location_extensions]
 
 # Waits for the affiliate location extension feed to be ready.
-# [START add_affiliate_location_extensions]
+# [START add_affiliate_location_extensions_2]
 sub wait_for_feed_to_be_ready {
   my ($api_client, $customer_id, $feed_resource_name) = @_;
 
@@ -296,10 +296,10 @@ sub wait_for_feed_to_be_ready {
     MAX_FEED_MAPPING_RETRIEVAL_ATTEMPTS
   );
 }
-# [END add_affiliate_location_extensions]
+# [END add_affiliate_location_extensions_2]
 
 # Gets the affiliate location extension feed mapping.
-# [START add_affiliate_location_extensions_4]
+# [START add_affiliate_location_extensions_1]
 sub get_affiliate_location_extension_feed_mapping {
   my ($api_client, $customer_id, $feed_resource_name) = @_;
 
@@ -323,10 +323,10 @@ sub get_affiliate_location_extension_feed_mapping {
     ? $response->{results}[0]{feedMapping}
     : undef;
 }
-# [END add_affiliate_location_extensions_4]
+# [END add_affiliate_location_extensions_1]
 
 # Create the campaign feed.
-# [START add_affiliate_location_extensions_1]
+# [START add_affiliate_location_extensions_3]
 sub create_campaign_feed {
   my ($api_client, $customer_id, $campaign_id, $feed_mapping,
     $feed_resource_name, $chain_id)
@@ -367,10 +367,10 @@ sub create_campaign_feed {
     "Campaign feed created with resource name: '%s'.\n",
     $response->{results}[0]{resourceName};
 }
-# [END add_affiliate_location_extensions_1]
+# [END add_affiliate_location_extensions_3]
 
 # Gets the feed attribute ID for the retail chain ID.
-# [START add_affiliate_location_extensions_2]
+# [START add_affiliate_location_extensions_4]
 sub get_attribute_id_for_chain_id {
   my ($feed_mapping) = @_;
 
@@ -382,7 +382,7 @@ sub get_attribute_id_for_chain_id {
 
   die "Affiliate location feed mapping isn't setup correctly.";
 }
-# [END add_affiliate_location_extensions_2]
+# [END add_affiliate_location_extensions_4]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

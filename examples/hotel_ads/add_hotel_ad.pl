@@ -133,13 +133,13 @@ sub add_campaign_budget {
 }
 
 # Creates a new hotel campaign in the specified client account.
-# [START add_hotel_ad_3]
+# [START add_hotel_ad]
 sub add_hotel_campaign {
   my ($api_client, $customer_id, $budget_resource_name,
     $hotel_center_account_id, $cpc_bid_ceiling_micro_amount)
     = @_;
 
-  # [START add_hotel_ad]
+  # [START add_hotel_ad_1]
   # Create a hotel campaign.
   my $campaign = Google::Ads::GoogleAds::V6::Resources::Campaign->new({
       name => "Interplanetary Cruise Campaign #" . uniqid(),
@@ -168,7 +168,7 @@ sub add_hotel_campaign {
         Google::Ads::GoogleAds::V6::Resources::NetworkSettings->new({
           targetGoogleSearch => "true"
         })});
-  # [END add_hotel_ad]
+  # [END add_hotel_ad_1]
 
   # Create a campaign operation.
   my $campaign_operation =
@@ -185,7 +185,7 @@ sub add_hotel_campaign {
 
   return $campaign_resource_name;
 }
-# [END add_hotel_ad_3]
+# [END add_hotel_ad]
 
 # Creates a new hotel ad group in the specified campaign.
 # [START add_hotel_ad_2]
@@ -222,7 +222,7 @@ sub add_hotel_ad_group {
 # [END add_hotel_ad_2]
 
 # Creates a new hotel ad group ad in the specified ad group.
-# [START add_hotel_ad_1]
+# [START add_hotel_ad_3]
 sub add_hotel_ad_group_ad {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
@@ -252,7 +252,7 @@ sub add_hotel_ad_group_ad {
 
   return $ad_group_ad_resource_name;
 }
-# [END add_hotel_ad_1]
+# [END add_hotel_ad_3]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

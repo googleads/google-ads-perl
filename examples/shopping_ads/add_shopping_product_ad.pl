@@ -137,7 +137,7 @@ sub add_campaign_budget {
 }
 
 # Creates a new standard shopping campaign in the specified client account.
-# [START add_shopping_product_ad]
+# [START add_shopping_product_ad_2]
 sub add_standard_shopping_campaign {
   my ($api_client, $customer_id, $budget_resource_name,
     $merchant_center_account_id)
@@ -192,10 +192,10 @@ sub add_standard_shopping_campaign {
 
   return $campaign_resource_name;
 }
-# [END add_shopping_product_ad]
+# [END add_shopping_product_ad_2]
 
 # Creates a new shopping product ad group in the specified campaign.
-# [START add_shopping_product_ad_2]
+# [START add_shopping_product_ad_1]
 sub add_shopping_product_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
@@ -225,10 +225,10 @@ sub add_shopping_product_ad_group {
 
   return $ad_group_resource_name;
 }
-# [END add_shopping_product_ad_2]
+# [END add_shopping_product_ad_1]
 
 # Creates a new shopping product ad group ad in the specified ad group.
-# [START add_shopping_product_ad_1]
+# [START add_shopping_product_ad]
 sub add_shopping_product_ad_group_ad {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
@@ -259,7 +259,7 @@ sub add_shopping_product_ad_group_ad {
 
   return $ad_group_ad_resource_name;
 }
-# [END add_shopping_product_ad_1]
+# [END add_shopping_product_ad]
 
 # Creates a new default shopping listing group for the specified ad group. A listing
 # group is the Google Ads API representation of a "product group" described in the
