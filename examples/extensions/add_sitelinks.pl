@@ -144,7 +144,7 @@ sub create_extension_feed_items {
 
   # Target this sitelink for United States only.
   # A list of country codes can be referenced here:
-  # https://developers.google.com/adwords/api/docs/appendix/geotargeting
+  # https://developers.google.com/google-ads/api/reference/data/geotargets
   my $united_states =
     Google::Ads::GoogleAds::V6::Utils::ResourceNames::geo_target_constant(2840);
 

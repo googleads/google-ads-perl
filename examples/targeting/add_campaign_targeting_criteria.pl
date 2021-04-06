@@ -54,7 +54,7 @@ my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 my $keyword_text = "jupiter cruise";
 # Specify the location ID below.
 # For more information on determining LOCATION_ID value, see:
-# https://developers.google.com/adwords/api/docs/appendix/geotargeting.
+# https://developers.google.com/google-ads/api/reference/data/geotargets.
 my $location_id = 21167;    # NEW YORK
 
 sub add_campaign_targeting_criteria {

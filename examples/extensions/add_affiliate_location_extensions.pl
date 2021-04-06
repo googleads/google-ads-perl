@@ -65,7 +65,7 @@ use constant MAX_FEED_MAPPING_RETRIEVAL_ATTEMPTS => 10;
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 # The retail chain ID. For a complete list of valid retail chain IDs, see
-# https://developers.google.com/adwords/api/docs/appendix/codes-formats#chain-ids.
+# https://developers.google.com/google-ads/api/reference/data/codes-formats#chain-ids.
 my $chain_id = "INSERT_CHAIN_ID_HERE";
 # The campaign ID for which the affiliate location extensions are added.
 my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";

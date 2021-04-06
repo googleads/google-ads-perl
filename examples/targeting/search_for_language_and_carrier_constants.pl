@@ -45,7 +45,7 @@ use Cwd qw(abs_path);
 my $customer_id   = "INSERT_CUSTOMER_ID_HERE";
 my $language_name = "eng";
 # A list of country codes can be referenced here:
-# https://developers.google.com/adwords/api/docs/appendix/geotargeting.
+# https://developers.google.com/google-ads/api/reference/data/geotargets.
 my $carrier_country_code = "US";
 
 sub search_for_language_and_carrier_constants {

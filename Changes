@@ -1,3 +1,9 @@
+6.1.1 - 2021-04-07
+- Supported HTTP requests retry mechanism on error responses.
+- Improved code examples: create_customer, add_dynamic_page_feed, etc.
+- Updated all code examples to link to Google Ads API documentation instead of
+  AdWords API documentation.
+
 6.1.0 - 2021-02-15
 - Added support for Google Ads API v6_1.
 - Removed support for Google Ads API v3.

@@ -59,7 +59,7 @@ sub forecast_reach {
   my ($api_client, $customer_id) = @_;
 
   # Location ID to plan for. You can get a valid location ID from
-  # https://developers.google.com/adwords/api/docs/appendix/geotargeting or by
+  # https://developers.google.com/google-ads/api/reference/data/geotargets or by
   # calling list_plannable_locations on the ReachPlanService.
   # Location ID 2840 is for USA.
   my $location_id   = "2840";

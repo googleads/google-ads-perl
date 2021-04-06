@@ -29,7 +29,8 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::GoogleAdsException;
 
 use Class::Std::Fast;
-use LWP::UserAgent;
+use LWP::UserAgent::Determined;
+use HTTP::Status qw(:constants);
 use JSON::XS;
 use URI::Query;
 use utf8;
@@ -48,7 +49,7 @@ my %__json_coder_of : ATTR(:name<__json_coder> :default<>);
 sub START {
   my ($self, $ident) = @_;
 
-  $__lwp_agent_of{$ident} ||= LWP::UserAgent->new();
+  $__lwp_agent_of{$ident} ||= LWP::UserAgent::Determined->new();
   # The 'pretty' attribute should be enabled for more readable form in the log.
   # The 'convert_blessed' attributed should be enabled to convert blessed objects.
   $__json_coder_of{$ident} ||= JSON::XS->new->utf8->pretty->convert_blessed;
@@ -141,13 +142,24 @@ sub call {
 
   my $lwp_agent = $self->get___lwp_agent();
 
-  # Set up http timeout and proxy for the lwp agent.
+  # Set up HTTP timeout, retry and proxy for the lwp agent.
   my $http_timeout = $api_client->get_http_timeout();
   $lwp_agent->timeout(
       $http_timeout
     ? $http_timeout
     : Google::Ads::GoogleAds::Constants::DEFAULT_HTTP_TIMEOUT
   );
+
+  my $http_retry_timing = $api_client->get_http_retry_timing();
+  $lwp_agent->timing(
+      $http_retry_timing
+    ? $http_retry_timing
+    : Google::Ads::GoogleAds::Constants::DEFAULT_HTTP_RETRY_TIMING
+  );
+  # Retry for status codes 503 & 504 to be parity with gRPC.
+  $lwp_agent->codes_to_determinate(
+    {HTTP_SERVICE_UNAVAILABLE => 1, HTTP_GATEWAY_TIMEOUT => 1});
+
   my $proxy = $api_client->get_proxy();
   $proxy
     ? $lwp_agent->proxy(['http', 'https'], $proxy)

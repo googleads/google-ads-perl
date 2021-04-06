@@ -45,7 +45,7 @@ use Cwd qw(abs_path);
 my $customer_id  = "INSERT_CUSTOMER_ID_HERE";
 my $feed_item_id = "INSERT_FEED_ITEM_ID_HERE";
 # A list of country codes can be referenced here:
-# https://developers.google.com/adwords/api/docs/appendix/geotargeting
+# https://developers.google.com/google-ads/api/reference/data/geotargets
 my $geo_target_constant_id = 2840;    # US
 
 # [START add_geo_target]

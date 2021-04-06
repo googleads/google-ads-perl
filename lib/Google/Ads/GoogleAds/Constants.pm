@@ -24,7 +24,7 @@ use File::HomeDir;
 use File::Spec::Functions;
 
 # Main version number that the rest of the modules pick up off of.
-our $VERSION = qv("6.1.0");
+our $VERSION = qv("6.1.1");
 
 use constant DEFAULT_PROPERTIES_FILE =>
   catfile(File::HomeDir->my_home, "googleads.properties");
@@ -54,8 +54,12 @@ use constant DEFAULT_SERVICE_ADDRESS => "https://googleads.googleapis.com";
 # Default user-agent header for HTTP request.
 use constant DEFAULT_USER_AGENT => "gl-perl/" . substr($^V, 1);
 
-# Default LWP::UserAgent timeout.
+# Default LWP::UserAgent timeout in seconds.
 use constant DEFAULT_HTTP_TIMEOUT => 3600;
+
+# Default retry timing for LWP::UserAgent::Determined. The string controls how
+# many times it should retry, and how long the pauses should be in seconds.
+use constant DEFAULT_HTTP_RETRY_TIMING => "5,10,15";
 
 # The LongRunning.OperationSerivce version.
 use constant OPERATION_SERVICE_VERSION => "V6";

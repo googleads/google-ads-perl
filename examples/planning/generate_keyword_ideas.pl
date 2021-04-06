@@ -49,14 +49,14 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 
 # Location criteria IDs. For example, specify 21167 for New York. For more
 # information on determining this value, see
-# https://developers.google.com/adwords/api/docs/appendix/geotargeting.
+# https://developers.google.com/google-ads/api/reference/data/geotargets.
 my $location_id_1 = "INSERT_LOCATION_ID_1_HERE";
 my $location_id_2 = "INSERT_LOCATION_ID_2_HERE";
 my $location_ids  = [];
 
 # A language criterion ID. For example, specify 1000 for English. For more
 # information on determining this value, see
-# https://developers.google.com/adwords/api/docs/appendix/codes-formats#languages.
+# https://developers.google.com/google-ads/api/reference/data/codes-formats#languages.
 my $language_id = "INSERT_LANGUAGE_ID_HERE";
 
 my $keyword_text_1 = "INSERT_KEYWORD_TEXT_1_HERE";

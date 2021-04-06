@@ -129,7 +129,7 @@ sub create_keyword_plan_campaign {
       keywordPlan        => $keyword_plan_resource
     });
 
-  # See https://developers.google.com/adwords/api/docs/appendix/geotargeting
+  # See https://developers.google.com/google-ads/api/reference/data/geotargets
   # for the list of geo target IDs.
   $keyword_plan_campaign->{geoTargets} = [
     Google::Ads::GoogleAds::V6::Resources::KeywordPlanGeoTarget->new({
@@ -138,7 +138,7 @@ sub create_keyword_plan_campaign {
           Google::Ads::GoogleAds::V6::Utils::ResourceNames::geo_target_constant(
           2840)})];
 
-  # See https://developers.google.com/adwords/api/docs/appendix/codes-formats#languages
+  # See https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
   # for the list of language criteria IDs.
   $keyword_plan_campaign->{languageConstants} = [
     # Language criteria 1000 is for English.

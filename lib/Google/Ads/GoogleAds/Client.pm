@@ -21,7 +21,7 @@ package Google::Ads::GoogleAds::Client;
 use strict;
 use warnings;
 use version;
-our $VERSION = qv("6.1.0");
+our $VERSION = qv("6.1.1");
 
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::OAuth2ServiceAccountsHandler;
@@ -44,6 +44,7 @@ my %service_address_of : ATTR(:name<service_address> :default<>);
 my %user_agent_of : ATTR(:name<user_agent> :default<>);
 my %proxy_of : ATTR(:name<proxy> :default<>);
 my %http_timeout_of : ATTR(:name<http_timeout> :default<>);
+my %http_retry_timing_of : ATTR(:name<http_retry_timing> :default<>);
 my %version_of : ATTR(:name<version> :default<>);
 my %die_on_faults_of : ATTR(:name<die_on_faults> :default<0>);
 
@@ -92,6 +93,8 @@ sub START {
 
   $http_timeout_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_HTTP_TIMEOUT;
+  $http_retry_timing_of{$ident} ||=
+    Google::Ads::GoogleAds::Constants::DEFAULT_HTTP_RETRY_TIMING;
   $version_of{$ident} ||=
     Google::Ads::GoogleAds::Constants::DEFAULT_API_VERSION;
 
@@ -365,6 +368,11 @@ The proxy server URL to be used for internet connectivity.
 =head2 http_timeout
 
 The HTTP timeout value in seconds.
+
+=head2 http_retry_timing
+
+The HTTP retry timing for LWP::UserAgent::Determined. The string controls how
+many times it should retry, and how long the pauses should be in seconds.
 
 =head2 version
 

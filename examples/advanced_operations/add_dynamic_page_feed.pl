@@ -303,8 +303,6 @@ sub get_dsa_setting {
   # following step.
   my $search_query =
     "SELECT campaign.id, campaign.name, " .
-    "campaign.dynamic_search_ads_setting.domain_name, " .
-    "campaign.dynamic_search_ads_setting.language_code, " .
     "campaign.dynamic_search_ads_setting.use_supplied_urls_only " .
     "FROM campaign where campaign.id = $campaign_id";
 

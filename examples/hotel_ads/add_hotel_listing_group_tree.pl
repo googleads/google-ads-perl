@@ -185,8 +185,8 @@ sub add_level_2_nodes {
     = @_;
 
   # The criterion ID for Japan is 2392.
-  # See https://developers.google.com/adwords/api/docs/appendix/geotargeting for criteria ID
-  # of other countries.
+  # See https://developers.google.com/google-ads/api/reference/data/geotargets
+  # for criteria ID of other countries.
   my $japan_geo_target_constant_id = 2392;
   my $japan_dimension_info =
     Google::Ads::GoogleAds::V6::Common::ListingDimensionInfo->new({

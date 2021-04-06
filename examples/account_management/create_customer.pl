@@ -55,16 +55,16 @@ sub create_customer {
       descriptiveName => "Account created with CustomerService on #" . uniqid(),
 
       # For a list of valid currency codes and time zones, see this documentation:
-      # https://developers.google.com/adwords/api/docs/appendix/codes-formats
+      # https://developers.google.com/google-ads/api/reference/data/codes-formats
       currencyCode => "USD",
       timeZone     => "America/New_York",
 
       # The below values are optional. For more information about URL options, see:
       # https://support.google.com/google-ads/answer/6305348
       trackingUrlTemplate => "{lpurl}?device={device}",
-      finalUrlSuffix =>
-        "keyword={keyword}&matchtype={matchtype}&adgroupid={adgroupid}",
-      hasPartnersBadge => to_boolean(0)});
+      finalUrlSuffix      =>
+        "keyword={keyword}&matchtype={matchtype}&adgroupid={adgroupid}"
+  });
 
   # Create the customer client.
   my $create_customer_client_response =
