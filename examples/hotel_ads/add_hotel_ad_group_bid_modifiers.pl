@@ -48,6 +48,7 @@ use Cwd qw(abs_path);
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $ad_group_id = "INSERT_AD_GROUP_ID_HERE";
 
+# [START add_hotel_ad_group_bid_modifiers]
 sub add_hotel_ad_group_bid_modifiers {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
@@ -120,6 +121,7 @@ sub add_hotel_ad_group_bid_modifiers {
 
   return 1;
 }
+# [END add_hotel_ad_group_bid_modifiers]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

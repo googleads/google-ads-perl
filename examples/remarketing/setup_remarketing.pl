@@ -112,13 +112,14 @@ sub setup_remarketing {
 }
 
 # Creates a user list targeting users that have visited a given url.
+# [START setup_remarketing]
 sub create_user_list {
   my ($api_client, $customer_id) = @_;
 
   # Create a rule targeting any user that visited a url containing 'example.com'.
   my $rule = Google::Ads::GoogleAds::V6::Common::UserListRuleItemInfo->new({
       # Use a built-in parameter to create a domain URL rule.
-      name => "url__",
+      name           => "url__",
       stringRuleItem =>
         Google::Ads::GoogleAds::V6::Common::UserListStringRuleItemInfo->new({
           operator => CONTAINS,
@@ -171,8 +172,10 @@ sub create_user_list {
 
   return $user_list_resource_name;
 }
+# [END setup_remarketing]
 
 # Creates an ad group criterion that targets a user list with an ad group.
+# [START setup_remarketing_1]
 sub target_ads_in_ad_group_to_user_list {
   my ($api_client, $customer_id, $ad_group_id, $user_list_resource_name) = @_;
 
@@ -207,6 +210,7 @@ sub target_ads_in_ad_group_to_user_list {
 
   return $ad_group_criterion_resource_name;
 }
+# [END setup_remarketing_1]
 
 # Updates the bid modifier on an ad group criterion.
 sub modify_ad_group_bids {
@@ -241,6 +245,7 @@ sub modify_ad_group_bids {
 
 # Removes all ad group criteria targeting a user list under a given campaign.
 # This is a necessary step before targeting a user list at the campaign level.
+# [START setup_remarketing_3]
 sub remove_existing_list_criteria_from_ad_group {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -273,8 +278,10 @@ sub remove_existing_list_criteria_from_ad_group {
       $result->{resourceName};
   }
 }
+# [END setup_remarketing_3]
 
 # Finds all of user list ad group criteria under a campaign.
+# [START setup_remarketing_2]
 sub get_user_list_ad_group_criteria {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -315,8 +322,10 @@ sub get_user_list_ad_group_criteria {
 
   return $user_list_criterion_resource_names;
 }
+# [END setup_remarketing_2]
 
 # Creates a campaign criterion that targets a user list with a campaign.
+# [START setup_remarketing_4]
 sub target_ads_in_campaign_to_user_list {
   my ($api_client, $customer_id, $campaign_id, $user_list_resource_name) = @_;
 
@@ -351,6 +360,7 @@ sub target_ads_in_campaign_to_user_list {
 
   return $campaign_criterion_resource_name;
 }
+# [END setup_remarketing_4]
 
 # Updates the bid modifier on a campaign criterion.
 sub modify_campaign_bids {
