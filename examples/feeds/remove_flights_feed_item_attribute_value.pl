@@ -56,6 +56,7 @@ sub remove_flights_feed_item_attribute_value {
     $flight_placeholder_field_name)
     = @_;
 
+  # [START remove_flights_feed_item_attribute_value]
   # Get the feed resource name.
   my $feed_resource_name =
     Google::Ads::GoogleAds::V6::Utils::ResourceNames::feed($customer_id,
@@ -75,7 +76,9 @@ sub remove_flights_feed_item_attribute_value {
     remove_attribute_value_from_feed_item($api_client, $customer_id,
     $feed_attributes, $feed_item_resource_name,
     uc($flight_placeholder_field_name));
+  # [END remove_flights_feed_item_attribute_value]
 
+  # [START remove_flights_feed_item_attribute_value_1]
   # Create a feed item operation.
   my $feed_item_operation =
     Google::Ads::GoogleAds::V6::Services::FeedItemService::FeedItemOperation->
@@ -90,6 +93,7 @@ sub remove_flights_feed_item_attribute_value {
 
   printf "Updated feed item with resource name: '%s'.\n",
     $feed_items_response->{results}[0]{resourceName};
+  # [END remove_flights_feed_item_attribute_value_1]
 
   return 1;
 }

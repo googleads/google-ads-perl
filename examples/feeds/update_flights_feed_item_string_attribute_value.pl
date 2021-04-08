@@ -52,6 +52,7 @@ my $feed_item_id                  = "INSERT_FEED_ITEM_ID_HERE";
 my $flight_placeholder_field_name = "INSERT_FLIGHT_PLACEHOLDER_FIELD_NAME_HERE";
 my $attribute_value               = "INSERT_ATTRIBUTE_VALUE_HERE";
 
+# [START update_flights_feed_item_string_attribute_value]
 sub update_flights_feed_item_string_attribute_value {
   my ($api_client, $customer_id, $feed_id, $feed_item_id,
     $flight_placeholder_field_name,
@@ -111,6 +112,7 @@ sub update_flights_feed_item_string_attribute_value {
 
   return 1;
 }
+# [END update_flights_feed_item_string_attribute_value]
 
 # Retrieves a feed item and its attribute values given a resource name.
 sub get_feed_item {

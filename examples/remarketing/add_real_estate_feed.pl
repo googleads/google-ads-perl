@@ -149,6 +149,7 @@ sub create_feed {
 # a subsequent step. The example then inserts a new key, value pair into a hash for each
 # FeedAttribute, which is the return value of the method. The keys are the placeholder types
 # that the columns will be. The values are the FeedAttributes.
+# [START add_real_estate_feed]
 sub get_feed {
   my ($api_client, $customer_id, $feed_resource_name) = @_;
 
@@ -193,6 +194,7 @@ sub get_feed {
 
   return $feed_attributes;
 }
+# [END add_real_estate_feed]
 
 # Creates a feed mapping for a given feed.
 sub create_feed_mapping {
@@ -259,6 +261,7 @@ sub create_feed_mapping {
 }
 
 # Adds a new item to the feed.
+# [START add_real_estate_feed_1]
 sub create_feed_item {
   my ($api_client, $customer_id, $feed_attributes, $feed_resource_name) = @_;
 
@@ -287,7 +290,7 @@ sub create_feed_item {
   my $image_url =
     Google::Ads::GoogleAds::V6::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{IMAGE_URL}{id},
-      stringValue =>
+      stringValue     =>
         "http://www.example.com/listings/images?listing_id=ABC123DEF"
     });
   # Create the contextual keywords feed attribute value.
@@ -319,6 +322,7 @@ sub create_feed_item {
   printf "Created feed item with resource name '%s'.\n",
     $feed_items_response->{results}[0]{resourceName};
 }
+# [END add_real_estate_feed_1]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {

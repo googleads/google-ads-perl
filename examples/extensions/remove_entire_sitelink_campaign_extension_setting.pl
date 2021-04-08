@@ -56,6 +56,7 @@ use Cwd qw(abs_path);
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 
+# [START remove_entire_sitelink_campaign_extension_setting]
 sub remove_entire_sitelink_campaign_extension_setting {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -107,6 +108,7 @@ sub remove_entire_sitelink_campaign_extension_setting {
 
   return 1;
 }
+# [END remove_entire_sitelink_campaign_extension_setting]
 
 # Creates a mutate operation for the sitelink campaign extension setting that
 # will be removed.

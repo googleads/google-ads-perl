@@ -68,6 +68,7 @@ my $customer_id           = "INSERT_CUSTOMER_ID_HERE";
 my $ad_group_id           = "INSERT_AD_GROUP_ID_HERE";
 my $replace_existing_tree = undef;
 
+# [START add_shopping_product_listing_group_tree]
 sub add_shopping_product_listing_group_tree {
   my ($api_client, $customer_id, $ad_group_id, $replace_existing_tree) = @_;
 
@@ -241,6 +242,7 @@ sub add_shopping_product_listing_group_tree {
 
   return 1;
 }
+# [END add_shopping_product_listing_group_tree]
 
 # Removes all the ad group criteria that define the existing listing group
 # tree for an ad group.

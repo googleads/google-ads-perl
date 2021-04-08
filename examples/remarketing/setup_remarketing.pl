@@ -112,13 +112,14 @@ sub setup_remarketing {
 }
 
 # Creates a user list targeting users that have visited a given url.
+# [START setup_remarketing]
 sub create_user_list {
   my ($api_client, $customer_id) = @_;
 
   # Create a rule targeting any user that visited a url containing 'example.com'.
   my $rule = Google::Ads::GoogleAds::V6::Common::UserListRuleItemInfo->new({
       # Use a built-in parameter to create a domain URL rule.
-      name => "url__",
+      name           => "url__",
       stringRuleItem =>
         Google::Ads::GoogleAds::V6::Common::UserListStringRuleItemInfo->new({
           operator => CONTAINS,
@@ -171,8 +172,10 @@ sub create_user_list {
 
   return $user_list_resource_name;
 }
+# [END setup_remarketing]
 
 # Creates an ad group criterion that targets a user list with an ad group.
+# [START setup_remarketing_1]
 sub target_ads_in_ad_group_to_user_list {
   my ($api_client, $customer_id, $ad_group_id, $user_list_resource_name) = @_;
 
@@ -207,6 +210,7 @@ sub target_ads_in_ad_group_to_user_list {
 
   return $ad_group_criterion_resource_name;
 }
+# [END setup_remarketing_1]
 
 # Updates the bid modifier on an ad group criterion.
 sub modify_ad_group_bids {
