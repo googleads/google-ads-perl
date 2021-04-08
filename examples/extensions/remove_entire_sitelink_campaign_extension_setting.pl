@@ -138,6 +138,7 @@ sub create_sitelink_campaign_extension_setting_mutate_operation {
 
 # Return all sitelink extension feed items associated to the specified campaign
 # extension setting.
+# [START remove_entire_sitelink_campaign_extension_setting_1]
 sub get_all_sitelink_extension_feed_items {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -188,6 +189,7 @@ sub get_all_sitelink_extension_feed_items {
 
   return $extension_feed_item_resource_names;
 }
+# [END remove_entire_sitelink_campaign_extension_setting_1]
 
 # Creates mutate operations for the sitelink extension feed items that will be
 # removed.

@@ -245,6 +245,7 @@ sub modify_ad_group_bids {
 
 # Removes all ad group criteria targeting a user list under a given campaign.
 # This is a necessary step before targeting a user list at the campaign level.
+# [START setup_remarketing_3]
 sub remove_existing_list_criteria_from_ad_group {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -277,8 +278,10 @@ sub remove_existing_list_criteria_from_ad_group {
       $result->{resourceName};
   }
 }
+# [END setup_remarketing_3]
 
 # Finds all of user list ad group criteria under a campaign.
+# [START setup_remarketing_2]
 sub get_user_list_ad_group_criteria {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
@@ -319,8 +322,10 @@ sub get_user_list_ad_group_criteria {
 
   return $user_list_criterion_resource_names;
 }
+# [END setup_remarketing_2]
 
 # Creates a campaign criterion that targets a user list with a campaign.
+# [START setup_remarketing_4]
 sub target_ads_in_campaign_to_user_list {
   my ($api_client, $customer_id, $campaign_id, $user_list_resource_name) = @_;
 
@@ -355,6 +360,7 @@ sub target_ads_in_campaign_to_user_list {
 
   return $campaign_criterion_resource_name;
 }
+# [END setup_remarketing_4]
 
 # Updates the bid modifier on a campaign criterion.
 sub modify_campaign_bids {
