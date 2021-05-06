@@ -26,7 +26,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V6::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -50,9 +50,19 @@ sub get_ad_group_bid_modifiers {
 
   # Create a query that retrieves ad group bid modifiers.
   my $search_query =
-    "SELECT ad_group.id, ad_group_bid_modifier.criterion_id, " .
-    "ad_group_bid_modifier.bid_modifier, ad_group_bid_modifier.device.type, " .
-    "campaign.id FROM ad_group_bid_modifier";
+    "SELECT ad_group.id, ad_group_bid_modifier.criterion_id, campaign.id, " .
+    "ad_group_bid_modifier.bid_modifier, " .
+    "ad_group_bid_modifier.device.type, " .
+    "ad_group_bid_modifier.hotel_date_selection_type.type, " .
+    "ad_group_bid_modifier.hotel_advance_booking_window.min_days, " .
+    "ad_group_bid_modifier.hotel_advance_booking_window.max_days, " .
+    "ad_group_bid_modifier.hotel_length_of_stay.min_nights, " .
+    "ad_group_bid_modifier.hotel_length_of_stay.max_nights, " .
+    "ad_group_bid_modifier.hotel_check_in_day.day_of_week, " .
+    "ad_group_bid_modifier.hotel_check_in_date_range.start_date, " .
+    "ad_group_bid_modifier.hotel_check_in_date_range.end_date, " .
+    "ad_group_bid_modifier.preferred_content.type " .
+    "FROM ad_group_bid_modifier";
 
   if ($ad_group_id) {
     $search_query .= " WHERE ad_group.id = $ad_group_id";
@@ -61,7 +71,7 @@ sub get_ad_group_bid_modifiers {
   # Create a search Google Ads request that will retrieve all ad group bid modifiers
   # using pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V6::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
@@ -79,20 +89,57 @@ sub get_ad_group_bid_modifiers {
   # Iterate over all rows in all pages and print the requested field values for the
   # ad group bid modifier in each row.
   while ($iterator->has_next) {
-    my $google_ads_row = $iterator->next;
+    my $google_ads_row        = $iterator->next;
+    my $ad_group_bid_modifier = $google_ads_row->{adGroupBidModifier};
+    my $ad_group              = $google_ads_row->{adGroup};
+    my $campaign              = $google_ads_row->{campaign};
 
     printf
       "Ad group bid modifier with criterion ID %d, bid modifier value %s, " .
-      "device type '%s' was found in an ad group ID %d of campaign ID %d.\n",
-      $google_ads_row->{adGroupBidModifier}{criterionId},
-      $google_ads_row->{adGroupBidModifier}{bidModifier} ? sprintf "%.2f",
-      $google_ads_row->{adGroupBidModifier}{bidModifier}
+      "was found in an ad group with ID %d of campaign ID %d.\n",
+      $ad_group_bid_modifier->{criterionId},
+      $ad_group_bid_modifier->{bidModifier}
+      ? sprintf "%.2f", $ad_group_bid_modifier->{bidModifier}
       : "none",
-      $google_ads_row->{adGroupBidModifier}{device}{type}
-      ? $google_ads_row->{adGroupBidModifier}{device}{type}
-      : "unspecified",
-      $google_ads_row->{adGroup}{id},
-      $google_ads_row->{campaign}{id},;
+      $ad_group->{id},
+      $campaign->{id};
+
+    my $criterion_details = "  - Criterion type: '%s', ";
+    if ($ad_group_bid_modifier->{device}) {
+      $criterion_details = sprintf $criterion_details, "Device";
+      $criterion_details .= sprintf "Type: '%s'",
+        $ad_group_bid_modifier->{device}{type};
+    } elsif ($ad_group_bid_modifier->{hotelAdvanceBookingWindow}) {
+      $criterion_details = sprintf $criterion_details,
+        "HotelAdvanceBookingWindow";
+      $criterion_details .= sprintf "Min Days: %d, Max Days: %d",
+        $ad_group_bid_modifier->{hotelAdvanceBookingWindow}{minDays},
+        $ad_group_bid_modifier->{hotelAdvanceBookingWindow}{maxDays};
+    } elsif ($ad_group_bid_modifier->{hotelCheckInDateRange}) {
+      $criterion_details = sprintf $criterion_details, "HotelCheckInDateRange";
+      $criterion_details .= sprintf "Start Date: %s, End Date: %s",
+        $ad_group_bid_modifier->{hotelCheckInDateRange}{startDate},
+        $ad_group_bid_modifier->{hotelCheckInDateRange}{endDate};
+    } elsif ($ad_group_bid_modifier->{hotelCheckInDay}) {
+      $criterion_details = sprintf $criterion_details, "HotelCheckInDay";
+      $criterion_details .= sprintf "Day of the week: %s",
+        $ad_group_bid_modifier->{hotelCheckInDay}{dayOfWeek};
+    } elsif ($ad_group_bid_modifier->{HotelDateSelectionType}) {
+      $criterion_details = sprintf $criterion_details, "HotelDateSelectionType";
+      $criterion_details .= sprintf "Date selection type: '%s'",
+        $ad_group_bid_modifier->{hotelDateSelectionType}{type};
+    } elsif ($ad_group_bid_modifier->{hotelLengthOfStay}) {
+      $criterion_details = sprintf $criterion_details, "HotelLengthOfStay";
+      $criterion_details .= sprintf "Min Nights: %d, Max Nights: %d",
+        $ad_group_bid_modifier->{hotelLengthOfStay}{minNights},
+        $ad_group_bid_modifier->{hotelLengthOfStay}{maxNights};
+    } elsif ($ad_group_bid_modifier->{preferredContent}) {
+      $criterion_details = sprintf $criterion_details, "PreferredContent";
+      $criterion_details .= sprintf "Type: '%s'",
+        $ad_group_bid_modifier->{preferredContent}{type};
+    }
+
+    print $criterion_details, "\n";
   }
 
   return 1;

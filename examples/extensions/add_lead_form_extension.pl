@@ -25,24 +25,24 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V6::Resources::CampaignAsset;
-use Google::Ads::GoogleAds::V6::Resources::Asset;
-use Google::Ads::GoogleAds::V6::Common::LeadFormAsset;
-use Google::Ads::GoogleAds::V6::Common::LeadFormField;
-use Google::Ads::GoogleAds::V6::Common::LeadFormSingleChoiceAnswers;
-use Google::Ads::GoogleAds::V6::Common::LeadFormDeliveryMethod;
-use Google::Ads::GoogleAds::V6::Common::WebhookDelivery;
-use Google::Ads::GoogleAds::V6::Enums::AssetFieldTypeEnum qw(LEAD_FORM);
-use Google::Ads::GoogleAds::V6::Enums::LeadFormCallToActionTypeEnum
+use Google::Ads::GoogleAds::V7::Resources::CampaignAsset;
+use Google::Ads::GoogleAds::V7::Resources::Asset;
+use Google::Ads::GoogleAds::V7::Common::LeadFormAsset;
+use Google::Ads::GoogleAds::V7::Common::LeadFormField;
+use Google::Ads::GoogleAds::V7::Common::LeadFormSingleChoiceAnswers;
+use Google::Ads::GoogleAds::V7::Common::LeadFormDeliveryMethod;
+use Google::Ads::GoogleAds::V7::Common::WebhookDelivery;
+use Google::Ads::GoogleAds::V7::Enums::AssetFieldTypeEnum qw(LEAD_FORM);
+use Google::Ads::GoogleAds::V7::Enums::LeadFormCallToActionTypeEnum
   qw(BOOK_NOW);
-use Google::Ads::GoogleAds::V6::Enums::LeadFormFieldUserInputTypeEnum
+use Google::Ads::GoogleAds::V7::Enums::LeadFormFieldUserInputTypeEnum
   qw(FULL_NAME EMAIL PHONE_NUMBER PREFERRED_CONTACT_TIME TRAVEL_BUDGET);
-use Google::Ads::GoogleAds::V6::Enums::LeadFormPostSubmitCallToActionTypeEnum
+use Google::Ads::GoogleAds::V7::Enums::LeadFormPostSubmitCallToActionTypeEnum
   qw(VISIT_SITE);
 use
-  Google::Ads::GoogleAds::V6::Services::CampaignAssetService::CampaignAssetOperation;
-use Google::Ads::GoogleAds::V6::Services::AssetService::AssetOperation;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V7::Services::CampaignAssetService::CampaignAssetOperation;
+use Google::Ads::GoogleAds::V7::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -81,15 +81,15 @@ sub create_lead_form_extension {
 
   # Create the campaign asset for the lead form.
   my $campaign_asset =
-    Google::Ads::GoogleAds::V6::Resources::CampaignAsset->new({
+    Google::Ads::GoogleAds::V7::Resources::CampaignAsset->new({
       asset     => $lead_form_asset_resource_name,
       fieldType => LEAD_FORM,
-      campaign  => Google::Ads::GoogleAds::V6::Utils::ResourceNames::campaign(
+      campaign  => Google::Ads::GoogleAds::V7::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       )});
 
   my $campaign_asset_operation =
-    Google::Ads::GoogleAds::V6::Services::CampaignAssetService::CampaignAssetOperation
+    Google::Ads::GoogleAds::V7::Services::CampaignAssetService::CampaignAssetOperation
     ->new({
       create => $campaign_asset
     });
@@ -108,9 +108,9 @@ sub create_lead_form_asset {
   my ($api_client, $customer_id) = @_;
 
   # Create the lead form asset.
-  my $lead_form_asset = Google::Ads::GoogleAds::V6::Resources::Asset->new({
+  my $lead_form_asset = Google::Ads::GoogleAds::V7::Resources::Asset->new({
       name          => "Interplanetary Cruise Lead Form #" . uniqid(),
-      leadFormAsset => Google::Ads::GoogleAds::V6::Common::LeadFormAsset->new({
+      leadFormAsset => Google::Ads::GoogleAds::V7::Common::LeadFormAsset->new({
           # Specify the details of the extension that the users will see.
           callToActionType        => BOOK_NOW,
           callToActionDescription => "Latest trip to Jupiter!",
@@ -123,26 +123,26 @@ sub create_lead_form_asset {
 
           # Define the fields to be displayed to the user.
           fields => [
-            Google::Ads::GoogleAds::V6::Common::LeadFormField->new({
+            Google::Ads::GoogleAds::V7::Common::LeadFormField->new({
                 inputType => FULL_NAME
               }
             ),
-            Google::Ads::GoogleAds::V6::Common::LeadFormField->new({
+            Google::Ads::GoogleAds::V7::Common::LeadFormField->new({
                 inputType => EMAIL
               }
             ),
-            Google::Ads::GoogleAds::V6::Common::LeadFormField->new({
+            Google::Ads::GoogleAds::V7::Common::LeadFormField->new({
                 inputType => PHONE_NUMBER
               }
             ),
-            Google::Ads::GoogleAds::V6::Common::LeadFormField->new({
-                inputType => PREFERRED_CONTACT_TIME,
+            Google::Ads::GoogleAds::V7::Common::LeadFormField->new({
+                inputType           => PREFERRED_CONTACT_TIME,
                 singleChoiceAnswers =>
-                  Google::Ads::GoogleAds::V6::Common::LeadFormSingleChoiceAnswers
+                  Google::Ads::GoogleAds::V7::Common::LeadFormSingleChoiceAnswers
                   ->new({
                     answers => ["Before 9 AM", "Any time", "After 5 PM"]})}
             ),
-            Google::Ads::GoogleAds::V6::Common::LeadFormField->new({
+            Google::Ads::GoogleAds::V7::Common::LeadFormField->new({
                 inputType => TRAVEL_BUDGET
               })
           ],
@@ -165,9 +165,9 @@ sub create_lead_form_asset {
           # https://developers.google.com/google-ads/webhook/docs/overview for
           # more details on how to define a webhook.
           deliveryMethods => [
-            Google::Ads::GoogleAds::V6::Common::LeadFormDeliveryMethod->new({
+            Google::Ads::GoogleAds::V7::Common::LeadFormDeliveryMethod->new({
                 webhook =>
-                  Google::Ads::GoogleAds::V6::Common::WebhookDelivery->new({
+                  Google::Ads::GoogleAds::V7::Common::WebhookDelivery->new({
                     advertiserWebhookUrl => "http://example.com/webhook",
                     googleSecret         => "interplanetary google secret",
                     payloadSchemaVersion => 3
@@ -177,7 +177,7 @@ sub create_lead_form_asset {
 
   # Create the operation.
   my $asset_operation =
-    Google::Ads::GoogleAds::V6::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V7::Services::AssetService::AssetOperation->new({
       create => $lead_form_asset
     });
 

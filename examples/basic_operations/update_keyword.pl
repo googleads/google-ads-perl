@@ -26,11 +26,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V6::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V6::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V7::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V7::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
 use
-  Google::Ads::GoogleAds::V6::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V7::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -53,9 +53,9 @@ sub update_keyword {
 
   # Create an ad group criterion with the proper resource name and any other changes.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V6::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V7::Resources::AdGroupCriterion->new({
       resourceName =>
-        Google::Ads::GoogleAds::V6::Utils::ResourceNames::ad_group_criterion(
+        Google::Ads::GoogleAds::V7::Utils::ResourceNames::ad_group_criterion(
         $customer_id, $ad_group_id, $criterion_id
         ),
       status => ENABLED,
@@ -67,7 +67,7 @@ sub update_keyword {
   # Create an ad group criterion operation for update, using the FieldMasks utility
   # to derive the update mask.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V6::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V7::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       update     => $ad_group_criterion,
       updateMask => all_set_fields_of($ad_group_criterion)});

@@ -406,6 +406,7 @@ ok(
   ),
   "Test of add_sitelinks_using_feeds example."
 );
+# NOTE: Skip the migrate_promotion_feed_to_asset.pl as it requires additional setup.
 require
   qw(examples/extensions/remove_entire_sitelink_campaign_extension_setting.pl);
 ok(

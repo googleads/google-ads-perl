@@ -26,11 +26,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V6::Resources::Campaign;
-use Google::Ads::GoogleAds::V6::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V6::Enums::CampaignStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V6::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V7::Resources::Campaign;
+use Google::Ads::GoogleAds::V7::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V7::Enums::CampaignStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -51,21 +51,21 @@ sub update_campaign {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   # Create a campaign with the proper resource name and any other changes.
-  my $campaign = Google::Ads::GoogleAds::V6::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V7::Resources::Campaign->new({
       resourceName =>
-        Google::Ads::GoogleAds::V6::Utils::ResourceNames::campaign(
+        Google::Ads::GoogleAds::V7::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
         ),
-      status => PAUSED,
+      status          => PAUSED,
       networkSettings =>
-        Google::Ads::GoogleAds::V6::Resources::NetworkSettings->new({
+        Google::Ads::GoogleAds::V7::Resources::NetworkSettings->new({
           targetSearchNetwork => "false"
         })});
 
   # Create a campaign operation for update, using the FieldMasks utility to
   # derive the update mask.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V6::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation->
     new({
       update     => $campaign,
       updateMask => all_set_fields_of($campaign)});

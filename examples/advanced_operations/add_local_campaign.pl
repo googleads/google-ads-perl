@@ -30,40 +30,40 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V6::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V6::Resources::Campaign;
-use Google::Ads::GoogleAds::V6::Resources::LocalCampaignSetting;
-use Google::Ads::GoogleAds::V6::Resources::OptimizationGoalSetting;
-use Google::Ads::GoogleAds::V6::Resources::AdGroup;
-use Google::Ads::GoogleAds::V6::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V6::Resources::Ad;
-use Google::Ads::GoogleAds::V6::Resources::Asset;
-use Google::Ads::GoogleAds::V6::Common::MaximizeConversionValue;
-use Google::Ads::GoogleAds::V6::Common::LocalAdInfo;
-use Google::Ads::GoogleAds::V6::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V6::Common::AdImageAsset;
-use Google::Ads::GoogleAds::V6::Common::AdVideoAsset;
-use Google::Ads::GoogleAds::V6::Common::ImageAsset;
-use Google::Ads::GoogleAds::V6::Common::YoutubeVideoAsset;
-use Google::Ads::GoogleAds::V6::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
-use Google::Ads::GoogleAds::V6::Enums::CampaignStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V6::Enums::AdvertisingChannelTypeEnum qw(LOCAL);
-use Google::Ads::GoogleAds::V6::Enums::AdvertisingChannelSubTypeEnum
+use Google::Ads::GoogleAds::V7::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V7::Resources::Campaign;
+use Google::Ads::GoogleAds::V7::Resources::LocalCampaignSetting;
+use Google::Ads::GoogleAds::V7::Resources::OptimizationGoalSetting;
+use Google::Ads::GoogleAds::V7::Resources::AdGroup;
+use Google::Ads::GoogleAds::V7::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V7::Resources::Ad;
+use Google::Ads::GoogleAds::V7::Resources::Asset;
+use Google::Ads::GoogleAds::V7::Common::MaximizeConversionValue;
+use Google::Ads::GoogleAds::V7::Common::LocalAdInfo;
+use Google::Ads::GoogleAds::V7::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V7::Common::AdImageAsset;
+use Google::Ads::GoogleAds::V7::Common::AdVideoAsset;
+use Google::Ads::GoogleAds::V7::Common::ImageAsset;
+use Google::Ads::GoogleAds::V7::Common::YoutubeVideoAsset;
+use Google::Ads::GoogleAds::V7::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V7::Enums::CampaignStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V7::Enums::AdvertisingChannelTypeEnum qw(LOCAL);
+use Google::Ads::GoogleAds::V7::Enums::AdvertisingChannelSubTypeEnum
   qw(LOCAL_CAMPAIGN);
-use Google::Ads::GoogleAds::V6::Enums::LocationSourceTypeEnum
+use Google::Ads::GoogleAds::V7::Enums::LocationSourceTypeEnum
   qw(GOOGLE_MY_BUSINESS);
-use Google::Ads::GoogleAds::V6::Enums::OptimizationGoalTypeEnum
+use Google::Ads::GoogleAds::V7::Enums::OptimizationGoalTypeEnum
   qw(CALL_CLICKS DRIVING_DIRECTIONS);
-use Google::Ads::GoogleAds::V6::Enums::AdGroupStatusEnum;
-use Google::Ads::GoogleAds::V6::Enums::AdGroupAdStatusEnum;
-use Google::Ads::GoogleAds::V6::Enums::AssetTypeEnum qw(IMAGE YOUTUBE_VIDEO);
+use Google::Ads::GoogleAds::V7::Enums::AdGroupStatusEnum;
+use Google::Ads::GoogleAds::V7::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V7::Enums::AssetTypeEnum qw(IMAGE YOUTUBE_VIDEO);
 use
-  Google::Ads::GoogleAds::V6::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V6::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V6::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V6::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V6::Services::AssetService::AssetOperation;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V7::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V7::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V7::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -111,7 +111,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V6::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V7::Resources::CampaignBudget->new({
       name           => "Interplanetary Cruise Budget #" . uniqid(),
       amountMicros   => 50000000,
       deliveryMethod => STANDARD,
@@ -121,7 +121,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V6::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V7::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({
       create => $campaign_budget
     });
@@ -146,7 +146,7 @@ sub create_campaign {
   my ($api_client, $customer_id, $budget_resource_name) = @_;
 
   # Create a campaign.
-  my $campaign = Google::Ads::GoogleAds::V6::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V7::Resources::Campaign->new({
       name           => "Interplanetary Cruise Local #" . uniqid(),
       campaignBudget => $budget_resource_name,
       # Recommendation: Set the campaign to PAUSED when creating it to prevent
@@ -166,12 +166,12 @@ sub create_campaign {
       # For more information on maximize conversion value, see the support article:
       # http://support.google.com/google-ads/answer/7684216.
       maximizeConversionValue =>
-        Google::Ads::GoogleAds::V6::Common::MaximizeConversionValue->new(
+        Google::Ads::GoogleAds::V7::Common::MaximizeConversionValue->new(
         {targetRoas => 3.5}
         ),
       # Configure the Local campaign setting.
       localCampaignSetting =>
-        Google::Ads::GoogleAds::V6::Resources::LocalCampaignSetting->new({
+        Google::Ads::GoogleAds::V7::Resources::LocalCampaignSetting->new({
           # Use the locations associated with the customer's linked Google
           # My Business account.
           locationSourceType => GOOGLE_MY_BUSINESS
@@ -180,12 +180,12 @@ sub create_campaign {
       # Optimization goal setting is mandatory for Local campaigns. This example
       # selects driving directions and call clicks as goals.
       optimizationGoalSetting =>
-        Google::Ads::GoogleAds::V6::Resources::OptimizationGoalSetting->new({
+        Google::Ads::GoogleAds::V7::Resources::OptimizationGoalSetting->new({
           optimizationGoalTypes => [CALL_CLICKS, DRIVING_DIRECTIONS]})});
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V6::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation->
     new({
       create => $campaign
     });
@@ -214,15 +214,15 @@ sub create_ad_group {
   # Since the advertisingChannelSubType is LOCAL_CAMPAIGN:
   #   1. you cannot override bid settings at the ad group level.
   #   2. you cannot add ad group criteria.
-  my $ad_group = Google::Ads::GoogleAds::V6::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V7::Resources::AdGroup->new({
     name     => "Earth to Mars Cruises #" . uniqid(),
-    status   => Google::Ads::GoogleAds::V6::Enums::AdGroupStatusEnum::ENABLED,
+    status   => Google::Ads::GoogleAds::V7::Enums::AdGroupStatusEnum::ENABLED,
     campaign => $campaign_resource_name
   });
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V6::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V7::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
   # Issue a mutate request to add the ad group.
@@ -245,12 +245,12 @@ sub create_local_ad {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
   # Create an ad group ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V6::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V7::Resources::AdGroupAd->new({
       adGroup => $ad_group_resource_name,
-      status => Google::Ads::GoogleAds::V6::Enums::AdGroupAdStatusEnum::ENABLED,
-      ad     => Google::Ads::GoogleAds::V6::Resources::Ad->new({
+      status => Google::Ads::GoogleAds::V7::Enums::AdGroupAdStatusEnum::ENABLED,
+      ad     => Google::Ads::GoogleAds::V7::Resources::Ad->new({
           finalUrls => ["https://www.example.com"],
-          localAd   => Google::Ads::GoogleAds::V6::Common::LocalAdInfo->new({
+          localAd   => Google::Ads::GoogleAds::V7::Common::LocalAdInfo->new({
               headlines => [
                 create_ad_text_asset("Best Space Cruise Line"),
                 create_ad_text_asset("Experience the Stars")
@@ -262,14 +262,14 @@ sub create_local_ad {
               callToActions => [create_ad_text_asset("Shop Now")],
               # Set the marketing image and logo image assets.
               marketingImages => [
-                Google::Ads::GoogleAds::V6::Common::AdImageAsset->new({
+                Google::Ads::GoogleAds::V7::Common::AdImageAsset->new({
                     asset => create_image_asset(
                       $api_client,         $customer_id,
                       MARKETING_IMAGE_URL, "Marketing Image"
                     )})
               ],
               logoImages => [
-                Google::Ads::GoogleAds::V6::Common::AdImageAsset->new({
+                Google::Ads::GoogleAds::V7::Common::AdImageAsset->new({
                     asset => create_image_asset(
                       $api_client,    $customer_id,
                       LOGO_IMAGE_URL, "Square Marketing Image"
@@ -277,7 +277,7 @@ sub create_local_ad {
               ],
               # Set the video assets.
               videos => [
-                Google::Ads::GoogleAds::V6::Common::AdVideoAsset->new({
+                Google::Ads::GoogleAds::V7::Common::AdVideoAsset->new({
                     asset => create_youtube_video_asset(
                       $api_client,      $customer_id,
                       YOUTUBE_VIDEO_ID, "Local Campaigns"
@@ -287,7 +287,7 @@ sub create_local_ad {
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V6::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Issue a mutate request to add the ad group ad.
@@ -304,7 +304,7 @@ sub create_local_ad {
 sub create_ad_text_asset {
   my ($text) = @_;
 
-  return Google::Ads::GoogleAds::V6::Common::AdTextAsset->new({
+  return Google::Ads::GoogleAds::V7::Common::AdTextAsset->new({
     text => $text
   });
 }
@@ -315,15 +315,15 @@ sub create_image_asset {
   my ($api_client, $customer_id, $image_url, $image_name) = @_;
 
   # Create an asset.
-  my $asset = Google::Ads::GoogleAds::V6::Resources::Asset->new({
+  my $asset = Google::Ads::GoogleAds::V7::Resources::Asset->new({
       name       => $image_name,
       type       => IMAGE,
-      imageAsset => Google::Ads::GoogleAds::V6::Common::ImageAsset->new({
+      imageAsset => Google::Ads::GoogleAds::V7::Common::ImageAsset->new({
           data => get_base64_data_from_url($image_url)})});
 
   # Create an asset operation.
   my $asset_operation =
-    Google::Ads::GoogleAds::V6::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V7::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 
@@ -347,17 +347,17 @@ sub create_youtube_video_asset {
   my ($api_client, $customer_id, $youtube_video_id, $youtube_video_name) = @_;
 
   # Create an asset.
-  my $asset = Google::Ads::GoogleAds::V6::Resources::Asset->new({
-      name => $youtube_video_name,
-      type => YOUTUBE_VIDEO,
+  my $asset = Google::Ads::GoogleAds::V7::Resources::Asset->new({
+      name              => $youtube_video_name,
+      type              => YOUTUBE_VIDEO,
       youtubeVideoAsset =>
-        Google::Ads::GoogleAds::V6::Common::YoutubeVideoAsset->new({
+        Google::Ads::GoogleAds::V7::Common::YoutubeVideoAsset->new({
           youtubeVideoId => $youtube_video_id
         })});
 
   # Create an asset operation.
   my $asset_operation =
-    Google::Ads::GoogleAds::V6::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V7::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 

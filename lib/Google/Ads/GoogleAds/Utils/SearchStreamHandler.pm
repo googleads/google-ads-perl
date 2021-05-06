@@ -80,7 +80,7 @@ Google::Ads::GoogleAds::Utils::SearchStreamHandler
 =head1 SYNOPSIS
 
   my $search_stream_request =
-    Google::Ads::GoogleAds::V6::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query => "SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id"

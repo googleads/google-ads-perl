@@ -72,7 +72,7 @@ sub create_campaign_budget {
 
   # Create a budget.
   my $budget = Google::Ads::AdWords::v201809::Budget->new({
-    name => "Interplanetary Cruise Budget #" . uniqid(),
+    name   => "Interplanetary Cruise Budget #" . uniqid(),
     amount =>
       Google::Ads::AdWords::v201809::Money->new({microAmount => 500000}),
     deliveryMethod => "STANDARD"

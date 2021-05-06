@@ -30,41 +30,41 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V6::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V6::Resources::Campaign;
-use Google::Ads::GoogleAds::V6::Resources::AppCampaignSetting;
-use Google::Ads::GoogleAds::V6::Resources::SelectiveOptimization;
-use Google::Ads::GoogleAds::V6::Resources::CampaignCriterion;
-use Google::Ads::GoogleAds::V6::Resources::AdGroup;
-use Google::Ads::GoogleAds::V6::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V6::Resources::Ad;
-use Google::Ads::GoogleAds::V6::Common::TargetCpa;
-use Google::Ads::GoogleAds::V6::Common::LocationInfo;
-use Google::Ads::GoogleAds::V6::Common::LanguageInfo;
-use Google::Ads::GoogleAds::V6::Common::AppAdInfo;
-use Google::Ads::GoogleAds::V6::Common::AdImageAsset;
-use Google::Ads::GoogleAds::V6::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V6::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
-use Google::Ads::GoogleAds::V6::Enums::CampaignStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V6::Enums::AdvertisingChannelTypeEnum
+use Google::Ads::GoogleAds::V7::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V7::Resources::Campaign;
+use Google::Ads::GoogleAds::V7::Resources::AppCampaignSetting;
+use Google::Ads::GoogleAds::V7::Resources::SelectiveOptimization;
+use Google::Ads::GoogleAds::V7::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V7::Resources::AdGroup;
+use Google::Ads::GoogleAds::V7::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V7::Resources::Ad;
+use Google::Ads::GoogleAds::V7::Common::TargetCpa;
+use Google::Ads::GoogleAds::V7::Common::LocationInfo;
+use Google::Ads::GoogleAds::V7::Common::LanguageInfo;
+use Google::Ads::GoogleAds::V7::Common::AppAdInfo;
+use Google::Ads::GoogleAds::V7::Common::AdImageAsset;
+use Google::Ads::GoogleAds::V7::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V7::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V7::Enums::CampaignStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V7::Enums::AdvertisingChannelTypeEnum
   qw(MULTI_CHANNEL);
-use Google::Ads::GoogleAds::V6::Enums::AdvertisingChannelSubTypeEnum
+use Google::Ads::GoogleAds::V7::Enums::AdvertisingChannelSubTypeEnum
   qw(APP_CAMPAIGN);
-use Google::Ads::GoogleAds::V6::Enums::AppCampaignAppStoreEnum
+use Google::Ads::GoogleAds::V7::Enums::AppCampaignAppStoreEnum
   qw(GOOGLE_APP_STORE);
-use Google::Ads::GoogleAds::V6::Enums::AppCampaignBiddingStrategyGoalTypeEnum
+use Google::Ads::GoogleAds::V7::Enums::AppCampaignBiddingStrategyGoalTypeEnum
   qw(OPTIMIZE_INSTALLS_TARGET_INSTALL_COST);
-use Google::Ads::GoogleAds::V6::Enums::CriterionTypeEnum qw(LOCATION LANGUAGE);
-use Google::Ads::GoogleAds::V6::Enums::AdGroupStatusEnum;
-use Google::Ads::GoogleAds::V6::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V7::Enums::CriterionTypeEnum qw(LOCATION LANGUAGE);
+use Google::Ads::GoogleAds::V7::Enums::AdGroupStatusEnum;
+use Google::Ads::GoogleAds::V7::Enums::AdGroupAdStatusEnum;
 use
-  Google::Ads::GoogleAds::V6::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V6::Services::CampaignService::CampaignOperation;
+  Google::Ads::GoogleAds::V7::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation;
 use
-  Google::Ads::GoogleAds::V6::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V6::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V6::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V7::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V7::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -112,7 +112,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V6::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V7::Resources::CampaignBudget->new({
       name           => "Interplanetary Cruise Budget #" . uniqid(),
       amountMicros   => 50000000,
       deliveryMethod => STANDARD,
@@ -122,7 +122,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V6::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V7::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({
       create => $campaign_budget
     });
@@ -145,7 +145,7 @@ sub create_campaign {
   my ($api_client, $customer_id, $budget_resource_name) = @_;
 
   # Create a campaign.
-  my $campaign = Google::Ads::GoogleAds::V6::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V7::Resources::Campaign->new({
       name           => "Interplanetary Cruise App #" . uniqid(),
       campaignBudget => $budget_resource_name,
       # Recommendation: Set the campaign to PAUSED when creating it to prevent
@@ -158,13 +158,13 @@ sub create_campaign {
       advertisingChannelType    => MULTI_CHANNEL,
       advertisingChannelSubType => APP_CAMPAIGN,
       # Set the target CPA to $1 / app install.
-      targetCpa => Google::Ads::GoogleAds::V6::Common::TargetCpa->new({
+      targetCpa => Google::Ads::GoogleAds::V7::Common::TargetCpa->new({
           targetCpaMicros => 1000000
         }
       ),
       # Configure the App campaign setting.
       appCampaignSetting =>
-        Google::Ads::GoogleAds::V6::Resources::AppCampaignSetting->new({
+        Google::Ads::GoogleAds::V7::Resources::AppCampaignSetting->new({
           appId                   => "com.google.android.apps.adwords",
           appStore                => GOOGLE_APP_STORE,
           biddingStrategyGoalType => OPTIMIZE_INSTALLS_TARGET_INSTALL_COST
@@ -175,7 +175,7 @@ sub create_campaign {
       # Ads API can focus your campaign on people who are most likely to complete
       # the corresponding in-app actions.
       # selectiveOptimization =>
-      #   Google::Ads::GoogleAds::V6::Resources::SelectiveOptimization->new({
+      #   Google::Ads::GoogleAds::V7::Resources::SelectiveOptimization->new({
       #     conversionActions =>
       #       ["INSERT_CONVERSION_ACTION_RESOURCE_NAME(s)_HERE"]}
       #   ),
@@ -188,7 +188,7 @@ sub create_campaign {
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V6::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation->
     new({
       create => $campaign
     });
@@ -220,16 +220,16 @@ sub set_campaign_targeting_criteria {
   # targeting/get_geo_target_constants_by_names.pl.
   foreach my $location_id (21137, 2484) {
     my $campaign_criterion =
-      Google::Ads::GoogleAds::V6::Resources::CampaignCriterion->new({
+      Google::Ads::GoogleAds::V7::Resources::CampaignCriterion->new({
         campaign => $campaign_resource_name,
         type     => LOCATION,
-        location => Google::Ads::GoogleAds::V6::Common::LocationInfo->new({
+        location => Google::Ads::GoogleAds::V7::Common::LocationInfo->new({
             geoTargetConstant =>
-              Google::Ads::GoogleAds::V6::Utils::ResourceNames::geo_target_constant(
+              Google::Ads::GoogleAds::V7::Utils::ResourceNames::geo_target_constant(
               $location_id)})});
 
     push @$campaign_criterion_operations,
-      Google::Ads::GoogleAds::V6::Services::CampaignCriterionService::CampaignCriterionOperation
+      Google::Ads::GoogleAds::V7::Services::CampaignCriterionService::CampaignCriterionOperation
       ->new({
         create => $campaign_criterion
       });
@@ -239,16 +239,16 @@ sub set_campaign_targeting_criteria {
   # Language ID 1000 is for English, and 1003 is for Spanish.
   foreach my $language_id (1000, 1003) {
     my $campaign_criterion =
-      Google::Ads::GoogleAds::V6::Resources::CampaignCriterion->new({
+      Google::Ads::GoogleAds::V7::Resources::CampaignCriterion->new({
         campaign => $campaign_resource_name,
         type     => LANGUAGE,
-        language => Google::Ads::GoogleAds::V6::Common::LanguageInfo->new({
+        language => Google::Ads::GoogleAds::V7::Common::LanguageInfo->new({
             languageConstant =>
-              Google::Ads::GoogleAds::V6::Utils::ResourceNames::language_constant(
+              Google::Ads::GoogleAds::V7::Utils::ResourceNames::language_constant(
               $language_id)})});
 
     push @$campaign_criterion_operations,
-      Google::Ads::GoogleAds::V6::Services::CampaignCriterionService::CampaignCriterionOperation
+      Google::Ads::GoogleAds::V7::Services::CampaignCriterionService::CampaignCriterionOperation
       ->new({
         create => $campaign_criterion
       });
@@ -278,15 +278,15 @@ sub create_ad_group {
   # Since the advertisingChannelSubType is APP_CAMPAIGN,
   #   1- you cannot override bid settings at the ad group level.
   #   2- you cannot add ad group criteria.
-  my $ad_group = Google::Ads::GoogleAds::V6::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V7::Resources::AdGroup->new({
     name     => "Earth to Mars Cruises #" . uniqid(),
-    status   => Google::Ads::GoogleAds::V6::Enums::AdGroupStatusEnum::ENABLED,
+    status   => Google::Ads::GoogleAds::V7::Enums::AdGroupStatusEnum::ENABLED,
     campaign => $campaign_resource_name
   });
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V6::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V7::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
   # Issue a mutate request to add the ad group.
@@ -307,11 +307,11 @@ sub create_app_ad {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
   # Create an ad group ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V6::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V7::Resources::AdGroupAd->new({
       adGroup => $ad_group_resource_name,
-      status => Google::Ads::GoogleAds::V6::Enums::AdGroupAdStatusEnum::ENABLED,
-      ad     => Google::Ads::GoogleAds::V6::Resources::Ad->new({
-          appAd => Google::Ads::GoogleAds::V6::Common::AppAdInfo->new({
+      status => Google::Ads::GoogleAds::V7::Enums::AdGroupAdStatusEnum::ENABLED,
+      ad     => Google::Ads::GoogleAds::V7::Resources::Ad->new({
+          appAd => Google::Ads::GoogleAds::V7::Common::AppAdInfo->new({
               headlines => [
                 create_ad_text_asset("A cool puzzle game"),
                 create_ad_text_asset("Remove connected blocks")
@@ -322,14 +322,14 @@ sub create_app_ad {
               ],
               # Optional: You can set up to 20 image assets for your campaign.
               # images => [
-              #   Google::Ads::GoogleAds::V6::Common::AdImageAsset->new({
+              #   Google::Ads::GoogleAds::V7::Common::AdImageAsset->new({
               #       asset => "INSERT_IMAGE_ASSET_RESOURCE_NAME_HERE"
               #     })]
             })})});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V6::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Issue a mutate request to add the ad group ad.
@@ -345,7 +345,7 @@ sub create_app_ad {
 sub create_ad_text_asset {
   my ($text) = @_;
 
-  return Google::Ads::GoogleAds::V6::Common::AdTextAsset->new({
+  return Google::Ads::GoogleAds::V7::Common::AdTextAsset->new({
     text => $text
   });
 }

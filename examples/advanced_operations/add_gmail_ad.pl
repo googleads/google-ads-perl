@@ -27,18 +27,18 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V6::Resources::Ad;
-use Google::Ads::GoogleAds::V6::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V6::Resources::MediaImage;
-use Google::Ads::GoogleAds::V6::Resources::MediaFile;
-use Google::Ads::GoogleAds::V6::Common::GmailAdInfo;
-use Google::Ads::GoogleAds::V6::Common::GmailTeaser;
-use Google::Ads::GoogleAds::V6::Enums::AdGroupAdStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V6::Enums::MediaTypeEnum qw(IMAGE);
-use Google::Ads::GoogleAds::V6::Enums::MimeTypeEnum qw(IMAGE_PNG IMAGE_JPEG);
-use Google::Ads::GoogleAds::V6::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V6::Services::MediaFileService::MediaFileOperation;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V7::Resources::Ad;
+use Google::Ads::GoogleAds::V7::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V7::Resources::MediaImage;
+use Google::Ads::GoogleAds::V7::Resources::MediaFile;
+use Google::Ads::GoogleAds::V7::Common::GmailAdInfo;
+use Google::Ads::GoogleAds::V7::Common::GmailTeaser;
+use Google::Ads::GoogleAds::V7::Enums::AdGroupAdStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V7::Enums::MediaTypeEnum qw(IMAGE);
+use Google::Ads::GoogleAds::V7::Enums::MimeTypeEnum qw(IMAGE_PNG IMAGE_JPEG);
+use Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V7::Services::MediaFileService::MediaFileOperation;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -65,9 +65,9 @@ sub add_gmail_ad {
   my $media_files = add_media_files($api_client, $customer_id);
 
   # Create the Gmail ad info.
-  my $gmail_ad_info = Google::Ads::GoogleAds::V6::Common::GmailAdInfo->new({
+  my $gmail_ad_info = Google::Ads::GoogleAds::V7::Common::GmailAdInfo->new({
       # Set the teaser information.
-      teaser => Google::Ads::GoogleAds::V6::Common::GmailTeaser->new({
+      teaser => Google::Ads::GoogleAds::V7::Common::GmailTeaser->new({
           headline     => "Dream",
           description  => "Create your own adventure",
           businessName => "Interplanetary Ships",
@@ -81,23 +81,23 @@ sub add_gmail_ad {
     });
 
   # Set the Gmail ad info on an ad.
-  my $ad = Google::Ads::GoogleAds::V6::Resources::Ad->new({
+  my $ad = Google::Ads::GoogleAds::V7::Resources::Ad->new({
     name      => "Gmail Ad #" . uniqid(),
     finalUrls => ["http://www.example.com"],
     gmailAd   => $gmail_ad_info
   });
 
   # Create an ad group ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V6::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V7::Resources::AdGroupAd->new({
       ad      => $ad,
       status  => PAUSED,
-      adGroup => Google::Ads::GoogleAds::V6::Utils::ResourceNames::ad_group(
+      adGroup => Google::Ads::GoogleAds::V7::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       )});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V6::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad.
@@ -119,9 +119,9 @@ sub add_media_files {
   my $logo_image_data = get_base64_data_from_url(LOGO_IMAGE_URL);
 
   # Create the logo image.
-  my $logo_media_file = Google::Ads::GoogleAds::V6::Resources::MediaFile->new({
+  my $logo_media_file = Google::Ads::GoogleAds::V7::Resources::MediaFile->new({
       type  => IMAGE,
-      image => Google::Ads::GoogleAds::V6::Resources::MediaImage->new({
+      image => Google::Ads::GoogleAds::V7::Resources::MediaImage->new({
           data => $logo_image_data
         }
       ),
@@ -130,7 +130,7 @@ sub add_media_files {
 
   # Create the operation for the logo image.
   my $logo_media_file_operation =
-    Google::Ads::GoogleAds::V6::Services::MediaFileService::MediaFileOperation
+    Google::Ads::GoogleAds::V7::Services::MediaFileService::MediaFileOperation
     ->new({
       create => $logo_media_file
     });
@@ -140,9 +140,9 @@ sub add_media_files {
 
   # Create the marketing image.
   my $marketing_media_file =
-    Google::Ads::GoogleAds::V6::Resources::MediaFile->new({
+    Google::Ads::GoogleAds::V7::Resources::MediaFile->new({
       type  => IMAGE,
-      image => Google::Ads::GoogleAds::V6::Resources::MediaImage->new({
+      image => Google::Ads::GoogleAds::V7::Resources::MediaImage->new({
           data => $marketing_image_data
         }
       ),
@@ -151,7 +151,7 @@ sub add_media_files {
 
   # Create the operation for the marketing image.
   my $marketing_media_file_operation =
-    Google::Ads::GoogleAds::V6::Services::MediaFileService::MediaFileOperation
+    Google::Ads::GoogleAds::V7::Services::MediaFileService::MediaFileOperation
     ->new({
       create => $marketing_media_file
     });

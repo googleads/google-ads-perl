@@ -26,25 +26,25 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V6::Resources::UserList;
-use Google::Ads::GoogleAds::V6::Common::RuleBasedUserListInfo;
-use Google::Ads::GoogleAds::V6::Common::ExpressionRuleUserListInfo;
-use Google::Ads::GoogleAds::V6::Common::UserListRuleInfo;
-use Google::Ads::GoogleAds::V6::Common::UserListRuleItemGroupInfo;
-use Google::Ads::GoogleAds::V6::Common::UserListRuleItemInfo;
-use Google::Ads::GoogleAds::V6::Common::UserListStringRuleItemInfo;
-use Google::Ads::GoogleAds::V6::Common::UserListNumberRuleItemInfo;
-use Google::Ads::GoogleAds::V6::Common::UserListDateRuleItemInfo;
-use Google::Ads::GoogleAds::V6::Enums::UserListStringRuleItemOperatorEnum
+use Google::Ads::GoogleAds::V7::Resources::UserList;
+use Google::Ads::GoogleAds::V7::Common::RuleBasedUserListInfo;
+use Google::Ads::GoogleAds::V7::Common::ExpressionRuleUserListInfo;
+use Google::Ads::GoogleAds::V7::Common::UserListRuleInfo;
+use Google::Ads::GoogleAds::V7::Common::UserListRuleItemGroupInfo;
+use Google::Ads::GoogleAds::V7::Common::UserListRuleItemInfo;
+use Google::Ads::GoogleAds::V7::Common::UserListStringRuleItemInfo;
+use Google::Ads::GoogleAds::V7::Common::UserListNumberRuleItemInfo;
+use Google::Ads::GoogleAds::V7::Common::UserListDateRuleItemInfo;
+use Google::Ads::GoogleAds::V7::Enums::UserListStringRuleItemOperatorEnum
   qw(EQUALS);
-use Google::Ads::GoogleAds::V6::Enums::UserListNumberRuleItemOperatorEnum
+use Google::Ads::GoogleAds::V7::Enums::UserListNumberRuleItemOperatorEnum
   qw(GREATER_THAN);
-use Google::Ads::GoogleAds::V6::Enums::UserListDateRuleItemOperatorEnum
+use Google::Ads::GoogleAds::V7::Enums::UserListDateRuleItemOperatorEnum
   qw(AFTER BEFORE);
-use Google::Ads::GoogleAds::V6::Enums::UserListMembershipStatusEnum qw(OPEN);
-use Google::Ads::GoogleAds::V6::Enums::UserListPrepopulationStatusEnum
+use Google::Ads::GoogleAds::V7::Enums::UserListMembershipStatusEnum qw(OPEN);
+use Google::Ads::GoogleAds::V7::Enums::UserListPrepopulationStatusEnum
   qw(REQUESTED);
-use Google::Ads::GoogleAds::V6::Services::UserListService::UserListOperation;
+use Google::Ads::GoogleAds::V7::Services::UserListService::UserListOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -67,7 +67,7 @@ sub setup_advanced_remarketing {
   # Create a rule targeting any user that visited the checkout page.
   # [START setup_advanced_remarketing]
   my $checkout_rule =
-    Google::Ads::GoogleAds::V6::Common::UserListRuleItemInfo->new({
+    Google::Ads::GoogleAds::V7::Common::UserListRuleItemInfo->new({
       # The rule variable name must match a corresponding key name fired from a
       # pixel. To learn more about setting up remarketing tags, visit
       # https://support.google.com/google-ads/answer/2476688.
@@ -75,7 +75,7 @@ sub setup_advanced_remarketing {
       # https://support.google.com/google-ads/answer/7305793.
       name           => "ecomm_pagetype",
       stringRuleItem =>
-        Google::Ads::GoogleAds::V6::Common::UserListStringRuleItemInfo->new({
+        Google::Ads::GoogleAds::V7::Common::UserListStringRuleItemInfo->new({
           operator => EQUALS,
           value    => "checkout"
         })});
@@ -84,12 +84,12 @@ sub setup_advanced_remarketing {
   # Create a rule targeting any user that had more than one item in their cart.
   # [START setup_advanced_remarketing_1]
   my $cart_size_rule =
-    Google::Ads::GoogleAds::V6::Common::UserListRuleItemInfo->new({
+    Google::Ads::GoogleAds::V7::Common::UserListRuleItemInfo->new({
       # The rule variable name must match a corresponding key name fired from a
       # pixel.
       name           => "cart_size",
       numberRuleItem =>
-        Google::Ads::GoogleAds::V6::Common::UserListNumberRuleItemInfo->new({
+        Google::Ads::GoogleAds::V7::Common::UserListNumberRuleItemInfo->new({
           # Available UserListNumberRuleItemOperators can be found at
           # https://developers.google.com/google-ads/api/reference/rpc/latest/UserListNumberRuleItemOperatorEnum.UserListNumberRuleItemOperator
           operator => GREATER_THAN,
@@ -103,7 +103,7 @@ sub setup_advanced_remarketing {
   # each rule should be placed in its own rule item group.
   # [START setup_advanced_remarketing_2]
   my $checkout_and_cart_size_rule_group =
-    Google::Ads::GoogleAds::V6::Common::UserListRuleItemGroupInfo->new(
+    Google::Ads::GoogleAds::V7::Common::UserListRuleItemGroupInfo->new(
     {ruleItems => [$checkout_rule, $cart_size_rule]});
   # [END setup_advanced_remarketing_2]
 
@@ -112,12 +112,12 @@ sub setup_advanced_remarketing {
   # date range specified in the rules.
   # [START setup_advanced_remarketing_3]
   my $start_date_rule =
-    Google::Ads::GoogleAds::V6::Common::UserListRuleItemInfo->new({
+    Google::Ads::GoogleAds::V7::Common::UserListRuleItemInfo->new({
       # The rule variable name must match a corresponding key name fired from a
       # pixel.
       name         => "checkoutdate",
       dateRuleItem =>
-        Google::Ads::GoogleAds::V6::Common::UserListDateRuleItemInfo->new({
+        Google::Ads::GoogleAds::V7::Common::UserListDateRuleItemInfo->new({
           # Available UserListDateRuleItemOperators can be found at
           # https://developers.google.com/google-ads/api/reference/rpc/latest/UserListDateRuleItemOperatorEnum.UserListDateRuleItemOperator
           operator => AFTER,
@@ -128,12 +128,12 @@ sub setup_advanced_remarketing {
   # Create the RuleItem for checkout end date.
   # [START setup_advanced_remarketing_4]
   my $end_date_rule =
-    Google::Ads::GoogleAds::V6::Common::UserListRuleItemInfo->new({
+    Google::Ads::GoogleAds::V7::Common::UserListRuleItemInfo->new({
       # The rule variable name must match a corresponding key name fired from a
       # pixel.
       name         => "checkoutdate",
       dateRuleItem =>
-        Google::Ads::GoogleAds::V6::Common::UserListDateRuleItemInfo->new({
+        Google::Ads::GoogleAds::V7::Common::UserListDateRuleItemInfo->new({
           operator => BEFORE,
           value    => "20200101"
         })});
@@ -146,7 +146,7 @@ sub setup_advanced_remarketing {
   # its own rule item group.
   # [START setup_advanced_remarketing_5]
   my $checkout_date_rule_group =
-    Google::Ads::GoogleAds::V6::Common::UserListRuleItemGroupInfo->new(
+    Google::Ads::GoogleAds::V7::Common::UserListRuleItemGroupInfo->new(
     {ruleItems => [$start_date_rule, $end_date_rule]});
   # [END setup_advanced_remarketing_5]
 
@@ -156,15 +156,15 @@ sub setup_advanced_remarketing {
   # within rule item groups and the groups themselves will be ORed together.
   # [START setup_advanced_remarketing_6]
   my $expression_rule_user_list_info =
-    Google::Ads::GoogleAds::V6::Common::ExpressionRuleUserListInfo->new({
-      rule => Google::Ads::GoogleAds::V6::Common::UserListRuleInfo->new({
+    Google::Ads::GoogleAds::V7::Common::ExpressionRuleUserListInfo->new({
+      rule => Google::Ads::GoogleAds::V7::Common::UserListRuleInfo->new({
           ruleItemGroups =>
             [$checkout_date_rule_group, $checkout_and_cart_size_rule_group]})});
   # [END setup_advanced_remarketing_6]
 
   # Define a representation of a user list that is generated by a rule.
   my $rule_based_user_list_info =
-    Google::Ads::GoogleAds::V6::Common::RuleBasedUserListInfo->new({
+    Google::Ads::GoogleAds::V7::Common::RuleBasedUserListInfo->new({
       # Optional: To include past users in the user list, set the
       # prepopulation status to REQUESTED.
       prepopulationStatus    => REQUESTED,
@@ -172,7 +172,7 @@ sub setup_advanced_remarketing {
     });
 
   # Create the user list.
-  my $user_list = Google::Ads::GoogleAds::V6::Resources::UserList->new({
+  my $user_list = Google::Ads::GoogleAds::V7::Resources::UserList->new({
     name        => "My expression rule user list #" . uniqid(),
     description => "Users who checked out in November or December OR " .
       "visited the checkout page with more than one item in their cart",
@@ -183,7 +183,7 @@ sub setup_advanced_remarketing {
 
   # Create the operation.
   my $user_list_operation =
-    Google::Ads::GoogleAds::V6::Services::UserListService::UserListOperation->
+    Google::Ads::GoogleAds::V7::Services::UserListService::UserListOperation->
     new({
       create => $user_list
     });

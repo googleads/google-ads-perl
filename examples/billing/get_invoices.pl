@@ -25,7 +25,7 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,9 +54,9 @@ sub get_invoices {
   # [START get_invoices]
   # Issue the request.
   my $response = $api_client->InvoiceService()->list({
-      customerId => $customer_id,
+      customerId   => $customer_id,
       billingSetup =>
-        Google::Ads::GoogleAds::V6::Utils::ResourceNames::billing_setup(
+        Google::Ads::GoogleAds::V7::Utils::ResourceNames::billing_setup(
         ($customer_id, $billing_setup_id)
         ),
       # The year needs to be 2019 or later.

@@ -24,11 +24,11 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V6::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V6::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V7::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V7::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
 use
-  Google::Ads::GoogleAds::V6::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V7::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -53,7 +53,7 @@ sub graduate_campaign_experiment {
   # for the base campaign has explicitly_shared set to false, the budget cannot
   # be shared with the campaign after it is made independent by graduation.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V6::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V7::Resources::CampaignBudget->new({
       name           => "Budget #" . uniqid(),
       amountMicros   => 50000000,
       deliveryMethod => STANDARD
@@ -61,7 +61,7 @@ sub graduate_campaign_experiment {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V6::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V7::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Add the campaign budget.
@@ -77,7 +77,7 @@ sub graduate_campaign_experiment {
   # Graduate the campaign using the campaign budget created above.
   my $graduate_response = $api_client->CampaignExperimentService()->graduate({
       campaignExperiment =>
-        Google::Ads::GoogleAds::V6::Utils::ResourceNames::campaign_experiment(
+        Google::Ads::GoogleAds::V7::Utils::ResourceNames::campaign_experiment(
         $customer_id, $campaign_experiment_id
         ),
       campaignBudget => $campaign_budget_resource_name

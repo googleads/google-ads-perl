@@ -68,11 +68,11 @@ sub call {
   ##############################################################################
   if ($http_method eq GET) {
     # HTTP GET request scenarios:
-    #  GET: v6/customers:listAccessibleCustomers
-    #  GET: v6/{+resourceName}
-    #  GET: v6/{+resourceName}:listResults
-    #  GET: v6/customers/{+customerId}/paymentsAccounts
-    #  GET: v6/customers/{+customerId}/merchantCenterLinks
+    #  GET: v7/customers:listAccessibleCustomers
+    #  GET: v7/{+resourceName}
+    #  GET: v7/{+resourceName}:listResults
+    #  GET: v7/customers/{+customerId}/paymentsAccounts
+    #  GET: v7/customers/{+customerId}/merchantCenterLinks
     $request_path = expand_path_template($request_path, $request_body);
 
     # GET: When the $request_body is a hash reference, use the path parameters
@@ -87,13 +87,13 @@ sub call {
     }
   } elsif ($http_method eq POST) {
     # HTTP POST request scenarios:
-    #  POST: v6/geoTargetConstants:suggest
-    #  POST: v6/googleAdsFields:search
-    #  POST: v6/customers/{+customerId}/googleAds:search
-    #  POST: v6/customers/{+customerId}/campaigns:mutate
-    #  POST: v6/{+keywordPlan}:generateForecastMetrics
-    #  POST: v6/{+campaignDraft}:promote
-    #  POST: v6/{+resourceName}:addOperations
+    #  POST: v7/geoTargetConstants:suggest
+    #  POST: v7/googleAdsFields:search
+    #  POST: v7/customers/{+customerId}/googleAds:search
+    #  POST: v7/customers/{+customerId}/campaigns:mutate
+    #  POST: v7/{+keywordPlan}:generateForecastMetrics
+    #  POST: v7/{+campaignDraft}:promote
+    #  POST: v7/{+resourceName}:addOperations
 
     # POST: Retain the 'customerId' variable in the $request_body hash
     # reference after the $request_path is expanded.
@@ -104,7 +104,7 @@ sub call {
     $request_body->{customerId} = $customer_id if defined $customer_id;
   } else {
     # Other HTTP request scenarios:
-    #  DELETE: v6/{+name} for OperationService
+    #  DELETE: v7/{+name} for OperationService
     $request_path = expand_path_template($request_path, $request_body);
   }
 

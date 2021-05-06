@@ -27,8 +27,8 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V6::Services::ConversionUploadService::CallConversion;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V7::Services::ConversionUploadService::CallConversion;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -57,10 +57,10 @@ sub upload_call_conversion {
 
   # Create a call conversion by specifying currency as USD.
   my $call_conversion =
-    Google::Ads::GoogleAds::V6::Services::ConversionUploadService::CallConversion
+    Google::Ads::GoogleAds::V7::Services::ConversionUploadService::CallConversion
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V6::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V7::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       callerId           => $caller_id,

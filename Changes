@@ -1,3 +1,9 @@
+7.0.0 - 2021-05-06
+- Added support for Google Ads API v7_0.
+- Removed support for Google Ads API v4.
+- Added code examples: migrate_promotion_feed_to_asset.
+- Improved code examples: get_ad_group_bid_modifiers.
+
 6.1.1 - 2021-04-07
 - Supported HTTP requests retry mechanism on error responses.
 - Improved code examples: create_customer, add_dynamic_page_feed, etc.

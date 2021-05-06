@@ -26,35 +26,35 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V6::Resources::FeedAttribute;
-use Google::Ads::GoogleAds::V6::Resources::Feed;
-use Google::Ads::GoogleAds::V6::Resources::AttributeFieldMapping;
-use Google::Ads::GoogleAds::V6::Resources::FeedMapping;
-use Google::Ads::GoogleAds::V6::Resources::FeedItemAttributeValue;
-use Google::Ads::GoogleAds::V6::Resources::FeedItem;
-use Google::Ads::GoogleAds::V6::Resources::Campaign;
-use Google::Ads::GoogleAds::V6::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V6::Common::WebpageConditionInfo;
-use Google::Ads::GoogleAds::V6::Common::WebpageInfo;
-use Google::Ads::GoogleAds::V6::Enums::FeedAttributeTypeEnum
+use Google::Ads::GoogleAds::V7::Resources::FeedAttribute;
+use Google::Ads::GoogleAds::V7::Resources::Feed;
+use Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping;
+use Google::Ads::GoogleAds::V7::Resources::FeedMapping;
+use Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue;
+use Google::Ads::GoogleAds::V7::Resources::FeedItem;
+use Google::Ads::GoogleAds::V7::Resources::Campaign;
+use Google::Ads::GoogleAds::V7::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V7::Common::WebpageConditionInfo;
+use Google::Ads::GoogleAds::V7::Common::WebpageInfo;
+use Google::Ads::GoogleAds::V7::Enums::FeedAttributeTypeEnum
   qw(URL_LIST STRING_LIST);
-use Google::Ads::GoogleAds::V6::Enums::FeedOriginEnum qw(USER);
-use Google::Ads::GoogleAds::V6::Enums::DsaPageFeedCriterionFieldEnum
+use Google::Ads::GoogleAds::V7::Enums::FeedOriginEnum qw(USER);
+use Google::Ads::GoogleAds::V7::Enums::DsaPageFeedCriterionFieldEnum
   qw(PAGE_URL LABEL);
-use Google::Ads::GoogleAds::V6::Enums::FeedMappingCriterionTypeEnum
+use Google::Ads::GoogleAds::V7::Enums::FeedMappingCriterionTypeEnum
   qw(DSA_PAGE_FEED);
-use Google::Ads::GoogleAds::V6::Enums::WebpageConditionOperandEnum
+use Google::Ads::GoogleAds::V7::Enums::WebpageConditionOperandEnum
   qw(CUSTOM_LABEL);
-use Google::Ads::GoogleAds::V6::Services::FeedService::FeedOperation;
+use Google::Ads::GoogleAds::V7::Services::FeedService::FeedOperation;
 use
-  Google::Ads::GoogleAds::V6::Services::FeedMappingService::FeedMappingOperation;
-use Google::Ads::GoogleAds::V6::Services::FeedItemService::FeedItemOperation;
-use Google::Ads::GoogleAds::V6::Services::CampaignService::CampaignOperation;
+  Google::Ads::GoogleAds::V7::Services::FeedMappingService::FeedMappingOperation;
+use Google::Ads::GoogleAds::V7::Services::FeedItemService::FeedItemOperation;
+use Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation;
 use
-  Google::Ads::GoogleAds::V6::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+  Google::Ads::GoogleAds::V7::Services::AdGroupCriterionService::AdGroupCriterionOperation;
 use
-  Google::Ads::GoogleAds::V6::Services::GoogleAdsService::SearchGoogleAdsRequest;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsRequest;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -104,7 +104,7 @@ sub create_feed {
   my ($api_client, $customer_id) = @_;
 
   # Create a URL attribute.
-  my $url_attribute = Google::Ads::GoogleAds::V6::Resources::FeedAttribute->new(
+  my $url_attribute = Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new(
     {
       type => URL_LIST,
       name => "Page URL"
@@ -112,13 +112,13 @@ sub create_feed {
 
   # Create a label attribute.
   my $label_attribute =
-    Google::Ads::GoogleAds::V6::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new({
       type => STRING_LIST,
       name => "Label"
     });
 
   # Create the feed.
-  my $feed = Google::Ads::GoogleAds::V6::Resources::Feed->new({
+  my $feed = Google::Ads::GoogleAds::V7::Resources::Feed->new({
     name       => "DSA Feed #" . uniqid(),
     attributes => [$url_attribute, $label_attribute],
     origin     => USER
@@ -126,7 +126,7 @@ sub create_feed {
 
   # Create a feed operation for creating a feed.
   my $feed_operation =
-    Google::Ads::GoogleAds::V6::Services::FeedService::FeedOperation->new(
+    Google::Ads::GoogleAds::V7::Services::FeedService::FeedOperation->new(
     {create => $feed});
 
   # Add the feed.
@@ -170,26 +170,26 @@ sub create_feed_mapping {
 
   # Map the feed attribute IDs to the field ID constants.
   my $url_field_mapping =
-    Google::Ads::GoogleAds::V6::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
       feedAttributeId  => $feed_details->{'Page URL'},
       dsaPageFeedField => PAGE_URL
     });
 
   my $label_field_mapping =
-    Google::Ads::GoogleAds::V6::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
       feedAttributeId  => $feed_details->{Label},
       dsaPageFeedField => LABEL
     });
 
   # Create the feed mapping.
-  my $feed_mapping = Google::Ads::GoogleAds::V6::Resources::FeedMapping->new({
+  my $feed_mapping = Google::Ads::GoogleAds::V7::Resources::FeedMapping->new({
       criterionType          => DSA_PAGE_FEED,
       feed                   => $feed_details->{resourceName},
       attributeFieldMappings => [$url_field_mapping, $label_field_mapping]});
 
   # Create the feed mapping operation.
   my $feed_mapping_operation =
-    Google::Ads::GoogleAds::V6::Services::FeedMappingService::FeedMappingOperation
+    Google::Ads::GoogleAds::V7::Services::FeedMappingService::FeedMappingOperation
     ->new({
       create => $feed_mapping
     });
@@ -214,7 +214,7 @@ sub create_feed_items {
 
   # Create a label attribute.
   my $label_attribute_value =
-    Google::Ads::GoogleAds::V6::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_details->{Label},
       stringValue     => $dsa_page_url_label
     });
@@ -224,18 +224,18 @@ sub create_feed_items {
   foreach my $url (@$urls) {
     # Create a url attribute.
     my $url_attribute_value =
-      Google::Ads::GoogleAds::V6::Resources::FeedItemAttributeValue->new({
+      Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
         feedAttributeId => $feed_details->{'Page URL'},
         stringValue     => $url
       });
 
     # Create a feed item.
-    my $feed_item = Google::Ads::GoogleAds::V6::Resources::FeedItem->new({
+    my $feed_item = Google::Ads::GoogleAds::V7::Resources::FeedItem->new({
         feed            => $feed_details->{resourceName},
         attributeValues => [$url_attribute_value, $label_attribute_value]});
 
     push @$feed_item_operations,
-      Google::Ads::GoogleAds::V6::Services::FeedItemService::FeedItemOperation
+      Google::Ads::GoogleAds::V7::Services::FeedItemService::FeedItemOperation
       ->new({
         create => $feed_item
       });
@@ -265,9 +265,9 @@ sub update_campaign_dsa_setting {
   $dsa_setting->{feeds} = [$feed_resource_name];
 
   # Create the campaign object to be updated.
-  my $campaign = Google::Ads::GoogleAds::V6::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V7::Resources::Campaign->new({
       resourceName =>
-        Google::Ads::GoogleAds::V6::Utils::ResourceNames::campaign(
+        Google::Ads::GoogleAds::V7::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
         ),
       dynamicSearchAdsSetting => $dsa_setting
@@ -275,9 +275,9 @@ sub update_campaign_dsa_setting {
 
   # Create the update operation and set the update mask.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V6::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation->
     new({
-      update => $campaign,
+      update     => $campaign,
       updateMask =>
         Google::Ads::GoogleAds::Utils::FieldMasks::all_set_fields_of($campaign)}
     );
@@ -333,24 +333,24 @@ sub add_dsa_target {
   my ($api_client, $customer_id, $ad_group_id, $dsa_page_url_label) = @_;
 
   my $ad_group_resource_name =
-    Google::Ads::GoogleAds::V6::Utils::ResourceNames::ad_group($customer_id,
+    Google::Ads::GoogleAds::V7::Utils::ResourceNames::ad_group($customer_id,
     $ad_group_id);
 
   # Create the webpage condition info.
   my $web_page_condition_info =
-    Google::Ads::GoogleAds::V6::Common::WebpageConditionInfo->new({
+    Google::Ads::GoogleAds::V7::Common::WebpageConditionInfo->new({
       operand  => CUSTOM_LABEL,
       argument => $dsa_page_url_label
     });
 
   # Create the webpage info.
-  my $web_page_info = Google::Ads::GoogleAds::V6::Common::WebpageInfo->new({
+  my $web_page_info = Google::Ads::GoogleAds::V7::Common::WebpageInfo->new({
       criterionName => "Test Criterion",
       conditions    => [$web_page_condition_info]});
 
   # Create the ad group criterion.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V6::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V7::Resources::AdGroupCriterion->new({
       adGroup      => $ad_group_resource_name,
       webpage      => $web_page_info,
       cpcBidMicros => 1500000
@@ -358,7 +358,7 @@ sub add_dsa_target {
 
   # Create the operation.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V6::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V7::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion
     });

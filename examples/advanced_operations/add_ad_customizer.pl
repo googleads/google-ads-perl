@@ -25,29 +25,29 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V6::Resources::FeedAttribute;
-use Google::Ads::GoogleAds::V6::Resources::Feed;
-use Google::Ads::GoogleAds::V6::Resources::AttributeFieldMapping;
-use Google::Ads::GoogleAds::V6::Resources::FeedMapping;
-use Google::Ads::GoogleAds::V6::Resources::FeedItemAttributeValue;
-use Google::Ads::GoogleAds::V6::Resources::FeedItem;
-use Google::Ads::GoogleAds::V6::Resources::FeedItemTarget;
-use Google::Ads::GoogleAds::V6::Resources::Ad;
-use Google::Ads::GoogleAds::V6::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V6::Common::ExpandedTextAdInfo;
-use Google::Ads::GoogleAds::V6::Enums::FeedAttributeTypeEnum
+use Google::Ads::GoogleAds::V7::Resources::FeedAttribute;
+use Google::Ads::GoogleAds::V7::Resources::Feed;
+use Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping;
+use Google::Ads::GoogleAds::V7::Resources::FeedMapping;
+use Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue;
+use Google::Ads::GoogleAds::V7::Resources::FeedItem;
+use Google::Ads::GoogleAds::V7::Resources::FeedItemTarget;
+use Google::Ads::GoogleAds::V7::Resources::Ad;
+use Google::Ads::GoogleAds::V7::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V7::Common::ExpandedTextAdInfo;
+use Google::Ads::GoogleAds::V7::Enums::FeedAttributeTypeEnum
   qw(STRING DATE_TIME);
-use Google::Ads::GoogleAds::V6::Enums::FeedOriginEnum qw(USER);
-use Google::Ads::GoogleAds::V6::Enums::AdCustomizerPlaceholderFieldEnum;
-use Google::Ads::GoogleAds::V6::Enums::PlaceholderTypeEnum qw(AD_CUSTOMIZER);
-use Google::Ads::GoogleAds::V6::Services::FeedService::FeedOperation;
+use Google::Ads::GoogleAds::V7::Enums::FeedOriginEnum qw(USER);
+use Google::Ads::GoogleAds::V7::Enums::AdCustomizerPlaceholderFieldEnum;
+use Google::Ads::GoogleAds::V7::Enums::PlaceholderTypeEnum qw(AD_CUSTOMIZER);
+use Google::Ads::GoogleAds::V7::Services::FeedService::FeedOperation;
 use
-  Google::Ads::GoogleAds::V6::Services::FeedMappingService::FeedMappingOperation;
-use Google::Ads::GoogleAds::V6::Services::FeedItemService::FeedItemOperation;
+  Google::Ads::GoogleAds::V7::Services::FeedMappingService::FeedMappingOperation;
+use Google::Ads::GoogleAds::V7::Services::FeedItemService::FeedItemOperation;
 use
-  Google::Ads::GoogleAds::V6::Services::FeedItemTargetService::FeedItemTargetOperation;
-use Google::Ads::GoogleAds::V6::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V6::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V7::Services::FeedItemTargetService::FeedItemTargetOperation;
+use Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -125,25 +125,25 @@ sub create_ad_customizer_feed {
   # Create three feed attributes: a name, a price and a date. The attribute names
   # are arbitrary choices and will be used as placeholders in the ad text fields.
   my $name_attribute =
-    Google::Ads::GoogleAds::V6::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new({
       type => STRING,
       name => "Name"
     });
 
   my $price_attribute =
-    Google::Ads::GoogleAds::V6::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new({
       type => STRING,
       name => "Price"
     });
 
   my $date_attribute =
-    Google::Ads::GoogleAds::V6::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new({
       type => DATE_TIME,
       name => "Date"
     });
 
   # Create the feed.
-  my $feed = Google::Ads::GoogleAds::V6::Resources::Feed->new({
+  my $feed = Google::Ads::GoogleAds::V7::Resources::Feed->new({
     name       => $feed_name,
     attributes => [$name_attribute, $price_attribute, $date_attribute],
     origin     => USER
@@ -151,7 +151,7 @@ sub create_ad_customizer_feed {
 
   # Create a feed operation for creating a feed.
   my $feed_operation =
-    Google::Ads::GoogleAds::V6::Services::FeedService::FeedOperation->new({
+    Google::Ads::GoogleAds::V7::Services::FeedService::FeedOperation->new({
       create => $feed
     });
 
@@ -206,36 +206,36 @@ sub create_ad_customizer_mapping {
 
   # Map the feed attribute IDs to the field ID constants.
   my $name_field_mapping =
-    Google::Ads::GoogleAds::V6::Resources::AttributeFieldMapping->new({
-      feedAttributeId => $ad_customizer_feed_attributes->{Name},
+    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
+      feedAttributeId   => $ad_customizer_feed_attributes->{Name},
       adCustomizerField =>
-        Google::Ads::GoogleAds::V6::Enums::AdCustomizerPlaceholderFieldEnum::STRING,
+        Google::Ads::GoogleAds::V7::Enums::AdCustomizerPlaceholderFieldEnum::STRING,
     });
 
   my $price_field_mapping =
-    Google::Ads::GoogleAds::V6::Resources::AttributeFieldMapping->new({
-      feedAttributeId => $ad_customizer_feed_attributes->{Price},
+    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
+      feedAttributeId   => $ad_customizer_feed_attributes->{Price},
       adCustomizerField =>
-        Google::Ads::GoogleAds::V6::Enums::AdCustomizerPlaceholderFieldEnum::PRICE,
+        Google::Ads::GoogleAds::V7::Enums::AdCustomizerPlaceholderFieldEnum::PRICE,
     });
 
   my $date_field_mapping =
-    Google::Ads::GoogleAds::V6::Resources::AttributeFieldMapping->new({
-      feedAttributeId => $ad_customizer_feed_attributes->{Date},
+    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
+      feedAttributeId   => $ad_customizer_feed_attributes->{Date},
       adCustomizerField =>
-        Google::Ads::GoogleAds::V6::Enums::AdCustomizerPlaceholderFieldEnum::DATE,
+        Google::Ads::GoogleAds::V7::Enums::AdCustomizerPlaceholderFieldEnum::DATE,
     });
 
   # Create the feed mapping.
-  my $feed_mapping = Google::Ads::GoogleAds::V6::Resources::FeedMapping->new({
-      placeholderType => AD_CUSTOMIZER,
-      feed            => $ad_customizer_feed_resource_name,
+  my $feed_mapping = Google::Ads::GoogleAds::V7::Resources::FeedMapping->new({
+      placeholderType        => AD_CUSTOMIZER,
+      feed                   => $ad_customizer_feed_resource_name,
       attributeFieldMappings =>
         [$name_field_mapping, $price_field_mapping, $date_field_mapping]});
 
   # Create the operation.
   my $feed_mapping_operation =
-    Google::Ads::GoogleAds::V6::Services::FeedMappingService::FeedMappingOperation
+    Google::Ads::GoogleAds::V7::Services::FeedMappingService::FeedMappingOperation
     ->new({
       create => $feed_mapping
     });
@@ -312,31 +312,31 @@ sub create_feed_item_operation {
   ) = @_;
 
   my $name_attribute_value =
-    Google::Ads::GoogleAds::V6::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $ad_customizer_feed_attributes->{Name},
       stringValue     => $name
     });
 
   my $price_attribute_value =
-    Google::Ads::GoogleAds::V6::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $ad_customizer_feed_attributes->{Price},
       stringValue     => $price
     });
 
   my $date_attribute_value =
-    Google::Ads::GoogleAds::V6::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $ad_customizer_feed_attributes->{Date},
       stringValue     => $date
     });
 
-  my $feed_item = Google::Ads::GoogleAds::V6::Resources::FeedItem->new({
-      feed => $ad_customizer_feed_resource_name,
+  my $feed_item = Google::Ads::GoogleAds::V7::Resources::FeedItem->new({
+      feed            => $ad_customizer_feed_resource_name,
       attributeValues =>
         [$name_attribute_value, $price_attribute_value, $date_attribute_value]}
   );
 
   return
-    Google::Ads::GoogleAds::V6::Services::FeedItemService::FeedItemOperation->
+    Google::Ads::GoogleAds::V7::Services::FeedItemService::FeedItemOperation->
     new({
       create => $feed_item
     });
@@ -358,15 +358,15 @@ sub create_feed_item_targets {
     my $ad_group_id             = $ad_group_ids->[$i];
 
     my $feed_item_target =
-      Google::Ads::GoogleAds::V6::Resources::FeedItemTarget->new({
+      Google::Ads::GoogleAds::V7::Resources::FeedItemTarget->new({
         feedItem => $feed_item_resource_name,
-        adGroup  => Google::Ads::GoogleAds::V6::Utils::ResourceNames::ad_group(
+        adGroup  => Google::Ads::GoogleAds::V7::Utils::ResourceNames::ad_group(
           $customer_id, $ad_group_id
         )});
 
     # Create the operation.
     my $feed_item_target_operation =
-      Google::Ads::GoogleAds::V6::Services::FeedItemTargetService::FeedItemTargetOperation
+      Google::Ads::GoogleAds::V7::Services::FeedItemTargetService::FeedItemTargetOperation
       ->new({
         create => $feed_item_target
       });
@@ -391,26 +391,26 @@ sub create_ads_with_customizations {
   my ($api_client, $customer_id, $ad_group_ids, $feed_name) = @_;
 
   my $expanded_text_ad_info =
-    Google::Ads::GoogleAds::V6::Common::ExpandedTextAdInfo->new({
+    Google::Ads::GoogleAds::V7::Common::ExpandedTextAdInfo->new({
       headlinePart1 => "Luxury cruise to {=$feed_name.Name}",
       headlinePart2 => "Only {=$feed_name.Price}",
       description   => "Offer ends in {=countdown($feed_name.Date)}!"
     });
 
-  my $ad = Google::Ads::GoogleAds::V6::Resources::Ad->new({
+  my $ad = Google::Ads::GoogleAds::V7::Resources::Ad->new({
       expandedTextAd => $expanded_text_ad_info,
       finalUrls      => ["http://www.example.com"]});
 
   my $ad_group_ad_operations = [];
   foreach my $ad_group_id (@$ad_group_ids) {
-    my $ad_group_ad = Google::Ads::GoogleAds::V6::Resources::AdGroupAd->new({
+    my $ad_group_ad = Google::Ads::GoogleAds::V7::Resources::AdGroupAd->new({
         ad      => $ad,
-        adGroup => Google::Ads::GoogleAds::V6::Utils::ResourceNames::ad_group(
+        adGroup => Google::Ads::GoogleAds::V7::Utils::ResourceNames::ad_group(
           $customer_id, $ad_group_id
         )});
 
     push @$ad_group_ad_operations,
-      Google::Ads::GoogleAds::V6::Services::AdGroupAdService::AdGroupAdOperation
+      Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation
       ->new({
         create => $ad_group_ad
       });

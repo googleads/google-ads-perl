@@ -26,7 +26,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V6::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -57,7 +57,7 @@ sub get_campaigns_by_label {
   # Create a search Google Ads request that will retrieve all campaign labels
   # with the specified label Id using pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V6::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
