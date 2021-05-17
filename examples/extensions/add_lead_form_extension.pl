@@ -75,6 +75,7 @@ sub add_lead_form_extension {
 }
 
 # Creates the lead form extension.
+# [START add_lead_form_extension_1]
 sub create_lead_form_extension {
   my ($api_client, $customer_id, $campaign_id, $lead_form_asset_resource_name)
     = @_;
@@ -102,8 +103,10 @@ sub create_lead_form_extension {
     "Created campaign asset with resource name = '%s' for campaign ID %d.\n",
     $campaign_assets_response->{results}[0]{resourceName}, $campaign_id;
 }
+# [END add_lead_form_extension_1]
 
 # Creates the lead form asset.
+# [START add_lead_form_extension]
 sub create_lead_form_asset {
   my ($api_client, $customer_id) = @_;
 
@@ -193,6 +196,7 @@ sub create_lead_form_asset {
     $lead_form_asset_resource_name;
   return $lead_form_asset_resource_name;
 }
+# [END add_lead_form_extension]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {
