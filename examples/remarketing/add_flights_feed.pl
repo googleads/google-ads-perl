@@ -25,21 +25,21 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V7::Resources::FeedAttribute;
-use Google::Ads::GoogleAds::V7::Resources::Feed;
-use Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping;
-use Google::Ads::GoogleAds::V7::Resources::FeedMapping;
-use Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue;
-use Google::Ads::GoogleAds::V7::Resources::FeedItem;
-use Google::Ads::GoogleAds::V7::Enums::FeedAttributeTypeEnum
+use Google::Ads::GoogleAds::V8::Resources::FeedAttribute;
+use Google::Ads::GoogleAds::V8::Resources::Feed;
+use Google::Ads::GoogleAds::V8::Resources::AttributeFieldMapping;
+use Google::Ads::GoogleAds::V8::Resources::FeedMapping;
+use Google::Ads::GoogleAds::V8::Resources::FeedItemAttributeValue;
+use Google::Ads::GoogleAds::V8::Resources::FeedItem;
+use Google::Ads::GoogleAds::V8::Enums::FeedAttributeTypeEnum
   qw(STRING URL_LIST);
-use Google::Ads::GoogleAds::V7::Enums::FlightPlaceholderFieldEnum
+use Google::Ads::GoogleAds::V8::Enums::FlightPlaceholderFieldEnum
   qw(FLIGHT_DESCRIPTION DESTINATION_ID FLIGHT_PRICE FLIGHT_SALE_PRICE FINAL_URLS);
-use Google::Ads::GoogleAds::V7::Enums::PlaceholderTypeEnum qw(DYNAMIC_FLIGHT);
-use Google::Ads::GoogleAds::V7::Services::FeedService::FeedOperation;
+use Google::Ads::GoogleAds::V8::Enums::PlaceholderTypeEnum qw(DYNAMIC_FLIGHT);
+use Google::Ads::GoogleAds::V8::Services::FeedService::FeedOperation;
 use
-  Google::Ads::GoogleAds::V7::Services::FeedMappingService::FeedMappingOperation;
-use Google::Ads::GoogleAds::V7::Services::FeedItemService::FeedItemOperation;
+  Google::Ads::GoogleAds::V8::Services::FeedMappingService::FeedMappingOperation;
+use Google::Ads::GoogleAds::V8::Services::FeedItemService::FeedItemOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -86,37 +86,37 @@ sub create_feed {
 
   # Create a Flight Description attribute.
   my $flight_description_attribute =
-    Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedAttribute->new({
       type => STRING,
       name => "Flight Description"
     });
   # Create a Destination ID attribute.
   my $destination_id_attribute =
-    Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedAttribute->new({
       type => STRING,
       name => "Destination ID"
     });
   # Create a Flight Price attribute.
   my $flight_price_attribute =
-    Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedAttribute->new({
       type => STRING,
       name => "Flight Price"
     });
   # Create a Flight Sale Price attribute.
   my $flight_sales_price_attribute =
-    Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedAttribute->new({
       type => STRING,
       name => "Flight Sale Price"
     });
   # Create a Final URLs attribute.
   my $final_urls_Attribute =
-    Google::Ads::GoogleAds::V7::Resources::FeedAttribute->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedAttribute->new({
       type => URL_LIST,
       name => "Final URLs"
     });
 
   # Create a feed.
-  my $feed = Google::Ads::GoogleAds::V7::Resources::Feed->new({
+  my $feed = Google::Ads::GoogleAds::V8::Resources::Feed->new({
       name       => "Flights Feed #" . uniqid(),
       attributes => [
         $flight_description_attribute, $destination_id_attribute,
@@ -126,7 +126,7 @@ sub create_feed {
 
   # Create a feed operation.
   my $feed_operation =
-    Google::Ads::GoogleAds::V7::Services::FeedService::FeedOperation->new(({
+    Google::Ads::GoogleAds::V8::Services::FeedService::FeedOperation->new(({
       create => $feed
     }));
 
@@ -200,33 +200,33 @@ sub create_feed_mapping {
 
   # Map the FeedAttributeIds to the fieldId constants.
   my $flight_description_mapping =
-    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V8::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{FLIGHT_DESCRIPTION}{id},
       flightField     => FLIGHT_DESCRIPTION
     });
   my $destination_id_mapping =
-    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V8::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{DESTINATION_ID}{id},
       flightField     => DESTINATION_ID
     });
   my $flight_price_mapping =
-    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V8::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{FLIGHT_PRICE}{id},
       flightField     => FLIGHT_PRICE
     });
   my $flight_sale_price_mapping =
-    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V8::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{FLIGHT_SALE_PRICE}{id},
       flightField     => FLIGHT_SALE_PRICE
     });
   my $final_urls_mapping =
-    Google::Ads::GoogleAds::V7::Resources::AttributeFieldMapping->new({
+    Google::Ads::GoogleAds::V8::Resources::AttributeFieldMapping->new({
       feedAttributeId => $feed_attributes->{FINAL_URLS}{id},
       flightField     => FINAL_URLS
     });
 
   # Create a feed mapping.
-  my $feed_mapping = Google::Ads::GoogleAds::V7::Resources::FeedMapping->new({
+  my $feed_mapping = Google::Ads::GoogleAds::V8::Resources::FeedMapping->new({
       placeholderType        => DYNAMIC_FLIGHT,
       feed                   => $feed_resource_name,
       attributeFieldMappings => [
@@ -237,7 +237,7 @@ sub create_feed_mapping {
 
   # Create a feed mapping operation.
   my $feed_mapping_operation =
-    Google::Ads::GoogleAds::V7::Services::FeedMappingService::FeedMappingOperation
+    Google::Ads::GoogleAds::V8::Services::FeedMappingService::FeedMappingOperation
     ->new({
       create => $feed_mapping
     });
@@ -257,36 +257,36 @@ sub create_feed_item {
 
   # Create the flight description feed attribute value.
   my $flight_description =
-    Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{FLIGHT_DESCRIPTION}{id},
       stringValue     => "Earth to Mars"
     });
   # Create the destination ID feed attribute value.
   my $destination_id =
-    Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{DESTINATION_ID}{id},
       stringValue     => "Mars"
     });
   # Create the flight price feed attribute value.
   my $flight_price =
-    Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{FLIGHT_PRICE}{id},
       stringValue     => "499.99 USD"
     });
   # Create the flight sale price feed attribute value.
   my $flight_sale_price =
-    Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{FLIGHT_SALE_PRICE}{id},
       stringValue     => "299.99 USD"
     });
   # Create the final URLs feed attribute value.
   my $final_urls =
-    Google::Ads::GoogleAds::V7::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V8::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $feed_attributes->{FINAL_URLS}{id},
       stringValues    => ["http://www.example.com/flights/"]});
 
   # Create a feed item, specifying the Feed ID and the attributes created above.
-  my $feed_item = Google::Ads::GoogleAds::V7::Resources::FeedItem->new({
+  my $feed_item = Google::Ads::GoogleAds::V8::Resources::FeedItem->new({
       feed            => $feed_resource_name,
       attributeValues => [
         $flight_description, $destination_id, $flight_price,
@@ -295,7 +295,7 @@ sub create_feed_item {
 
   # Create a feed item operation.
   my $feed_item_operation =
-    Google::Ads::GoogleAds::V7::Services::FeedItemService::FeedItemOperation->
+    Google::Ads::GoogleAds::V8::Services::FeedItemService::FeedItemOperation->
     new({
       create => $feed_item
     });

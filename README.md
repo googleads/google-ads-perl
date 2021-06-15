@@ -267,3 +267,4 @@ See the [Proxy guide](https://developers.google.com/google-ads/api/docs/client-l
 ### Authors
 
 - [Wang Fan](https://github.com/wfansh)
+- [Andrew Burke](https://github.com/AndrewMBurke)

@@ -25,21 +25,21 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V7::Resources::ExtensionFeedItem;
-use Google::Ads::GoogleAds::V7::Resources::CampaignExtensionSetting;
-use Google::Ads::GoogleAds::V7::Resources::AdGroupExtensionSetting;
-use Google::Ads::GoogleAds::V7::Resources::CustomerExtensionSetting;
-use Google::Ads::GoogleAds::V7::Common::HotelCalloutFeedItem;
-use Google::Ads::GoogleAds::V7::Enums::ExtensionTypeEnum qw(HOTEL_CALLOUT);
+use Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem;
+use Google::Ads::GoogleAds::V8::Resources::CampaignExtensionSetting;
+use Google::Ads::GoogleAds::V8::Resources::AdGroupExtensionSetting;
+use Google::Ads::GoogleAds::V8::Resources::CustomerExtensionSetting;
+use Google::Ads::GoogleAds::V8::Common::HotelCalloutFeedItem;
+use Google::Ads::GoogleAds::V8::Enums::ExtensionTypeEnum qw(HOTEL_CALLOUT);
 use
-  Google::Ads::GoogleAds::V7::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
+  Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
 use
-  Google::Ads::GoogleAds::V7::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
+  Google::Ads::GoogleAds::V8::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
 use
-  Google::Ads::GoogleAds::V7::Services::AdGroupExtensionSettingService::AdGroupExtensionSettingOperation;
+  Google::Ads::GoogleAds::V8::Services::AdGroupExtensionSettingService::AdGroupExtensionSettingOperation;
 use
-  Google::Ads::GoogleAds::V7::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation;
-use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V8::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation;
+use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -93,20 +93,20 @@ sub add_extension_feed_item {
 
   # Create the callout feed item with text and language of choice.
   my $hotel_callout_feed_item =
-    Google::Ads::GoogleAds::V7::Common::HotelCalloutFeedItem->new({
+    Google::Ads::GoogleAds::V8::Common::HotelCalloutFeedItem->new({
       text         => $callout_text,
       languageCode => $language_code
     });
 
   # Create a feed item from the hotel callout extension.
   my $extension_feed_item =
-    Google::Ads::GoogleAds::V7::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem->new({
       hotelCalloutFeedItem => $hotel_callout_feed_item
     });
 
   # Create an extension feed item operation.
   my $extension_feed_item_operation =
-    Google::Ads::GoogleAds::V7::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item
     });
@@ -133,13 +133,13 @@ sub add_extension_to_account {
   # Create a customer extension setting, set its type to HOTEL_CALLOUT, and
   # attache the feed item.
   my $customer_extension_setting =
-    Google::Ads::GoogleAds::V7::Resources::CustomerExtensionSetting->new({
+    Google::Ads::GoogleAds::V8::Resources::CustomerExtensionSetting->new({
       extensionType      => HOTEL_CALLOUT,
       extensionFeedItems => [$extension_feed_item_resource_name]});
 
   # Create a customer extension setting operation.
   my $customer_extension_setting_operation =
-    Google::Ads::GoogleAds::V7::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation
+    Google::Ads::GoogleAds::V8::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation
     ->new({
       create => $customer_extension_setting
     });
@@ -166,16 +166,16 @@ sub add_extension_to_campaign {
   # Create a campaign extension setting, set its type to HOTEL_CALLOUT, and
   # attache the feed item.
   my $campaign_extension_setting =
-    Google::Ads::GoogleAds::V7::Resources::CampaignExtensionSetting->new({
+    Google::Ads::GoogleAds::V8::Resources::CampaignExtensionSetting->new({
       extensionType => HOTEL_CALLOUT,
-      campaign => Google::Ads::GoogleAds::V7::Utils::ResourceNames::campaign(
+      campaign => Google::Ads::GoogleAds::V8::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       extensionFeedItems => [$extension_feed_item_resource_name]});
 
   # Create a campaign extension setting operation.
   my $campaign_extension_setting_operation =
-    Google::Ads::GoogleAds::V7::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
+    Google::Ads::GoogleAds::V8::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
     ->new({
       create => $campaign_extension_setting
     });
@@ -202,16 +202,16 @@ sub add_extension_to_ad_group {
   # Create an ad group extension setting, set its type to HOTEL_CALLOUT, and
   # attache the feed item.
   my $ad_group_extension_setting =
-    Google::Ads::GoogleAds::V7::Resources::AdGroupExtensionSetting->new({
+    Google::Ads::GoogleAds::V8::Resources::AdGroupExtensionSetting->new({
       extensionType => HOTEL_CALLOUT,
-      adGroup => Google::Ads::GoogleAds::V7::Utils::ResourceNames::ad_group(
+      adGroup => Google::Ads::GoogleAds::V8::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       extensionFeedItems => [$extension_feed_item_resource_name]});
 
   # Create an ad group extension setting operation.
   my $ad_group_extension_setting_operation =
-    Google::Ads::GoogleAds::V7::Services::AdGroupExtensionSettingService::AdGroupExtensionSettingOperation
+    Google::Ads::GoogleAds::V8::Services::AdGroupExtensionSettingService::AdGroupExtensionSettingOperation
     ->new({
       create => $ad_group_extension_setting
     });

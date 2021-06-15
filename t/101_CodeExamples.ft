@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 90);
+use Test::More (tests => 92);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -179,6 +179,9 @@ require qw(examples/advanced_operations/add_gmail_ad.pl);
 ok(add_gmail_ad($api_client, $customer_id, $gmail_ad_group_id),
   "Test of add_gmail_ad example.");
 # NOTE: Skip the add_local_campaign.pl as it requires additional setup.
+require qw(examples/advanced_operations/add_smart_campaign.pl);
+ok(add_smart_campaign($api_client, $customer_id, "TestBusinessName"),
+  "Test of add_smart_campaign example.");
 # NOTE: Skip the add_smart_display_ad.pl as it requires additional setup.
 require
   qw(examples/advanced_operations/create_and_attach_shared_keyword_set.pl);
@@ -199,6 +202,13 @@ ok(
 require qw(examples/advanced_operations/get_ad_group_bid_modifiers.pl);
 ok(get_ad_group_bid_modifiers($api_client, $customer_id, undef),
   "Test of get_ad_group_bid_modifiers example.");
+require qw(examples/advanced_operations/use_cross_account_bidding_strategy.pl);
+ok(
+  use_cross_account_bidding_strategy(
+    $api_client, $customer_id, $manager_customer_id, $search_campaign_id
+  ),
+  "Test of use_cross_account_bidding_strategy example."
+);
 require qw(examples/advanced_operations/use_portfolio_bidding_strategy.pl);
 ok(use_portfolio_bidding_strategy($api_client, $customer_id, undef),
   "Test of use_portfolio_bidding_strategy example.");
@@ -333,6 +343,11 @@ ok(
     $api_client, $customer_id, $search_ad_group_id, $search_keyword_id
   ),
   "Test of set_ad_parameters example."
+);
+require qw(examples/campaign_management/update_bidding_strategy.pl);
+ok(
+  update_bidding_strategy($api_client, $customer_id),
+  "Test of update_bidding_strategy example."
 );
 require
   qw(examples/campaign_management/update_campaign_criterion_bid_modifier.pl);
