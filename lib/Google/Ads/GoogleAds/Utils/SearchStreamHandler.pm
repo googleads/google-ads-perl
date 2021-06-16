@@ -27,6 +27,9 @@ use Google::Ads::GoogleAds::Constants; our $VERSION = ${Google::Ads::GoogleAds::
 use Class::Std::Fast;
 use JSON::SL;
 
+use constant JSON_POINTER_RESULTS    => "/^/results";
+use constant JSON_POINTER_REQUEST_ID => "/^/requestId";
+
 # Class::Std-style attributes. Most values are read from googleads.properties file.
 # These need to go in the same line for older Perl interpreters to understand.
 my %service_of : ATTR(:name<service> :default<>);
@@ -40,7 +43,8 @@ sub START {
 
   $json_sl_of{$ident} ||= JSON::SL->new();
   # Set the query path to "results" for the JSON::SL object.
-  $json_sl_of{$ident}->set_jsonpointer(["/^/results"]);
+  $json_sl_of{$ident}
+    ->set_jsonpointer([JSON_POINTER_RESULTS, JSON_POINTER_REQUEST_ID]);
 }
 
 # Processes the response content of stream search.
@@ -59,11 +63,19 @@ sub process_contents {
       my $json_sl = $self->get_json_sl();
       # Append the returned data chunk to the JSON input stream.
       $json_sl->feed($data);
-      # The fetch() method returns the remaining decoded "results" JSON objects.
-      while (my $results = $json_sl->fetch()) {
-        foreach my $google_ads_row (@{$results->{Value}}) {
-          # Call the $for_each_callback subroutine for each parsed row.
-          $for_each_callback->($google_ads_row) if $for_each_callback;
+
+      # The fetch() method returns the remaining decoded JSON objects specified
+      # by the JSON pointers.
+      while (my $fetched = $json_sl->fetch()) {
+        if ($fetched->{JSONPointer} eq JSON_POINTER_RESULTS) {
+          foreach my $google_ads_row (@{$fetched->{Value}}) {
+            # Call the $for_each_callback subroutine for each parsed row.
+            $for_each_callback->($google_ads_row) if $for_each_callback;
+          }
+        } elsif ($fetched->{JSONPointer} eq JSON_POINTER_REQUEST_ID) {
+          # Add the request id from the JSON payload to the HTTP response header
+          # to be logged properly.
+          $response->header("request-id" => $fetched->{Value});
         }
       }
     });
@@ -80,7 +92,7 @@ Google::Ads::GoogleAds::Utils::SearchStreamHandler
 =head1 SYNOPSIS
 
   my $search_stream_request =
-    Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query => "SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id"
@@ -102,8 +114,8 @@ Google::Ads::GoogleAds::Utils::SearchStreamHandler
 =head1 DESCRIPTION
 
 The handler class to process the response of stream search. The handler should be
-constructed with a L<Google::Ads::GoogleAds::V7::Services::GoogleAdsService> and a
-L<Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsStreamRequest>.
+constructed with a L<Google::Ads::GoogleAds::V8::Services::GoogleAdsService> and a
+L<Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest>.
 
   my $search_stream_handler = Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
     service => $google_ads_service,
@@ -123,7 +135,7 @@ Processes the response content of stream search.
 =item *
 
 I<for_each_callback>: The callback subroutine which is invoked to process each
-parsed L<Google::Ads::GoogleAds::V7::Services::GoogleAdsService::GoogleAdsRow>.
+parsed L<Google::Ads::GoogleAds::V8::Services::GoogleAdsService::GoogleAdsRow>.
 
 =back
 

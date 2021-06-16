@@ -1,3 +1,15 @@
+8.0.0 - 2021-06-11
+- Added support for Google Ads API v8_0.
+- Removed support for Google Ads API v5.
+- Added support for logging the request IDs for search stream API.
+- Added new services: AccessibleBiddingStrategyService,
+  AssetFieldTypeViewService, ConversionValueRuleService,
+  ConversionValueRuleSetService, DetailedDemographicService,
+  KeywordThemeConstantService, SmartCampaignSearchTermViewService,
+  SmartCampaignSettingService, SmartCampaignSuggestService.
+- Added code examples: add_smart_campaign, use_cross_account_bidding_strategy.
+- Updated upload_store_sales_transactions code example.
+
 7.0.0 - 2021-05-06
 - Added support for Google Ads API v7_0.
 - Removed support for Google Ads API v4.

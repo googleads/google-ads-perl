@@ -31,20 +31,20 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
-use Google::Ads::GoogleAds::V7::Resources::AdGroupAsset;
-use Google::Ads::GoogleAds::V7::Resources::Asset;
-use Google::Ads::GoogleAds::V7::Resources::CampaignAsset;
-use Google::Ads::GoogleAds::V7::Common::Money;
-use Google::Ads::GoogleAds::V7::Common::PromotionAsset;
-use Google::Ads::GoogleAds::V7::Enums::ExtensionTypeEnum qw(PROMOTION);
+use Google::Ads::GoogleAds::V8::Resources::AdGroupAsset;
+use Google::Ads::GoogleAds::V8::Resources::Asset;
+use Google::Ads::GoogleAds::V8::Resources::CampaignAsset;
+use Google::Ads::GoogleAds::V8::Common::Money;
+use Google::Ads::GoogleAds::V8::Common::PromotionAsset;
+use Google::Ads::GoogleAds::V8::Enums::ExtensionTypeEnum qw(PROMOTION);
 use
-  Google::Ads::GoogleAds::V7::Services::AdGroupAssetService::AdGroupAssetOperation;
-use Google::Ads::GoogleAds::V7::Services::AssetService::AssetOperation;
+  Google::Ads::GoogleAds::V8::Services::AdGroupAssetService::AdGroupAssetOperation;
+use Google::Ads::GoogleAds::V8::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V7::Services::CampaignAssetService::CampaignAssetOperation;
+  Google::Ads::GoogleAds::V8::Services::CampaignAssetService::CampaignAssetOperation;
 use
-  Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
-use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -68,7 +68,7 @@ sub migrate_promotion_feed_to_asset {
   my $google_ads_service = $api_client->GoogleAdsService();
 
   my $extension_feed_item_resource_name =
-    Google::Ads::GoogleAds::V7::Utils::ResourceNames::extension_feed_item(
+    Google::Ads::GoogleAds::V8::Utils::ResourceNames::extension_feed_item(
     $customer_id, $feed_item_id);
 
   # Get the target extension feed item.
@@ -148,7 +148,7 @@ sub get_extension_feed_item {
 
   # Issue a search request to get the extension feed item contents.
   my $search_stream_request =
-    Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $extension_feed_item_query
@@ -175,7 +175,7 @@ sub get_extension_feed_item {
 
   # Issue a search request to get any URL custom parameters.
   $search_stream_request =
-    Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $url_custom_parameters_query
@@ -217,7 +217,7 @@ sub get_targeted_campaign_ids {
           AND campaign.status != 'REMOVED'";
 
   my $search_stream_request =
-    Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $query
@@ -263,7 +263,7 @@ sub get_targeted_ad_group_ids {
           AND ad_group.status != 'REMOVED'";
 
   my $search_stream_request =
-    Google::Ads::GoogleAds::V7::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $query
@@ -302,11 +302,11 @@ sub create_promotion_asset_from_feed {
   my $promotion_feed_item = $extension_feed_item->{promotionFeedItem};
 
   # Create the Promotion asset.
-  my $asset = Google::Ads::GoogleAds::V7::Resources::Asset->new({
+  my $asset = Google::Ads::GoogleAds::V8::Resources::Asset->new({
       name => "Migrated from feed item #" . $extension_feed_item->{id},
       trackingUrlTemplate => $promotion_feed_item->{trackingUrlTemplate},
       finalUrlSuffix      => $promotion_feed_item->{finalUrlSuffix},
-      promotionAsset => Google::Ads::GoogleAds::V7::Common::PromotionAsset->new(
+      promotionAsset => Google::Ads::GoogleAds::V8::Common::PromotionAsset->new(
         {
           promotionTarget     => $promotion_feed_item->{promotionTarget},
           discountModifier    => $promotion_feed_item->{discountModifier},
@@ -340,7 +340,7 @@ sub create_promotion_asset_from_feed {
       $promotion_feed_item->{percentOff} / 100;
   } else {
     $asset->{promotionAsset}{moneyAmountOff} =
-      Google::Ads::GoogleAds::V7::Common::Money->new({
+      Google::Ads::GoogleAds::V8::Common::Money->new({
         amountMicros => $promotion_feed_item->{moneyAmountOff}{amountMicros},
         currencyCode => $promotion_feed_item->{moneyAmountOff}{currencyCode}});
   }
@@ -351,7 +351,7 @@ sub create_promotion_asset_from_feed {
       $promotion_feed_item->{promotionCode};
   } else {
     $asset->{promotionAsset}{ordersOverAmount} =
-      Google::Ads::GoogleAds::V7::Common::Money->new({
+      Google::Ads::GoogleAds::V8::Common::Money->new({
         amountMicros => $promotion_feed_item->{ordersOverAmount}{amountMicros},
         currencyCode => $promotion_feed_item->{ordersOverAmount}{currencyCode}}
       );
@@ -372,7 +372,7 @@ sub create_promotion_asset_from_feed {
 
   # Build an operation to create the Promotion asset.
   my $operation =
-    Google::Ads::GoogleAds::V7::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V8::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 
@@ -404,15 +404,15 @@ sub associate_asset_with_campaigns {
 
   foreach my $campaign_id (@campaign_ids) {
     my $campaign_asset =
-      Google::Ads::GoogleAds::V7::Resources::CampaignAsset->new({
+      Google::Ads::GoogleAds::V8::Resources::CampaignAsset->new({
         asset     => $promotion_asset_resource_name,
         fieldType => PROMOTION,
-        campaign  => Google::Ads::GoogleAds::V7::Utils::ResourceNames::campaign(
+        campaign  => Google::Ads::GoogleAds::V8::Utils::ResourceNames::campaign(
           $customer_id, $campaign_id
         )});
 
     my $operation =
-      Google::Ads::GoogleAds::V7::Services::CampaignAssetService::CampaignAssetOperation
+      Google::Ads::GoogleAds::V8::Services::CampaignAssetService::CampaignAssetOperation
       ->new({
         create => $campaign_asset
       });
@@ -446,15 +446,15 @@ sub associate_asset_with_ad_groups {
 
   foreach my $ad_group_id (@ad_group_ids) {
     my $ad_group_asset =
-      Google::Ads::GoogleAds::V7::Resources::AdGroupAsset->new({
+      Google::Ads::GoogleAds::V8::Resources::AdGroupAsset->new({
         asset     => $promotion_asset_resource_name,
         fieldType => PROMOTION,
-        adGroup   => Google::Ads::GoogleAds::V7::Utils::ResourceNames::ad_group(
+        adGroup   => Google::Ads::GoogleAds::V8::Utils::ResourceNames::ad_group(
           $customer_id, $ad_group_id
         )});
 
     my $operation =
-      Google::Ads::GoogleAds::V7::Services::AdGroupAssetService::AdGroupAssetOperation
+      Google::Ads::GoogleAds::V8::Services::AdGroupAssetService::AdGroupAssetOperation
       ->new({
         create => $ad_group_asset
       });

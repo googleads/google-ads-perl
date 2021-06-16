@@ -27,13 +27,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V7::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V7::Resources::Ad;
-use Google::Ads::GoogleAds::V7::Common::ExpandedTextAdInfo;
-use Google::Ads::GoogleAds::V7::Common::PolicyValidationParameter;
-use Google::Ads::GoogleAds::V7::Enums::AdGroupStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V8::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V8::Resources::Ad;
+use Google::Ads::GoogleAds::V8::Common::ExpandedTextAdInfo;
+use Google::Ads::GoogleAds::V8::Common::PolicyValidationParameter;
+use Google::Ads::GoogleAds::V8::Enums::AdGroupStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V8::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -55,12 +55,12 @@ sub handle_expanded_text_ad_policy_violations {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
   my $ad_group_resource_name =
-    Google::Ads::GoogleAds::V7::Utils::ResourceNames::ad_group($customer_id,
+    Google::Ads::GoogleAds::V8::Utils::ResourceNames::ad_group($customer_id,
     $ad_group_id);
 
   # Create an expanded text ad info object.
   my $expanded_text_ad_info =
-    Google::Ads::GoogleAds::V7::Common::ExpandedTextAdInfo->new({
+    Google::Ads::GoogleAds::V8::Common::ExpandedTextAdInfo->new({
       headlinePart1 => "Cruise to Mars #" . uniqid(),
       headlinePart2 => "Best Space Cruise Line",
       # Intentionally use an ad text that violates policy -- having too many
@@ -69,19 +69,19 @@ sub handle_expanded_text_ad_policy_violations {
     });
 
   # Create an ad group ad to hold the above ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V7::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V8::Resources::AdGroupAd->new({
       adGroup => $ad_group_resource_name,
       # Set the ad group ad to PAUSED to prevent it from immediately serving.
       # Set to ENABLED once you've added targeting and the ad are ready to serve.
       status => PAUSED,
       # Set the expanded text ad info on an ad.
-      ad => Google::Ads::GoogleAds::V7::Resources::Ad->new({
+      ad => Google::Ads::GoogleAds::V8::Resources::Ad->new({
           expandedTextAd => $expanded_text_ad_info,
           finalUrls      => ["http://www.example.com"]})});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V8::Services::AdGroupAdService::AdGroupAdOperation
     ->new({
       create => $ad_group_ad
     });
@@ -162,7 +162,7 @@ sub request_exemption {
     "policy violations.\n";
 
   $ad_group_ad_operation->{policyValidationParameter} =
-    Google::Ads::GoogleAds::V7::Common::PolicyValidationParameter->new(
+    Google::Ads::GoogleAds::V8::Common::PolicyValidationParameter->new(
     {ignorablePolicyTopics => $ignorable_policy_topics});
 
   my $ad_group_ads_response = $api_client->AdGroupAdService()->mutate({

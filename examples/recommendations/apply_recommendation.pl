@@ -26,8 +26,8 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V7::Services::RecommendationService::ApplyRecommendationOperation;
-use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V8::Services::RecommendationService::ApplyRecommendationOperation;
+use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -53,12 +53,12 @@ sub apply_recommendation {
   my ($api_client, $customer_id, $recommendation_id) = @_;
 
   my $recommendation_resource_name =
-    Google::Ads::GoogleAds::V7::Utils::ResourceNames::recommendation(
+    Google::Ads::GoogleAds::V8::Utils::ResourceNames::recommendation(
     $customer_id, $recommendation_id);
 
   # Create an apply recommendation operation.
   my $apply_recommendation_operation =
-    Google::Ads::GoogleAds::V7::Services::RecommendationService::ApplyRecommendationOperation
+    Google::Ads::GoogleAds::V8::Services::RecommendationService::ApplyRecommendationOperation
     ->new({
       resourceName => $recommendation_resource_name
     });
@@ -68,11 +68,11 @@ sub apply_recommendation {
   # For details, please read
   # https://developers.google.com/google-ads/api/reference/rpc/latest/ApplyRecommendationOperation.
   #
-  # my $overriding_ad = Google::Ads::GoogleAds::V7::Resources::Ad->new({
+  # my $overriding_ad = Google::Ads::GoogleAds::V8::Resources::Ad->new({
   #   id => "INSERT_AD_ID_AS_INTEGER_HERE"
   # });
   # my $text_ad_parameters =
-  #   Google::Ads::GoogleAds::V7::Services::RecommendationService::TextAdParameters
+  #   Google::Ads::GoogleAds::V8::Services::RecommendationService::TextAdParameters
   #   ->new({ad => $overriding_ad});
   # $apply_recommendation_operation->{textAd} = $text_ad_parameters;
 

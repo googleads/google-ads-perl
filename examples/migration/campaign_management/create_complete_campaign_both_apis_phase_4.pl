@@ -29,25 +29,25 @@ use utf8;
 
 use FindBin qw($Bin);
 use lib "$Bin/../../../lib";
-use Google::Ads::GoogleAds::V7::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V7::Resources::Campaign;
-use Google::Ads::GoogleAds::V7::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V7::Resources::AdGroup;
-use Google::Ads::GoogleAds::V7::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V7::Resources::Ad;
-use Google::Ads::GoogleAds::V7::Common::ManualCpc;
-use Google::Ads::GoogleAds::V7::Common::ExpandedTextAdInfo;
-use Google::Ads::GoogleAds::V7::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
-use Google::Ads::GoogleAds::V7::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V7::Enums::CampaignStatusEnum;
-use Google::Ads::GoogleAds::V7::Enums::AdGroupStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V7::Enums::AdGroupTypeEnum qw(SEARCH_STANDARD);
-use Google::Ads::GoogleAds::V7::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V8::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V8::Resources::Campaign;
+use Google::Ads::GoogleAds::V8::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V8::Resources::AdGroup;
+use Google::Ads::GoogleAds::V8::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V8::Resources::Ad;
+use Google::Ads::GoogleAds::V8::Common::ManualCpc;
+use Google::Ads::GoogleAds::V8::Common::ExpandedTextAdInfo;
+use Google::Ads::GoogleAds::V8::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V8::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V8::Enums::CampaignStatusEnum;
+use Google::Ads::GoogleAds::V8::Enums::AdGroupStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V8::Enums::AdGroupTypeEnum qw(SEARCH_STANDARD);
+use Google::Ads::GoogleAds::V8::Enums::AdGroupAdStatusEnum;
 use
-  Google::Ads::GoogleAds::V7::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V7::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation;
+  Google::Ads::GoogleAds::V8::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V8::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V8::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V8::Services::AdGroupAdService::AdGroupAdOperation;
 use Google::Ads::AdWords::v201809::Keyword;
 use Google::Ads::AdWords::v201809::BiddableAdGroupCriterion;
 use Google::Ads::AdWords::v201809::UrlList;
@@ -82,7 +82,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V7::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V8::Resources::CampaignBudget->new({
       name           => "Interplanetary Cruise Budget #" . uniqid(),
       deliveryMethod => STANDARD,
       amountMicros   => 500000
@@ -90,7 +90,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V7::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V8::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Issue a mutate request to add the campaign budget.
@@ -134,19 +134,19 @@ sub create_campaign {
   my ($google_ads_client, $customer_id, $campaign_budget) = @_;
 
   # Create a campaign.
-  my $campaign = Google::Ads::GoogleAds::V7::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V8::Resources::Campaign->new({
       name                   => "Interplanetary Cruise #" . uniqid(),
       advertisingChannelType => SEARCH,
       # Recommendation: Set the campaign to PAUSED when creating it to stop
       # the ads from immediately serving. Set to ENABLED once you've added
       # targeting and the ads are ready to serve.
-      status => Google::Ads::GoogleAds::V7::Enums::CampaignStatusEnum::PAUSED,
+      status => Google::Ads::GoogleAds::V8::Enums::CampaignStatusEnum::PAUSED,
       # Set the bidding strategy and budget.
-      manualCpc      => Google::Ads::GoogleAds::V7::Common::ManualCpc->new(),
+      manualCpc      => Google::Ads::GoogleAds::V8::Common::ManualCpc->new(),
       campaignBudget => $campaign_budget->{resourceName},
       # Set the campaign network options.
       networkSettings =>
-        Google::Ads::GoogleAds::V7::Resources::NetworkSettings->new({
+        Google::Ads::GoogleAds::V8::Resources::NetworkSettings->new({
           targetGoogleSearch         => "true",
           targetSearchNetwork        => "true",
           targetContentNetwork       => "false",
@@ -160,7 +160,7 @@ sub create_campaign {
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V7::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V8::Services::CampaignService::CampaignOperation->
     new({create => $campaign});
 
   # Issue a mutate request to add the campaign.
@@ -202,7 +202,7 @@ sub create_ad_group {
   my ($google_ads_client, $customer_id, $campaign) = @_;
 
   # Construct an ad group and set an optional CPC value.
-  my $ad_group = Google::Ads::GoogleAds::V7::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V8::Resources::AdGroup->new({
     name         => "Earth to Mars Cruise #" . uniqid(),
     campaign     => $campaign->{resourceName},
     status       => ENABLED,
@@ -212,7 +212,7 @@ sub create_ad_group {
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V7::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V8::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
   # Issue a mutate request to add the ad group.
@@ -256,24 +256,24 @@ sub create_text_ads {
   for (my $i = 0 ; $i < NUMBER_OF_ADS ; $i++) {
     # Create an expanded text ad info.
     my $expanded_text_ad_info =
-      Google::Ads::GoogleAds::V7::Common::ExpandedTextAdInfo->new({
+      Google::Ads::GoogleAds::V8::Common::ExpandedTextAdInfo->new({
         headlinePart1 => "Cruise to Mars #" . uniqid(),
         headlinePart2 => "Best Space Cruise Line",
         description   => "Buy your tickets now!"
       });
 
     # Create an ad group ad to hold the above ad.
-    my $ad_group_ad = Google::Ads::GoogleAds::V7::Resources::AdGroupAd->new({
+    my $ad_group_ad = Google::Ads::GoogleAds::V8::Resources::AdGroupAd->new({
         adGroup => $ad_group->{resourceName},
         status  =>
-          Google::Ads::GoogleAds::V7::Enums::AdGroupAdStatusEnum::PAUSED,
-        ad => Google::Ads::GoogleAds::V7::Resources::Ad->new({
+          Google::Ads::GoogleAds::V8::Enums::AdGroupAdStatusEnum::PAUSED,
+        ad => Google::Ads::GoogleAds::V8::Resources::Ad->new({
             expandedTextAd => $expanded_text_ad_info,
             finalUrls      => ["http://www.example.com"]})});
 
     # Create an ad group ad operation and add it to the operations array.
     my $ad_group_ad_operation =
-      Google::Ads::GoogleAds::V7::Services::AdGroupAdService::AdGroupAdOperation
+      Google::Ads::GoogleAds::V8::Services::AdGroupAdService::AdGroupAdOperation
       ->new({
         create => $ad_group_ad
       });

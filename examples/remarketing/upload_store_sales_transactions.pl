@@ -28,18 +28,19 @@ use lib "$Bin/../../lib";
 
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V7::Resources::OfflineUserDataJob;
-use Google::Ads::GoogleAds::V7::Common::OfflineUserAddressInfo;
-use Google::Ads::GoogleAds::V7::Common::StoreSalesMetadata;
-use Google::Ads::GoogleAds::V7::Common::StoreSalesThirdPartyMetadata;
-use Google::Ads::GoogleAds::V7::Common::TransactionAttribute;
-use Google::Ads::GoogleAds::V7::Common::UserData;
-use Google::Ads::GoogleAds::V7::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V7::Enums::OfflineUserDataJobTypeEnum
+use Google::Ads::GoogleAds::V8::Resources::OfflineUserDataJob;
+use Google::Ads::GoogleAds::V8::Common::ItemAttribute;
+use Google::Ads::GoogleAds::V8::Common::OfflineUserAddressInfo;
+use Google::Ads::GoogleAds::V8::Common::StoreSalesMetadata;
+use Google::Ads::GoogleAds::V8::Common::StoreSalesThirdPartyMetadata;
+use Google::Ads::GoogleAds::V8::Common::TransactionAttribute;
+use Google::Ads::GoogleAds::V8::Common::UserData;
+use Google::Ads::GoogleAds::V8::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V8::Enums::OfflineUserDataJobTypeEnum
   qw(STORE_SALES_UPLOAD_FIRST_PARTY STORE_SALES_UPLOAD_THIRD_PARTY);
 use
-  Google::Ads::GoogleAds::V7::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
-use Google::Ads::GoogleAds::V7::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V8::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
+use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -48,6 +49,8 @@ use Digest::SHA qw(sha256_hex);
 
 use constant POLL_FREQUENCY_SECONDS => 1;
 use constant POLL_TIMEOUT_SECONDS   => 60;
+# If uploading data with custom key and values, specify the value.
+use constant CUSTOM_VALUE => "INSERT_CUSTOM_VALUE_HERE";
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -59,7 +62,7 @@ use constant POLL_TIMEOUT_SECONDS   => 60;
 # Running the example with -h will print the command line usage.
 my $customer_id          = "INSERT_CUSTOMER_ID_HERE";
 my $conversion_action_id = "INSERT_CONVERSION_ACTION_ID_HERE";
-#
+
 # Optional: Specify the type of user data in the job (first or third party).
 # If you have an official store sales partnership with Google, use
 # STORE_SALES_UPLOAD_THIRD_PARTY.
@@ -76,6 +79,24 @@ my $advertiser_upload_date_time = undef;
 my $bridge_map_version_id = undef;
 # Optional: Specify a partner ID for third party data.
 my $partner_id = undef;
+# Optional: Specify a unique identifier of a product, either the Merchant Center
+# Item ID or Global Trade Item Number (GTIN). Only required if uploading with
+# item attributes.
+my $item_id = undef;
+# Optional: Specify a Merchant Center Account ID. Only required if uploading
+# with item attributes.
+my $merchant_center_account_id = undef;
+# Optional: Specify a two-letter region code of the location associated with the
+# feed where your items are uploaded. Only required if uploading with item
+# attributes.
+my $region_code = undef;
+# Optional: Specify a two-letter language code of the language associated with
+# the feed where your items are uploaded. Only required if uploading with item
+# attributes.
+my $language_code = undef;
+# Optional: Specify a number of items sold. Only required if uploading with item
+# attributes.
+my $quantity = 1;
 
 sub upload_store_sales_transactions {
   my (
@@ -83,7 +104,9 @@ sub upload_store_sales_transactions {
     $offline_user_data_job_type,  $conversion_action_id,
     $external_id,                 $custom_key,
     $advertiser_upload_date_time, $bridge_map_version_id,
-    $partner_id
+    $partner_id,                  $item_id,
+    $merchant_center_account_id,  $region_code,
+    $language_code,               $quantity
   ) = @_;
 
   my $offline_user_data_job_service = $api_client->OfflineUserDataJobService();
@@ -99,7 +122,10 @@ sub upload_store_sales_transactions {
   # Add transactions to the job.
   add_transactions_to_offline_user_data_job(
     $offline_user_data_job_service,       $customer_id,
-    $offline_user_data_job_resource_name, $conversion_action_id
+    $offline_user_data_job_resource_name, $conversion_action_id,
+    $custom_key,                          $item_id,
+    $merchant_center_account_id,          $region_code,
+    $language_code,                       $quantity,
   );
 
   # Issue an asynchronous request to run the offline user data job.
@@ -147,7 +173,7 @@ sub create_offline_user_data_job {
   my $store_sales_metadata =
     # Please refer to https://support.google.com/google-ads/answer/7506124 for
     # additional details.
-    Google::Ads::GoogleAds::V7::Common::StoreSalesMetadata->new({
+    Google::Ads::GoogleAds::V8::Common::StoreSalesMetadata->new({
       # Set the fraction of your overall sales that you (or the advertiser,
       # in the third party case) can associate with a customer (email, phone
       # number, address, etc.) in your database or loyalty program.
@@ -164,12 +190,13 @@ sub create_offline_user_data_job {
       transactionUploadFraction => 1.0
     });
 
-  $store_sales_metadata->{customKey} = $custom_key if $custom_key;
+  # Apply the custom key if provided.
+  $store_sales_metadata->{customKey} = $custom_key if defined $custom_key;
 
   if ($offline_user_data_job_type eq STORE_SALES_UPLOAD_THIRD_PARTY) {
     # Create additional metadata required for uploading third party data.
     my $store_sales_third_party_metadata =
-      Google::Ads::GoogleAds::V7::Common::StoreSalesThirdPartyMetadata->new({
+      Google::Ads::GoogleAds::V8::Common::StoreSalesThirdPartyMetadata->new({
         # The date/time must be in the format "yyyy-MM-dd hh:mm:ss".
         advertiserUploadDateTime => $advertiser_upload_date_time,
 
@@ -209,7 +236,7 @@ sub create_offline_user_data_job {
 
   # Create a new offline user data job.
   my $offline_user_data_job =
-    Google::Ads::GoogleAds::V7::Resources::OfflineUserDataJob->new({
+    Google::Ads::GoogleAds::V8::Resources::OfflineUserDataJob->new({
       type               => $offline_user_data_job_type,
       storeSalesMetadata => $store_sales_metadata,
       external_id        => $external_id,
@@ -233,7 +260,10 @@ sub create_offline_user_data_job {
 sub add_transactions_to_offline_user_data_job {
   my (
     $offline_user_data_job_service,       $customer_id,
-    $offline_user_data_job_resource_name, $conversion_action_id
+    $offline_user_data_job_resource_name, $conversion_action_id,
+    $custom_key,                          $item_id,
+    $merchant_center_account_id,          $region_code,
+    $language_code,                       $quantity
   ) = @_;
 
   # Issue a request to add the operations to the offline user data job.
@@ -241,7 +271,10 @@ sub add_transactions_to_offline_user_data_job {
       resourceName         => $offline_user_data_job_resource_name,
       enablePartialFailure => "true",
       operations           => build_offline_user_data_job_operations(
-        $customer_id, $conversion_action_id
+        $customer_id,                $conversion_action_id,
+        $custom_key,                 $item_id,
+        $merchant_center_account_id, $region_code,
+        $language_code,              $quantity,
       )});
 
   # Print the status message if any partial failure error is returned.
@@ -261,26 +294,28 @@ sub add_transactions_to_offline_user_data_job {
 # Creates a list of offline user data job operations for sample transactions.
 # Returns a list of operations.
 sub build_offline_user_data_job_operations {
-  my ($customer_id, $conversion_action_id) = @_;
+  my ($customer_id, $conversion_action_id, $custom_key, $item_id,
+    $merchant_center_account_id, $region_code, $language_code, $quantity)
+    = @_;
 
   # Create the first transaction for upload based on an email address and state.
   my $user_data_with_email_address =
-    Google::Ads::GoogleAds::V7::Common::UserData->new({
+    Google::Ads::GoogleAds::V8::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V7::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V8::Common::UserIdentifier->new({
             # Hash normalized email addresses based on SHA-256 hashing algorithm.
             hashedEmail => normalize_and_hash('customer@example.com')}
         ),
-        Google::Ads::GoogleAds::V7::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V8::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V7::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V8::Common::OfflineUserAddressInfo->new({
                 state => "NY"
               })})
       ],
       transactionAttribute =>
-        Google::Ads::GoogleAds::V7::Common::TransactionAttribute->new({
+        Google::Ads::GoogleAds::V8::Common::TransactionAttribute->new({
           conversionAction =>
-            Google::Ads::GoogleAds::V7::Utils::ResourceNames::conversion_action(
+            Google::Ads::GoogleAds::V8::Utils::ResourceNames::conversion_action(
             $customer_id, $conversion_action_id
             ),
           currencyCode => "USD",
@@ -292,18 +327,22 @@ sub build_offline_user_data_job_operations {
           # account's timezone as default. Examples: "2018-03-05 09:15:00"
           # or "2018-02-01 14:34:30+03:00".
           transactionDateTime => "2020-05-01 23:52:12",
-          # Optional: If uploading data with custom key and values, also specify
-          # the following value:
-          # customValue => "INSERT_CUSTOM_VALUE_HERE"
         })});
+
+  # Optional: If uploading data with custom key and values, also assign the
+  # custom value.
+  if (defined($custom_key)) {
+    $user_data_with_email_address->{transactionAttribute}{customValue} =
+      CUSTOM_VALUE;
+  }
 
   # Create the second transaction for upload based on a physical address.
   my $user_data_with_physical_address =
-    Google::Ads::GoogleAds::V7::Common::UserData->new({
+    Google::Ads::GoogleAds::V8::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V7::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V8::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V7::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V8::Common::OfflineUserAddressInfo->new({
                 # First and last name must be normalized and hashed.
                 hashedFirstName => normalize_and_hash("John"),
                 hashedLastName  => normalize_and_hash("Doe"),
@@ -313,9 +352,9 @@ sub build_offline_user_data_job_operations {
               })})
       ],
       transactionAttribute =>
-        Google::Ads::GoogleAds::V7::Common::TransactionAttribute->new({
+        Google::Ads::GoogleAds::V8::Common::TransactionAttribute->new({
           conversionAction =>
-            Google::Ads::GoogleAds::V7::Utils::ResourceNames::conversion_action(
+            Google::Ads::GoogleAds::V8::Utils::ResourceNames::conversion_action(
             $customer_id,
             $conversion_action_id
             ),
@@ -327,19 +366,32 @@ sub build_offline_user_data_job_operations {
           # time zone. The date/time must be in the format
           # "yyyy-MM-dd hh:mm:ss".
           transactionDateTime => "2020-05-14 19:07:02",
-          # Optional: If uploading data with custom key and values, also specify
-          # the following value:
-          # customValue => "INSERT_CUSTOM_VALUE_HERE"
         })});
+
+  # Optional: If uploading data with item attributes, also assign these values
+  # in the transaction attribute.
+  if (defined($item_id)) {
+    $user_data_with_physical_address->{transactionAttribute}{itemAttribute} =
+      Google::Ads::GoogleAds::V8::Common::ItemAttribute->new({
+        itemId       => $item_id,
+        merchantId   => $merchant_center_account_id,
+        regionCode   => $region_code,
+        languageCode => $language_code,
+        # Quantity field should only be set when at least one of the other item
+        # attributes is present.
+        quantity     => $quantity
+      });
+
+  }
 
   # Create the operations to add the two transactions.
   my $operations = [
-    Google::Ads::GoogleAds::V7::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V8::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_email_address
       }
       ),
-    Google::Ads::GoogleAds::V7::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V8::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_physical_address
       })];
@@ -378,6 +430,11 @@ GetOptions(
   "advertiser_upload_date_time=s" => \$advertiser_upload_date_time,
   "bridge_map_version_id=i"       => \$bridge_map_version_id,
   "partner_id=i"                  => \$partner_id,
+  "item_id=s"                     => \$item_id,
+  "merchant_center_account_id=i"  => \$merchant_center_account_id,
+  "region_code=s"                 => \$region_code,
+  "language_code=s"               => \$language_code,
+  "quantity=i"                    => \$quantity,
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -391,7 +448,9 @@ upload_store_sales_transactions(
   $offline_user_data_job_type,  $conversion_action_id,
   $external_id,                 $custom_key,
   $advertiser_upload_date_time, $bridge_map_version_id,
-  $partner_id,
+  $partner_id,                  $item_id,
+  $merchant_center_account_id,  $region_code,
+  $language_code,               $quantity,
 );
 
 =pod
@@ -425,5 +484,15 @@ upload_store_sales_transactions.pl [options]
                                     The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. "2019-01-01 12:32:45-08:00".
     -bridge_map_version_id          [optional] Version of partner IDs to be used for uploads. Only required for third party uploads.
     -partner_id                     [optional] ID of the third party partner. Only required for third party uploads.
+    -item_id                        [optional] A unique identifier of a product, either the Merchant Center Item ID or Global Trade Item Number (GTIN).
+                                    Only required if uploading with item attributes.
+    -merchant_center_account_id     [optional] A Merchant Center Account ID. Only required if uploading with item attributes.
+    -region_code                    [optional] A two-letter region code of the location associated with the feed where your items are uploaded.
+                                    Only required if uploading with item attributes.
+                                    For a list of region codes see: https://developers.google.com/google-ads/api/reference/data/codes-formats#expandable-16
+    -language_code                  [optional] A two-letter language code of the language associated with the feed where your items are uploaded.
+                                    Only required if uploading with item attributes.
+                                    For a list of language codes see: https://developers.google.com/google-ads/api/reference/data/codes-formats#expandable-7
+    -quantity                       [optional] The number of items sold. Can only be set when at least one other item attribute has been provided. Only required if uploading with item attributes.
 
 =cut
