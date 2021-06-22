@@ -62,7 +62,7 @@ sub get_ad_group_bid_modifiers {
     "ad_group_bid_modifier.hotel_check_in_date_range.start_date, " .
     "ad_group_bid_modifier.hotel_check_in_date_range.end_date, " .
     "ad_group_bid_modifier.preferred_content.type " .
-    "FROM ad_group_bid_modifier";
+    "FROM ad_group_bid_modifier LIMIT 10000";
 
   if ($ad_group_id) {
     $search_query .= " WHERE ad_group.id = $ad_group_id";
