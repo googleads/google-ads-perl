@@ -1,3 +1,7 @@
+8.0.1 - 2021-07-05
+- Improved code examples: get_ad_group_bid_modifiers, upload_call_conversion,
+  upload_offline_conversion.
+
 8.0.0 - 2021-06-11
 - Added support for Google Ads API v8_0.
 - Removed support for Google Ads API v5.

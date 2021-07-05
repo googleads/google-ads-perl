@@ -29,6 +29,8 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
   Google::Ads::GoogleAds::V8::Services::ConversionUploadService::ClickConversion;
+use
+  Google::Ads::GoogleAds::V8::Services::ConversionUploadService::CustomVariable;
 use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
@@ -48,12 +50,19 @@ my $conversion_action_id = "INSERT_CONVERSION_ACTION_ID_HERE";
 my $gclid                = "INSERT_GCLID_HERE";
 my $conversion_date_time = "INSERT_CONVERSION_DATE_TIME_HERE";
 my $conversion_value     = "INSERT_CONVERSION_VALUE_HERE";
+# Optional: Specify the conversion custom variable ID and value you want to
+# associate with the click conversion upload.
+my $conversion_custom_variable_id    = undef;
+my $conversion_custom_variable_value = undef;
 
 # [START upload_offline_conversion]
 sub upload_offline_conversion {
-  my ($api_client, $customer_id, $conversion_action_id, $gclid,
-    $conversion_date_time, $conversion_value)
-    = @_;
+  my (
+    $api_client,                    $customer_id,
+    $conversion_action_id,          $gclid,
+    $conversion_date_time,          $conversion_value,
+    $conversion_custom_variable_id, $conversion_custom_variable_value
+  ) = @_;
 
   # Create a click conversion by specifying currency as USD.
   my $click_conversion =
@@ -68,6 +77,18 @@ sub upload_offline_conversion {
       conversionValue    => $conversion_value,
       currencyCode       => "USD"
     });
+
+  if ($conversion_custom_variable_id && $conversion_custom_variable_value) {
+    $click_conversion->{customVariables} = [
+      Google::Ads::GoogleAds::V8::Services::ConversionUploadService::CustomVariable
+        ->new({
+          conversionCustomVariable =>
+            Google::Ads::GoogleAds::V8::Utils::ResourceNames::conversion_custom_variable(
+            $customer_id, $conversion_custom_variable_id
+            ),
+          value => $conversion_custom_variable_value
+        })];
+  }
 
   # Issue a request to upload the click conversion.
   my $upload_click_conversions_response =
@@ -112,11 +133,13 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"          => \$customer_id,
-  "conversion_action_id=i" => \$conversion_action_id,
-  "gclid=s"                => \$gclid,
-  "conversion_date_time=s" => \$conversion_date_time,
-  "conversion_value=f"     => \$conversion_value
+  "customer_id=s"                      => \$customer_id,
+  "conversion_action_id=i"             => \$conversion_action_id,
+  "gclid=s"                            => \$gclid,
+  "conversion_date_time=s"             => \$conversion_date_time,
+  "conversion_value=f"                 => \$conversion_value,
+  "conversion_custom_variable_id=s"    => \$conversion_custom_variable_id,
+  "conversion_custom_variable_value=s" => \$conversion_custom_variable_value
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -126,8 +149,12 @@ pod2usage(2)
   $conversion_date_time, $conversion_value);
 
 # Call the example.
-upload_offline_conversion($api_client, $customer_id =~ s/-//gr,
-  $conversion_action_id, $gclid, $conversion_date_time, $conversion_value);
+upload_offline_conversion(
+  $api_client,                    $customer_id =~ s/-//gr,
+  $conversion_action_id,          $gclid,
+  $conversion_date_time,          $conversion_value,
+  $conversion_custom_variable_id, $conversion_custom_variable_value
+);
 
 =pod
 
@@ -146,13 +173,15 @@ To set up a conversion action, run the add_conversion_action.pl example.
 
 upload_offline_conversion.pl [options]
 
-    -help                       Show the help message.
-    -customer_id                The Google Ads customer ID.
-    -conversion_action_id       The ID of the conversion action to upload to.
-    -gclid                      The GCLID for the conversion (should be newer than the number of days
-                                set on the conversion window of the conversion action).
-    -conversion_date_time       The date and time of the conversion (should be after the click time).
-                                The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. "2019-01-01 12:32:45-08:00".
-    -conversion_value           The value of the conversion.
-
+    -help                               Show the help message.
+    -customer_id                        The Google Ads customer ID.
+    -conversion_action_id               The ID of the conversion action to upload to.
+    -gclid                              The GCLID for the conversion (should be newer than the number of days
+                                        set on the conversion window of the conversion action).
+    -conversion_date_time               The date and time of the conversion (should be after the click time).
+                                        The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. "2019-01-01 12:32:45-08:00".
+    -conversion_value                   The value of the conversion.
+    -conversion_custom_variable_id      [optional] The ID of the conversion custom variable to associate with the upload.
+    -conversion_custom_variable_value   [optional] The value of the conversion custom variable to associate with the upload.
+    
 =cut
