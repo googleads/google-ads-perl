@@ -66,9 +66,8 @@ sub get_ad_group_bid_modifiers {
 
   if ($ad_group_id) {
     $search_query .= " WHERE ad_group.id = $ad_group_id";
-  } else {
-    $search_query .= " LIMIT 10000";
   }
+  $search_query .= " LIMIT 10000";
 
   # Create a search Google Ads request that will retrieve all ad group bid modifiers
   # using pages of the specified page size.
