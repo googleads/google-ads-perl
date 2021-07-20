@@ -197,6 +197,7 @@ sub add_users_to_customer_match_user_list {
 # Builds and returns offline user data job operations to add one user identified
 # by an email address and one user identified based on a physical address.
 sub build_offline_user_data_job_operations() {
+  # [START add_customer_match_user_list_2]
   # Create a first user data based on an email address.
   my $user_data_with_email_address =
     Google::Ads::GoogleAds::V8::Common::UserData->new({
@@ -219,6 +220,7 @@ sub build_offline_user_data_job_operations() {
                 countryCode => "US",
                 postalCode  => "10011"
               })})]});
+  # [END add_customer_match_user_list_2]
 
   # Create the operations to add the two users.
   my $operations = [
