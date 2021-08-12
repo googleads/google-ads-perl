@@ -1,4 +1,4 @@
-8.1.0 - 2021-08-13
+9.0.0 - 2021-08-13
 - Added support for Google Ads API v8_1.
 - Removed support for Google Ads API v6.
 - Removed add_gmail_ad code example.
