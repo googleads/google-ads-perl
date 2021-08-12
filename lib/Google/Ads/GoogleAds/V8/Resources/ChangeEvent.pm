@@ -24,6 +24,7 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     adGroup                 => $args->{adGroup},
+    asset                   => $args->{asset},
     campaign                => $args->{campaign},
     changeDateTime          => $args->{changeDateTime},
     changeResourceName      => $args->{changeResourceName},

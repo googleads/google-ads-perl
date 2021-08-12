@@ -67,9 +67,13 @@ use
   Google::Ads::GoogleAds::V8::Services::SmartCampaignSettingService::SmartCampaignSettingOperation;
 use Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService;
 use
+  Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::BusinessContext;
+use
   Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::LocationList;
 use
   Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::SmartCampaignSuggestionInfo;
+use
+  Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::SuggestSmartCampaignAdRequest;
 use
   Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::SuggestSmartCampaignBudgetOptionsRequest;
 use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
@@ -121,9 +125,13 @@ sub add_smart_campaign {
         keywordThemeConstant => $keyword_theme_constant->{resourceName}});
   }
 
-  my $suggested_budget_amount =
-    _get_budget_suggestion($api_client, $customer_id, $business_location_id,
+  my $suggestion_info =
+    _get_smart_campaign_suggestion_info($business_location_id, $business_name,
     $keyword_theme_infos);
+  my $suggested_budget_amount =
+    _get_budget_suggestion($api_client, $customer_id, $suggestion_info);
+  my $ad_suggestions =
+    _get_ad_suggestions($api_client, $customer_id, $suggestion_info);
 
   # [START add_smart_campaign_7]
   # The below methods create and return MutateOperations that we later provide to the
@@ -141,8 +149,9 @@ sub add_smart_campaign {
     $business_location_id, $business_name);
   my @campaign_criterion_operations =
     _create_campaign_criterion_operations($customer_id, $keyword_theme_infos);
-  my $ad_group_operation    = _create_ad_group_operation($customer_id);
-  my $ad_group_ad_operation = _create_ad_group_ad_operation($customer_id);
+  my $ad_group_operation = _create_ad_group_operation($customer_id);
+  my $ad_group_ad_operation =
+    _create_ad_group_ad_operation($customer_id, $ad_suggestions);
 
   # It's important to create these entities in this order because they depend on
   # each other. For example, the SmartCampaignSetting and ad group depend on the
@@ -187,56 +196,54 @@ sub _get_keyword_theme_constants {
 }
 # [END add_smart_campaign]
 
-# [START add_smart_campaign_1]
-sub _get_budget_suggestion {
-  my ($api_client, $customer_id, $business_location_id, $keyword_theme_infos) =
-    @_;
+# [START add_smart_campaign_9]
+# Builds a SmartCampaignSuggestionInfo object with business details.
+# The details are used by the SmartCampaignSuggestService to suggest a budget
+# amount as well as creatives for the ad.
+# Note that when retrieving ad creative suggestions you must set the
+# "final_url", "language_code" and "keyword_themes" fields on the
+# SmartCampaignSuggestionInfo instance.
+sub _get_smart_campaign_suggestion_info {
+  my ($business_location_id, $business_name, $keyword_theme_infos) = @_;
 
-  my $request =
-    Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::SuggestSmartCampaignBudgetOptionsRequest
+  my $suggestion_info =
+    Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::SmartCampaignSuggestionInfo
     ->new({
-      customerId => $customer_id,
-      # You can retrieve suggestions for an existing campaign by setting the
-      # "Campaign" field of the request to the resource name of a campaign and
-      # leaving the rest of the request fields below unset:
-      # campaign   => "INSERT_CAMPAIGN_RESOURCE_NAME_HERE",
-      suggestionInfo =>
-        Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::SmartCampaignSuggestionInfo
-        ->new({
-          # Add the URL of the campaign's landing page.
-          finalUrl => LANDING_PAGE_URL,
-          # Construct location information using the given geo target constant.
-          # It's also possible to provide a geographic proximity using the
-          # "proximity" field on suggestion_info, for example:
-          # proximity => Google::Ads::GoogleAds::V8::Common::ProximityInfo->new({
-          #     address => Google::Ads::GoogleAds::V8::Common::AddressInfo->new({
-          #         postalCode     => "INSERT_POSTAL_CODE",
-          #         provinceCode   => "INSERT_PROVINCE_CODE",
-          #         countryCode    => "INSERT_COUNTRY_CODE",
-          #         provinceName   => "INSERT_PROVINCE_NAME",
-          #         streetAddress  => "INSERT_STREET_ADDRESS",
-          #         streetAddress2 => "INSERT_STREET_ADDRESS_2",
-          #         cityName       => "INSERT_CITY_NAME"
-          #       }
-          #     ),
-          #     radius      => "INSERT_RADIUS",
-          #     radiusUnits => MILES
-          #   }
-          # ),
-          # For more information on proximities see:
-          # https://developers.google.com/google-ads/api/reference/rpc/latest/ProximityInfo
-          locationList =>
-            Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::LocationList
-            ->new(
-            ),
-          # keywordThemes => Keywordtheme
-        })});
+      # Add the URL of the campaign's landing page.
+      finalUrl => LANDING_PAGE_URL,
+      # Add the language code for the campaign.
+      languageCode => LANGUAGE_CODE,
+      # Construct location information using the given geo target constant.
+      # It's also possible to provide a geographic proximity using the
+      # "proximity" field on suggestion_info, for example:
+      #
+      # proximity => Google::Ads::GoogleAds::V8::Common::ProximityInfo->new({
+      #   address => Google::Ads::GoogleAds::V8::Common::AddressInfo->new({
+      #     postalCode     => "INSERT_POSTAL_CODE",
+      #     provinceCode   => "INSERT_PROVINCE_CODE",
+      #     countryCode    => "INSERT_COUNTRY_CODE",
+      #     provinceName   => "INSERT_PROVINCE_NAME",
+      #     streetAddress  => "INSERT_STREET_ADDRESS",
+      #     streetAddress2 => "INSERT_STREET_ADDRESS_2",
+      #     cityName       => "INSERT_CITY_NAME"
+      #   }),
+      #   radius      => "INSERT_RADIUS",
+      #   radiusUnits => MILES
+      # }),
+      #
+      # For more information on proximities see:
+      # https://developers.google.com/google-ads/api/reference/rpc/latest/ProximityInfo
+      locationList =>
+        Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::LocationList
+        ->new(
+        ),
+    });
 
   # Add the LocationInfo object to the list of locations on the SuggestionInfo
   # object. You have the option of providing multiple locations when using
   # location-based suggestions.
   push
-    @{$request->{suggestionInfo}{locationList}{locations}},
+    @{$suggestion_info->{locationList}{locations}},
     Google::Ads::GoogleAds::V8::Common::LocationInfo->new({
       # Set the location to the resource name of the given geo target constant.
       geoTargetConstant =>
@@ -244,17 +251,24 @@ sub _get_budget_suggestion {
         GEO_TARGET_CONSTANT)});
 
   # Add the KeywordThemeInfo objects to the SuggestionInfo object.
-  push @{$request->{suggestionInfo}{keywordThemes}}, $keyword_theme_infos;
+  push @{$suggestion_info->{keywordThemes}}, $keyword_theme_infos;
 
-  # Add the GM location ID if provided.
-  $request->{suggestionInfo}{businessLocationId} = $business_location_id
-    if defined $business_location_id;
+  # Set one of the business_location_id or business_name, whichever is provided.
+  if (defined $business_location_id) {
+    $suggestion_info->{businessLocationId} = $business_location_id;
+  } else {
+    $suggestion_info->{businessContext} =
+      Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::BusinessContext
+      ->new({
+        businessName => $business_name
+      });
+  }
 
   # Add a schedule detailing which days of the week the business is open. This
   # example schedule describes a business that is open on Mondays from 9:00 AM
   # to 5:00 PM.
   push(
-    @{$request->{suggestionInfo}{adSchedules}},
+    @{$suggestion_info->{adSchedules}},
     Google::Ads::GoogleAds::V8::Common::AdScheduleInfo->new({
         # Set the day of this schedule as Monday.
         dayOfWeek => MONDAY,
@@ -266,6 +280,32 @@ sub _get_budget_suggestion {
         startMinute => ZERO,
         endMinute   => ZERO
       }));
+
+  return $suggestion_info;
+}
+# [END add_smart_campaign_9]
+
+# [START add_smart_campaign_1]
+# Retrieves a suggested budget amount for a new budget.
+# Using the SmartCampaignSuggestService to determine a daily budget for new and
+# existing Smart campaigns is highly recommended because it helps the campaigns
+# achieve optimal performance.
+sub _get_budget_suggestion {
+  my ($api_client, $customer_id, $suggestion_info) = @_;
+
+  my $request =
+    Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::SuggestSmartCampaignBudgetOptionsRequest
+    ->new({
+      customerId => $customer_id,
+      # You can retrieve suggestions for an existing campaign by setting the
+      # "Campaign" field of the request to the resource name of a campaign and
+      # leaving the rest of the request fields below unset:
+      # campaign   => "INSERT_CAMPAIGN_RESOURCE_NAME_HERE",
+      #
+      # Since these suggestions are for a new campaign, we're going to
+      # use the suggestion_info field instead.
+      suggestionInfo => $suggestion_info
+    });
 
   # Issue a request to retrieve a budget suggestion.
   my $response = $api_client->SmartCampaignSuggestService()
@@ -283,6 +323,43 @@ sub _get_budget_suggestion {
   return $response->{recommended}{dailyAmountMicros};
 }
 # [END add_smart_campaign_1]
+
+# [START add_smart_campaign_10]
+# Retrieves creative suggestions for a Smart campaign ad.
+# Using the SmartCampaignSuggestService to suggest creatives for new and
+# existing Smart campaigns is highly recommended because it helps the campaigns
+# achieve optimal performance.
+sub _get_ad_suggestions {
+  my ($api_client, $customer_id, $suggestion_info) = @_;
+
+  # Issue a request to retrieve ad creative suggestions.
+  my $response =
+    $api_client->SmartCampaignSuggestService()->suggest_smart_campaign_ad(
+    Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::SuggestSmartCampaignAdRequest
+      ->new({
+        customerId => $customer_id,
+        # Unlike the SuggestSmartCampaignBudgetOptions method, it's only
+        # possible to use suggestion_info to retrieve ad creative suggestions.
+        suggestionInfo => $suggestion_info
+      }));
+
+  # The SmartCampaignAdInfo object in the response contains a list of up to
+  # three headlines and two descriptions. Note that some of the suggestions
+  # may have empty strings as text.
+  my $ad_suggestions = $response->{adInfo};
+  printf "The following headlines were suggested:\n";
+  foreach my $headline (@{$ad_suggestions->{headlines}}) {
+    printf "\t%s\n", defined $headline->{text} ? $headline->{text} : "<None>";
+  }
+  printf "The following descriptions were suggested:\n";
+  foreach my $description (@{$ad_suggestions->{descriptions}}) {
+    printf "\t%s\n",
+      defined $description->{text} ? $description->{text} : "<None>";
+  }
+
+  return $ad_suggestions;
+}
+# [END add_smart_campaign_10]
 
 # [START add_smart_campaign_2]
 # Creates a MutateOperation that creates a new CampaignBudget.
@@ -472,9 +549,9 @@ sub _create_ad_group_operation {
 # A temporary ID will be used in the ad group resource name for this ad group
 # ad to associate it with the ad group created in earlier steps.
 sub _create_ad_group_ad_operation {
-  my ($customer_id) = @_;
+  my ($customer_id, $ad_suggestions) = @_;
 
-  return
+  my $mutate_operation =
     Google::Ads::GoogleAds::V8::Services::GoogleAdsService::MutateOperation->
     new({
       adGroupAdOperation =>
@@ -482,6 +559,7 @@ sub _create_ad_group_ad_operation {
         ->new({
           create => Google::Ads::GoogleAds::V8::Resources::AdGroupAd->new({
               adGroup =>
+                # Set the ad group ID to a temporary ID.
                 Google::Ads::GoogleAds::V8::Utils::ResourceNames::ad_group(
                 $customer_id, AD_GROUP_TEMPORARY_ID
                 ),
@@ -490,30 +568,29 @@ sub _create_ad_group_ad_operation {
                   type            => SMART_CAMPAIGN_AD,
                   smartCampaignAd =>
                     Google::Ads::GoogleAds::V8::Common::SmartCampaignAdInfo->
-                    new({
-                      # At most, three headlines can be specified for a Smart
-                      # campaign ad.
-                      headlines => [
-                        Google::Ads::GoogleAds::V8::Common::AdTextAsset->new({
-                            text => "Headline number one"
-                          }
-                        ),
-                        Google::Ads::GoogleAds::V8::Common::AdTextAsset->new({
-                            text => "Headline number two"
-                          }
-                        ),
-                        Google::Ads::GoogleAds::V8::Common::AdTextAsset->new({
-                            text => "Headline number three"
-                          })
-                      ],
-                      # At most, two descriptions can be specified for a Smart
-                      # campaign ad.
-                      descriptions => [
-                        Google::Ads::GoogleAds::V8::Common::AdTextAsset->new(
-                          {text => "Description number one"}
-                        ),
-                        Google::Ads::GoogleAds::V8::Common::AdTextAsset->new(
-                          {text => "Description number two"})]})})})})});
+                    new(
+                    )})})})});
+
+  # The SmartCampaignAdInfo object includes headlines and descriptions
+  # retrieved from the SmartCampaignSuggestService.SuggestSmartCampaignAd
+  # method. It's recommended that users review and approve or update these
+  # creatives before they're set on the ad. It's possible that some or all of
+  # these assets may contain empty texts, which should not be set on the ad
+  # and instead should be replaced with meaninful texts from the user. Below
+  # we just accept the creatives that were suggested while filtering out empty
+  # assets, but individual workflows will vary here.
+  foreach my $asset (@{$ad_suggestions->{headlines}}) {
+    push @{$mutate_operation->{adGroupAdOperation}{create}{ad}{smartCampaignAd}
+        {headlines}}, $asset
+      if defined $asset->{text};
+  }
+  foreach my $asset (@{$ad_suggestions->{descriptions}}) {
+    push @{$mutate_operation->{adGroupAdOperation}{create}{ad}{smartCampaignAd}
+        {descriptions}}, $asset
+      if defined $asset->{text};
+  }
+
+  return $mutate_operation;
 }
 # [END add_smart_campaign_6]
 

@@ -23,6 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    actionItems   => $args->{actionItems},
     ad            => $args->{ad},
     adGroup       => $args->{adGroup},
     adStrength    => $args->{adStrength},

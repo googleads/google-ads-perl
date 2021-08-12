@@ -30,7 +30,7 @@ use Google::Ads::GoogleAds::Utils::FieldMasks;
 use Google::Ads::GoogleAds::V8::Enums::ResourceChangeOperationEnum
   qw(CREATE UPDATE);
 use Google::Ads::GoogleAds::V8::Enums::ChangeEventResourceTypeEnum
-  qw(AD AD_GROUP AD_GROUP_AD AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER CAMPAIGN CAMPAIGN_BUDGET CAMPAIGN_CRITERION AD_GROUP_FEED CAMPAIGN_FEED FEED FEED_ITEM);
+  qw(AD AD_GROUP AD_GROUP_AD AD_GROUP_ASSET AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER ASSET CAMPAIGN CAMPAIGN_ASSET CAMPAIGN_BUDGET CAMPAIGN_CRITERION AD_GROUP_FEED CAMPAIGN_FEED CUSTOMER_ASSET FEED FEED_ITEM);
 use
   Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
@@ -105,7 +105,7 @@ sub get_change_details {
 
     if (grep /$change_event->{resourceChangeOperation}/, (CREATE, UPDATE)) {
       my ($old_resource, $new_resource) =
-        __get_changed_resources_for_resource_type($change_event);
+        _get_changed_resources_for_resource_type($change_event);
 
       foreach my $changed_field (split /,/, $change_event->{changedFields}) {
         my $new_value = get_field_value($new_resource, $changed_field) || "";
@@ -124,7 +124,7 @@ sub get_change_details {
 
 # This method returns the old resource and new resource based on the change
 # resource type of a change event.
-sub __get_changed_resources_for_resource_type {
+sub _get_changed_resources_for_resource_type {
   my $change_event  = shift;
   my $resource_type = $change_event->{changeResourceType};
   if ($resource_type eq AD) {
@@ -135,27 +135,39 @@ sub __get_changed_resources_for_resource_type {
   } elsif ($resource_type eq AD_GROUP_AD) {
     return $change_event->{oldResource}{adGroupAd},
       $change_event->{newResource}{adGroupAd};
+  } elsif ($resource_type eq AD_GROUP_ASSET) {
+    return $change_event->{oldResource}{adGroupAsset},
+      $change_event->{newResource}{adGroupAsset};
   } elsif ($resource_type eq AD_GROUP_CRITERION) {
     return $change_event->{oldResource}{adGroupCriterion},
       $change_event->{newResource}{adGroupCriterion};
   } elsif ($resource_type eq AD_GROUP_BID_MODIFIER) {
     return $change_event->{oldResource}{adGroupBidModifier},
       $change_event->{newResource}{adGroupBidModifier};
+  } elsif ($resource_type eq AD_GROUP_FEED) {
+    return $change_event->{oldResource}{adGroupFeed},
+      $change_event->{newResource}{adGroupFeed};
+  } elsif ($resource_type eq ASSET) {
+    return $change_event->{oldResource}{asset},
+      $change_event->{newResource}{asset};
   } elsif ($resource_type eq CAMPAIGN) {
     return $change_event->{oldResource}{campaign},
       $change_event->{newResource}{campaign};
+  } elsif ($resource_type eq CAMPAIGN_ASSET) {
+    return $change_event->{oldResource}{campaignAsset},
+      $change_event->{newResource}{campaignAsset};
   } elsif ($resource_type eq CAMPAIGN_BUDGET) {
     return $change_event->{oldResource}{campaignBudget},
       $change_event->{newResource}{campaignBudget};
   } elsif ($resource_type eq CAMPAIGN_CRITERION) {
     return $change_event->{oldResource}{campaignCriterion},
       $change_event->{newResource}{campaignCriterion};
-  } elsif ($resource_type eq AD_GROUP_FEED) {
-    return $change_event->{oldResource}{adGroupFeed},
-      $change_event->{newResource}{adGroupFeed};
   } elsif ($resource_type eq CAMPAIGN_FEED) {
     return $change_event->{oldResource}{campaignFeed},
       $change_event->{newResource}{campaignFeed};
+  } elsif ($resource_type eq CUSTOMER_ASSET) {
+    return $change_event->{oldResource}{customerAsset},
+      $change_event->{newResource}{customerAsset};
   } elsif ($resource_type eq FEED) {
     return $change_event->{oldResource}{feed},
       $change_event->{newResource}{feed};
