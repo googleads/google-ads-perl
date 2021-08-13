@@ -26,13 +26,17 @@ sub new {
     ad                 => $args->{ad},
     adGroup            => $args->{adGroup},
     adGroupAd          => $args->{adGroupAd},
+    adGroupAsset       => $args->{adGroupAsset},
     adGroupBidModifier => $args->{adGroupBidModifier},
     adGroupCriterion   => $args->{adGroupCriterion},
     adGroupFeed        => $args->{adGroupFeed},
+    asset              => $args->{asset},
     campaign           => $args->{campaign},
+    campaignAsset      => $args->{campaignAsset},
     campaignBudget     => $args->{campaignBudget},
     campaignCriterion  => $args->{campaignCriterion},
     campaignFeed       => $args->{campaignFeed},
+    customerAsset      => $args->{customerAsset},
     feed               => $args->{feed},
     feedItem           => $args->{feedItem}};
 

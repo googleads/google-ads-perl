@@ -59,6 +59,8 @@ sub new {
     conversionAdjustmentUploadError => $args->{conversionAdjustmentUploadError},
     conversionCustomVariableError   => $args->{conversionCustomVariableError},
     conversionUploadError           => $args->{conversionUploadError},
+    conversionValueRuleError        => $args->{conversionValueRuleError},
+    conversionValueRuleSetError     => $args->{conversionValueRuleSetError},
     countryCodeError                => $args->{countryCodeError},
     criterionError                  => $args->{criterionError},
     currencyCodeError               => $args->{currencyCodeError},

@@ -72,7 +72,7 @@ use Data::Uniqid qw(uniqid);
 
 use constant MARKETING_IMAGE_URL => "https://goo.gl/3b9Wfh";
 use constant LOGO_IMAGE_URL      => "https://goo.gl/mtt54n";
-use constant YOUTUBE_VIDEO_ID    => "t1fDo0VyeEo";
+use constant YOUTUBE_VIDEO_ID    => "ECpDzH9gXh8";
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

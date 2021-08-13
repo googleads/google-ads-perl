@@ -31,7 +31,8 @@ sub new {
     customVariables         => $args->{customVariables},
     externalAttributionData => $args->{externalAttributionData},
     gclid                   => $args->{gclid},
-    orderId                 => $args->{orderId}};
+    orderId                 => $args->{orderId},
+    userIdentifiers         => $args->{userIdentifiers}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

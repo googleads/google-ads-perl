@@ -18,6 +18,18 @@ use strict;
 use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
+sub suggest_smart_campaign_ad {
+  my $self         = shift;
+  my $request_body = shift;
+  my $http_method  = 'POST';
+  my $request_path = 'v8/customers/{+customerId}:suggestSmartCampaignAd';
+  my $response_type =
+'Google::Ads::GoogleAds::V8::Services::SmartCampaignSuggestService::SuggestSmartCampaignAdResponse';
+
+  return $self->SUPER::call($http_method, $request_path, $request_body,
+    $response_type);
+}
+
 sub suggest_smart_campaign_budget_options {
   my $self         = shift;
   my $request_body = shift;

@@ -22,6 +22,7 @@ use Const::Exporter enums => [
   UNKNOWN                   => "UNKNOWN",
   COMMISSION                => "COMMISSION",
   ENHANCED_CPC              => "ENHANCED_CPC",
+  INVALID                   => "INVALID",
   MANUAL_CPC                => "MANUAL_CPC",
   MANUAL_CPM                => "MANUAL_CPM",
   MANUAL_CPV                => "MANUAL_CPV",

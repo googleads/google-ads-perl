@@ -1,3 +1,12 @@
+9.0.0 - 2021-08-13
+- Added support for Google Ads API v8_1.
+- Removed support for Google Ads API v6.
+- Removed add_gmail_ad code example.
+- Added new services: BiddingDataExclusionService,
+  BiddingSeasonalityAdjustmentService.
+- Updated code examples for Google Ads API v8_1: add_smart_campaign,
+  get_change_details.
+
 8.0.1 - 2021-07-05
 - Improved code examples: get_ad_group_bid_modifiers, upload_call_conversion,
   upload_offline_conversion.

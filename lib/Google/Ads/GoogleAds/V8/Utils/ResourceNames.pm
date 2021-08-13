@@ -297,6 +297,28 @@ sub batch_job {
   return expand_path_template($path_template, [$customer_id, $batch_job_id]);
 }
 
+# Returns the bidding_data_exclusion resource name for the specified components.
+sub bidding_data_exclusion {
+  my ($customer_id, $data_exclusion_id) = @_;
+
+  my $path_template =
+    'customers/{customer_id}/biddingDataExclusions/{data_exclusion_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $data_exclusion_id]);
+}
+
+# Returns the bidding_seasonality_adjustment resource name for the specified components.
+sub bidding_seasonality_adjustment {
+  my ($customer_id, $seasonality_adjustment_id) = @_;
+
+  my $path_template =
+'customers/{customer_id}/biddingSeasonalityAdjustments/{seasonality_adjustment_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $seasonality_adjustment_id]);
+}
+
 # Returns the bidding_strategy resource name for the specified components.
 sub bidding_strategy {
   my ($customer_id, $bidding_strategy_id) = @_;
@@ -581,6 +603,28 @@ sub conversion_custom_variable {
 
   return expand_path_template($path_template,
     [$customer_id, $conversion_custom_variable_id]);
+}
+
+# Returns the conversion_value_rule resource name for the specified components.
+sub conversion_value_rule {
+  my ($customer_id, $conversion_value_rule_id) = @_;
+
+  my $path_template =
+    'customers/{customer_id}/conversionValueRules/{conversion_value_rule_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $conversion_value_rule_id]);
+}
+
+# Returns the conversion_value_rule_set resource name for the specified components.
+sub conversion_value_rule_set {
+  my ($customer_id, $conversion_value_rule_set_id) = @_;
+
+  my $path_template =
+'customers/{customer_id}/conversionValueRuleSets/{conversion_value_rule_set_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $conversion_value_rule_set_id]);
 }
 
 # Returns the currency_constant resource name for the specified components.

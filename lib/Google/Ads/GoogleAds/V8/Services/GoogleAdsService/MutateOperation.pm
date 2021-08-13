@@ -31,12 +31,15 @@ sub new {
     adGroupCriterionOperation        => $args->{adGroupCriterionOperation},
     adGroupExtensionSettingOperation =>
       $args->{adGroupExtensionSettingOperation},
-    adGroupFeedOperation              => $args->{adGroupFeedOperation},
-    adGroupLabelOperation             => $args->{adGroupLabelOperation},
-    adGroupOperation                  => $args->{adGroupOperation},
-    adOperation                       => $args->{adOperation},
-    adParameterOperation              => $args->{adParameterOperation},
-    assetOperation                    => $args->{assetOperation},
+    adGroupFeedOperation          => $args->{adGroupFeedOperation},
+    adGroupLabelOperation         => $args->{adGroupLabelOperation},
+    adGroupOperation              => $args->{adGroupOperation},
+    adOperation                   => $args->{adOperation},
+    adParameterOperation          => $args->{adParameterOperation},
+    assetOperation                => $args->{assetOperation},
+    biddingDataExclusionOperation => $args->{biddingDataExclusionOperation},
+    biddingSeasonalityAdjustmentOperation =>
+      $args->{biddingSeasonalityAdjustmentOperation},
     biddingStrategyOperation          => $args->{biddingStrategyOperation},
     campaignAssetOperation            => $args->{campaignAssetOperation},
     campaignBidModifierOperation      => $args->{campaignBidModifierOperation},
@@ -53,7 +56,9 @@ sub new {
     conversionActionOperation         => $args->{conversionActionOperation},
     conversionCustomVariableOperation =>
       $args->{conversionCustomVariableOperation},
-    customerAssetOperation            => $args->{customerAssetOperation},
+    conversionValueRuleOperation    => $args->{conversionValueRuleOperation},
+    conversionValueRuleSetOperation => $args->{conversionValueRuleSetOperation},
+    customerAssetOperation          => $args->{customerAssetOperation},
     customerExtensionSettingOperation =>
       $args->{customerExtensionSettingOperation},
     customerFeedOperation              => $args->{customerFeedOperation},

@@ -28,7 +28,9 @@ sub new {
     conversionAction   => $args->{conversionAction},
     gclidDateTimePair  => $args->{gclidDateTimePair},
     orderId            => $args->{orderId},
-    restatementValue   => $args->{restatementValue}};
+    restatementValue   => $args->{restatementValue},
+    userAgent          => $args->{userAgent},
+    userIdentifiers    => $args->{userIdentifiers}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

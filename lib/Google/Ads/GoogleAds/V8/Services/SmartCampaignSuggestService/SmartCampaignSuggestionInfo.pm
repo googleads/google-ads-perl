@@ -24,6 +24,7 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     adSchedules        => $args->{adSchedules},
+    businessContext    => $args->{businessContext},
     businessLocationId => $args->{businessLocationId},
     finalUrl           => $args->{finalUrl},
     keywordThemes      => $args->{keywordThemes},
