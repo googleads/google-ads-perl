@@ -1,3 +1,9 @@
+9.1.0 - 2021-09-30
+- Added code examples: add_bidding_data_exclusion, add_bidding_seasonality_adjustment.
+- Fixed code examples: add_display_upload_ad, add_local_campaign, add_smart_display_ad,
+  upload_image, upload_image_asset, upload_media_bundle,
+  add_merchant_center_dynamic_remarketing_campaign.
+
 9.0.0 - 2021-08-13
 - Added support for Google Ads API v8_1.
 - Removed support for Google Ads API v6.

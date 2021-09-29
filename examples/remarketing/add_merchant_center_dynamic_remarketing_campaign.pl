@@ -183,11 +183,11 @@ sub create_ad {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
   my $marketing_image_resource_name =
-    upload_asset($api_client, $customer_id, "https://goo.gl/3b9Wfh",
+    upload_asset($api_client, $customer_id, "https://gaagl.page.link/Eit5",
     "Marketing Image");
 
   my $square_marketing_image_resource_name =
-    upload_asset($api_client, $customer_id, "https://goo.gl/mtt54n",
+    upload_asset($api_client, $customer_id, "https://gaagl.page.link/bjYi",
     "Square Marketing Image");
 
   # Create the responsive display ad info object.

@@ -50,7 +50,7 @@ use Cwd qw(abs_path);
 # The HTML5 zip file contains all the HTML, CSS, and images needed for the
 # HTML5 ad. For help on creating an HTML5 zip file, check out Google Web
 # Designer (https://www.google.com/webdesigner/).
-use constant BUNDLE_URL => "https://goo.gl/9Y7qI2";
+use constant BUNDLE_URL => "https://gaagl.page.link/ib87";
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

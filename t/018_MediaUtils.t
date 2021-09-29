@@ -29,7 +29,7 @@ use_ok("Google::Ads::GoogleAds::Utils::MediaUtils");
 #
 # NOTE: Skip the success case for testings without network connection.
 # ok(
-#   get_base64_data_from_url("https://goo.gl/3b9Wfh"),
+#   get_base64_data_from_url("https://gaagl.page.link/Eit5"),
 #   "Test get_base64_data_from_url(): valid url."
 # );
 ok(

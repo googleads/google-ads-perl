@@ -1,34 +1,52 @@
 ---
-name: Bug report
-about: Report a bug in this library
+name: Library-specific Bug Report
+about: Report a problem with this library that needs to be fixed.
 title: ''
-labels: bug
+labels: bug, triage
 assignees: ''
 
 ---
 
-<!--
-This form is for bug reports for this library only.
-For general, language-agnostic questions and troubleshooting, please ask/look for answers [here](https://groups.google.com/g/adwords-api).
+<!-- PLEASE READ
+This form is for bug reports specific to this library.
+
+For troubleshooting tips, see: https://developers.google.com/google-ads/api/docs/best-practices/troubleshooting.
+
+For issues that are related to the Google Ads API itself and not specific to this library, please reach out to one of our support channels: https://developers.google.com/google-ads/api/support.
 
 Please check existing issues to see if your bug has already been reported before creating a new issue. We encourage you to add any relevant information to the existing issue if one already exists.
 -->
 
-**Which version of the client library are you using?**
+[DO NOT INCLUDE ANY PERSONAL OR SENSITIVE DATA - MAKE SURE TO REDACT CONTENT WHEN NECESSARY]
 
-**Which version of Perl are you using?**
+**Your client library and Google Ads API versions:**
 
-**Which operating system (Linux, Windows, ...) and version?**
+* Client library version: `vX.Y.Z`
 
-**Actions taken**
-Please provide a code snippet or steps to consistently reproduce the experienced behavior.
-[DO NOT INCLUDE ANY PERSONAL OR SENSITIVE DATA IN YOUR SUBMITTED CODE]
+<!-- This should be a released version, see https://github.com/googleads/google-ads-perl/releases. -->
 
-**Expected result**
+* Google Ads API version: `VX`
 
-**Actual result**
+<!-- You can determine it from the version of your API client, e.g., `Google::Ads::GoogleAds::Client`. -->
 
-Make sure you include information that can help us debug (full error message, exception listing, stack trace, logs).
-See [troubleshooting](https://developers.google.com/google-ads/api/docs/best-practices/troubleshooting) for how to diagnose problems better.
- 
-**Anything else we should know about your project / environment**
+**Your environment:**
+
+* Which version of Perl are you using?
+
+* Which operating system (Linux, Windows, ...) and version?*
+
+**Description of the bug:**
+
+**Steps to reproduce:**
+
+**Expected behavior:**
+
+**Request/Response Logs:**
+
+<!--
+To enable logging see this page: https://developers.google.com/google-ads/api/docs/client-libs/perl/logging.
+
+NOTE: Make sure to include Request IDs when possible.
+-->
+
+**Anything else we should know about your project / environment:**

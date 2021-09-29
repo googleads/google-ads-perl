@@ -52,7 +52,7 @@ Google::Ads::GoogleAds::Utils::MediaUtils
 
   use Google::Ads::GoogleAds::Utils::MediaUtils;
 
-  my $image_data = get_base64_data_from_url("https://goo.gl/3b9Wfh");
+  my $image_data = get_base64_data_from_url("https://gaagl.page.link/Eit5");
 
   if ($image_data) {
     # Make use of $image_data.

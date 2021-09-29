@@ -70,8 +70,8 @@ use Pod::Usage;
 use Cwd qw(abs_path);
 use Data::Uniqid qw(uniqid);
 
-use constant MARKETING_IMAGE_URL => "https://goo.gl/3b9Wfh";
-use constant LOGO_IMAGE_URL      => "https://goo.gl/mtt54n";
+use constant MARKETING_IMAGE_URL => "https://gaagl.page.link/Eit5";
+use constant LOGO_IMAGE_URL      => "https://gaagl.page.link/bjYi";
 use constant YOUTUBE_VIDEO_ID    => "ECpDzH9gXh8";
 
 # The following parameter(s) should be provided to run the example. You can

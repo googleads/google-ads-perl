@@ -69,8 +69,8 @@ use Data::Uniqid qw(uniqid);
 use POSIX qw(strftime);
 
 # They can be used to create an image asset for your customer account only once.
-use constant MARKETING_IMAGE_URL        => "https://goo.gl/3b9Wfh";
-use constant SQUARE_MARKETING_IMAGE_URL => "https://goo.gl/mtt54n";
+use constant MARKETING_IMAGE_URL        => "https://gaagl.page.link/Eit5";
+use constant SQUARE_MARKETING_IMAGE_URL => "https://gaagl.page.link/bjYi";
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on

@@ -34,7 +34,7 @@ use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 use Cwd qw(abs_path);
 
-use constant BUNDLE_URL => "https://goo.gl/9Y7qI2";
+use constant BUNDLE_URL => "https://gaagl.page.link/ib87";
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
