@@ -32,7 +32,7 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::MerchantCenterLinkOperation;
+  Google::Ads::GoogleAds::V9::Services::MerchantCenterLinkService::MerchantCenterLinkOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -92,7 +92,7 @@ sub remove_merchant_center_link {
 
   # Create a single remove operation, specifying the Merchant Center link resource name.
   my $merchant_center_link_operation =
-    Google::Ads::GoogleAds::V8::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
+    Google::Ads::GoogleAds::V9::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
     ->new({
       remove => $merchant_center_link->{resourceName}});
 

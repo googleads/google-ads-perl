@@ -68,11 +68,11 @@ sub call {
   ##############################################################################
   if ($http_method eq GET) {
     # HTTP GET request scenarios:
-    #  GET: v8/customers:listAccessibleCustomers
-    #  GET: v8/{+resourceName}
-    #  GET: v8/{+resourceName}:listResults
-    #  GET: v8/customers/{+customerId}/paymentsAccounts
-    #  GET: v8/customers/{+customerId}/merchantCenterLinks
+    #  GET: v9/customers:listAccessibleCustomers
+    #  GET: v9/{+resourceName}
+    #  GET: v9/{+resourceName}:listResults
+    #  GET: v9/customers/{+customerId}/paymentsAccounts
+    #  GET: v9/customers/{+customerId}/merchantCenterLinks
     $request_path = expand_path_template($request_path, $request_body);
 
     # GET: When the $request_body is a hash reference, use the path parameters
@@ -87,13 +87,13 @@ sub call {
     }
   } elsif ($http_method eq POST) {
     # HTTP POST request scenarios:
-    #  POST: v8/geoTargetConstants:suggest
-    #  POST: v8/googleAdsFields:search
-    #  POST: v8/customers/{+customerId}/googleAds:search
-    #  POST: v8/customers/{+customerId}/campaigns:mutate
-    #  POST: v8/{+keywordPlan}:generateForecastMetrics
-    #  POST: v8/{+campaignDraft}:promote
-    #  POST: v8/{+resourceName}:addOperations
+    #  POST: v9/geoTargetConstants:suggest
+    #  POST: v9/googleAdsFields:search
+    #  POST: v9/customers/{+customerId}/googleAds:search
+    #  POST: v9/customers/{+customerId}/campaigns:mutate
+    #  POST: v9/{+keywordPlan}:generateForecastMetrics
+    #  POST: v9/{+campaignDraft}:promote
+    #  POST: v9/{+resourceName}:addOperations
 
     # POST: Retain the 'customerId' variable in the $request_body hash
     # reference after the $request_path is expanded.
@@ -104,7 +104,7 @@ sub call {
     $request_body->{customerId} = $customer_id if defined $customer_id;
   } else {
     # Other HTTP request scenarios:
-    #  DELETE: v8/{+name} for OperationService
+    #  DELETE: v9/{+name} for OperationService
     $request_path = expand_path_template($request_path, $request_body);
   }
 
@@ -237,7 +237,9 @@ sub _get_http_headers {
     "user-agent",
     $api_client->get_user_agent(),
     "x-goog-api-client",
-    Google::Ads::GoogleAds::Constants::DEFAULT_USER_AGENT,
+    join(' ',
+      Google::Ads::GoogleAds::Constants::DEFAULT_USER_AGENT,
+      "gccl/" . Google::Ads::GoogleAds::BaseService->VERSION),
     "developer-token",
     $api_client->get_developer_token()];
 

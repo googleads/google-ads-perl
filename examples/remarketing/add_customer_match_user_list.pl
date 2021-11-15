@@ -17,6 +17,9 @@
 # This example uses Customer Match to create a new user list (a.k.a. audience)
 # and adds users to it.
 #
+# This feature is only available to allowlisted accounts.
+# See https://support.google.com/adspolicy/answer/6299717 for more details.
+#
 # Note: It may take up to several hours for the list to be populated with users.
 # Email addresses must be associated with a Google account. For privacy purposes,
 # the user list size will show as zero until the list has at least 1,000 users.
@@ -31,22 +34,22 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
-use Google::Ads::GoogleAds::V8::Resources::UserList;
-use Google::Ads::GoogleAds::V8::Resources::OfflineUserDataJob;
-use Google::Ads::GoogleAds::V8::Common::CrmBasedUserListInfo;
-use Google::Ads::GoogleAds::V8::Common::CustomerMatchUserListMetadata;
-use Google::Ads::GoogleAds::V8::Common::UserData;
-use Google::Ads::GoogleAds::V8::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V8::Common::OfflineUserAddressInfo;
-use Google::Ads::GoogleAds::V8::Enums::CustomerMatchUploadKeyTypeEnum
+use Google::Ads::GoogleAds::V9::Resources::UserList;
+use Google::Ads::GoogleAds::V9::Resources::OfflineUserDataJob;
+use Google::Ads::GoogleAds::V9::Common::CrmBasedUserListInfo;
+use Google::Ads::GoogleAds::V9::Common::CustomerMatchUserListMetadata;
+use Google::Ads::GoogleAds::V9::Common::UserData;
+use Google::Ads::GoogleAds::V9::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V9::Common::OfflineUserAddressInfo;
+use Google::Ads::GoogleAds::V9::Enums::CustomerMatchUploadKeyTypeEnum
   qw(CONTACT_INFO);
-use Google::Ads::GoogleAds::V8::Enums::OfflineUserDataJobTypeEnum
+use Google::Ads::GoogleAds::V9::Enums::OfflineUserDataJobTypeEnum
   qw(CUSTOMER_MATCH_USER_LIST);
-use Google::Ads::GoogleAds::V8::Services::UserListService::UserListOperation;
+use Google::Ads::GoogleAds::V9::Services::UserListService::UserListOperation;
 use
-  Google::Ads::GoogleAds::V8::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
+  Google::Ads::GoogleAds::V9::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
 use
-  Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V9::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -85,7 +88,7 @@ sub create_customer_match_user_list {
   my ($api_client, $customer_id) = @_;
 
   # Create the user list.
-  my $user_list = Google::Ads::GoogleAds::V8::Resources::UserList->new({
+  my $user_list = Google::Ads::GoogleAds::V9::Resources::UserList->new({
       name        => "Customer Match list #" . uniqid(),
       description =>
         "A list of customers that originated from email and physical addresses",
@@ -94,13 +97,13 @@ sub create_customer_match_user_list {
       # Set the membership life span to 30 days.
       membershipLifeSpan => 30,
       crmBasedUserList   =>
-        Google::Ads::GoogleAds::V8::Common::CrmBasedUserListInfo->new({
+        Google::Ads::GoogleAds::V9::Common::CrmBasedUserListInfo->new({
           uploadKeyType => CONTACT_INFO
         })});
 
   # Create the user list operation.
   my $user_list_operation =
-    Google::Ads::GoogleAds::V8::Services::UserListService::UserListOperation->
+    Google::Ads::GoogleAds::V9::Services::UserListService::UserListOperation->
     new({
       create => $user_list
     });
@@ -127,10 +130,10 @@ sub add_users_to_customer_match_user_list {
 
   # Create a new offline user data job.
   my $offline_user_data_job =
-    Google::Ads::GoogleAds::V8::Resources::OfflineUserDataJob->new({
+    Google::Ads::GoogleAds::V9::Resources::OfflineUserDataJob->new({
       type                          => CUSTOMER_MATCH_USER_LIST,
       customerMatchUserListMetadata =>
-        Google::Ads::GoogleAds::V8::Common::CustomerMatchUserListMetadata->new({
+        Google::Ads::GoogleAds::V9::Common::CustomerMatchUserListMetadata->new({
           userList => $user_list_resource_name
         })});
 
@@ -147,10 +150,13 @@ sub add_users_to_customer_match_user_list {
     $offline_user_data_job_resource_name;
 
   # Issue a request to add the operations to the offline user data job.
-  my $response = $offline_user_data_job_service->add_operations({
+  my $user_data_job_operations = build_offline_user_data_job_operations();
+  my $response                 = $offline_user_data_job_service->add_operations(
+    {
       resourceName         => $offline_user_data_job_resource_name,
       enablePartialFailure => "true",
-      operations           => build_offline_user_data_job_operations()});
+      operations           => $user_data_job_operations
+    });
 
   # Print the status message if any partial failure error is returned.
   # Note: The details of each partial failure error are not printed here, you can
@@ -158,12 +164,15 @@ sub add_users_to_customer_match_user_list {
   if ($response->{partialFailureError}) {
     # Extract the partial failure from the response status.
     my $partial_failure = $response->{partialFailureError}{details}[0];
-    printf
-      "%d partial failure error(s) occurred: %s.\n",
-      scalar @{$partial_failure->{errors}},
+    printf "Encountered %d partial failure errors while adding %d operations " .
+      "to the offline user data job: '%s'. Only the successfully added " .
+      "operations will be executed when the job runs.\n",
+      scalar @{$partial_failure->{errors}}, scalar @$user_data_job_operations,
       $response->{partialFailureError}{message};
+  } else {
+    printf "Successfully added %d operations to the offline user data job.\n",
+      scalar @$user_data_job_operations;
   }
-  print "The operations are added to the offline user data job.\n";
 
   # Issue an asynchronous request to run the offline user data job for executing
   # all added operations.
@@ -200,19 +209,19 @@ sub build_offline_user_data_job_operations() {
   # [START add_customer_match_user_list_2]
   # Create a first user data based on an email address.
   my $user_data_with_email_address =
-    Google::Ads::GoogleAds::V8::Common::UserData->new({
+    Google::Ads::GoogleAds::V9::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V8::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V9::Common::UserIdentifier->new({
             # Hash normalized email addresses based on SHA-256 hashing algorithm.
             hashedEmail => normalize_and_hash('customer@example.com')})]});
 
   # Create a second user data based on a physical address.
   my $user_data_with_physical_address =
-    Google::Ads::GoogleAds::V8::Common::UserData->new({
+    Google::Ads::GoogleAds::V9::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V8::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V9::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V8::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V9::Common::OfflineUserAddressInfo->new({
                 # First and last name must be normalized and hashed.
                 hashedFirstName => normalize_and_hash("John"),
                 hashedLastName  => normalize_and_hash("Doe"),
@@ -224,12 +233,12 @@ sub build_offline_user_data_job_operations() {
 
   # Create the operations to add the two users.
   my $operations = [
-    Google::Ads::GoogleAds::V8::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V9::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_email_address
       }
       ),
-    Google::Ads::GoogleAds::V8::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V9::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_physical_address
       })];
@@ -249,7 +258,7 @@ sub print_customer_match_user_list_info {
 
   # Create a search Google Ads stream request that will retrieve the user list.
   my $search_stream_request =
-    Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V9::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
@@ -322,6 +331,9 @@ add_customer_match_user_list
 
 This example uses Customer Match to create a new user list (a.k.a. audience) and
 adds users to it.
+
+This feature is only available to allowlisted accounts.
+See https://support.google.com/adspolicy/answer/6299717 for more details.
 
 Note: It may take up to several hours for the list to be populated with users.
 Email addresses must be associated with a Google account. For privacy purposes,

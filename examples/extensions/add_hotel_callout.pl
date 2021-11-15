@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a hotel callout extension to a specific account, campaign
-# within the account, and ad group within the campaign.
+# This example adds hotel callout extensions to a specific account.
 
 use strict;
 use warnings;
@@ -25,21 +24,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem;
-use Google::Ads::GoogleAds::V8::Resources::CampaignExtensionSetting;
-use Google::Ads::GoogleAds::V8::Resources::AdGroupExtensionSetting;
-use Google::Ads::GoogleAds::V8::Resources::CustomerExtensionSetting;
-use Google::Ads::GoogleAds::V8::Common::HotelCalloutFeedItem;
-use Google::Ads::GoogleAds::V8::Enums::ExtensionTypeEnum qw(HOTEL_CALLOUT);
+use Google::Ads::GoogleAds::V9::Resources::Asset;
+use Google::Ads::GoogleAds::V9::Resources::CustomerAsset;
+use Google::Ads::GoogleAds::V9::Common::HotelCalloutAsset;
+use Google::Ads::GoogleAds::V9::Enums::AssetFieldTypeEnum qw(HOTEL_CALLOUT);
+use Google::Ads::GoogleAds::V9::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
-use
-  Google::Ads::GoogleAds::V8::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
-use
-  Google::Ads::GoogleAds::V8::Services::AdGroupExtensionSettingService::AdGroupExtensionSettingOperation;
-use
-  Google::Ads::GoogleAds::V8::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation;
-use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V9::Services::CustomerAssetService::CustomerAssetOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -53,180 +44,99 @@ use Cwd qw(abs_path);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id  = "INSERT_CUSTOMER_ID_HERE";
-my $campaign_id  = "INSERT_CAMPAIGN_ID_HERE";
-my $ad_group_id  = "INSERT_AD_GROUP_ID_HERE";
-my $callout_text = "INSERT_CALLOUT_TEXT_HERE";
+my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 # See supported languages at:
-# https://developers.google.com/hotels/hotel-ads/api-reference/language-codes.
+# https://developers.google.com/hotels/hotel-ads/api-reference/language-codes
 my $language_code = "INSERT_LANGUAGE_CODE_HERE";
 
 sub add_hotel_callout {
-  my (
-    $api_client,  $customer_id,  $campaign_id,
-    $ad_group_id, $callout_text, $language_code
-  ) = @_;
+  my ($api_client, $customer_id, $language_code) = @_;
 
-  # Create an extension feed item as hotel callout.
-  my $extension_feed_item_resource_name =
-    add_extension_feed_item($api_client, $customer_id, $callout_text,
-    $language_code);
+  # Create assets for the hotel callout extensions.
+  my $hotel_callout_asset_resource_names =
+    add_extension_assets($api_client, $customer_id, $language_code);
 
-  # Add the extension feed item to the account.
-  add_extension_to_account($api_client, $customer_id,
-    $extension_feed_item_resource_name);
-
-  # Add the extension feed item to the campaign.
-  add_extension_to_campaign($api_client, $customer_id, $campaign_id,
-    $extension_feed_item_resource_name);
-
-  # Add the extension feed item to the ad group.
-  add_extension_to_ad_group($api_client, $customer_id, $ad_group_id,
-    $extension_feed_item_resource_name);
+  # Add the extensions at the account level, so these will serve in all eligible campaigns.
+  link_assets_to_account($api_client, $customer_id,
+    $hotel_callout_asset_resource_names);
 
   return 1;
 }
 
-# Creates a new extension feed item for the callout extension.
-sub add_extension_feed_item {
-  my ($api_client, $customer_id, $callout_text, $language_code) = @_;
+# Creates new assets for the callout.
+sub add_extension_assets {
+  my ($api_client, $customer_id, $language_code) = @_;
 
-  # Create the callout feed item with text and language of choice.
-  my $hotel_callout_feed_item =
-    Google::Ads::GoogleAds::V8::Common::HotelCalloutFeedItem->new({
-      text         => $callout_text,
+  my $hotel_callout_assets = [];
+  # Create the callouts with text and specified language.
+  push @$hotel_callout_assets,
+    Google::Ads::GoogleAds::V9::Common::HotelCalloutAsset->new({
+      text         => "Activities",
+      languageCode => $language_code
+    });
+  push @$hotel_callout_assets,
+    Google::Ads::GoogleAds::V9::Common::HotelCalloutAsset->new({
+      text         => "Facilities",
       languageCode => $language_code
     });
 
-  # Create a feed item from the hotel callout extension.
-  my $extension_feed_item =
-    Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem->new({
-      hotelCalloutFeedItem => $hotel_callout_feed_item
-    });
+  my $operations = [];
+  # Wrap the HotelCalloutAsset in an Asset and create an AssetOperation to add the Asset.
+  foreach my $hotel_callout_asset (@$hotel_callout_assets) {
+    push @$operations,
+      Google::Ads::GoogleAds::V9::Services::AssetService::AssetOperation->new({
+        create => Google::Ads::GoogleAds::V9::Resources::Asset->new({
+            hotelCalloutAsset => $hotel_callout_asset
+          })});
+  }
 
-  # Create an extension feed item operation.
-  my $extension_feed_item_operation =
-    Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
-    ->new({
-      create => $extension_feed_item
-    });
+  # Issue the create request to create the assets.
+  my $response = $api_client->AssetService()->mutate({
+    customerId => $customer_id,
+    operations => $operations
+  });
 
-  # Issue a mutate request to add the extension feed item.
-  my $extension_feed_items_response =
-    $api_client->ExtensionFeedItemService()->mutate({
-      customerId => $customer_id,
-      operations => [$extension_feed_item_operation]});
+  # Print some information about the result.
+  my $resource_names = [];
+  foreach my $result (@{$response->{results}}) {
+    push @$resource_names, $result->{resourceName};
+    printf "Created hotel callout asset with resource name '%s'.\n",
+      $result->{resourceName};
+  }
 
-  # Print out some information about the added extension feed item.
-  my $extension_feed_item_resource_name =
-    $extension_feed_items_response->{results}[0]{resourceName};
-  printf "Created an extension feed item with resource name: '%s'.\n",
-    $extension_feed_item_resource_name;
-
-  return $extension_feed_item_resource_name;
+  return $resource_names;
 }
 
-# Adds the extension feed item to the customer account.
-sub add_extension_to_account {
-  my ($api_client, $customer_id, $extension_feed_item_resource_name) = @_;
+# Links the assets at the Customer level to serve in all eligible campaigns.
+sub link_assets_to_account {
+  my ($api_client, $customer_id, $hotel_callout_asset_resource_names) = @_;
 
-  # Create a customer extension setting, set its type to HOTEL_CALLOUT, and
-  # attache the feed item.
-  my $customer_extension_setting =
-    Google::Ads::GoogleAds::V8::Resources::CustomerExtensionSetting->new({
-      extensionType      => HOTEL_CALLOUT,
-      extensionFeedItems => [$extension_feed_item_resource_name]});
+  # Create a CustomerAsset link for each Asset resource name provided, then
+  # convert this into a CustomerAssetOperation to create the Asset.
+  my $operations = [];
+  foreach
+    my $hotel_callout_asset_resource_name (@$hotel_callout_asset_resource_names)
+  {
+    push @$operations,
+      Google::Ads::GoogleAds::V9::Services::CustomerAssetService::CustomerAssetOperation
+      ->new({
+        create => Google::Ads::GoogleAds::V9::Resources::CustomerAsset->new({
+            asset     => $hotel_callout_asset_resource_name,
+            fieldType => HOTEL_CALLOUT
+          })});
+  }
 
-  # Create a customer extension setting operation.
-  my $customer_extension_setting_operation =
-    Google::Ads::GoogleAds::V8::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation
-    ->new({
-      create => $customer_extension_setting
-    });
+  # Send the mutate request.
+  my $response = $api_client->CustomerAssetService()->mutate({
+    customerId => $customer_id,
+    operations => $operations
+  });
 
-  # Issue a mutate request to add the customer extension setting.
-  my $customer_extension_settings_response =
-    $api_client->CustomerExtensionSettingService()->mutate({
-      customerId => $customer_id,
-      operations => [$customer_extension_setting_operation]});
-
-  # Print out some information about the added customer extension setting.
-  my $customer_extension_setting_resource_name =
-    $customer_extension_settings_response->{results}[0]{resourceName};
-  printf "Created a customer extension setting with resource name: '%s'.\n",
-    $customer_extension_setting_resource_name;
-}
-
-# Adds the extension feed item to the specified campaign.
-sub add_extension_to_campaign {
-  my ($api_client, $customer_id, $campaign_id,
-    $extension_feed_item_resource_name)
-    = @_;
-
-  # Create a campaign extension setting, set its type to HOTEL_CALLOUT, and
-  # attache the feed item.
-  my $campaign_extension_setting =
-    Google::Ads::GoogleAds::V8::Resources::CampaignExtensionSetting->new({
-      extensionType => HOTEL_CALLOUT,
-      campaign => Google::Ads::GoogleAds::V8::Utils::ResourceNames::campaign(
-        $customer_id, $campaign_id
-      ),
-      extensionFeedItems => [$extension_feed_item_resource_name]});
-
-  # Create a campaign extension setting operation.
-  my $campaign_extension_setting_operation =
-    Google::Ads::GoogleAds::V8::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
-    ->new({
-      create => $campaign_extension_setting
-    });
-
-  # Issue a mutate request to add the campaign extension setting.
-  my $campaign_extension_settings_response =
-    $api_client->CampaignExtensionSettingService()->mutate({
-      customerId => $customer_id,
-      operations => [$campaign_extension_setting_operation]});
-
-  # Print out some information about the added campaign extension setting.
-  my $campaign_extension_setting_resource_name =
-    $campaign_extension_settings_response->{results}[0]{resourceName};
-  printf "Created a campaign extension setting with resource name: '%s'.\n",
-    $campaign_extension_setting_resource_name;
-}
-
-# Adds the extension feed item to the specified ad group.
-sub add_extension_to_ad_group {
-  my ($api_client, $customer_id, $ad_group_id,
-    $extension_feed_item_resource_name)
-    = @_;
-
-  # Create an ad group extension setting, set its type to HOTEL_CALLOUT, and
-  # attache the feed item.
-  my $ad_group_extension_setting =
-    Google::Ads::GoogleAds::V8::Resources::AdGroupExtensionSetting->new({
-      extensionType => HOTEL_CALLOUT,
-      adGroup => Google::Ads::GoogleAds::V8::Utils::ResourceNames::ad_group(
-        $customer_id, $ad_group_id
-      ),
-      extensionFeedItems => [$extension_feed_item_resource_name]});
-
-  # Create an ad group extension setting operation.
-  my $ad_group_extension_setting_operation =
-    Google::Ads::GoogleAds::V8::Services::AdGroupExtensionSettingService::AdGroupExtensionSettingOperation
-    ->new({
-      create => $ad_group_extension_setting
-    });
-
-  # Issue a mutate request to add the ad group extension setting.
-  my $ad_group_extension_settings_response =
-    $api_client->AdGroupExtensionSettingService()->mutate({
-      customerId => $customer_id,
-      operations => [$ad_group_extension_setting_operation]});
-
-  # Print out some information about the added ad group extension setting.
-  my $ad_group_extension_setting_resource_name =
-    $ad_group_extension_settings_response->{results}[0]{resourceName};
-  printf "Created an ad group extension setting with resource name: '%s'.\n",
-    $ad_group_extension_setting_resource_name;
+  # Print some information about the result.
+  foreach my $result (@{$response->{results}}) {
+    printf "Added a account extension with resource name '%s'.\n",
+      $result->{resourceName};
+  }
 }
 
 # Don't run the example if the file is being included.
@@ -243,21 +153,16 @@ $api_client->set_die_on_faults(1);
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
   "customer_id=s"   => \$customer_id,
-  "campaign_id=i"   => \$campaign_id,
-  "ad_group_id=i"   => \$ad_group_id,
-  "callout_text=s"  => \$callout_text,
   "language_code=s" => \$language_code
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params($customer_id, $campaign_id, $ad_group_id, $callout_text,
-  $language_code);
+  if not check_params($customer_id, $language_code);
 
 # Call the example.
-add_hotel_callout($api_client, $customer_id =~ s/-//gr,
-  $campaign_id, $ad_group_id, $callout_text, $language_code);
+add_hotel_callout($api_client, $customer_id =~ s/-//gr, $language_code);
 
 =pod
 
@@ -267,8 +172,7 @@ add_hotel_callout
 
 =head1 DESCRIPTION
 
-This example adds a hotel callout extension to a specific account, campaign
-within the account, and ad group within the campaign.
+This example adds hotel callout extensions to a specific account.
 
 =head1 SYNOPSIS
 
@@ -276,9 +180,6 @@ add_hotel_callout.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
-    -campaign_id                The campaign ID.
-    -ad_group_id                The ad group ID.
-    -callout_text               The hotel callout text.
     -language_code              The hotel callout language code, e.g. specify 'en' for English.
 
 =cut

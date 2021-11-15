@@ -25,14 +25,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V8::Resources::CampaignBidModifier;
-use Google::Ads::GoogleAds::V8::Common::InteractionTypeInfo;
-use Google::Ads::GoogleAds::V8::Enums::InteractionTypeEnum qw(CALLS);
-use Google::Ads::GoogleAds::V8::Enums::ResponseContentTypeEnum
+use Google::Ads::GoogleAds::V9::Resources::CampaignBidModifier;
+use Google::Ads::GoogleAds::V9::Common::InteractionTypeInfo;
+use Google::Ads::GoogleAds::V9::Enums::InteractionTypeEnum qw(CALLS);
+use Google::Ads::GoogleAds::V9::Enums::ResponseContentTypeEnum
   qw(MUTABLE_RESOURCE);
 use
-  Google::Ads::GoogleAds::V8::Services::CampaignBidModifierService::CampaignBidModifierOperation;
-use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V9::Services::CampaignBidModifierService::CampaignBidModifierOperation;
+use Google::Ads::GoogleAds::V9::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,13 +56,13 @@ sub add_campaign_bid_modifier {
   # Create a campaign bid modifier for call interactions with the specified
   # campaign ID and bid modifier value.
   my $campaign_bid_modifier =
-    Google::Ads::GoogleAds::V8::Resources::CampaignBidModifier->new({
-      campaign => Google::Ads::GoogleAds::V8::Utils::ResourceNames::campaign(
+    Google::Ads::GoogleAds::V9::Resources::CampaignBidModifier->new({
+      campaign => Google::Ads::GoogleAds::V9::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       # Make the bid modifier apply to call interactions.
       interactionType =>
-        Google::Ads::GoogleAds::V8::Common::InteractionTypeInfo->new({
+        Google::Ads::GoogleAds::V9::Common::InteractionTypeInfo->new({
           type => CALLS
         }
         ),
@@ -72,7 +72,7 @@ sub add_campaign_bid_modifier {
 
   # Create a campaign bid modifier operation.
   my $campaign_bid_modifier_operation =
-    Google::Ads::GoogleAds::V8::Services::CampaignBidModifierService::CampaignBidModifierOperation
+    Google::Ads::GoogleAds::V9::Services::CampaignBidModifierService::CampaignBidModifierOperation
     ->new({
       create => $campaign_bid_modifier
     });

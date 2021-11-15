@@ -28,19 +28,19 @@ use lib "$Bin/../../lib";
 
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V8::Resources::OfflineUserDataJob;
-use Google::Ads::GoogleAds::V8::Common::ItemAttribute;
-use Google::Ads::GoogleAds::V8::Common::OfflineUserAddressInfo;
-use Google::Ads::GoogleAds::V8::Common::StoreSalesMetadata;
-use Google::Ads::GoogleAds::V8::Common::StoreSalesThirdPartyMetadata;
-use Google::Ads::GoogleAds::V8::Common::TransactionAttribute;
-use Google::Ads::GoogleAds::V8::Common::UserData;
-use Google::Ads::GoogleAds::V8::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V8::Enums::OfflineUserDataJobTypeEnum
+use Google::Ads::GoogleAds::V9::Resources::OfflineUserDataJob;
+use Google::Ads::GoogleAds::V9::Common::ItemAttribute;
+use Google::Ads::GoogleAds::V9::Common::OfflineUserAddressInfo;
+use Google::Ads::GoogleAds::V9::Common::StoreSalesMetadata;
+use Google::Ads::GoogleAds::V9::Common::StoreSalesThirdPartyMetadata;
+use Google::Ads::GoogleAds::V9::Common::TransactionAttribute;
+use Google::Ads::GoogleAds::V9::Common::UserData;
+use Google::Ads::GoogleAds::V9::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V9::Enums::OfflineUserDataJobTypeEnum
   qw(STORE_SALES_UPLOAD_FIRST_PARTY STORE_SALES_UPLOAD_THIRD_PARTY);
 use
-  Google::Ads::GoogleAds::V8::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
-use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V9::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
+use Google::Ads::GoogleAds::V9::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -86,10 +86,10 @@ my $item_id = undef;
 # Optional: Specify a Merchant Center Account ID. Only required if uploading
 # with item attributes.
 my $merchant_center_account_id = undef;
-# Optional: Specify a two-letter region code of the location associated with the
+# Optional: Specify a two-letter country code of the location associated with the
 # feed where your items are uploaded. Only required if uploading with item
 # attributes.
-my $region_code = undef;
+my $country_code = undef;
 # Optional: Specify a two-letter language code of the language associated with
 # the feed where your items are uploaded. Only required if uploading with item
 # attributes.
@@ -105,7 +105,7 @@ sub upload_store_sales_transactions {
     $external_id,                 $custom_key,
     $advertiser_upload_date_time, $bridge_map_version_id,
     $partner_id,                  $item_id,
-    $merchant_center_account_id,  $region_code,
+    $merchant_center_account_id,  $country_code,
     $language_code,               $quantity
   ) = @_;
 
@@ -124,7 +124,7 @@ sub upload_store_sales_transactions {
     $offline_user_data_job_service,       $customer_id,
     $offline_user_data_job_resource_name, $conversion_action_id,
     $custom_key,                          $item_id,
-    $merchant_center_account_id,          $region_code,
+    $merchant_center_account_id,          $country_code,
     $language_code,                       $quantity,
   );
 
@@ -173,7 +173,7 @@ sub create_offline_user_data_job {
   my $store_sales_metadata =
     # Please refer to https://support.google.com/google-ads/answer/7506124 for
     # additional details.
-    Google::Ads::GoogleAds::V8::Common::StoreSalesMetadata->new({
+    Google::Ads::GoogleAds::V9::Common::StoreSalesMetadata->new({
       # Set the fraction of your overall sales that you (or the advertiser,
       # in the third party case) can associate with a customer (email, phone
       # number, address, etc.) in your database or loyalty program.
@@ -196,7 +196,7 @@ sub create_offline_user_data_job {
   if ($offline_user_data_job_type eq STORE_SALES_UPLOAD_THIRD_PARTY) {
     # Create additional metadata required for uploading third party data.
     my $store_sales_third_party_metadata =
-      Google::Ads::GoogleAds::V8::Common::StoreSalesThirdPartyMetadata->new({
+      Google::Ads::GoogleAds::V9::Common::StoreSalesThirdPartyMetadata->new({
         # The date/time must be in the format "yyyy-MM-dd hh:mm:ss".
         advertiserUploadDateTime => $advertiser_upload_date_time,
 
@@ -236,7 +236,7 @@ sub create_offline_user_data_job {
 
   # Create a new offline user data job.
   my $offline_user_data_job =
-    Google::Ads::GoogleAds::V8::Resources::OfflineUserDataJob->new({
+    Google::Ads::GoogleAds::V9::Resources::OfflineUserDataJob->new({
       type               => $offline_user_data_job_type,
       storeSalesMetadata => $store_sales_metadata,
       external_id        => $external_id,
@@ -262,20 +262,26 @@ sub add_transactions_to_offline_user_data_job {
     $offline_user_data_job_service,       $customer_id,
     $offline_user_data_job_resource_name, $conversion_action_id,
     $custom_key,                          $item_id,
-    $merchant_center_account_id,          $region_code,
+    $merchant_center_account_id,          $country_code,
     $language_code,                       $quantity
   ) = @_;
 
+  # Construct the operation for each transaction.
+  my $user_data_job_operations =
+    build_offline_user_data_job_operations($customer_id, $conversion_action_id,
+    $custom_key,    $item_id, $merchant_center_account_id, $country_code,
+    $language_code, $quantity,);
+
+  # [START enable_warnings_1]
   # Issue a request to add the operations to the offline user data job.
   my $response = $offline_user_data_job_service->add_operations({
-      resourceName         => $offline_user_data_job_resource_name,
-      enablePartialFailure => "true",
-      operations           => build_offline_user_data_job_operations(
-        $customer_id,                $conversion_action_id,
-        $custom_key,                 $item_id,
-        $merchant_center_account_id, $region_code,
-        $language_code,              $quantity,
-      )});
+    resourceName         => $offline_user_data_job_resource_name,
+    enablePartialFailure => "true",
+    # Enable warnings (optional).
+    enableWarnings => "true",
+    operations     => $user_data_job_operations
+  });
+  # [END enable_warnings_1]
 
   # Print the status message if any partial failure error is returned.
   # Note: The details of each partial failure error are not printed here, you
@@ -283,39 +289,57 @@ sub add_transactions_to_offline_user_data_job {
   if ($response->{partialFailureError}) {
     # Extract the partial failure from the response status.
     my $partial_failure = $response->{partialFailureError}{details}[0];
-    printf
-      "%d partial failure error(s) occurred: %s.\n",
-      scalar @{$partial_failure->{errors}},
+    foreach my $error (@{$partial_failure->{errors}}) {
+      printf "Partial failure occurred: '%s'\n", $error->{message};
+    }
+    printf "Encountered %d partial failure errors while adding %d operations " .
+      "to the offline user data job: '%s'. Only the successfully added " .
+      "operations will be executed when the job runs.\n",
+      scalar @{$partial_failure->{errors}}, scalar @$user_data_job_operations,
       $response->{partialFailureError}{message};
+  } else {
+    printf "Successfully added %d operations to the offline user data job.\n",
+      scalar @$user_data_job_operations;
   }
-  print "The operations are added to the offline user data job.\n";
+
+  # [START enable_warnings_2]
+  # Print the number of warnings if any warnings are returned. You can access
+  # details of each warning using the same approach you'd use for partial failure
+  # errors.
+  if ($response->{warning}) {
+    # Extract the warnings from the response status.
+    my $warnings_failure = $response->{warning}{details}[0];
+    printf "Encountered %d warning(s).\n",
+      scalar @{$warnings_failure->{errors}};
+  }
+  # [END enable_warnings_2]
 }
 
 # Creates a list of offline user data job operations for sample transactions.
 # Returns a list of operations.
 sub build_offline_user_data_job_operations {
   my ($customer_id, $conversion_action_id, $custom_key, $item_id,
-    $merchant_center_account_id, $region_code, $language_code, $quantity)
+    $merchant_center_account_id, $country_code, $language_code, $quantity)
     = @_;
 
   # Create the first transaction for upload based on an email address and state.
   my $user_data_with_email_address =
-    Google::Ads::GoogleAds::V8::Common::UserData->new({
+    Google::Ads::GoogleAds::V9::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V8::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V9::Common::UserIdentifier->new({
             # Hash normalized email addresses based on SHA-256 hashing algorithm.
             hashedEmail => normalize_and_hash('customer@example.com')}
         ),
-        Google::Ads::GoogleAds::V8::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V9::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V8::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V9::Common::OfflineUserAddressInfo->new({
                 state => "NY"
               })})
       ],
       transactionAttribute =>
-        Google::Ads::GoogleAds::V8::Common::TransactionAttribute->new({
+        Google::Ads::GoogleAds::V9::Common::TransactionAttribute->new({
           conversionAction =>
-            Google::Ads::GoogleAds::V8::Utils::ResourceNames::conversion_action(
+            Google::Ads::GoogleAds::V9::Utils::ResourceNames::conversion_action(
             $customer_id, $conversion_action_id
             ),
           currencyCode => "USD",
@@ -338,11 +362,11 @@ sub build_offline_user_data_job_operations {
 
   # Create the second transaction for upload based on a physical address.
   my $user_data_with_physical_address =
-    Google::Ads::GoogleAds::V8::Common::UserData->new({
+    Google::Ads::GoogleAds::V9::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V8::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V9::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V8::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V9::Common::OfflineUserAddressInfo->new({
                 # First and last name must be normalized and hashed.
                 hashedFirstName => normalize_and_hash("John"),
                 hashedLastName  => normalize_and_hash("Doe"),
@@ -352,9 +376,9 @@ sub build_offline_user_data_job_operations {
               })})
       ],
       transactionAttribute =>
-        Google::Ads::GoogleAds::V8::Common::TransactionAttribute->new({
+        Google::Ads::GoogleAds::V9::Common::TransactionAttribute->new({
           conversionAction =>
-            Google::Ads::GoogleAds::V8::Utils::ResourceNames::conversion_action(
+            Google::Ads::GoogleAds::V9::Utils::ResourceNames::conversion_action(
             $customer_id,
             $conversion_action_id
             ),
@@ -372,26 +396,26 @@ sub build_offline_user_data_job_operations {
   # in the transaction attribute.
   if (defined($item_id)) {
     $user_data_with_physical_address->{transactionAttribute}{itemAttribute} =
-      Google::Ads::GoogleAds::V8::Common::ItemAttribute->new({
+      Google::Ads::GoogleAds::V9::Common::ItemAttribute->new({
         itemId       => $item_id,
         merchantId   => $merchant_center_account_id,
-        regionCode   => $region_code,
+        countryCode  => $country_code,
         languageCode => $language_code,
         # Quantity field should only be set when at least one of the other item
         # attributes is present.
-        quantity     => $quantity
+        quantity => $quantity
       });
 
   }
 
   # Create the operations to add the two transactions.
   my $operations = [
-    Google::Ads::GoogleAds::V8::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V9::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_email_address
       }
       ),
-    Google::Ads::GoogleAds::V8::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V9::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_physical_address
       })];
@@ -432,7 +456,7 @@ GetOptions(
   "partner_id=i"                  => \$partner_id,
   "item_id=s"                     => \$item_id,
   "merchant_center_account_id=i"  => \$merchant_center_account_id,
-  "region_code=s"                 => \$region_code,
+  "country_code=s"                => \$country_code,
   "language_code=s"               => \$language_code,
   "quantity=i"                    => \$quantity,
 );
@@ -449,7 +473,7 @@ upload_store_sales_transactions(
   $external_id,                 $custom_key,
   $advertiser_upload_date_time, $bridge_map_version_id,
   $partner_id,                  $item_id,
-  $merchant_center_account_id,  $region_code,
+  $merchant_center_account_id,  $country_code,
   $language_code,               $quantity,
 );
 
@@ -487,12 +511,13 @@ upload_store_sales_transactions.pl [options]
     -item_id                        [optional] A unique identifier of a product, either the Merchant Center Item ID or Global Trade Item Number (GTIN).
                                     Only required if uploading with item attributes.
     -merchant_center_account_id     [optional] A Merchant Center Account ID. Only required if uploading with item attributes.
-    -region_code                    [optional] A two-letter region code of the location associated with the feed where your items are uploaded.
+    -country_code                   [optional] A two-letter country code of the location associated with the feed where your items are uploaded.
                                     Only required if uploading with item attributes.
-                                    For a list of region codes see: https://developers.google.com/google-ads/api/reference/data/codes-formats#expandable-16
+                                    For a list of country codes see: https://developers.google.com/google-ads/api/reference/data/codes-formats#country-codes
     -language_code                  [optional] A two-letter language code of the language associated with the feed where your items are uploaded.
                                     Only required if uploading with item attributes.
-                                    For a list of language codes see: https://developers.google.com/google-ads/api/reference/data/codes-formats#expandable-7
-    -quantity                       [optional] The number of items sold. Can only be set when at least one other item attribute has been provided. Only required if uploading with item attributes.
+                                    For a list of language codes see: https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
+    -quantity                       [optional] The number of items sold. Can only be set when at least one other item attribute has been provided.
+                                    Only required if uploading with item attributes.
 
 =cut

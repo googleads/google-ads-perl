@@ -1,3 +1,11 @@
+9.2.0 - 2021-11-12
+- Added support for Google Ads API v9_0.
+- Supported client library version in the "x-goog-api-client" request header.
+- Improved code examples: add_smart_campaign, upload_store_sales_transactions,
+  create_customer_match_user_list.
+- Updated code examples to the asset based extensions: add_hotel_callout,
+  add_sitelinks_using_assets, add_prices.
+
 9.1.0 - 2021-09-30
 - Added code examples: add_bidding_data_exclusion, add_bidding_seasonality_adjustment.
 - Fixed code examples: add_display_upload_ad, add_local_campaign, add_smart_display_ad,

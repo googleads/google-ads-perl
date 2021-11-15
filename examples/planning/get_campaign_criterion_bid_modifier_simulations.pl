@@ -27,7 +27,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
-  Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V9::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -58,7 +58,7 @@ sub get_campaign_criterion_bid_modifier_simulations {
     "AND campaign_criterion_simulation.campaign_id = $campaign_id";
 
   my $search_stream_request =
-    Google::Ads::GoogleAds::V8::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V9::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query

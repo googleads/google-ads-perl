@@ -15,6 +15,10 @@
 # limitations under the License.
 #
 # This example adds sitelinks to a campaign. To create a campaign, run add_campaigns.pl.
+#
+# DEPRECATION WARNING!
+# THIS USAGE IS DEPRECATED AND WILL BE REMOVED IN AN UPCOMING API VERSION
+# All extensions should migrate to Assets. See add_sitelinks_using_assets.pl
 
 use strict;
 use warnings;
@@ -24,22 +28,22 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V8::Resources::CampaignExtensionSetting;
-use Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem;
-use Google::Ads::GoogleAds::V8::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V8::Common::SitelinkFeedItem;
-use Google::Ads::GoogleAds::V8::Common::AdScheduleInfo;
-use Google::Ads::GoogleAds::V8::Enums::ExtensionTypeEnum qw(SITELINK);
-use Google::Ads::GoogleAds::V8::Enums::FeedItemTargetDeviceEnum qw(MOBILE);
-use Google::Ads::GoogleAds::V8::Enums::KeywordMatchTypeEnum qw(BROAD);
-use Google::Ads::GoogleAds::V8::Enums::DayOfWeekEnum
+use Google::Ads::GoogleAds::V9::Resources::CampaignExtensionSetting;
+use Google::Ads::GoogleAds::V9::Resources::ExtensionFeedItem;
+use Google::Ads::GoogleAds::V9::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V9::Common::SitelinkFeedItem;
+use Google::Ads::GoogleAds::V9::Common::AdScheduleInfo;
+use Google::Ads::GoogleAds::V9::Enums::ExtensionTypeEnum qw(SITELINK);
+use Google::Ads::GoogleAds::V9::Enums::FeedItemTargetDeviceEnum qw(MOBILE);
+use Google::Ads::GoogleAds::V9::Enums::KeywordMatchTypeEnum qw(BROAD);
+use Google::Ads::GoogleAds::V9::Enums::DayOfWeekEnum
   qw(MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY);
-use Google::Ads::GoogleAds::V8::Enums::MinuteOfHourEnum qw(ZERO);
+use Google::Ads::GoogleAds::V9::Enums::MinuteOfHourEnum qw(ZERO);
 use
-  Google::Ads::GoogleAds::V8::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
+  Google::Ads::GoogleAds::V9::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
 use
-  Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
-use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V9::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
+use Google::Ads::GoogleAds::V9::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -62,7 +66,7 @@ sub add_sitelinks {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   my $campaign_resource_name =
-    Google::Ads::GoogleAds::V8::Utils::ResourceNames::campaign($customer_id,
+    Google::Ads::GoogleAds::V9::Utils::ResourceNames::campaign($customer_id,
     $campaign_id);
 
   # Create extension feed items as sitelinks.
@@ -72,7 +76,7 @@ sub add_sitelinks {
 
   # Create a campaign extension setting.
   my $campaign_extension_setting =
-    Google::Ads::GoogleAds::V8::Resources::CampaignExtensionSetting->new({
+    Google::Ads::GoogleAds::V9::Resources::CampaignExtensionSetting->new({
       campaign           => $campaign_resource_name,
       extensionType      => SITELINK,
       extensionFeedItems => $extension_feed_items
@@ -80,7 +84,7 @@ sub add_sitelinks {
 
   # Create a campaign extension setting operation.
   my $campaign_extension_setting_operation =
-    Google::Ads::GoogleAds::V8::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
+    Google::Ads::GoogleAds::V9::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
     ->new({
       create => $campaign_extension_setting
     });
@@ -110,7 +114,7 @@ sub create_extension_feed_items {
 
   # Create an extension feed item from the sitelink feed item.
   my $extension_feed_item_1 =
-    Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V9::Resources::ExtensionFeedItem->new({
       extensionType    => SITELINK,
       sitelinkFeedItem => $sitelink_feed_item_1,
       targetedCampaign => $campaign_resource_name
@@ -118,7 +122,7 @@ sub create_extension_feed_items {
 
   # Create an extension feed item operation and add it to the operations list.
   push @$operations,
-    Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V9::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item_1
     });
@@ -146,10 +150,10 @@ sub create_extension_feed_items {
   # A list of country codes can be referenced here:
   # https://developers.google.com/google-ads/api/reference/data/geotargets
   my $united_states =
-    Google::Ads::GoogleAds::V8::Utils::ResourceNames::geo_target_constant(2840);
+    Google::Ads::GoogleAds::V9::Utils::ResourceNames::geo_target_constant(2840);
 
   my $extension_feed_item_2 =
-    Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V9::Resources::ExtensionFeedItem->new({
       extensionType             => SITELINK,
       sitelinkFeedItem          => $sitelink_feed_item_2,
       targetedCampaign          => $campaign_resource_name,
@@ -159,7 +163,7 @@ sub create_extension_feed_items {
     });
 
   push @$operations,
-    Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V9::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item_2
     });
@@ -171,18 +175,18 @@ sub create_extension_feed_items {
   # mobile users.
   # Target this sitelink for the keyword "free wifi".
   my $extension_feed_item_3 =
-    Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V9::Resources::ExtensionFeedItem->new({
       extensionType    => SITELINK,
       sitelinkFeedItem => $sitelink_feed_item_3,
       targetedCampaign => $campaign_resource_name,
       device           => MOBILE,
-      targetedKeyword  => Google::Ads::GoogleAds::V8::Common::KeywordInfo->new({
+      targetedKeyword  => Google::Ads::GoogleAds::V9::Common::KeywordInfo->new({
           text      => "free wifi",
           matchType => BROAD
         })});
 
   push @$operations,
-    Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V9::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item_3
     });
@@ -193,7 +197,7 @@ sub create_extension_feed_items {
   # Set the feed item schedules to show the happy hours link only during Mon - Fri
   # 6PM to 9PM.
   my $extension_feed_item_4 =
-    Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V9::Resources::ExtensionFeedItem->new({
       extensionType    => SITELINK,
       sitelinkFeedItem => $sitelink_feed_item_4,
       targetedCampaign => $campaign_resource_name,
@@ -205,7 +209,7 @@ sub create_extension_feed_items {
         create_ad_schedule_info(FRIDAY,    18, ZERO, 21, ZERO)]});
 
   push @$operations,
-    Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V9::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item_4
     });
@@ -236,7 +240,7 @@ sub create_extension_feed_items {
 sub create_sitelink_feed_item {
   my ($sitelink_text, $sitelink_url) = @_;
 
-  return Google::Ads::GoogleAds::V8::Common::SitelinkFeedItem->new({
+  return Google::Ads::GoogleAds::V9::Common::SitelinkFeedItem->new({
     linkText  => $sitelink_text,
     finalUrls => $sitelink_url
   });
@@ -246,7 +250,7 @@ sub create_sitelink_feed_item {
 sub create_ad_schedule_info {
   my ($day, $start_hour, $start_minute, $end_hour, $end_minute) = @_;
 
-  return Google::Ads::GoogleAds::V8::Common::AdScheduleInfo->new({
+  return Google::Ads::GoogleAds::V9::Common::AdScheduleInfo->new({
     dayOfWeek   => $day,
     startHour   => $start_hour,
     startMinute => $start_minute,
@@ -285,6 +289,10 @@ add_sitelinks
 =head1 DESCRIPTION
 
 This example adds sitelinks to a campaign. To create a campaign, run add_campaigns.pl.
+
+DEPRECATION WARNING!
+THIS USAGE IS DEPRECATED AND WILL BE REMOVED IN AN UPCOMING API VERSION
+All extensions should migrate to Assets. See add_sitelinks_using_assets.pl
 
 =head1 SYNOPSIS
 

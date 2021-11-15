@@ -14,9 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a price extension and associates it with an account. Campaign
-# targeting is also set using the specified campaign ID. To get campaigns, run
-# get_campaigns.pl.
+# This example adds a price extension and associates it with an account.
 
 use strict;
 use warnings;
@@ -26,29 +24,25 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V8::Resources::CustomerExtensionSetting;
-use Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem;
-use Google::Ads::GoogleAds::V8::Common::PriceFeedItem;
-use Google::Ads::GoogleAds::V8::Common::PriceOffer;
-use Google::Ads::GoogleAds::V8::Common::Money;
-use Google::Ads::GoogleAds::V8::Common::AdScheduleInfo;
-use Google::Ads::GoogleAds::V8::Enums::ExtensionTypeEnum qw(PRICE);
-use Google::Ads::GoogleAds::V8::Enums::PriceExtensionTypeEnum qw(SERVICES);
-use Google::Ads::GoogleAds::V8::Enums::PriceExtensionPriceQualifierEnum
+use Google::Ads::GoogleAds::V9::Resources::Asset;
+use Google::Ads::GoogleAds::V9::Resources::CustomerAsset;
+use Google::Ads::GoogleAds::V9::Common::PriceAsset;
+use Google::Ads::GoogleAds::V9::Common::PriceOffering;
+use Google::Ads::GoogleAds::V9::Common::Money;
+use Google::Ads::GoogleAds::V9::Enums::PriceExtensionTypeEnum qw(SERVICES);
+use Google::Ads::GoogleAds::V9::Enums::PriceExtensionPriceQualifierEnum
   qw(FROM);
-use Google::Ads::GoogleAds::V8::Enums::PriceExtensionPriceUnitEnum
+use Google::Ads::GoogleAds::V9::Enums::PriceExtensionPriceUnitEnum
   qw(PER_HOUR PER_MONTH);
-use Google::Ads::GoogleAds::V8::Enums::DayOfWeekEnum qw(SATURDAY SUNDAY);
-use Google::Ads::GoogleAds::V8::Enums::MinuteOfHourEnum qw(ZERO);
+use Google::Ads::GoogleAds::V9::Enums::AssetFieldTypeEnum qw(PRICE);
+use Google::Ads::GoogleAds::V9::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V8::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation;
-use
-  Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
-use Google::Ads::GoogleAds::V8::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V9::Services::CustomerAssetService::CustomerAssetOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 use Cwd qw(abs_path);
+use Data::Uniqid qw(uniqid);
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -59,130 +53,124 @@ use Cwd qw(abs_path);
 #
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
-my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 
 sub add_prices {
-  my ($api_client, $customer_id, $campaign_id) = @_;
+  my ($api_client, $customer_id) = @_;
 
-  # Create an extension feed item as price.
-  my $extension_feed_item =
-    create_extension_feed_item($api_client, $customer_id, $campaign_id);
+  # Create a new price asset.
+  my $price_asset_resource_name = create_price_asset($api_client, $customer_id);
 
-  # Create a customer extension setting using the previously created extension
-  # feed item. This associates the price extension to your account.
-  my $customer_extension_setting =
-    Google::Ads::GoogleAds::V8::Resources::CustomerExtensionSetting->new({
-      extensionType      => PRICE,
-      extensionFeedItems => [$extension_feed_item]});
-
-  # Create a customer extension setting operation.
-  my $customer_extension_setting_operation =
-    Google::Ads::GoogleAds::V8::Services::CustomerExtensionSettingService::CustomerExtensionSettingOperation
-    ->new({
-      create => $customer_extension_setting
-    });
-
-  # Add the customer extension setting.
-  my $customer_extension_settings_response =
-    $api_client->CustomerExtensionSettingService()->mutate({
-      customerId => $customer_id,
-      operations => [$customer_extension_setting_operation]});
-
-  printf "Created customer extension setting with resource name '%s'.\n",
-    $customer_extension_settings_response->{results}[0]{resourceName};
+  # Add the new price asset to the account, so it will serve all campaigns
+  # under the account.
+  add_extension_to_account($api_client, $customer_id,
+    $price_asset_resource_name);
 
   return 1;
 }
 
-# Creates an extension feed item.
-sub create_extension_feed_item {
-  my ($api_client, $customer_id, $campaign_id) = @_;
+# Creates a price asset.
+sub create_price_asset {
+  my ($api_client, $customer_id) = @_;
 
-  # Create the price extension feed item.
-  my $price_feed_item = Google::Ads::GoogleAds::V8::Common::PriceFeedItem->new({
-    type => SERVICES,
-    # Price qualifier is optional.
-    priceQualifier      => FROM,
+  # Create the price asset.
+  my $price_asset = Google::Ads::GoogleAds::V9::Common::PriceAsset->new({
+      type => SERVICES,
+      # Price qualifier is optional.
+      priceQualifier => FROM,
+      languageCode   => "en",
+      priceOfferings => [
+        create_price_offering(
+          "Scrubs",
+          "Body Scrub, Salt Scrub",
+          "http://www.example.com/scrubs",
+          "http://m.example.com/scrubs",
+          60000000,    # 60 USD
+          "USD",
+          PER_HOUR
+        ),
+        create_price_offering(
+          "Hair Cuts",
+          "Once a month",
+          "http://www.example.com/haircuts",
+          "http://m.example.com/haircuts",
+          75000000,    # 75 USD
+          "USD",
+          PER_MONTH
+        ),
+        create_price_offering(
+          "Skin Care Package",
+          "Four times a month",
+          "http://www.example.com/skincarepackage",
+          undef,
+          250000000,    # 250 USD
+          "USD",
+          PER_MONTH
+        )]});
+
+  # Create an asset.
+  my $asset = Google::Ads::GoogleAds::V9::Resources::Asset->new({
+    name                => "Price Asset #" . uniqid(),
     trackingUrlTemplate => "http://tracker.example.com/?u={lpurl}",
-    languageCode        => "en"
+    priceAsset          => $price_asset
   });
 
-  # To create a price extension, at least three price offerings are needed.
-  $price_feed_item->{priceOfferings} = [
-    create_price_offer(
-      "Scrubs",
-      "Body Scrub, Salt Scrub",
-      "http://www.example.com/scrubs",
-      "http://m.example.com/scrubs",
-      60000000,    # 60 USD
-      "USD",
-      PER_HOUR
-    ),
-    create_price_offer(
-      "Hair Cuts",
-      "Once a month",
-      "http://www.example.com/haircuts",
-      "http://m.example.com/haircuts",
-      75000000,    # 75 USD
-      "USD",
-      PER_MONTH
-    ),
-    create_price_offer(
-      "Skin Care Package",
-      "Four times a month",
-      "http://www.example.com/skincarepackage",
-      undef,
-      250000000,    # 250 USD
-      "USD",
-      PER_MONTH
-    )];
-
-  # Create an extension feed item from the price feed item.
-  my $extension_feed_item =
-    Google::Ads::GoogleAds::V8::Resources::ExtensionFeedItem->new({
-      extensionType    => PRICE,
-      priceFeedItem    => $price_feed_item,
-      targetedCampaign =>
-        Google::Ads::GoogleAds::V8::Utils::ResourceNames::campaign(
-        $customer_id, $campaign_id
-        ),
-      adSchedules => [
-        create_ad_schedule_info(SUNDAY,   10, ZERO, 18, ZERO),
-        create_ad_schedule_info(SATURDAY, 10, ZERO, 22, ZERO),
-      ]});
-
-  # Create an extension feed item operation.
-  my $extension_feed_item_operation =
-    Google::Ads::GoogleAds::V8::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
-    ->new({
-      create => $extension_feed_item
+  # Create an asset operation.
+  my $operation =
+    Google::Ads::GoogleAds::V9::Services::AssetService::AssetOperation->new({
+      create => $asset
     });
 
-  # Add the extension feed item.
-  my $extension_feed_items_response =
-    $api_client->ExtensionFeedItemService()->mutate({
+  # Issue a mutate request to add the price asset and print some information.
+  my $response = $api_client->AssetService()->mutate({
       customerId => $customer_id,
-      operations => [$extension_feed_item_operation]});
+      operations => [$operation]});
 
-  my $extension_feed_item_resource_name =
-    $extension_feed_items_response->{results}[0]{resourceName};
-  printf "Created extension feed item with resource name '%s'.\n",
-    $extension_feed_item_resource_name;
+  printf
+    "Created price asset with resource name '%s'.\n",
+    $response->{results}[0]{resourceName};
 
-  return $extension_feed_item_resource_name;
+  return $response->{results}[0]{resourceName};
 }
 
-# Creates a new price offer with the specified attributes.
-sub create_price_offer {
+# Adds the price asset to the customer account, allowing it to serve all campaigns
+# under the account.
+sub add_extension_to_account {
+  my ($api_client, $customer_id, $price_asset_resource_name) = @_;
+
+  # Create a customer asset, set its type to PRICE and attach the price asset.
+  my $customer_asset =
+    Google::Ads::GoogleAds::V9::Resources::CustomerAsset->new({
+      asset     => $price_asset_resource_name,
+      fieldType => PRICE
+    });
+
+  # Create a customer asset operation.
+  my $operation =
+    Google::Ads::GoogleAds::V9::Services::CustomerAssetService::CustomerAssetOperation
+    ->new({
+      create => $customer_asset
+    });
+
+  # Issue a mutate request to add the customer asset and print some information.
+  my $response = $api_client->CustomerAssetService()->mutate({
+      customerId => $customer_id,
+      operations => [$operation]});
+
+  printf "Created customer asset with resource name '%s'.\n",
+    $response->{results}[0]{resourceName};
+}
+
+# Creates a new price offering with the specified attributes.
+sub create_price_offering {
   my ($header, $description, $final_url, $final_mobile_url, $price_in_micros,
     $currency_code, $unit)
     = @_;
 
-  my $price_offer = Google::Ads::GoogleAds::V8::Common::PriceOffer->new({
+  my $price_offering = Google::Ads::GoogleAds::V9::Common::PriceOffering->new({
       header      => $header,
       description => $description,
-      finalUrls   => [$final_url],
-      price       => Google::Ads::GoogleAds::V8::Common::Money->new({
+      finalUrl    => $final_url,
+      price       => Google::Ads::GoogleAds::V9::Common::Money->new({
           amountMicros => $price_in_micros,
           currencyCode => $currency_code
         }
@@ -190,23 +178,10 @@ sub create_price_offer {
       unit => $unit
     });
 
-  # Optional: set the final mobile URLs.
-  $price_offer->{finalMobileUrls} = [$final_mobile_url] if $final_mobile_url;
+  # Optional: set the final mobile URL.
+  $price_offering->{finalMobileUrl} = $final_mobile_url if $final_mobile_url;
 
-  return $price_offer;
-}
-
-# Creates a new ad schedule info with the specified attributes.
-sub create_ad_schedule_info {
-  my ($day, $start_hour, $start_minute, $end_hour, $end_minute) = @_;
-
-  return Google::Ads::GoogleAds::V8::Common::AdScheduleInfo->new({
-    dayOfWeek   => $day,
-    startHour   => $start_hour,
-    startMinute => $start_minute,
-    endHour     => $end_hour,
-    endMinute   => $end_minute
-  });
+  return $price_offering;
 }
 
 # Don't run the example if the file is being included.
@@ -221,15 +196,14 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
-GetOptions("customer_id=s" => \$customer_id, "campaign_id=i" => \$campaign_id);
+GetOptions("customer_id=s" => \$customer_id);
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2)
-  if not check_params($customer_id, $campaign_id);
+pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
-add_prices($api_client, $customer_id =~ s/-//gr, $campaign_id);
+add_prices($api_client, $customer_id =~ s/-//gr);
 
 =pod
 
@@ -239,9 +213,7 @@ add_prices
 
 =head1 DESCRIPTION
 
-This example adds a price extension and associates it with an account. Campaign
-targeting is also set using the specified campaign ID. To get campaigns, run
-get_campaigns.pl.
+This example adds a price extension and associates it with an account.
 
 =head1 SYNOPSIS
 
@@ -249,6 +221,5 @@ add_prices.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
-    -campaign_id                The campaign ID.
 
 =cut
