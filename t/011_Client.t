@@ -42,7 +42,7 @@ my $api_client = Google::Ads::GoogleAds::Client->new({
   properties_file   => $properties_file
 });
 
-is($api_client->get_developer_token(), "dev-token", "Read of developer token.");
+is($api_client->get_developer_token(), "dev-token1", "Read of developer token.");
 is($api_client->get_login_customer_id(),
   $login_customer_id, "Override of login customer ID.");
 is($api_client->get_linked_customer_id(),
