@@ -54,7 +54,6 @@ use Google::Ads::GoogleAds::V9::Enums::AppCampaignAppStoreEnum
   qw(GOOGLE_APP_STORE);
 use Google::Ads::GoogleAds::V9::Enums::AppCampaignBiddingStrategyGoalTypeEnum
   qw(OPTIMIZE_INSTALLS_TARGET_INSTALL_COST);
-use Google::Ads::GoogleAds::V9::Enums::CriterionTypeEnum qw(LOCATION LANGUAGE);
 use Google::Ads::GoogleAds::V9::Enums::AdGroupStatusEnum;
 use Google::Ads::GoogleAds::V9::Enums::AdGroupAdStatusEnum;
 use
@@ -222,7 +221,6 @@ sub set_campaign_targeting_criteria {
     my $campaign_criterion =
       Google::Ads::GoogleAds::V9::Resources::CampaignCriterion->new({
         campaign => $campaign_resource_name,
-        type     => LOCATION,
         location => Google::Ads::GoogleAds::V9::Common::LocationInfo->new({
             geoTargetConstant =>
               Google::Ads::GoogleAds::V9::Utils::ResourceNames::geo_target_constant(
@@ -241,7 +239,6 @@ sub set_campaign_targeting_criteria {
     my $campaign_criterion =
       Google::Ads::GoogleAds::V9::Resources::CampaignCriterion->new({
         campaign => $campaign_resource_name,
-        type     => LANGUAGE,
         language => Google::Ads::GoogleAds::V9::Common::LanguageInfo->new({
             languageConstant =>
               Google::Ads::GoogleAds::V9::Utils::ResourceNames::language_constant(

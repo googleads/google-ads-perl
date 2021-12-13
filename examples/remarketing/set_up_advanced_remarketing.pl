@@ -61,7 +61,7 @@ use Data::Uniqid qw(uniqid);
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 
-sub setup_advanced_remarketing {
+sub set_up_advanced_remarketing {
   my ($api_client, $customer_id) = @_;
 
   # Create a rule targeting any user that visited the checkout page.
@@ -217,13 +217,13 @@ GetOptions("customer_id=s" => \$customer_id,);
 pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
-setup_advanced_remarketing($api_client, $customer_id =~ s/-//gr);
+set_up_advanced_remarketing($api_client, $customer_id =~ s/-//gr);
 
 =pod
 
 =head1 NAME
 
-setup_advanced_remarketing
+set_up_advanced_remarketing
 
 =head1 DESCRIPTION
 
@@ -233,7 +233,7 @@ more than one item in their cart.
 
 =head1 SYNOPSIS
 
-setup_advanced_remarketing.pl [options]
+set_up_advanced_remarketing.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.

@@ -17,7 +17,7 @@
 # This example adds an Local campaign.
 #
 # Prerequisite: To create a Local campaign, you need to define the store locations
-# you want to promote by linking your Google My Business account or selecting
+# you want to promote by linking your Business Profile account or selecting
 # affiliate locations. More information about Local campaigns can be found at:
 # https://support.google.com/google-ads/answer/9118422.
 
@@ -172,8 +172,8 @@ sub create_campaign {
       # Configure the Local campaign setting.
       localCampaignSetting =>
         Google::Ads::GoogleAds::V9::Resources::LocalCampaignSetting->new({
-          # Use the locations associated with the customer's linked Google
-          # My Business account.
+          # Use the locations associated with the customer's linked Business Profile
+          # account.
           locationSourceType => GOOGLE_MY_BUSINESS
         }
         ),
@@ -407,7 +407,7 @@ add_local_campaign
 This example adds an Local campaign.
 
 Prerequisite: To create a Local campaign, you need to define the store locations
-you want to promote by linking your Google My Business account or selecting
+you want to promote by linking your Business Profile account or selecting
 affiliate locations. More information about Local campaigns can be found at:
 https://support.google.com/google-ads/answer/9118422.
 

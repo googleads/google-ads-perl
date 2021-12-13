@@ -239,7 +239,8 @@ sub _get_http_headers {
     "x-goog-api-client",
     join(' ',
       Google::Ads::GoogleAds::Constants::DEFAULT_USER_AGENT,
-      "gccl/" . Google::Ads::GoogleAds::BaseService->VERSION),
+      "gccl/" . Google::Ads::GoogleAds::BaseService->VERSION,
+      "rest/" . $LWP::UserAgent::Determined::VERSION),
     "developer-token",
     $api_client->get_developer_token()];
 

@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 93);
+use Test::More (tests => 95);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -187,9 +187,26 @@ ok(
   "Test of add_expanded_text_ad_with_upgraded_urls example."
 );
 # NOTE: Skip the add_local_campaign.pl as it requires additional setup.
+require qw(examples/advanced_operations/add_performance_max_campaign.pl);
+ok(
+  add_performance_max_campaign($api_client, $customer_id),
+  "Test of add_performance_max_campaign example."
+);
+require
+  qw(examples/advanced_operations/add_responsive_search_ad_with_ad_customizer.pl);
+ok(
+  add_responsive_search_ad_with_ad_customizer(
+    $api_client, $customer_id, $search_ad_group_id, "Price"
+  ),
+  "Test of add_responsive_search_ad_with_ad_customizer example."
+);
 require qw(examples/advanced_operations/add_smart_campaign.pl);
-ok(add_smart_campaign($api_client, $customer_id, "TestBusinessName"),
-  "Test of add_smart_campaign example.");
+ok(
+  add_smart_campaign(
+    $api_client, $customer_id, undef, undef, undef, "TestBusinessName"
+  ),
+  "Test of add_smart_campaign example."
+);
 # NOTE: Skip the add_smart_display_ad.pl as it requires additional setup.
 require
   qw(examples/advanced_operations/create_and_attach_shared_keyword_set.pl);
@@ -347,11 +364,6 @@ ok(
   ),
   "Test of set_ad_parameters example."
 );
-require qw(examples/campaign_management/update_bidding_strategy.pl);
-ok(
-  update_bidding_strategy($api_client, $customer_id),
-  "Test of update_bidding_strategy example."
-);
 require
   qw(examples/campaign_management/update_campaign_criterion_bid_modifier.pl);
 ok(
@@ -399,7 +411,7 @@ ok(
   "Test of add_affiliate_location_extensions example."
 );
 # NOTE: Skip the add_geo_target.pl as it requires additional setup.
-# NOTE: Skip the add_google_my_business_location_extensions.pl as it requires additional setup.
+# NOTE: Skip the add_business_profile_location_extensions.pl as it requires additional setup.
 require qw(examples/extensions/add_hotel_callout.pl);
 ok(add_hotel_callout($api_client, $customer_id, "en"),
   "Test of add_hotel_callout example.");
@@ -549,23 +561,25 @@ ok(
   add_remarketing_action($api_client, $customer_id),
   "Test of add_remarketing_action example."
 );
-require qw(examples/remarketing/setup_advanced_remarketing.pl);
+require qw(examples/remarketing/set_up_advanced_remarketing.pl);
 ok(
-  setup_advanced_remarketing($api_client, $customer_id),
-  "Test of setup_advanced_remarketing example."
+  set_up_advanced_remarketing($api_client, $customer_id),
+  "Test of set_up_advanced_remarketing example."
 );
-require qw(examples/remarketing/setup_remarketing.pl);
+require qw(examples/remarketing/set_up_remarketing.pl);
 ok(
-  setup_remarketing(
+  set_up_remarketing(
     $api_client, $customer_id, $search_ad_group_id, $search_campaign_id, 1.5
   ),
-  "Test of setup_remarketing example."
+  "Test of set_up_remarketing example."
 );
 require qw(examples/remarketing/update_audience_target_restriction.pl);
 ok(add_remarketing_action($api_client, $customer_id, $search_ad_group_id),
   "Test of update_audience_target_restriction example.");
 # NOTE: Skip the upload_call_conversion.pl as it requires additional setup.
 # NOTE: Skip the upload_conversion_adjustment.pl as it requires additional setup.
+# NOTE: Skip the upload_conversion_enhancement.pl as it requires additional setup.
+# NOTE: Skip the upload_conversion_with_identifiers.pl as it requires additional setup.
 # NOTE: Skip the upload_offline_conversion.pl as it requires additional setup.
 # NOTE: Skip the upload_store_sales_transactions.pl as it requires additional setup.
 
@@ -584,6 +598,7 @@ ok(
 
 # shopping_ads
 # NOTE: Skip the add_listing_scope.pl as it requires a merchant account.
+# NOTE: Skip the add_performance_max_retail_campaign.pl as it requires a merchant account.
 # NOTE: Skip the add_shopping_product_ad.pl as it requires a merchant account.
 # NOTE: Skip the add_shopping_product_listing_group_tree.pl as it requires a merchant account.
 # NOTE: Skip the add_shopping_smart_ad.pl as it requires a merchant account.

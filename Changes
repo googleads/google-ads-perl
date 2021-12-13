@@ -1,3 +1,15 @@
+9.3.0 - 2021-12-15
+- Supported HTTP agent version in the "x-goog-api-client" request header.
+- Updated the references of “Google My Business/GMB” in code examples to
+  “Business Profile”.
+- Added code examples: add_performance_max_campaign, add_performance_max_retail_campaign,
+  add_responsive_search_ad_with_ad_customizer, upload_conversion_enhancement,
+  upload_conversion_with_identifiers.
+- Updated code examples: add_app_campaign, add_smart_campaign.
+- Renamed code examples: add_google_my_business_location_extensions to
+  add_business_profile_location_extensions, setup_advanced_remarketing to
+  set_up_advanced_remarketing, setup_remarketing to set_up_remarketing.
+
 9.2.0 - 2021-11-12
 - Added support for Google Ads API v9_0.
 - Supported client library version in the "x-goog-api-client" request header.

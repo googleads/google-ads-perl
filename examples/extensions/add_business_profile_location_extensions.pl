@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example adds a feed that syncs feed items from a Google My Business (GMB)
-# account and associates the feed with a customer.
+# This example adds a feed that syncs feed items from a Business Profile account
+# and associates the feed with a customer.
 
 use strict;
 use warnings;
@@ -57,53 +57,54 @@ use constant MAX_CUSTOMER_FEED_ADD_ATTEMPTS => 10;
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id         = "INSERT_CUSTOMER_ID_HERE";
-my $gmb_email_address   = "INSERT_GMB_EMAIL_ADDRESS_HERE";
-my $business_account_id = "INSERT_BUSINESS_ACCOUNT_ID_HERE";
-my $gmb_access_token    = "INSERT_GMB_ACCESS_TOKEN_HERE";
+my $customer_id                   = "INSERT_CUSTOMER_ID_HERE";
+my $business_profile_email        = "INSERT_BUSINESS_PROFILE_EMAIL_HERE";
+my $business_profile_account_id   = "INSERT_BUSINESS_PROFILE_ACCOUNT_ID_HERE";
+my $business_profile_access_token = "INSERT_BUSINESS_PROFILE_ACCESS_TOKEN_HERE";
 
-sub add_google_my_business_location_extensions {
-  my ($api_client, $customer_id, $gmb_email_address, $business_account_id,
-    $gmb_access_token)
+sub add_business_profile_location_extensions {
+  my ($api_client, $customer_id, $business_profile_email,
+    $business_profile_account_id, $business_profile_access_token)
     = @_;
 
-  # [START add_google_my_business_location_extensions]
-  # Create a feed that will sync to the Google My Business account specified by
-  # $gmb_email_address. Do not add FeedAttributes to this object as Google Ads
+  # [START add_business_profile_location_extensions]
+  # Create a feed that will sync to the Business Profile account specified by
+  # $business_profile_email. Do not add FeedAttributes to this object as Google Ads
   # will add them automatically because this will be a system generated feed.
-  my $gmb_feed = Google::Ads::GoogleAds::V9::Resources::Feed->new({
-      name => "Google My Business feed #" . uniqid(),
-      # Configure the location feed populated from Google My Business Locations.
+  my $business_profile_feed = Google::Ads::GoogleAds::V9::Resources::Feed->new({
+      name => "Business Profile feed #" . uniqid(),
+      # Configure the location feed populated from Business Profile Locations.
       placesLocationFeedData =>
         Google::Ads::GoogleAds::V9::Resources::PlacesLocationFeedData->new({
-          emailAddress      => $gmb_email_address,
-          businessAccountId => $business_account_id,
-          # Used to filter Google My Business listings by labels. If entries exist in
+          emailAddress      => $business_profile_email,
+          businessAccountId => $business_profile_account_id,
+          # Used to filter Business Profile listings by labels. If entries exist in
           # label_filters, only listings that have at least one of the labels set are
           # candidates to be synchronized into FeedItems. If no entries exist in
           # label_filters, then all listings are candidates for syncing.
           labelFilters => ["Stores in New York"],
-          # Set the authentication info to be able to connect Google Ads to the GMB
-          # account.
+          # Set the authentication info to be able to connect Google Ads to the
+          # Business Profile account.
           oauthInfo => Google::Ads::GoogleAds::V9::Resources::OAuthInfo->new({
               httpMethod     => "GET",
               httpRequestUrl =>
                 Google::Ads::GoogleAds::Constants::DEFAULT_OAUTH2_SCOPE,
-              httpAuthorizationHeader => "Bearer " . $gmb_access_token
+              httpAuthorizationHeader => "Bearer " .
+                $business_profile_access_token
             })}
         ),
       # Since this feed's feed items will be managed by Google, you must set its
       # origin to GOOGLE.
       origin => GOOGLE
     });
-  # [END add_google_my_business_location_extensions]
+  # [END add_business_profile_location_extensions]
 
   # Create a feed operation.
   my $feed_operation =
     Google::Ads::GoogleAds::V9::Services::FeedService::FeedOperation->new(
-    {create => $gmb_feed});
+    {create => $business_profile_feed});
 
-  # [START add_google_my_business_location_extensions_1]
+  # [START add_business_profile_location_extensions_1]
   # Add the feed. Since it is a system generated feed, Google Ads will automatically:
   # 1. Set up the FeedAttributes on the feed.
   # 2. Set up a FeedMapping that associates the FeedAttributes of the feed with the
@@ -114,10 +115,11 @@ sub add_google_my_business_location_extensions {
 
   my $feed_resource_name = $feeds_response->{results}[0]{resourceName};
 
-  printf "GMB feed created with resource name: '%s'.\n", $feed_resource_name;
-  # [END add_google_my_business_location_extensions_1]
+  printf "Business Profile feed created with resource name: '%s'.\n",
+    $feed_resource_name;
+  # [END add_business_profile_location_extensions_1]
 
-  # [START add_google_my_business_location_extensions_2]
+  # [START add_business_profile_location_extensions_2]
   # Add a CustomerFeed that associates the feed with this customer for the LOCATION
   # placeholder type.
   my $customer_feed = Google::Ads::GoogleAds::V9::Resources::CustomerFeed->new({
@@ -136,17 +138,17 @@ sub add_google_my_business_location_extensions {
           functionString => "IDENTITY(true)",
           operator       => IDENTITY
         })});
-  # [END add_google_my_business_location_extensions_2]
+  # [END add_business_profile_location_extensions_2]
 
   # Create a customer feed operation.
   my $customer_feed_operation =
     Google::Ads::GoogleAds::V9::Services::CustomerFeedService::CustomerFeedOperation
     ->new({create => $customer_feed});
 
-  # [START add_google_my_business_location_extensions_3]
+  # [START add_business_profile_location_extensions_3]
   # After the completion of the Feed ADD operation above the added feed will not be available
-  # for usage in a CustomerFeed until the sync between the Google Ads and GMB accounts
-  # completes. The loop below will retry adding the CustomerFeed up to ten times with an
+  # for usage in a CustomerFeed until the sync between the Google Ads and Business Profile
+  # accounts completes. The loop below will retry adding the CustomerFeed up to ten times with an
   # exponential back-off policy.
   my $customer_feed_service       = $api_client->CustomerFeedService();
   my $customer_feed_resource_name = undef;
@@ -187,7 +189,7 @@ sub add_google_my_business_location_extensions {
       last;
     }
   }
-  # [END add_google_my_business_location_extensions_3]
+  # [END add_business_profile_location_extensions_3]
 
   printf "Could not create the CustomerFeed after %d attempts. " .
     "Please retry the CustomerFeed ADD operation later.",
@@ -215,45 +217,45 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"         => \$customer_id,
-  "gmb_email_address=s"   => \$gmb_email_address,
-  "business_account_id=s" => \$business_account_id,
-  "gmb_access_token=s"    => \$gmb_access_token,
+  "customer_id=s"                   => \$customer_id,
+  "business_profile_email=s"        => \$business_profile_email,
+  "business_profile_account_id=s"   => \$business_profile_account_id,
+  "business_profile_access_token=s" => \$business_profile_access_token,
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params($customer_id, $gmb_email_address,
-  $business_account_id, $gmb_access_token);
+  if not check_params($customer_id, $business_profile_email,
+  $business_profile_account_id, $business_profile_access_token);
 
 # Call the example.
-add_google_my_business_location_extensions(
-  $api_client,          $customer_id =~ s/-//gr, $gmb_email_address,
-  $business_account_id, $gmb_access_token
-);
+add_business_profile_location_extensions($api_client, $customer_id =~ s/-//gr,
+  $business_profile_email,
+  $business_profile_account_id, $business_profile_access_token);
 
 =pod
 
 =head1 NAME
 
-add_google_my_business_location_extensions
+add_business_profile_location_extensions
 
 =head1 DESCRIPTION
 
-This example adds a feed that syncs feed items from a Google My Business (GMB)
-account and associates the feed with a customer.
+This example adds a feed that syncs feed items from a Business Profile account
+and associates the feed with a customer.
 
 =head1 SYNOPSIS
 
-add_google_my_business_location_extensions.pl [options]
+add_business_profile_location_extensions.pl [options]
 
     -help                               Show the help message.
     -customer_id                        The Google Ads customer ID.
-    -gmb_email_address                  The email address associated with the GMB account.
-    -business_account_id                The account ID of the managed business.
-    -gmb_access_token                   The access token created using the 'AdWords' scope
+    -business_profile_email             The email address associated with the Business Profile
+                  `                     account.
+    -business_profile_account_id        The account ID of the managed business.
+    -business_profile_access_token      The access token created using the 'AdWords' scope
                                         and the client ID and client secret of with the
-                                        Cloud project associated with the GMB account.
+                                        Cloud project associated with the Business Profile account.
 
 =cut

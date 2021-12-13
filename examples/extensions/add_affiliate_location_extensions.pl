@@ -108,7 +108,7 @@ sub delete_location_extension_feeds {
 
   # To delete a location extension feed, you need to
   # 1. Delete the customer feed so that the location extensions from the feed stop serving.
-  # 2. Delete the feed so that Google Ads will no longer sync from the GMB account.
+  # 2. Delete the feed so that Google Ads will no longer sync from the Business Profile account.
   my $customer_feeds =
     get_location_extension_customer_feeds($api_client, $customer_id);
   if (scalar @$customer_feeds > 0) {

@@ -81,7 +81,7 @@ my $ad_group_id        = "INSERT_AD_GROUP_ID_HERE";
 my $campaign_id        = "INSERT_CAMPAIGN_ID_HERE";
 my $bid_modifier_value = "INSERT_BID_MODIFIER_VALUE_HERE";
 
-sub setup_remarketing {
+sub set_up_remarketing {
   my ($api_client, $customer_id, $ad_group_id, $campaign_id,
     $bid_modifier_value) = @_;
 
@@ -418,14 +418,14 @@ pod2usage(2)
   $bid_modifier_value);
 
 # Call the example.
-setup_remarketing($api_client, $customer_id =~ s/-//gr,
+set_up_remarketing($api_client, $customer_id =~ s/-//gr,
   $ad_group_id, $campaign_id, $bid_modifier_value);
 
 =pod
 
 =head1 NAME
 
-setup_remarketing
+set_up_remarketing
 
 =head1 DESCRIPTION
 
@@ -448,7 +448,7 @@ at the campaign level before running this example.
 
 =head1 SYNOPSIS
 
-setup_remarketing.pl [options]
+set_up_remarketing.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
