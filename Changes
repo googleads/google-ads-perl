@@ -1,4 +1,4 @@
-9.3.0 - 2021-12-15
+9.3.0 - 2021-12-15 
 - Supported HTTP agent version in the "x-goog-api-client" request header.
 - Updated the references of “Google My Business/GMB” in code examples to
   “Business Profile”.
