@@ -111,8 +111,7 @@ sub upload_conversion_with_identifiers {
   my $result = $response->{results}[0];
   # Only print valid results.
   if (defined $result->{conversionDateTime}) {
-    printf "Uploaded conversion that occurred at '%s' " .
-      "to '%s'.\n",
+    printf "Uploaded conversion that occurred at '%s' to '%s'.\n",
       $result->{conversionDateTime},
       $result->{conversionAction};
   }
