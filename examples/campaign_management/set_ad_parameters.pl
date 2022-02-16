@@ -24,10 +24,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V9::Resources::AdParameter;
+use Google::Ads::GoogleAds::V10::Resources::AdParameter;
 use
-  Google::Ads::GoogleAds::V9::Services::AdParameterService::AdParameterOperation;
-use Google::Ads::GoogleAds::V9::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V10::Services::AdParameterService::AdParameterOperation;
+use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -49,37 +49,39 @@ sub set_ad_parameters {
   my ($api_client, $customer_id, $ad_group_id, $criterion_id) = @_;
 
   my $ad_group_criterion_resource_name =
-    Google::Ads::GoogleAds::V9::Utils::ResourceNames::ad_group_criterion(
+    Google::Ads::GoogleAds::V10::Utils::ResourceNames::ad_group_criterion(
     $customer_id, $ad_group_id, $criterion_id);
 
   # Create ad parameters.
   # There can be a maximum of two ad parameters per ad group criterion.
   # (One with parameter_index = 1 and one with parameter_index = 2.)
-  my $ad_parameter_1 = Google::Ads::GoogleAds::V9::Resources::AdParameter->new({
-    adGroupCriterion => $ad_group_criterion_resource_name,
-    # The unique index of this ad parameter. Must be either 1 or 2.
-    parameterIndex => 1,
-    # String containing a numeric value to insert into the ad text.
-    # The following restrictions apply: (a) can use comma or period as a separator,
-    # with an optional period or comma (respectively) for fractional values,
-    # (b) can be prepended or appended with a currency code, (c) can use plus or minus,
-    # (d) can use '/' between two numbers.
-    insertionText => "100"
-  });
+  my $ad_parameter_1 = Google::Ads::GoogleAds::V10::Resources::AdParameter->new(
+    {
+      adGroupCriterion => $ad_group_criterion_resource_name,
+      # The unique index of this ad parameter. Must be either 1 or 2.
+      parameterIndex => 1,
+      # String containing a numeric value to insert into the ad text.
+      # The following restrictions apply: (a) can use comma or period as a separator,
+      # with an optional period or comma (respectively) for fractional values,
+      # (b) can be prepended or appended with a currency code, (c) can use plus or minus,
+      # (d) can use '/' between two numbers.
+      insertionText => "100"
+    });
 
-  my $ad_parameter_2 = Google::Ads::GoogleAds::V9::Resources::AdParameter->new({
-    adGroupCriterion => $ad_group_criterion_resource_name,
-    parameterIndex   => 2,
-    insertionText    => "\$40"
-  });
+  my $ad_parameter_2 = Google::Ads::GoogleAds::V10::Resources::AdParameter->new(
+    {
+      adGroupCriterion => $ad_group_criterion_resource_name,
+      parameterIndex   => 2,
+      insertionText    => "\$40"
+    });
 
   # Create ad parameter operations.
   my $ad_parameter_operation1 =
-    Google::Ads::GoogleAds::V9::Services::AdParameterService::AdParameterOperation
+    Google::Ads::GoogleAds::V10::Services::AdParameterService::AdParameterOperation
     ->new({create => $ad_parameter_1});
 
   my $ad_parameter_operation2 =
-    Google::Ads::GoogleAds::V9::Services::AdParameterService::AdParameterOperation
+    Google::Ads::GoogleAds::V10::Services::AdParameterService::AdParameterOperation
     ->new({create => $ad_parameter_2});
 
   # Set the ad parameters.

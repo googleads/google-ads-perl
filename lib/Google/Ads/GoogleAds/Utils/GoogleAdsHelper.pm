@@ -186,7 +186,7 @@ arguments.
 
 I<path_template>: the path template to expand. The format could be:
 'customers/{customer_id}/adGroups/{ad_group_id}' or
-'v9/customers/{+customerId}/adGroups:mutate'.
+'v10/customers/{+customerId}/adGroups:mutate'.
 
 =item *
 

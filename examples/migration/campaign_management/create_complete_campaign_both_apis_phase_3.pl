@@ -30,20 +30,20 @@ use utf8;
 
 use FindBin qw($Bin);
 use lib "$Bin/../../../lib";
-use Google::Ads::GoogleAds::V9::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V9::Resources::Campaign;
-use Google::Ads::GoogleAds::V9::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V9::Resources::AdGroup;
-use Google::Ads::GoogleAds::V9::Common::ManualCpc;
-use Google::Ads::GoogleAds::V9::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
-use Google::Ads::GoogleAds::V9::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V9::Enums::CampaignStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V9::Enums::AdGroupStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V9::Enums::AdGroupTypeEnum qw(SEARCH_STANDARD);
+use Google::Ads::GoogleAds::V10::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V10::Resources::Campaign;
+use Google::Ads::GoogleAds::V10::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V10::Resources::AdGroup;
+use Google::Ads::GoogleAds::V10::Common::ManualCpc;
+use Google::Ads::GoogleAds::V10::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V10::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V10::Enums::CampaignStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V10::Enums::AdGroupStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V10::Enums::AdGroupTypeEnum qw(SEARCH_STANDARD);
 use
-  Google::Ads::GoogleAds::V9::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V9::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V9::Services::AdGroupService::AdGroupOperation;
+  Google::Ads::GoogleAds::V10::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V10::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V10::Services::AdGroupService::AdGroupOperation;
 use Google::Ads::AdWords::v201809::ExpandedTextAd;
 use Google::Ads::AdWords::v201809::AdGroupAd;
 use Google::Ads::AdWords::v201809::Keyword;
@@ -81,7 +81,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V9::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V10::Resources::CampaignBudget->new({
       name           => "Interplanetary Cruise Budget #" . uniqid(),
       deliveryMethod => STANDARD,
       amountMicros   => 500000
@@ -89,7 +89,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V9::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V10::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Issue a mutate request to add the campaign budget.
@@ -133,7 +133,7 @@ sub create_campaign {
   my ($google_ads_client, $customer_id, $campaign_budget) = @_;
 
   # Create a campaign.
-  my $campaign = Google::Ads::GoogleAds::V9::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V10::Resources::Campaign->new({
       name                   => "Interplanetary Cruise #" . uniqid(),
       advertisingChannelType => SEARCH,
       # Recommendation: Set the campaign to PAUSED when creating it to stop
@@ -141,11 +141,11 @@ sub create_campaign {
       # targeting and the ads are ready to serve.
       status => PAUSED,
       # Set the bidding strategy and budget.
-      manualCpc      => Google::Ads::GoogleAds::V9::Common::ManualCpc->new(),
+      manualCpc      => Google::Ads::GoogleAds::V10::Common::ManualCpc->new(),
       campaignBudget => $campaign_budget->{resourceName},
       # Set the campaign network options.
       networkSettings =>
-        Google::Ads::GoogleAds::V9::Resources::NetworkSettings->new({
+        Google::Ads::GoogleAds::V10::Resources::NetworkSettings->new({
           targetGoogleSearch         => "true",
           targetSearchNetwork        => "true",
           targetContentNetwork       => "false",
@@ -159,7 +159,7 @@ sub create_campaign {
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V9::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V10::Services::CampaignService::CampaignOperation->
     new({create => $campaign});
 
   # Issue a mutate request to add the campaign.
@@ -201,7 +201,7 @@ sub create_ad_group {
   my ($google_ads_client, $customer_id, $campaign) = @_;
 
   # Construct an ad group and set an optional CPC value.
-  my $ad_group = Google::Ads::GoogleAds::V9::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V10::Resources::AdGroup->new({
     name         => "Earth to Mars Cruise #" . uniqid(),
     campaign     => $campaign->{resourceName},
     status       => ENABLED,
@@ -211,7 +211,7 @@ sub create_ad_group {
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V9::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V10::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
   # Issue a mutate request to add the ad group.

@@ -14,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example gets keywords for a customer or for a specific ad group. To add
-# keywords, run add_keywords.pl.
+# This example retrieves keywords for a customer or for a specific ad group and
+# demonstrates how to use the omit_unselected_resource_names option in GAQL to
+# reduce payload size.
 
 use strict;
 use warnings;
@@ -27,7 +28,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V9::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V10::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -44,10 +45,15 @@ use constant PAGE_SIZE => 1000;
 #
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
+# Optional: Specify an ad group ID below to restrict search to only a given ad group.
 my $ad_group_id = undef;
+# Optional: Change the below value to "true" to omit unselected resource names from
+# the returned response of GoogleAdsService.
+my $omit_unselected_resource_names = undef;
 
 sub get_keywords {
-  my ($api_client, $customer_id, $ad_group_id) = @_;
+  my ($api_client, $customer_id, $ad_group_id, $omit_unselected_resource_names)
+    = @_;
 
   # Create the search query.
   my $search_query =
@@ -57,14 +63,27 @@ sub get_keywords {
     "ad_group_criterion.keyword.match_type FROM ad_group_criterion " .
     "WHERE ad_group_criterion.type = KEYWORD";
 
-  if ($ad_group_id) {
+  if (defined $ad_group_id) {
     $search_query .= " AND ad_group.id = $ad_group_id";
+  }
+
+  # Add omit_unselected_resource_names = true to the PARAMETERS clause of the
+  # Google Ads Query Language (GAQL) query, which excludes the resource names of
+  # all resources that aren't explicitly requested in the SELECT clause.
+  # Enabling this option reduces payload size, but if you plan to use a returned
+  # object in subsequent mutate operations, make sure you explicitly request its
+  # "resource_name" field in the SELECT clause.
+  #
+  # Read more about PARAMETERS:
+  # https://developers.google.com/google-ads/api/docs/query/structure#parameters
+  if (defined $omit_unselected_resource_names) {
+    $search_query .= " PARAMETERS omit_unselected_resource_names = true";
   }
 
   # Create a search Google Ads request that will retrieve all keywords using pages
   # of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V9::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
@@ -87,15 +106,20 @@ sub get_keywords {
     my $ad_group           = $google_ads_row->{adGroup};
     my $ad_group_criterion = $google_ads_row->{adGroupCriterion};
     my $keyword_info       = $ad_group_criterion->{keyword};
+    my $resource_name_string =
+      defined $omit_unselected_resource_names
+      ? ""
+      : sprintf " and resource name '%s'", $ad_group->{resourceName};
 
     printf
       "Keyword with text '%s', match type '%s', criteria type '%s', and ID %d "
-      . "was found in ad group with ID %d.\n",
+      . "was found in ad group with ID %d%s.\n",
       $keyword_info->{text},
       $keyword_info->{matchType},
       $ad_group_criterion->{type},
       $ad_group_criterion->{criterionId},
-      $ad_group->{id},;
+      $ad_group->{id},
+      $resource_name_string;
   }
 
   return 1;
@@ -113,14 +137,21 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
-GetOptions("customer_id=s" => \$customer_id, "ad_group_id=i" => \$ad_group_id);
+GetOptions(
+  "customer_id=s"                    => \$customer_id,
+  "ad_group_id=i"                    => \$ad_group_id,
+  "omit_unselected_resource_names=s" => \$omit_unselected_resource_names
+);
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
-get_keywords($api_client, $customer_id =~ s/-//gr, $ad_group_id);
+get_keywords(
+  $api_client,  $customer_id =~ s/-//gr,
+  $ad_group_id, $omit_unselected_resource_names
+);
 
 =pod
 
@@ -130,15 +161,19 @@ get_keywords
 
 =head1 DESCRIPTION
 
-This example gets keywords for a customer or for a specific ad group. To add
-keywords, run add_keywords.pl.
+This example retrieves keywords for a customer or for a specific ad group and
+demonstrates how to use the omit_unselected_resource_names option in GAQL to
+reduce payload size.
 
 =head1 SYNOPSIS
 
 get_keywords.pl [options]
 
-    -help                       Show the help message.
-    -customer_id                The Google Ads customer ID.
-    -ad_group_id                [optional] The ad group ID.
+    -help                               Show the help message.
+    -customer_id                        The Google Ads customer ID.
+    -ad_group_id                        [optional] The ad group ID from which keywords will be retrieved.
+                                        If not set, keywords from all ad groups will be returned.
+    -omit_unselected_resource_names     [optional] Whether to omit the resource names of all resources
+                                        not explicitly requested in the SELECT clause of the GAQL query.
 
 =cut

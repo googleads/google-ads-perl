@@ -59,8 +59,8 @@ sub get_google_ads_failure {
     my $type = $detail->{"\@type"};
     if ($type =~ /google.ads.googleads.v(\d+).errors.GoogleAdsFailure/) {
       my $class =
-        sprintf
-        (Google::Ads::GoogleAds::Constants::GOOGLE_ADS_FAILURE_CLASS_NAME,
+        sprintf(
+        Google::Ads::GoogleAds::Constants::GOOGLE_ADS_FAILURE_CLASS_NAME,
         $1);
 
       # Require class name.
@@ -120,12 +120,12 @@ The detailed information of this exception, which may contain failure messages.
 
 =head2 get_google_ads_failure
 
-Extracts a L<Google::Ads::GoogleAds::V9::Errors::GoogleAdsFailure> object from the
+Extracts a L<Google::Ads::GoogleAds::V10::Errors::GoogleAdsFailure> object from the
 L</details> attribute of the current exception object.
 
 =head3 Returns
 
-A L<Google::Ads::GoogleAds::V9::Errors::GoogleAdsFailure> object or undef if not found.
+A L<Google::Ads::GoogleAds::V10::Errors::GoogleAdsFailure> object or undef if not found.
 
 =head1 LICENSE AND COPYRIGHT
 

@@ -17,7 +17,7 @@ package TestAPIUtils;
 use strict;
 use warnings;
 
-use Google::Ads::GoogleAds::V9::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
 
 use Data::Uniqid qw(uniqid);
 
@@ -131,7 +131,7 @@ sub create_ad_group {
   my $ad_group =
     __get_api_package($api_client, "Resources", "AdGroup", 1)->new({
       name     => "Ad group #" . uniqid(),
-      campaign => Google::Ads::GoogleAds::V9::Utils::ResourceNames::campaign(
+      campaign => Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       cpcBidMicros => 500000
@@ -159,7 +159,7 @@ sub create_keyword {
 
   my $ad_group_criterion =
     __get_api_package($api_client, "Resources", "AdGroupCriterion", 1)->new({
-      adGroup => Google::Ads::GoogleAds::V9::Utils::ResourceNames::ad_group(
+      adGroup => Google::Ads::GoogleAds::V10::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       keyword =>
@@ -198,7 +198,7 @@ sub create_text_ad {
 
   my $ad_group_ad =
     __get_api_package($api_client, "Resources", "AdGroupAd", 1)->new({
-      adGroup => Google::Ads::GoogleAds::V9::Utils::ResourceNames::ad_group(
+      adGroup => Google::Ads::GoogleAds::V10::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       ad => __get_api_package($api_client, "Resources", "Ad", 1)->new({
@@ -247,7 +247,7 @@ sub delete_label {
 
   my $label_operation =
     __get_api_package($api_client, "LabelService", "LabelOperation", 1)->new({
-      remove => Google::Ads::GoogleAds::V9::Utils::ResourceNames::label(
+      remove => Google::Ads::GoogleAds::V10::Utils::ResourceNames::label(
         $customer_id, $label_id
       )});
 

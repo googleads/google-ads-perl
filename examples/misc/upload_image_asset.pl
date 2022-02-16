@@ -25,10 +25,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V9::Resources::Asset;
-use Google::Ads::GoogleAds::V9::Common::ImageAsset;
-use Google::Ads::GoogleAds::V9::Enums::AssetTypeEnum qw(IMAGE);
-use Google::Ads::GoogleAds::V9::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V10::Resources::Asset;
+use Google::Ads::GoogleAds::V10::Common::ImageAsset;
+use Google::Ads::GoogleAds::V10::Enums::AssetTypeEnum qw(IMAGE);
+use Google::Ads::GoogleAds::V10::Services::AssetService::AssetOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -55,20 +55,19 @@ sub upload_image_asset {
   my $image_content = get_base64_data_from_url(IMAGE_URL);
 
   # Create an asset.
-  my $asset = Google::Ads::GoogleAds::V9::Resources::Asset->new({
-      # Optional: Provide a unique friendly name to identify your asset.
-      # If you specify the name field, then both the asset name and the image being
-      # uploaded should be unique, and should not match another ACTIVE asset in this
-      # customer account.
-      # name       => "Jupiter Trip #" . uniqid(),
+  my $asset = Google::Ads::GoogleAds::V10::Resources::Asset->new({
+      # Provide a unique friendly name to identify your asset.
+      # When there is an existing image asset with the same content but a different
+      # name, the new name will be dropped silently.
+      name       => "Marketing Image",
       type       => IMAGE,
-      imageAsset => Google::Ads::GoogleAds::V9::Common::ImageAsset->new({
+      imageAsset => Google::Ads::GoogleAds::V10::Common::ImageAsset->new({
           data => $image_content
         })});
 
   # Create an asset operation.
   my $asset_operation =
-    Google::Ads::GoogleAds::V9::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V10::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 

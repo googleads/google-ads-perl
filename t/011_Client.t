@@ -74,8 +74,8 @@ is(
   Google::Ads::GoogleAds::Constants->DEFAULT_API_VERSION,
   "The default API version."
 );
-$api_client->set_version("V999");
-is($api_client->get_version(), "V999", "The get/set of version.");
+$api_client->set_version("V1099");
+is($api_client->get_version(), "V1099", "The get/set of version.");
 
 $api_client->set_service_address(
   Google::Ads::GoogleAds::Constants->DEFAULT_SERVICE_ADDRESS);

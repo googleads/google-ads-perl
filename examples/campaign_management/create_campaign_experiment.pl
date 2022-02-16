@@ -25,10 +25,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V9::Resources::CampaignExperiment;
-use Google::Ads::GoogleAds::V9::Enums::CampaignExperimentTrafficSplitTypeEnum
+use Google::Ads::GoogleAds::V10::Resources::CampaignExperiment;
+use Google::Ads::GoogleAds::V10::Enums::CampaignExperimentTrafficSplitTypeEnum
   qw(RANDOM_QUERY);
-use Google::Ads::GoogleAds::V9::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,9 +52,9 @@ sub create_campaign_experiment {
 
   # Create a campaign experiment.
   my $campaign_experiment =
-    Google::Ads::GoogleAds::V9::Resources::CampaignExperiment->new({
+    Google::Ads::GoogleAds::V10::Resources::CampaignExperiment->new({
       campaignDraft =>
-        Google::Ads::GoogleAds::V9::Utils::ResourceNames::campaign_draft(
+        Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign_draft(
         $customer_id, $base_campaign_id, $draft_id
         ),
       name                => "Campaign Experiment #" . uniqid(),

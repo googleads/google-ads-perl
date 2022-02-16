@@ -1,3 +1,11 @@
+10.0.0 - 2022-02-18
+- Added support for Google Ads API v10_0.
+- Removed support for Google Ads API v7.
+- Added code examples: add_call, add_call_ad, add_dynamic_page_feed_asset,
+  add_dynamic_remarketing_asset.
+- Updated code examples: get_account_information, add_display_upload_ad, upload_image_asset,
+  add_performance_max_campaign, add_performance_max_retail_campaign, get_keywords.
+
 9.3.0 - 2021-12-15
 - Supported HTTP agent version in the "x-goog-api-client" request header.
 - Updated the references of “Google My Business/GMB” in code examples to

@@ -27,14 +27,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V9::Resources::CustomAudience;
-use Google::Ads::GoogleAds::V9::Resources::CustomAudienceMember;
-use Google::Ads::GoogleAds::V9::Enums::CustomAudienceTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V9::Enums::CustomAudienceStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V9::Enums::CustomAudienceMemberTypeEnum
+use Google::Ads::GoogleAds::V10::Resources::CustomAudience;
+use Google::Ads::GoogleAds::V10::Resources::CustomAudienceMember;
+use Google::Ads::GoogleAds::V10::Enums::CustomAudienceTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V10::Enums::CustomAudienceStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V10::Enums::CustomAudienceMemberTypeEnum
   qw(KEYWORD URL APP);
 use
-  Google::Ads::GoogleAds::V9::Services::CustomAudienceService::CustomAudienceOperation;
+  Google::Ads::GoogleAds::V10::Services::CustomAudienceService::CustomAudienceOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,7 +56,7 @@ sub add_custom_audience {
 
   # Create a custom audience.
   my $custom_audience =
-    Google::Ads::GoogleAds::V9::Resources::CustomAudience->new({
+    Google::Ads::GoogleAds::V10::Resources::CustomAudience->new({
       name        => "Example CustomAudience #" . uniqid(),
       description =>
         "Custom audiences who have searched specific terms on Google Search",
@@ -74,11 +74,11 @@ sub add_custom_audience {
         create_custom_audience_member(KEYWORD, "mars cruise"),
         create_custom_audience_member(KEYWORD, "jupiter cruise"),
         # Website URLs that your customers might visit.
-        create_custom_audience_member(URL,
-          "http://www.example.com/locations/mars"
+        create_custom_audience_member(
+          URL, "http://www.example.com/locations/mars"
         ),
-        create_custom_audience_member(URL,
-          "http://www.example.com/locations/jupiter"
+        create_custom_audience_member(
+          URL, "http://www.example.com/locations/jupiter"
         ),
         # Package names of Android apps which customers might install.
         create_custom_audience_member(APP, "com.google.android.apps.adwords"),
@@ -86,7 +86,7 @@ sub add_custom_audience {
 
   # Create a custom audience operation.
   my $custom_audience_operation =
-    Google::Ads::GoogleAds::V9::Services::CustomAudienceService::CustomAudienceOperation
+    Google::Ads::GoogleAds::V10::Services::CustomAudienceService::CustomAudienceOperation
     ->new({create => $custom_audience});
 
   # Add the custom audience.
@@ -104,7 +104,7 @@ sub add_custom_audience {
 sub create_custom_audience_member {
   my ($member_type, $value) = @_;
   my $custom_audience_member =
-    Google::Ads::GoogleAds::V9::Resources::CustomAudienceMember->new({
+    Google::Ads::GoogleAds::V10::Resources::CustomAudienceMember->new({
       memberType => $member_type
     });
 

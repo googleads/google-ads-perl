@@ -26,10 +26,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V9::Resources::Ad;
-use Google::Ads::GoogleAds::V9::Common::ExpandedTextAdInfo;
-use Google::Ads::GoogleAds::V9::Services::AdService::AdOperation;
-use Google::Ads::GoogleAds::V9::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V10::Resources::Ad;
+use Google::Ads::GoogleAds::V10::Common::ExpandedTextAdInfo;
+use Google::Ads::GoogleAds::V10::Services::AdService::AdOperation;
+use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,12 +52,12 @@ sub update_expanded_text_ad {
   my ($api_client, $customer_id, $ad_id) = @_;
 
   # Create an ad with the proper resource name and any other changes.
-  my $ad = Google::Ads::GoogleAds::V9::Resources::Ad->new({
-      resourceName => Google::Ads::GoogleAds::V9::Utils::ResourceNames::ad(
+  my $ad = Google::Ads::GoogleAds::V10::Resources::Ad->new({
+      resourceName => Google::Ads::GoogleAds::V10::Utils::ResourceNames::ad(
         $customer_id, $ad_id
       ),
       expandedTextAd =>
-        Google::Ads::GoogleAds::V9::Common::ExpandedTextAdInfo->new({
+        Google::Ads::GoogleAds::V10::Common::ExpandedTextAdInfo->new({
           # Update some properties of the expanded text ad.
           headlinePart1 => "Cruise to Pluto #" . uniqid(),
           headlinePart2 => "Tickets on sale now",
@@ -70,7 +70,7 @@ sub update_expanded_text_ad {
   # Create an ad operation for update, using the FieldMasks utility to derive
   # the update mask.
   my $ad_operation =
-    Google::Ads::GoogleAds::V9::Services::AdService::AdOperation->new({
+    Google::Ads::GoogleAds::V10::Services::AdService::AdOperation->new({
       update     => $ad,
       updateMask => all_set_fields_of($ad)});
 

@@ -25,7 +25,6 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V9::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -44,11 +43,23 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 sub get_account_information {
   my ($api_client, $customer_id) = @_;
 
-  my $resource_name =
-    Google::Ads::GoogleAds::V9::Utils::ResourceNames::customer($customer_id);
+  # Construct a query to retrieve the customer.
+  my $query =
+    "SELECT customer.id, customer.descriptive_name, customer.currency_code, " .
+    "customer.time_zone, customer.tracking_url_template, " .
+    "customer.auto_tagging_enabled FROM customer " .
+    # Limit to 1 to clarify that selecting from the customer resource
+    # will always return only one row, which will be for the customer
+    # ID specified in the request.
+    "LIMIT 1";
 
-  my $customer =
-    $api_client->CustomerService()->get({resourceName => $resource_name});
+  # Execute the query and get the Customer object from the single row of the response.
+  my $search_response = $api_client->GoogleAdsService()->search({
+    customerId => $customer_id,
+    query      => $query
+  });
+  my $google_ads_row = $search_response->{results}[0];
+  my $customer       = $google_ads_row->{customer};
 
   # Print account information.
   printf "Customer with ID %d, descriptive name '%s', currency code '%s', " .
