@@ -696,7 +696,9 @@ sub create_conversion_goal_operations {
     #     (category=PURCHASE, origin=WEBSITE) exists in this account.
     #  2- More than one goal can be biddable if desired. This example
     #     shows only one.
-    if ( $customer_conversion_goal->{category} == PURCHASE
+    if ( defined $customer_conversion_goal->{category}
+      && $customer_conversion_goal->{category} == PURCHASE
+      && defined $customer_conversion_goal->{origin}
       && $customer_conversion_goal->{origin} == WEBSITE)
     {
       $campaign_conversion_goal->{biddable} = "true";
