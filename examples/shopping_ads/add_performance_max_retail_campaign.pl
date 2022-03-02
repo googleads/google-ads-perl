@@ -664,8 +664,8 @@ sub get_customer_conversion_goals {
   foreach my $google_ads_row (@{$search_response->{results}}) {
     push @$customer_conversion_goals,
       {
-      category => $google_ads_row->{customConversionGoal}{category},
-      origin   => $google_ads_row->{customConversionGoal}{origin}};
+      category => $google_ads_row->{customerConversionGoal}{category},
+      origin   => $google_ads_row->{customerConversionGoal}{origin}};
   }
 
   return $customer_conversion_goals;
