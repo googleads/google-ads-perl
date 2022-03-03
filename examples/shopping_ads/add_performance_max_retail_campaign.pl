@@ -664,8 +664,8 @@ sub get_customer_conversion_goals {
   foreach my $google_ads_row (@{$search_response->{results}}) {
     push @$customer_conversion_goals,
       {
-      category => $google_ads_row->{customConversionGoal}{category},
-      origin   => $google_ads_row->{customConversionGoal}{origin}};
+      category => $google_ads_row->{customerConversionGoal}{category},
+      origin   => $google_ads_row->{customerConversionGoal}{origin}};
   }
 
   return $customer_conversion_goals;
@@ -696,8 +696,8 @@ sub create_conversion_goal_operations {
     #     (category=PURCHASE, origin=WEBSITE) exists in this account.
     #  2- More than one goal can be biddable if desired. This example
     #     shows only one.
-    if ( $customer_conversion_goal->{category} == PURCHASE
-      && $customer_conversion_goal->{origin} == WEBSITE)
+    if ( $customer_conversion_goal->{category} eq PURCHASE
+      && $customer_conversion_goal->{origin} eq WEBSITE)
     {
       $campaign_conversion_goal->{biddable} = "true";
     } else {
