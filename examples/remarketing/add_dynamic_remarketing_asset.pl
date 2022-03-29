@@ -106,8 +106,8 @@ sub create_asset {
       iosAppStoreId => 123
     });
   my $asset = Google::Ads::GoogleAds::V10::Resources::Asset->new({
-    dynamicEducationAsset => $education_asset
-  });
+      dynamicEducationAsset => $education_asset,
+      finalUrls             => ["https://www.example.com"]});
 
   # Create an operation to add the asset.
   my $operation =

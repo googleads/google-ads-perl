@@ -1,3 +1,9 @@
+10.0.1 - 2022-03-30
+- Added code examples: add_performance_max_product_listing_group_tree,
+  navigate_search_result_pages_caching_tokens.
+- Updated code examples: add_campaigns, add_performance_max_campaign,
+  add_performance_max_retail_campaign, upload_offline_conversion.
+
 10.0.0 - 2022-02-18
 - Added support for Google Ads API v10_0.
 - Removed support for Google Ads API v7.

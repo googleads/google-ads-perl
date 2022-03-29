@@ -47,22 +47,38 @@ use Cwd qw(abs_path);
 # Running the example with -h will print the command line usage.
 my $customer_id          = "INSERT_CUSTOMER_ID_HERE";
 my $conversion_action_id = "INSERT_CONVERSION_ACTION_ID_HERE";
+#  Set exactly one of gclid, gbraid, or wbraid.
 my $gclid                = "INSERT_GCLID_HERE";
+my $gbraid               = undef;
+my $wbraid               = undef;
 my $conversion_date_time = "INSERT_CONVERSION_DATE_TIME_HERE";
 my $conversion_value     = "INSERT_CONVERSION_VALUE_HERE";
 # Optional: Specify the conversion custom variable ID and value you want to
 # associate with the click conversion upload.
 my $conversion_custom_variable_id    = undef;
 my $conversion_custom_variable_value = undef;
+# Optional: Specify the unique order ID for the click conversion.
+my $order_id = undef;
 
 # [START upload_offline_conversion]
 sub upload_offline_conversion {
   my (
     $api_client,                    $customer_id,
     $conversion_action_id,          $gclid,
+    $gbraid,                        $wbraid,
     $conversion_date_time,          $conversion_value,
-    $conversion_custom_variable_id, $conversion_custom_variable_value
+    $conversion_custom_variable_id, $conversion_custom_variable_value,
+    $order_id
   ) = @_;
+
+  # Verify that exactly one of gclid, gbraid, and wbraid is specified, as required.
+  # See https://developers.google.com/google-ads/api/docs/conversions/upload-clicks for details.
+  my $number_of_ids_specified = grep { defined $_ } ($gclid, $gbraid, $wbraid);
+  if ($number_of_ids_specified != 1) {
+    die sprintf "Exactly 1 of gclid, gbraid, or wbraid is required, " .
+      "but %d ID values were provided.\n",
+      $number_of_ids_specified;
+  }
 
   # Create a click conversion by specifying currency as USD.
   my $click_conversion =
@@ -72,11 +88,19 @@ sub upload_offline_conversion {
         Google::Ads::GoogleAds::V10::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
-      gclid              => $gclid,
       conversionDateTime => $conversion_date_time,
       conversionValue    => $conversion_value,
       currencyCode       => "USD"
     });
+
+  # Set the single specified ID field.
+  if (defined $gclid) {
+    $click_conversion->{gclid} = $gclid;
+  } elsif (defined $gbraid) {
+    $click_conversion->{gbraid} = $gbraid;
+  } else {
+    $click_conversion->{wbraid} = $wbraid;
+  }
 
   if ($conversion_custom_variable_id && $conversion_custom_variable_value) {
     $click_conversion->{customVariables} = [
@@ -88,6 +112,13 @@ sub upload_offline_conversion {
             ),
           value => $conversion_custom_variable_value
         })];
+  }
+
+  if (defined $order_id) {
+    # Set the order ID (unique transaction ID), if provided. An order ID is
+    # required in order to upload enhancements as shown in the
+    # upload_conversion_enhancement.pl example.
+    $click_conversion->{orderId} = $order_id;
   }
 
   # Issue a request to upload the click conversion.
@@ -136,24 +167,31 @@ GetOptions(
   "customer_id=s"                      => \$customer_id,
   "conversion_action_id=i"             => \$conversion_action_id,
   "gclid=s"                            => \$gclid,
+  "gbraid=s"                           => \$gbraid,
+  "wbraid=s"                           => \$wbraid,
   "conversion_date_time=s"             => \$conversion_date_time,
   "conversion_value=f"                 => \$conversion_value,
   "conversion_custom_variable_id=s"    => \$conversion_custom_variable_id,
-  "conversion_custom_variable_value=s" => \$conversion_custom_variable_value
+  "conversion_custom_variable_value=s" => \$conversion_custom_variable_value,
+  "order_id=s"                         => \$order_id
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params($customer_id, $conversion_action_id, $gclid,
-  $conversion_date_time, $conversion_value);
+  if not check_params(
+  $customer_id,          $conversion_action_id,
+  $conversion_date_time, $conversion_value
+  );
 
 # Call the example.
 upload_offline_conversion(
   $api_client,                    $customer_id =~ s/-//gr,
   $conversion_action_id,          $gclid,
+  $gbraid,                        $wbraid,
   $conversion_date_time,          $conversion_value,
-  $conversion_custom_variable_id, $conversion_custom_variable_value
+  $conversion_custom_variable_id, $conversion_custom_variable_value,
+  $order_id
 );
 
 =pod
@@ -176,12 +214,18 @@ upload_offline_conversion.pl [options]
     -help                               Show the help message.
     -customer_id                        The Google Ads customer ID.
     -conversion_action_id               The ID of the conversion action to upload to.
-    -gclid                              The GCLID for the conversion (should be newer than the number of days
-                                        set on the conversion window of the conversion action).
+    -gclid                              [optional] The GCLID for the conversion. If setting this value, do not
+                                        set -gbraid or -wbraid.
+    -gbraid                             [optional] The GBRAID for the iOS app conversion. If setting this value,
+                                        do not set -gclid or -wbraid.
+    -wbraid                             [optional] The WBRAID for the iOS web conversion. If setting this value,
+                                        do not set -gclid or -gbraid.
     -conversion_date_time               The date and time of the conversion (should be after the click time).
                                         The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. "2019-01-01 12:32:45-08:00".
     -conversion_value                   The value of the conversion.
     -conversion_custom_variable_id      [optional] The ID of the conversion custom variable to associate with the upload.
     -conversion_custom_variable_value   [optional] The value of the conversion custom variable to associate with the upload.
-    
+    -order_id                           [optional] The unique ID (transaction ID) of the conversion.
+
+
 =cut

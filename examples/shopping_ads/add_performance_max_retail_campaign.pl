@@ -53,6 +53,7 @@ use Google::Ads::GoogleAds::V10::Resources::Asset;
 use Google::Ads::GoogleAds::V10::Resources::AssetGroup;
 use Google::Ads::GoogleAds::V10::Resources::AssetGroupAsset;
 use Google::Ads::GoogleAds::V10::Resources::CampaignConversionGoal;
+use Google::Ads::GoogleAds::V10::Resources::AssetGroupListingGroupFilter;
 use Google::Ads::GoogleAds::V10::Common::MaximizeConversionValue;
 use Google::Ads::GoogleAds::V10::Common::LocationInfo;
 use Google::Ads::GoogleAds::V10::Common::LanguageInfo;
@@ -68,6 +69,10 @@ use Google::Ads::GoogleAds::V10::Enums::AssetFieldTypeEnum
 use Google::Ads::GoogleAds::V10::Enums::ConversionActionCategoryEnum
   qw(PURCHASE);
 use Google::Ads::GoogleAds::V10::Enums::ConversionOriginEnum qw(WEBSITE);
+use Google::Ads::GoogleAds::V10::Enums::ListingGroupFilterTypeEnum
+  qw(UNIT_INCLUDED);
+use Google::Ads::GoogleAds::V10::Enums::ListingGroupFilterVerticalEnum
+  qw(SHOPPING);
 use Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation;
 use
   Google::Ads::GoogleAds::V10::Services::CampaignBudgetService::CampaignBudgetOperation;
@@ -81,6 +86,8 @@ use
   Google::Ads::GoogleAds::V10::Services::AssetGroupAssetService::AssetGroupAssetOperation;
 use
   Google::Ads::GoogleAds::V10::Services::CampaignConversionGoalService::CampaignConversionGoalOperation;
+use
+  Google::Ads::GoogleAds::V10::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation;
 use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
@@ -169,6 +176,11 @@ sub add_performance_max_retail_campaign {
   push @$operations,
     @{create_conversion_goal_operations($customer_id,
       $customer_conversion_goals)};
+
+  # Retail Performance Max campaigns require listing groups, which are created
+  # via the AssetGroupListingGroupFilter resource.
+  push @$operations,
+    @{create_asset_group_listing_group_operations($customer_id)};
 
   # Issue a mutate request to create everything and print its information.
   my $mutate_google_ads_response = $api_client->GoogleAdsService()->mutate({
@@ -274,7 +286,10 @@ sub create_performance_max_campaign_operation {
               # If opted in (false), the entire domain will be targeted. For best
               # results, set this value to false to opt in and allow URL expansions. You
               # can optionally add exclusions to limit traffic to parts of your website.
-              urlExpansionOptOut => "false",
+              #
+              # For a Retail campaign, we want the final URL to be limited to those
+              # explicitly surfaced via GMC.
+              urlExpansionOptOut => "true",
 
               # Set the shopping settings.
               shoppingSetting =>
@@ -719,6 +734,48 @@ sub create_conversion_goal_operations {
   return $operations;
 }
 # [END add_performance_max_retail_campaign_9]
+
+# Creates a list of MutateOperations that create a new asset group listing group filter.
+# [START add_performance_max_retail_campaign_10]
+sub create_asset_group_listing_group_operations {
+  my ($customer_id) = @_;
+
+  my $operations = [];
+  # Create a new listing group filter containing the "default" listing group (All
+  # products).
+  my $listing_group_filter =
+    Google::Ads::GoogleAds::V10::Resources::AssetGroupListingGroupFilter->new({
+      assetGroup =>
+        Google::Ads::GoogleAds::V10::Utils::ResourceNames::asset_group(
+        $customer_id, ASSET_GROUP_TEMPORARY_ID
+        ),
+
+      # Since this is the root node, do not set the parentListingGroupFilter.
+      # For all other nodes, this would refer to the parent listing group filter
+      # resource name.
+      # parentListingGroupFilter => "<PARENT FILTER NAME>"
+
+      # The subdivision type means this node has children. This type is used for
+      # the root node as well.
+      type => UNIT_INCLUDED,
+
+      # Because this is a Performance Max campaign for retail, we need to specify
+      # that this is in the shopping vertical.
+      vertical => SHOPPING
+    });
+
+  push @$operations,
+    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation->
+    new({
+      assetGroupListingGroupFilterOperation =>
+        Google::Ads::GoogleAds::V10::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
+        ->new({
+          create => $listing_group_filter
+        })});
+
+  return $operations;
+}
+# [END add_performance_max_retail_campaign_10]
 
 # Prints the details of a MutateGoogleAdsResponse.
 # Parses the "response" oneof field name and uses it to extract the new entity's

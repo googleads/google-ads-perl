@@ -43,11 +43,13 @@ use Google::Ads::GoogleAds::V10::Resources::CampaignCriterion;
 use Google::Ads::GoogleAds::V10::Resources::Asset;
 use Google::Ads::GoogleAds::V10::Resources::AssetGroup;
 use Google::Ads::GoogleAds::V10::Resources::AssetGroupAsset;
+use Google::Ads::GoogleAds::V10::Resources::AssetGroupSignal;
 use Google::Ads::GoogleAds::V10::Common::MaximizeConversionValue;
 use Google::Ads::GoogleAds::V10::Common::LocationInfo;
 use Google::Ads::GoogleAds::V10::Common::LanguageInfo;
 use Google::Ads::GoogleAds::V10::Common::TextAsset;
 use Google::Ads::GoogleAds::V10::Common::ImageAsset;
+use Google::Ads::GoogleAds::V10::Common::AudienceInfo;
 use Google::Ads::GoogleAds::V10::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
 use Google::Ads::GoogleAds::V10::Enums::CampaignStatusEnum;
 use Google::Ads::GoogleAds::V10::Enums::AdvertisingChannelTypeEnum
@@ -66,6 +68,8 @@ use
   Google::Ads::GoogleAds::V10::Services::AssetGroupService::AssetGroupOperation;
 use
   Google::Ads::GoogleAds::V10::Services::AssetGroupAssetService::AssetGroupAssetOperation;
+use
+  Google::Ads::GoogleAds::V10::Services::AssetGroupSignalService::AssetGroupSignalOperation;
 use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
@@ -98,10 +102,11 @@ our $next_temp_id = ASSET_GROUP_TEMPORARY_ID - 1;
 #
 # Running the example with -h will print the command line usage.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
+my $audience_id = undef;
 
 # [START add_performance_max_campaign]
 sub add_performance_max_campaign {
-  my ($api_client, $customer_id) = @_;
+  my ($api_client, $customer_id, $audience_id) = @_;
 
   # [START add_performance_max_campaign_1]
   # Performance Max campaigns require that repeated assets such as headlines
@@ -137,6 +142,8 @@ sub add_performance_max_campaign {
       $customer_id, $headline_asset_resource_names,
       $description_asset_resource_names
     )};
+  push @$operations,
+    @{create_asset_group_signal_operations($customer_id, $audience_id)};
 
   # Issue a mutate request to create everything and print its information.
   my $mutate_google_ads_response = $api_client->GoogleAdsService()->mutate({
@@ -602,6 +609,38 @@ sub create_and_link_image_asset {
 }
 # [END add_performance_max_campaign_8]
 
+# Creates a list of MutateOperations that create asset group signals.
+# [START add_performance_max_campaign_9]
+sub create_asset_group_signal_operations {
+  my ($customer_id, $audience_id) = @_;
+
+  my $operations = [];
+  return $operations if not defined $audience_id;
+
+  push @$operations,
+    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation->
+    new({
+      assetGroupSignalOperation =>
+        Google::Ads::GoogleAds::V10::Services::AssetGroupSignalService::AssetGroupSignalOperation
+        ->new({
+          # To learn more about Audience Signals, see:
+          # https://developers.google.com/google-ads/api/docs/performance-max/asset-groups#audience_signals
+          create =>
+            Google::Ads::GoogleAds::V10::Resources::AssetGroupSignal->new({
+              assetGroup =>
+                Google::Ads::GoogleAds::V10::Utils::ResourceNames::asset_group(
+                $customer_id, ASSET_GROUP_TEMPORARY_ID
+                ),
+              audience =>
+                Google::Ads::GoogleAds::V10::Common::AudienceInfo->new({
+                  audience =>
+                    Google::Ads::GoogleAds::V10::Utils::ResourceNames::audience(
+                    $customer_id, $audience_id
+                    )})})})});
+  return $operations;
+}
+# [END add_performance_max_campaign_9]
+
 # Prints the details of a MutateGoogleAdsResponse.
 # Parses the "response" oneof field name and uses it to extract the new entity's
 # name and resource name.
@@ -632,14 +671,18 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
-GetOptions("customer_id=s" => \$customer_id);
+GetOptions(
+  "customer_id=s" => \$customer_id,
+  "audience_id=i" => \$audience_id
+);
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
-add_performance_max_campaign($api_client, $customer_id =~ s/-//gr);
+add_performance_max_campaign($api_client, $customer_id =~ s/-//gr,
+  $audience_id);
 
 =pod
 
@@ -669,5 +712,7 @@ add_performance_max_campaign.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
+    -audience_id                [optional] An audience ID to use to improve the
+                                targeting of the Performance Max campaign.
 
 =cut

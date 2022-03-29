@@ -91,9 +91,11 @@ sub add_campaigns {
       # Set the campaign network options.
       networkSettings =>
         Google::Ads::GoogleAds::V10::Resources::NetworkSettings->new({
-          targetGoogleSearch         => "true",
-          targetSearchNetwork        => "true",
-          targetContentNetwork       => "false",
+          targetGoogleSearch  => "true",
+          targetSearchNetwork => "true",
+          # Enable Display Expansion on Search campaigns. See
+          # https://support.google.com/google-ads/answer/7193800 to learn more.
+          targetContentNetwork       => "true",
           targetPartnerSearchNetwork => "false"
         }
         ),

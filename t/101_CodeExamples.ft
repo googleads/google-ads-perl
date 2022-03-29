@@ -24,7 +24,7 @@ use lib qw(. lib t/utils);
 use TestAPIUtils;
 use TestUtils qw(get_test_client read_client_properties);
 
-use Test::More (tests => 99);
+use Test::More (tests => 100);
 
 # Get the API client for the functional tests.
 my $api_client = get_test_client();
@@ -203,10 +203,8 @@ ok(
 );
 # NOTE: Skip the add_local_campaign.pl as it requires additional setup.
 require qw(examples/advanced_operations/add_performance_max_campaign.pl);
-ok(
-  add_performance_max_campaign($api_client, $customer_id),
-  "Test of add_performance_max_campaign example."
-);
+ok(add_performance_max_campaign($api_client, $customer_id, undef),
+  "Test of add_performance_max_campaign example.");
 require
   qw(examples/advanced_operations/add_responsive_search_ad_with_ad_customizer.pl);
 ok(
@@ -480,6 +478,11 @@ ok(
   get_all_videos_and_images($api_client, $customer_id),
   "Test of get_all_videos_and_images example."
 );
+require qw(examples/misc/navigate_search_result_pages_caching_tokens.pl);
+ok(
+  navigate_search_result_pages_caching_tokens($api_client, $customer_id),
+  "Test of navigate_search_result_pages_caching_tokens example."
+);
 require qw(examples/misc/set_custom_client_timeouts.pl);
 ok(
   set_custom_client_timeouts($api_client, $customer_id),
@@ -623,6 +626,7 @@ ok(
 
 # shopping_ads
 # NOTE: Skip the add_listing_scope.pl as it requires a merchant account.
+# NOTE: Skip the add_performance_max_product_listing_group_tree.pl as it requires a merchant account.
 # NOTE: Skip the add_performance_max_retail_campaign.pl as it requires a merchant account.
 # NOTE: Skip the add_shopping_product_ad.pl as it requires a merchant account.
 # NOTE: Skip the add_shopping_product_listing_group_tree.pl as it requires a merchant account.
