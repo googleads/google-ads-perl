@@ -30,7 +30,7 @@ use Google::Ads::GoogleAds::Utils::FieldMasks;
 use Google::Ads::GoogleAds::V10::Enums::ResourceChangeOperationEnum
   qw(CREATE UPDATE);
 use Google::Ads::GoogleAds::V10::Enums::ChangeEventResourceTypeEnum
-  qw(AD AD_GROUP AD_GROUP_AD AD_GROUP_ASSET AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER ASSET CAMPAIGN CAMPAIGN_ASSET CAMPAIGN_BUDGET CAMPAIGN_CRITERION AD_GROUP_FEED CAMPAIGN_FEED CUSTOMER_ASSET FEED FEED_ITEM);
+  qw(AD AD_GROUP AD_GROUP_AD AD_GROUP_ASSET AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER ASSET ASSET_SET ASSET_SET_ASSET CAMPAIGN CAMPAIGN_ASSET CAMPAIGN_ASSET_SET CAMPAIGN_BUDGET CAMPAIGN_CRITERION AD_GROUP_FEED CAMPAIGN_FEED CUSTOMER_ASSET FEED FEED_ITEM);
 use
   Google::Ads::GoogleAds::V10::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
@@ -150,12 +150,21 @@ sub _get_changed_resources_for_resource_type {
   } elsif ($resource_type eq ASSET) {
     return $change_event->{oldResource}{asset},
       $change_event->{newResource}{asset};
+  } elsif ($resource_type eq ASSET_SET) {
+    return $change_event->{oldResource}{assetSet},
+      $change_event->{newResource}{assetSet};
+  } elsif ($resource_type eq ASSET_SET_ASSET) {
+    return $change_event->{oldResource}{assetSetAsset},
+      $change_event->{newResource}{assetSetAsset};
   } elsif ($resource_type eq CAMPAIGN) {
     return $change_event->{oldResource}{campaign},
       $change_event->{newResource}{campaign};
   } elsif ($resource_type eq CAMPAIGN_ASSET) {
     return $change_event->{oldResource}{campaignAsset},
       $change_event->{newResource}{campaignAsset};
+  } elsif ($resource_type eq CAMPAIGN_ASSET_SET) {
+    return $change_event->{oldResource}{campaignAssetSet},
+      $change_event->{newResource}{campaignAssetSet};
   } elsif ($resource_type eq CAMPAIGN_BUDGET) {
     return $change_event->{oldResource}{campaignBudget},
       $change_event->{newResource}{campaignBudget};

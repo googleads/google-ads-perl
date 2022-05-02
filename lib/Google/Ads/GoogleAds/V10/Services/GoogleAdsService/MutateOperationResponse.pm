@@ -62,6 +62,7 @@ sub new {
     campaignExperimentResult       => $args->{campaignExperimentResult},
     campaignExtensionSettingResult => $args->{campaignExtensionSettingResult},
     campaignFeedResult             => $args->{campaignFeedResult},
+    campaignGroupResult            => $args->{campaignGroupResult},
     campaignLabelResult            => $args->{campaignLabelResult},
     campaignResult                 => $args->{campaignResult},
     campaignSharedSetResult        => $args->{campaignSharedSetResult},

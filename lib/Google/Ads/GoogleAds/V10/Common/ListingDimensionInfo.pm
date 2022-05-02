@@ -34,8 +34,12 @@ sub new {
     productChannelExclusivity => $args->{productChannelExclusivity},
     productCondition          => $args->{productCondition},
     productCustomAttribute    => $args->{productCustomAttribute},
+    productGrouping           => $args->{productGrouping},
     productItemId             => $args->{productItemId},
+    productLabels             => $args->{productLabels},
+    productLegacyCondition    => $args->{productLegacyCondition},
     productType               => $args->{productType},
+    productTypeFull           => $args->{productTypeFull},
     unknownListingDimension   => $args->{unknownListingDimension}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload

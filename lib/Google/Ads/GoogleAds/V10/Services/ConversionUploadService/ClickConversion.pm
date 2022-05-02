@@ -26,6 +26,7 @@ sub new {
     cartData                => $args->{cartData},
     conversionAction        => $args->{conversionAction},
     conversionDateTime      => $args->{conversionDateTime},
+    conversionEnvironment   => $args->{conversionEnvironment},
     conversionValue         => $args->{conversionValue},
     currencyCode            => $args->{currencyCode},
     customVariables         => $args->{customVariables},

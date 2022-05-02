@@ -21,33 +21,13 @@ use Google::Ads::GoogleAds::Client;
 
 use Exporter 'import';
 our @EXPORT =
-  qw(get_test_client get_mock_client_no_auth get_mock_client_with_auth
-  read_file_content read_client_properties);
+  qw(get_mock_client_no_auth get_mock_client_with_auth read_file_content);
 
 use File::Basename;
 use File::Spec;
 use HTTP::Request::Common;
 use Config::Properties;
 use Test::MockObject::Extends;
-
-# Constructs a Google Ads Client instance using the configurations in the
-# 'testdata/googleads_test.properties' file.
-sub get_test_client {
-  my $api_version = shift;
-
-  my $properties_file =
-    File::Spec->catdir(dirname($0), qw(testdata googleads_test.properties));
-
-  my $api_client =
-    Google::Ads::GoogleAds::Client->new({properties_file => $properties_file});
-
-  Google::Ads::GoogleAds::Logging::GoogleAdsLogger::enable_all_logging();
-  if ($api_version) {
-    $api_client->set_version($api_version);
-  }
-
-  return $api_client;
-}
 
 # Constructs a mock Google Ads Client instance without an OAuth2 handler, using
 # the configurations in the 'testdata/googleads_mock.properties' file.
@@ -92,12 +72,6 @@ sub read_file_content {
     local $/;
     <DATA>;
   };
-}
-
-# Reads the properties in the 'testdata/googleads_test.properties' file.
-sub read_client_properties() {
-  return __read_properties(
-    File::Spec->catdir(dirname($0), qw(testdata googleads_test.properties)));
 }
 
 # Reads a properties file into a hash object.

@@ -26,6 +26,7 @@ sub new {
     accountLinkId          => $args->{accountLinkId},
     dataPartner            => $args->{dataPartner},
     googleAds              => $args->{googleAds},
+    hotelCenter            => $args->{hotelCenter},
     resourceName           => $args->{resourceName},
     status                 => $args->{status},
     thirdPartyAppAnalytics => $args->{thirdPartyAppAnalytics},

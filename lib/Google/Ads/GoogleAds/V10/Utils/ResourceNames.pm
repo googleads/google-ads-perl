@@ -647,6 +647,17 @@ sub campaign_feed {
     [$customer_id, $campaign_id, $feed_id]);
 }
 
+# Returns the campaign_group resource name for the specified components.
+sub campaign_group {
+  my ($customer_id, $campaign_group_id) = @_;
+
+  my $path_template =
+    'customers/{customer_id}/campaignGroups/{campaign_group_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $campaign_group_id]);
+}
+
 # Returns the campaign_label resource name for the specified components.
 sub campaign_label {
   my ($customer_id, $campaign_id, $label_id) = @_;
@@ -1370,6 +1381,17 @@ sub language_constant {
   my $path_template = 'languageConstants/{criterion_id}';
 
   return expand_path_template($path_template, [$criterion_id]);
+}
+
+# Returns the lead_form_submission_data resource name for the specified components.
+sub lead_form_submission_data {
+  my ($customer_id, $lead_form_submission_data_id) = @_;
+
+  my $path_template =
+'customers/{customer_id}/leadFormSubmissionData/{lead_form_submission_data_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $lead_form_submission_data_id]);
 }
 
 # Returns the life_event resource name for the specified components.

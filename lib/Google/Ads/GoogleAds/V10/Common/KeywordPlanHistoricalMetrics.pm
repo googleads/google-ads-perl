@@ -23,6 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    averageCpcMicros       => $args->{averageCpcMicros},
     avgMonthlySearches     => $args->{avgMonthlySearches},
     competition            => $args->{competition},
     competitionIndex       => $args->{competitionIndex},

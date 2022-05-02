@@ -43,6 +43,8 @@ use Google::Ads::GoogleAds::V10::Common::UserIdentifier;
 use Google::Ads::GoogleAds::V10::Common::OfflineUserAddressInfo;
 use Google::Ads::GoogleAds::V10::Enums::CustomerMatchUploadKeyTypeEnum
   qw(CONTACT_INFO);
+use Google::Ads::GoogleAds::V10::Enums::OfflineUserDataJobStatusEnum
+  qw(SUCCESS FAILED PENDING RUNNING);
 use Google::Ads::GoogleAds::V10::Enums::OfflineUserDataJobTypeEnum
   qw(CUSTOMER_MATCH_USER_LIST);
 use Google::Ads::GoogleAds::V10::Services::UserListService::UserListOperation;
@@ -56,9 +58,6 @@ use Pod::Usage;
 use Cwd qw(abs_path);
 use Data::Uniqid qw(uniqid);
 use Digest::SHA qw(sha256_hex);
-
-use constant POLL_FREQUENCY_SECONDS => 1;
-use constant POLL_TIMEOUT_SECONDS   => 60;
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -180,29 +179,70 @@ sub add_users_to_customer_match_user_list {
   my $operation_response = $offline_user_data_job_service->run({
     resourceName => $offline_user_data_job_resource_name
   });
-  print "Asynchronous request to execute the added operations started.\n";
-  print "Waiting until operation completes.\n";
 
-  # poll_until_done() implements a default back-off policy for retrying. You can
-  # tweak the parameters like the poll timeout seconds by passing them to the
-  # poll_until_done() method. Visit the OperationService.pm file for more details.
-  my $lro = $api_client->OperationService()->poll_until_done({
-    name                 => $operation_response->{name},
-    pollFrequencySeconds => POLL_FREQUENCY_SECONDS,
-    pollTimeoutSeconds   => POLL_TIMEOUT_SECONDS
-  });
-  if ($lro->{done}) {
-    printf "Offline user data job with resource name '%s' has finished.\n",
-      $offline_user_data_job_resource_name;
-  } else {
-    printf
-      "Offline user data job with resource name '%s' still pending after %d " .
-      "seconds, continuing the execution of the code example anyway.\n",
-      $offline_user_data_job_resource_name,
-      POLL_TIMEOUT_SECONDS;
-  }
+  # Offline user data jobs may take 6 hours or more to complete, so instead of waiting
+  # for the job to complete, this example retrieves and displays the job status once.
+  # If the job is completed successfully, it prints information about the user list.
+  # Otherwise, it prints, the query to use to check the job status again later.
+  check_job_status($api_client, $customer_id,
+    $offline_user_data_job_resource_name,
+    $user_list_resource_name);
 }
 # [END add_customer_match_user_list]
+
+# Retrieves, checks, and prints the status of the offline user data job.
+sub check_job_status() {
+  my ($api_client, $customer_id, $offline_user_data_job_resource_name,
+    $user_list_resource_name)
+    = @_;
+
+  my $search_query =
+    "SELECT offline_user_data_job.resource_name, " .
+    "offline_user_data_job.id, offline_user_data_job.status, " .
+    "offline_user_data_job.type, offline_user_data_job.failure_reason " .
+    "FROM offline_user_data_job " .
+    "WHERE offline_user_data_job.resource_name = " .
+    "$offline_user_data_job_resource_name LIMIT 1";
+
+  my $search_request =
+    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::SearchGoogleAdsRequest
+    ->new({
+      customerId => $customer_id,
+      query      => $search_query
+    });
+
+  # Get the GoogleAdsService.
+  my $google_ads_service = $api_client->GoogleAdsService();
+
+  my $iterator = Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator->new({
+    service => $google_ads_service,
+    request => $search_request
+  });
+
+  # The results have exactly one row.
+  my $google_ads_row        = $iterator->next;
+  my $offline_user_data_job = $google_ads_row->{offlineUserDataJob};
+  my $status                = $offline_user_data_job->{status};
+
+  printf
+    "Offline user data job ID %d with type %s has status: %s.\n",
+    $offline_user_data_job->{id},
+    $offline_user_data_job->{type},
+    $status;
+
+  if ($status eq SUCCESS) {
+    print_customer_match_user_list_info($api_client, $customer_id,
+      $user_list_resource_name);
+  } elsif ($status eq FAILED) {
+    print "Failure reason: $offline_user_data_job->{failure_reason}";
+  } elsif (grep /$status/, (PENDING, RUNNING)) {
+    print
+      "To check the status of the job periodically, use the following GAQL " .
+      "query with the GoogleAdsService->search() method:\n$search_query\n";
+  }
+
+  return 1;
+}
 
 # Builds and returns offline user data job operations to add one user identified
 # by an email address and one user identified based on a physical address.

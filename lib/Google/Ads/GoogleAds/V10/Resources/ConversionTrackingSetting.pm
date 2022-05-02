@@ -29,7 +29,8 @@ sub new {
     crossAccountConversionTrackingId =>
       $args->{crossAccountConversionTrackingId},
     enhancedConversionsForLeadsEnabled =>
-      $args->{enhancedConversionsForLeadsEnabled}};
+      $args->{enhancedConversionsForLeadsEnabled},
+    googleAdsConversionCustomer => $args->{googleAdsConversionCustomer}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);
