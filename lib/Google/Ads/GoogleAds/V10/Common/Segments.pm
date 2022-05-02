@@ -104,6 +104,7 @@ sub new {
     searchEngineResultsPageType   => $args->{searchEngineResultsPageType},
     searchTermMatchType           => $args->{searchTermMatchType},
     skAdNetworkAdEventType        => $args->{skAdNetworkAdEventType},
+    skAdNetworkAttributionCredit  => $args->{skAdNetworkAttributionCredit},
     skAdNetworkConversionValue    => $args->{skAdNetworkConversionValue},
     skAdNetworkSourceApp          => $args->{skAdNetworkSourceApp},
     skAdNetworkUserType           => $args->{skAdNetworkUserType},

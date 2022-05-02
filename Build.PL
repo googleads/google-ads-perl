@@ -38,11 +38,11 @@ my $build_sc = Module::Build->subclass(
 $build_sc->new(
   module_name        => "Google::Ads::GoogleAds::Client",
   license            => "apache",
-  dist_author        => "Wang Fan",
+  dist_author        => "Laura Chevalier",
   create_makefile_pl => "traditional",
   dist_abstract      => "Google Ads API Client Library for Perl",
   dist_name          => "Google-Ads-GoogleAds-Client",
-  dist_version       => "10.0.1",
+  dist_version       => "11.0.0",
   requires           => {
     "Class::Load"                  => 0,
     "Class::Std::Fast"             => 0,
@@ -104,8 +104,6 @@ $build_sc->new(
       "023_OAuth2ServiceAccountsHandler.t"
     ],
     medium           => ["001_require.t"],
-    nondeterministic => [".ft"],
-    functional       => [".ft"],
     smoke            => [".t"],
   },
   meta_merge => {

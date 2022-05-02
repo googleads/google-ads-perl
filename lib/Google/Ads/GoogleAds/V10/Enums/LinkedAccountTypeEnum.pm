@@ -22,7 +22,8 @@ use Const::Exporter enums => [
   UNKNOWN                   => "UNKNOWN",
   THIRD_PARTY_APP_ANALYTICS => "THIRD_PARTY_APP_ANALYTICS",
   DATA_PARTNER              => "DATA_PARTNER",
-  GOOGLE_ADS                => "GOOGLE_ADS"
+  GOOGLE_ADS                => "GOOGLE_ADS",
+  HOTEL_CENTER              => "HOTEL_CENTER"
 ];
 
 1;

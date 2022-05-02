@@ -29,7 +29,8 @@ use Const::Exporter enums => [
   LOCAL           => "LOCAL",
   SMART           => "SMART",
   PERFORMANCE_MAX => "PERFORMANCE_MAX",
-  LOCAL_SERVICES  => "LOCAL_SERVICES"
+  LOCAL_SERVICES  => "LOCAL_SERVICES",
+  DISCOVERY       => "DISCOVERY"
 ];
 
 1;

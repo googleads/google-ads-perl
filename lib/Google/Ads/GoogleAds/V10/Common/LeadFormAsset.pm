@@ -28,6 +28,7 @@ sub new {
     callToActionDescription    => $args->{callToActionDescription},
     callToActionType           => $args->{callToActionType},
     customDisclosure           => $args->{customDisclosure},
+    customQuestionFields       => $args->{customQuestionFields},
     deliveryMethods            => $args->{deliveryMethods},
     description                => $args->{description},
     desiredIntent              => $args->{desiredIntent},

@@ -33,6 +33,7 @@ sub new {
     biddingStrategy               => $args->{biddingStrategy},
     biddingStrategyType           => $args->{biddingStrategyType},
     campaignBudget                => $args->{campaignBudget},
+    campaignGroup                 => $args->{campaignGroup},
     commission                    => $args->{commission},
     dynamicSearchAdsSetting       => $args->{dynamicSearchAdsSetting},
     endDate                       => $args->{endDate},

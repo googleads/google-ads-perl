@@ -23,6 +23,8 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    breadcrumb1      => $args->{breadcrumb1},
+    breadcrumb2      => $args->{breadcrumb2},
     callToActions    => $args->{callToActions},
     companionBanners => $args->{companionBanners},
     descriptions     => $args->{descriptions},

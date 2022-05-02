@@ -64,6 +64,7 @@ sub new {
     campaignExtensionSettingOperation =>
       $args->{campaignExtensionSettingOperation},
     campaignFeedOperation             => $args->{campaignFeedOperation},
+    campaignGroupOperation            => $args->{campaignGroupOperation},
     campaignLabelOperation            => $args->{campaignLabelOperation},
     campaignOperation                 => $args->{campaignOperation},
     campaignSharedSetOperation        => $args->{campaignSharedSetOperation},

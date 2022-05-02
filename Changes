@@ -1,3 +1,11 @@
+11.0.0 - 2022-04-28
+- Added support for Google Ads API v10_1.
+- Removed support for Google Ads API v8_0.
+- Renamed authenticate_in_web_application to generate_user_credentials and updated
+  to support the desktop application flow, since OAuth OOB is being deprecated.
+- Removed authenticate_in_desktop_application code example.
+- Updated add_customer_match_user_list code example.
+
 10.0.1 - 2022-03-30
 - Added code examples: add_performance_max_product_listing_group_tree,
   navigate_search_result_pages_caching_tokens.

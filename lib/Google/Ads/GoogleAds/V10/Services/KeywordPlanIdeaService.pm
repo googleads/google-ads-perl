@@ -18,6 +18,19 @@ use strict;
 use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
+sub generate_keyword_historical_metrics {
+  my $self         = shift;
+  my $request_body = shift;
+  my $http_method  = 'POST';
+  my $request_path =
+    'v10/customers/{+customerId}:generateKeywordHistoricalMetrics';
+  my $response_type =
+'Google::Ads::GoogleAds::V10::Services::KeywordPlanIdeaService::GenerateKeywordHistoricalMetricsResponse';
+
+  return $self->SUPER::call($http_method, $request_path, $request_body,
+    $response_type);
+}
+
 sub generate_keyword_ideas {
   my $self         = shift;
   my $request_body = shift;

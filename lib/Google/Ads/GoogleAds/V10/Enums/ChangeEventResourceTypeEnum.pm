@@ -35,7 +35,10 @@ use Const::Exporter enums => [
   ASSET                 => "ASSET",
   CUSTOMER_ASSET        => "CUSTOMER_ASSET",
   CAMPAIGN_ASSET        => "CAMPAIGN_ASSET",
-  AD_GROUP_ASSET        => "AD_GROUP_ASSET"
+  AD_GROUP_ASSET        => "AD_GROUP_ASSET",
+  ASSET_SET             => "ASSET_SET",
+  ASSET_SET_ASSET       => "ASSET_SET_ASSET",
+  CAMPAIGN_ASSET_SET    => "CAMPAIGN_ASSET_SET"
 ];
 
 1;

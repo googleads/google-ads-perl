@@ -23,6 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    closeVariants      => $args->{closeVariants},
     keywordAnnotations => $args->{keywordAnnotations},
     keywordIdeaMetrics => $args->{keywordIdeaMetrics},
     text               => $args->{text}};

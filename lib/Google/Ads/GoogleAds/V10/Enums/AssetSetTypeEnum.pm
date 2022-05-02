@@ -18,11 +18,18 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED          => "UNSPECIFIED",
-  UNKNOWN              => "UNKNOWN",
-  PAGE_FEED            => "PAGE_FEED",
-  DYNAMIC_EDUCATION    => "DYNAMIC_EDUCATION",
-  MERCHANT_CENTER_FEED => "MERCHANT_CENTER_FEED"
+  UNSPECIFIED                => "UNSPECIFIED",
+  UNKNOWN                    => "UNKNOWN",
+  PAGE_FEED                  => "PAGE_FEED",
+  DYNAMIC_EDUCATION          => "DYNAMIC_EDUCATION",
+  MERCHANT_CENTER_FEED       => "MERCHANT_CENTER_FEED",
+  DYNAMIC_REAL_ESTATE        => "DYNAMIC_REAL_ESTATE",
+  DYNAMIC_CUSTOM             => "DYNAMIC_CUSTOM",
+  DYNAMIC_HOTELS_AND_RENTALS => "DYNAMIC_HOTELS_AND_RENTALS",
+  DYNAMIC_FLIGHTS            => "DYNAMIC_FLIGHTS",
+  DYNAMIC_TRAVEL             => "DYNAMIC_TRAVEL",
+  DYNAMIC_LOCAL              => "DYNAMIC_LOCAL",
+  DYNAMIC_JOBS               => "DYNAMIC_JOBS"
 ];
 
 1;
