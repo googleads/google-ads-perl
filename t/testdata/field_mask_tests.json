@@ -12,8 +12,7 @@
     },
     {
       "description": "Create wrapper proto",
-      "originalResource": {
-      },
+      "originalResource": {},
       "modifiedResource": {
         "wrapper": "a"
       },
@@ -71,8 +70,7 @@
     },
     {
       "description": "Create submessages",
-      "originalResource": {
-      },
+      "originalResource": {},
       "modifiedResource": {
         "foo": {
           "num": 1
@@ -83,8 +81,7 @@
     {
       "description": "Modify submessage",
       "originalResource": {
-        "foo": {
-        }
+        "foo": {}
       },
       "modifiedResource": {
         "foo": {
@@ -96,8 +93,7 @@
     {
       "description": "Clear submessage",
       "originalResource": {
-        "foo": {
-        }
+        "foo": {}
       },
       "modifiedResource": {
         "foo": null
@@ -126,8 +122,7 @@
     },
     {
       "description": "Empty initial object (ForObject)",
-      "originalResource": {
-      },
+      "originalResource": {},
       "modifiedResource": {
         "wrapper": "a",
         "foo": {
@@ -142,6 +137,75 @@
         ]
       },
       "expectedMask": "wrapper,foo.bar.nested_wrapper,foos"
+    },
+    {
+      "description": "Message fields are partially present in modified resource, not present on original resource",
+      "originalResource": {},
+      "modifiedResource": {
+        "dynamicSetting": {
+          "domainName": "google.com",
+          "trackingSetting": {}
+        },
+        "selectiveOptimization": {
+          "conversionAction": "ca"
+        }
+      },
+      "expectedMask": "dynamic_setting.domain_name,dynamic_setting.tracking_setting,selective_optimization.conversion_action",
+      "allSetFieldsMask": "dynamic_setting.domain_name,dynamic_setting.tracking_setting,selective_optimization.conversion_action"
+    },
+    {
+      "description": "Default message values in modified resource, not present on original resource",
+      "originalResource": {},
+      "modifiedResource": {
+        "dynamicSetting": {
+          "domainName": "",
+          "useSuppliedUrlsOnly": false,
+          "trackingSetting": {
+            "trackingUrl": ""
+          }
+        },
+        "selectiveOptimization": {}
+      },
+      "expectedMask": "dynamic_setting.domain_name,dynamic_setting.use_supplied_urls_only,dynamic_setting.tracking_setting.tracking_url,selective_optimization",
+      "allSetFieldsMask": "dynamic_setting.use_supplied_urls_only,dynamic_setting.domain_name,dynamic_setting.tracking_setting.tracking_url,selective_optimization"
+    },
+    {
+      "description": "Message fields are empty in modified object and set in original object",
+      "originalResource": {
+        "dynamicSetting": {
+          "domainName": "google.com",
+          "trackingSetting": {
+            "trackingUrl": "tracking.com"
+          }
+        },
+        "selectiveOptimization": {
+          "conversionAction": "ca"
+        }
+      },
+      "modifiedResource": {
+        "dynamicSetting": {},
+        "selectiveOptimization": {}
+      },
+      "expectedMask": "dynamic_setting.domain_name,dynamic_setting.tracking_setting.tracking_url,selective_optimization.conversion_action",
+      "allSetFieldsMask": "dynamic_setting,selective_optimization"
+    },
+    {
+      "description": "List field set to empty in modified resource to clear original resource list",
+      "originalResource": {
+        "optimizationSetting": {
+          "optimizationTypes": [
+            "UNKNOWN",
+            "CALL_CLICKS"
+          ]
+        }
+      },
+      "modifiedResource": {
+        "optimizationSetting": {
+          "optimizationTypes": []
+        }
+      },
+      "expectedMask": "optimization_setting.optimization_types",
+      "allSetFieldsMask": "optimization_setting.optimization_types"
     }
   ]
 }

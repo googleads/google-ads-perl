@@ -1,3 +1,11 @@
+11.1.0 - 2022-06-16
+- Added support for Google Ads API v11_0.
+- Added code examples: create_experiment, detect_and_apply_recommendations.
+- Removed code examples: create_campaign_experiment, graduate_campaign_experiment.
+- Updated add_smart_campaign example.
+- Updated the FieldMasks utility to better handle empty object fields. See updated guide:
+  https://developers.google.com/google-ads/api/docs/client-libs/perl/field-masks.
+
 11.0.0 - 2022-04-28
 - Added support for Google Ads API v10_1.
 - Removed support for Google Ads API v8_0.
