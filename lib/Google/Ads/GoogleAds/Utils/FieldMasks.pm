@@ -65,7 +65,13 @@ sub get_field_value {
 sub __compare {
   my ($paths, $current_field, $original, $modified) = @_;
 
-  foreach my $key (keys %$modified) {
+  # Combine fields from original and modified resource, since the original might
+  # have nested fields which are cleared in the modified resource.
+  my %key_hash = ();
+  foreach my $key (keys %$original) { $key_hash{$key} = 1; }
+  foreach my $key (keys %$modified) { $key_hash{$key} = 1; }
+
+  foreach my $key (keys %key_hash) {
     # The field mask should contain the field path in underscore format.
     my $field      = to_lower_underscore($key);
     my $field_path = $current_field ? $current_field . "." . $field : $field;
@@ -83,11 +89,20 @@ sub __compare {
       # Hash or class reference field whose ref name is not empty.
       next if Compare($original_value, $modified_value);
       if (!$original_key_exists) {
-        __compare($paths, $field_path, {}, $modified_value);
-      } elsif (!defined $modified_value) {
+        # If the modified value is an empty object that doesn't exist in the original
+        # then add it to the paths list. Otherwise recurse on the modified value object.
+        if (!%$modified_value) { push @$paths, $field_path; }
+        else {
+          __compare($paths, $field_path, {}, $modified_value);
+        }
+      } elsif (__is_clearing_message($original_value, $modified_value)) {
         push @$paths, $field_path;
       } else {
-        __compare($paths, $field_path, $original_value, $modified_value);
+        if (!defined $modified_value) {
+          __compare($paths, $field_path, $original_value, {});
+        } else {
+          __compare($paths, $field_path, $original_value, $modified_value);
+        }
       }
     } else {
       # Scalar field or both $modified_value and $original_value are undef.
@@ -112,6 +127,31 @@ sub __is_hash_ref {
   return 0 if grep /^$ref_type/, @invalid_types;
 
   return 1;
+}
+
+sub __is_clearing_message {
+  my ($original_value, $modified_value) = @_;
+
+  my $original_is_defined = defined $original_value;
+  my $modified_is_defined = defined $modified_value;
+
+  my $original_values_size = values %$original_value;
+  my $modified_values_size = values %$modified_value;
+
+  # Returns true if the original message contains an empty message field that is not present on the
+  # modified message, or vice-versa, in which case the user is attempting to clear the top level
+  # message field.
+  return 1
+    if ((
+         !$modified_is_defined
+      and $original_is_defined
+      and $original_values_size == 0
+    )
+    or ( !$original_is_defined
+      and $modified_is_defined
+      and $modified_values_size == 0));
+
+  return 0;
 }
 
 1;

@@ -28,53 +28,53 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V10::Resources::Ad;
-use Google::Ads::GoogleAds::V10::Resources::AdGroup;
-use Google::Ads::GoogleAds::V10::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V10::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V10::Resources::Campaign;
-use Google::Ads::GoogleAds::V10::Resources::CampaignCriterion;
-use Google::Ads::GoogleAds::V10::Resources::PhoneNumber;
-use Google::Ads::GoogleAds::V10::Resources::SmartCampaignSetting;
-use Google::Ads::GoogleAds::V10::Common::AdScheduleInfo;
-use Google::Ads::GoogleAds::V10::Common::KeywordThemeInfo;
-use Google::Ads::GoogleAds::V10::Common::LocationInfo;
-use Google::Ads::GoogleAds::V10::Common::SmartCampaignAdInfo;
-use Google::Ads::GoogleAds::V10::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V10::Enums::AdGroupTypeEnum qw(SMART_CAMPAIGN_ADS);
-use Google::Ads::GoogleAds::V10::Enums::AdTypeEnum qw(SMART_CAMPAIGN_AD);
-use Google::Ads::GoogleAds::V10::Enums::AdvertisingChannelTypeEnum qw(SMART);
-use Google::Ads::GoogleAds::V10::Enums::AdvertisingChannelSubTypeEnum;
-use Google::Ads::GoogleAds::V10::Enums::BudgetTypeEnum;
-use Google::Ads::GoogleAds::V10::Enums::CampaignStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V10::Enums::DayOfWeekEnum qw(MONDAY);
-use Google::Ads::GoogleAds::V10::Enums::MinuteOfHourEnum qw(ZERO);
-use Google::Ads::GoogleAds::V10::Enums::ProximityRadiusUnitsEnum qw(MILES);
-use Google::Ads::GoogleAds::V10::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V10::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V11::Resources::Ad;
+use Google::Ads::GoogleAds::V11::Resources::AdGroup;
+use Google::Ads::GoogleAds::V11::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V11::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V11::Resources::Campaign;
+use Google::Ads::GoogleAds::V11::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V11::Resources::PhoneNumber;
+use Google::Ads::GoogleAds::V11::Resources::SmartCampaignSetting;
+use Google::Ads::GoogleAds::V11::Common::AdScheduleInfo;
+use Google::Ads::GoogleAds::V11::Common::KeywordThemeInfo;
+use Google::Ads::GoogleAds::V11::Common::LocationInfo;
+use Google::Ads::GoogleAds::V11::Common::SmartCampaignAdInfo;
+use Google::Ads::GoogleAds::V11::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V11::Enums::AdGroupTypeEnum qw(SMART_CAMPAIGN_ADS);
+use Google::Ads::GoogleAds::V11::Enums::AdTypeEnum qw(SMART_CAMPAIGN_AD);
+use Google::Ads::GoogleAds::V11::Enums::AdvertisingChannelTypeEnum qw(SMART);
+use Google::Ads::GoogleAds::V11::Enums::AdvertisingChannelSubTypeEnum;
+use Google::Ads::GoogleAds::V11::Enums::BudgetTypeEnum;
+use Google::Ads::GoogleAds::V11::Enums::CampaignStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V11::Enums::DayOfWeekEnum qw(MONDAY);
+use Google::Ads::GoogleAds::V11::Enums::MinuteOfHourEnum qw(ZERO);
+use Google::Ads::GoogleAds::V11::Enums::ProximityRadiusUnitsEnum qw(MILES);
+use Google::Ads::GoogleAds::V11::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V11::Services::AdGroupAdService::AdGroupAdOperation;
 use
-  Google::Ads::GoogleAds::V10::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V10::Services::CampaignService::CampaignOperation;
+  Google::Ads::GoogleAds::V11::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V11::Services::CampaignService::CampaignOperation;
 use
-  Google::Ads::GoogleAds::V10::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation;
+  Google::Ads::GoogleAds::V11::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation;
 use
-  Google::Ads::GoogleAds::V10::Services::KeywordThemeConstantService::SuggestKeywordThemeConstantsRequest;
+  Google::Ads::GoogleAds::V11::Services::KeywordThemeConstantService::SuggestKeywordThemeConstantsRequest;
 use
-  Google::Ads::GoogleAds::V10::Services::SmartCampaignSettingService::SmartCampaignSettingOperation;
+  Google::Ads::GoogleAds::V11::Services::SmartCampaignSettingService::SmartCampaignSettingOperation;
 use
-  Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::BusinessContext;
+  Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::BusinessContext;
 use
-  Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::LocationList;
+  Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::LocationList;
 use
-  Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::SmartCampaignSuggestionInfo;
+  Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::SmartCampaignSuggestionInfo;
 use
-  Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::SuggestKeywordThemesRequest;
+  Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::SuggestKeywordThemesRequest;
 use
-  Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::SuggestSmartCampaignAdRequest;
+  Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::SuggestSmartCampaignAdRequest;
 use
-  Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::SuggestSmartCampaignBudgetOptionsRequest;
-use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::SuggestSmartCampaignBudgetOptionsRequest;
+use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -99,9 +99,6 @@ use constant AD_GROUP_TEMPORARY_ID       => -3;
 use constant REQUIRED_NUM_HEADLINES    => 3;
 use constant REQUIRED_NUM_DESCRIPTIONS => 2;
 
-use constant _64_BIT_RANGE_CEILING        => 2**64;
-use constant _SIGNED_64_BIT_RANGE_CEILING => 2**63;
-
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
 # the command line.
@@ -110,15 +107,15 @@ use constant _SIGNED_64_BIT_RANGE_CEILING => 2**63;
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id           = "INSERT_CUSTOMER_ID_HERE";
-my $keyword_text          = undef;
-my $freeform_keyword_text = undef;
-my $business_location_id  = undef;
-my $business_name         = undef;
+my $customer_id               = undef;
+my $keyword_text              = undef;
+my $freeform_keyword_text     = undef;
+my $business_profile_location = undef;
+my $business_name             = undef;
 
 sub add_smart_campaign {
   my ($api_client, $customer_id, $keyword_text, $freeform_keyword_text,
-    $business_location_id, $business_name)
+    $business_profile_location, $business_name)
     = @_;
 
   # [START add_smart_campaign_12]
@@ -127,7 +124,8 @@ sub add_smart_campaign {
   # of times to retrieve suggestions for keyword themes, budget amount,
   # ad creatives, and campaign criteria.
   my $suggestion_info =
-    _get_smart_campaign_suggestion_info($business_location_id, $business_name);
+    _get_smart_campaign_suggestion_info($business_profile_location,
+    $business_name);
 
   # After creating a SmartCampaignSuggestionInfo object we first use it to
   # generate a list of keyword themes using the SuggestKeywordThemes method
@@ -180,7 +178,7 @@ sub add_smart_campaign {
   my $smart_campaign_operation = _create_smart_campaign_operation($customer_id);
   my $smart_campaign_setting_operation =
     _create_smart_campaign_setting_operation($customer_id,
-    $business_location_id, $business_name);
+    $business_profile_location, $business_name);
   my $campaign_criterion_operations =
     _create_campaign_criterion_operations($customer_id, $keyword_theme_infos,
     $suggestion_info);
@@ -224,14 +222,14 @@ sub _get_keyword_theme_suggestions {
 
   my $response =
     $api_client->SmartCampaignSuggestService()->suggest_keyword_themes(
-    Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::SuggestKeywordThemesRequest
+    Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::SuggestKeywordThemesRequest
       ->new({
         customerId     => $customer_id,
         suggestionInfo => $suggestion_info
       }));
 
-  printf "Retrieved %d keyword theme constant suggestions " .
-    "from the SuggestKeywordThemes method.\n",
+  printf "Retrieved %d keyword theme constant suggestions "
+    . "from the SuggestKeywordThemes method.\n",
     scalar @{$response->{keywordThemes}};
 
   return $response->{keywordThemes};
@@ -246,7 +244,7 @@ sub _get_keyword_text_auto_completions {
   my ($api_client, $keyword_text) = @_;
 
   my $response = $api_client->KeywordThemeConstantService()->suggest(
-    Google::Ads::GoogleAds::V10::Services::KeywordThemeConstantService::SuggestKeywordThemeConstantsRequest
+    Google::Ads::GoogleAds::V11::Services::KeywordThemeConstantService::SuggestKeywordThemeConstantsRequest
       ->new({
         queryText    => $keyword_text,
         countryCode  => COUNTRY_CODE,
@@ -265,7 +263,7 @@ sub _get_keyword_text_auto_completions {
 sub _get_freeform_keyword_theme_info {
   my ($freeform_keyword_text) = @_;
 
-  return Google::Ads::GoogleAds::V10::Common::KeywordThemeInfo->new({
+  return Google::Ads::GoogleAds::V11::Common::KeywordThemeInfo->new({
     freeFormKeywordTheme => $freeform_keyword_text
   });
 }
@@ -278,7 +276,7 @@ sub _map_keyword_theme_constants_to_infos {
   my $keyword_theme_infos = [];
   foreach my $keyword_theme_constant (@$keyword_theme_constants) {
     push @$keyword_theme_infos,
-      Google::Ads::GoogleAds::V10::Common::KeywordThemeInfo->new({
+      Google::Ads::GoogleAds::V11::Common::KeywordThemeInfo->new({
         keywordThemeConstant => $keyword_theme_constant->{resourceName}});
   }
 
@@ -293,10 +291,10 @@ sub _map_keyword_theme_constants_to_infos {
 # "final_url", "language_code" and "keyword_themes" fields on the
 # SmartCampaignSuggestionInfo instance.
 sub _get_smart_campaign_suggestion_info {
-  my ($business_location_id, $business_name) = @_;
+  my ($business_profile_location, $business_name) = @_;
 
   my $suggestion_info =
-    Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::SmartCampaignSuggestionInfo
+    Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::SmartCampaignSuggestionInfo
     ->new({
       # Add the URL of the campaign's landing page.
       finalUrl => LANDING_PAGE_URL,
@@ -306,8 +304,8 @@ sub _get_smart_campaign_suggestion_info {
       # It's also possible to provide a geographic proximity using the
       # "proximity" field on suggestion_info, for example:
       #
-      # proximity => Google::Ads::GoogleAds::V10::Common::ProximityInfo->new({
-      #     address => Google::Ads::GoogleAds::V10::Common::AddressInfo->new({
+      # proximity => Google::Ads::GoogleAds::V11::Common::ProximityInfo->new({
+      #     address => Google::Ads::GoogleAds::V11::Common::AddressInfo->new({
       #         postalCode     => "INSERT_POSTAL_CODE",
       #         provinceCode   => "INSERT_PROVINCE_CODE",
       #         countryCode    => "INSERT_COUNTRY_CODE",
@@ -325,7 +323,7 @@ sub _get_smart_campaign_suggestion_info {
       # For more information on proximities see:
       # https://developers.google.com/google-ads/api/reference/rpc/latest/ProximityInfo
       locationList =>
-        Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::LocationList
+        Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::LocationList
         ->new(
         )});
 
@@ -334,19 +332,19 @@ sub _get_smart_campaign_suggestion_info {
   # location-based suggestions.
   push
     @{$suggestion_info->{locationList}{locations}},
-    Google::Ads::GoogleAds::V10::Common::LocationInfo->new({
+    Google::Ads::GoogleAds::V11::Common::LocationInfo->new({
       # Set the location to the resource name of the given geo target constant.
       geoTargetConstant =>
-        Google::Ads::GoogleAds::V10::Utils::ResourceNames::geo_target_constant(
+        Google::Ads::GoogleAds::V11::Utils::ResourceNames::geo_target_constant(
         GEO_TARGET_CONSTANT)});
 
-  # Set one of the business_location_id or business_name, whichever is provided.
-  if (defined $business_location_id) {
-    $suggestion_info->{businessLocationId} =
-      _convert_business_location_id($business_location_id);
+  # Set one of the business_profile_location or business_name, whichever is provided.
+  if (defined $business_profile_location) {
+    $suggestion_info->{businessProfileLocation} =
+      _convert_business_profile_location($business_profile_location);
   } else {
     $suggestion_info->{businessContext} =
-      Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::BusinessContext
+      Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::BusinessContext
       ->new({
         businessName => $business_name
       });
@@ -357,7 +355,7 @@ sub _get_smart_campaign_suggestion_info {
   # to 5:00 PM.
   push
     @{$suggestion_info->{adSchedules}},
-    Google::Ads::GoogleAds::V10::Common::AdScheduleInfo->new({
+    Google::Ads::GoogleAds::V11::Common::AdScheduleInfo->new({
       # Set the day of this schedule as Monday.
       dayOfWeek => MONDAY,
       # Set the start hour to 9 AM.
@@ -382,7 +380,7 @@ sub _get_budget_suggestion {
   my ($api_client, $customer_id, $suggestion_info) = @_;
 
   my $request =
-    Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::SuggestSmartCampaignBudgetOptionsRequest
+    Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::SuggestSmartCampaignBudgetOptionsRequest
     ->new({
       customerId => $customer_id,
       # You can retrieve suggestions for an existing campaign by setting the
@@ -402,8 +400,8 @@ sub _get_budget_suggestion {
   # Three tiers of options will be returned: "low", "high", and "recommended".
   # Here we will use the "recommended" option. The amount is specified in micros,
   # where one million is equivalent to one currency unit.
-  printf "A daily budget amount of %d was suggested, garnering an estimated " .
-    "minimum of %d clicks and an estimated maximum of %d clicks per day.\n",
+  printf "A daily budget amount of %d was suggested, garnering an estimated "
+    . "minimum of %d clicks and an estimated maximum of %d clicks per day.\n",
     $response->{recommended}{dailyAmountMicros},
     $response->{recommended}{metrics}{minDailyClicks},
     $response->{recommended}{metrics}{maxDailyClicks};
@@ -423,7 +421,7 @@ sub _get_ad_suggestions {
   # Issue a request to retrieve ad creative suggestions.
   my $response =
     $api_client->SmartCampaignSuggestService()->suggest_smart_campaign_ad(
-    Google::Ads::GoogleAds::V10::Services::SmartCampaignSuggestService::SuggestSmartCampaignAdRequest
+    Google::Ads::GoogleAds::V11::Services::SmartCampaignSuggestService::SuggestSmartCampaignAdRequest
       ->new({
         customerId => $customer_id,
         # Unlike the SuggestSmartCampaignBudgetOptions method, it's only
@@ -458,17 +456,17 @@ sub _create_campaign_budget_operation {
   my ($customer_id, $suggested_budget_amount) = @_;
 
   return
-    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
     new({
       campaignBudgetOperation =>
-        Google::Ads::GoogleAds::V10::Services::CampaignBudgetService::CampaignBudgetOperation
+        Google::Ads::GoogleAds::V11::Services::CampaignBudgetService::CampaignBudgetOperation
         ->new({
-          create => Google::Ads::GoogleAds::V10::Resources::CampaignBudget->new(
-            {
+          create =>
+            Google::Ads::GoogleAds::V11::Resources::CampaignBudget->new({
               name => "Smart campaign budget #" . uniqid(),
               # A budget used for Smart campaigns must have the type SMART_CAMPAIGN.
               type =>
-                Google::Ads::GoogleAds::V10::Enums::BudgetTypeEnum::SMART_CAMPAIGN,
+                Google::Ads::GoogleAds::V11::Enums::BudgetTypeEnum::SMART_CAMPAIGN,
               # The suggested budget amount from the SmartCampaignSuggestService is
               # a daily budget. We don't need to specify that here, because the
               # budget period already defaults to DAILY.
@@ -476,7 +474,7 @@ sub _create_campaign_budget_operation {
               # Set a temporary ID in the budget's resource name so it can be
               # referenced by the campaign in later steps.
               resourceName =>
-                Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign_budget(
+                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign_budget(
                 $customer_id, BUDGET_TEMPORARY_ID
                 )})})});
 }
@@ -490,12 +488,12 @@ sub _create_smart_campaign_operation {
   my ($customer_id) = @_;
 
   return
-    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
     new({
       campaignOperation =>
-        Google::Ads::GoogleAds::V10::Services::CampaignService::CampaignOperation
+        Google::Ads::GoogleAds::V11::Services::CampaignService::CampaignOperation
         ->new({
-          create => Google::Ads::GoogleAds::V10::Resources::Campaign->new({
+          create => Google::Ads::GoogleAds::V11::Resources::Campaign->new({
               name => "Smart campaign #" . uniqid(),
               # Set the campaign status as PAUSED. The campaign is the only
               # entity in the mutate request that should have its status set.
@@ -504,15 +502,15 @@ sub _create_smart_campaign_operation {
               advertisingChannelType => SMART,
               # AdvertisingChannelSubType must be SMART_CAMPAIGN.
               advertisingChannelSubType =>
-                Google::Ads::GoogleAds::V10::Enums::AdvertisingChannelSubTypeEnum::SMART_CAMPAIGN,
+                Google::Ads::GoogleAds::V11::Enums::AdvertisingChannelSubTypeEnum::SMART_CAMPAIGN,
               # Assign the resource name with a temporary ID.
               resourceName =>
-                Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign(
+                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
                 $customer_id, SMART_CAMPAIGN_TEMPORARY_ID
                 ),
               # Set the budget using the given budget resource name.
               campaignBudget =>
-                Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign_budget(
+                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign_budget(
                 $customer_id, BUDGET_TEMPORARY_ID
                 )})})});
 }
@@ -524,19 +522,19 @@ sub _create_smart_campaign_operation {
 # which are used to update and create them. Below we will use a temporary ID in
 # the resource name to associate it with the campaign created in the previous step.
 sub _create_smart_campaign_setting_operation {
-  my ($customer_id, $business_location_id, $business_name) = @_;
+  my ($customer_id, $business_profile_location, $business_name) = @_;
 
   my $smart_campaign_setting =
-    Google::Ads::GoogleAds::V10::Resources::SmartCampaignSetting->new({
+    Google::Ads::GoogleAds::V11::Resources::SmartCampaignSetting->new({
       # Set a temporary ID in the campaign setting's resource name to associate it
       # with the campaign created in the previous step.
       resourceName =>
-        Google::Ads::GoogleAds::V10::Utils::ResourceNames::smart_campaign_setting(
+        Google::Ads::GoogleAds::V11::Utils::ResourceNames::smart_campaign_setting(
         $customer_id, SMART_CAMPAIGN_TEMPORARY_ID
         ),
       # Below we configure the SmartCampaignSetting using many of the same
       # details used to generate a budget suggestion.
-      phoneNumber => Google::Ads::GoogleAds::V10::Resources::PhoneNumber->new({
+      phoneNumber => Google::Ads::GoogleAds::V11::Resources::PhoneNumber->new({
           countryCode => COUNTRY_CODE,
           phoneNumber => PHONE_NUMBER
         }
@@ -545,20 +543,20 @@ sub _create_smart_campaign_setting_operation {
       advertisingLanguageCode => LANGUAGE_CODE
     });
 
-  # It's required that either a business location ID or a business name is
+  # It's required that either a business profile location or a business name is
   # added to the SmartCampaignSetting.
-  if (defined $business_location_id) {
-    $smart_campaign_setting->{businessLocationId} =
-      _convert_business_location_id($business_location_id);
+  if (defined $business_profile_location) {
+    $smart_campaign_setting->{businessProfileLocation} =
+      $business_profile_location;
   } else {
     $smart_campaign_setting->{businessName} = $business_name;
   }
 
   return
-    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
     new({
       smartCampaignSettingOperation =>
-        Google::Ads::GoogleAds::V10::Services::SmartCampaignSettingService::SmartCampaignSettingOperation
+        Google::Ads::GoogleAds::V11::Services::SmartCampaignSettingService::SmartCampaignSettingOperation
         ->new({
           update => $smart_campaign_setting,
           # Set the update mask on the operation. This is required since the
@@ -578,16 +576,16 @@ sub _create_campaign_criterion_operations {
 
   foreach my $keyword_theme_info (@$keyword_theme_infos) {
     push @$campaign_criterion_operations,
-      Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation
       ->new({
         campaignCriterionOperation =>
-          Google::Ads::GoogleAds::V10::Services::CampaignCriterionService::CampaignCriterionOperation
+          Google::Ads::GoogleAds::V11::Services::CampaignCriterionService::CampaignCriterionOperation
           ->new({
             create =>
-              Google::Ads::GoogleAds::V10::Resources::CampaignCriterion->new({
+              Google::Ads::GoogleAds::V11::Resources::CampaignCriterion->new({
                 # Set the campaign ID to a temporary ID.
                 campaign =>
-                  Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign(
+                  Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
                   $customer_id, SMART_CAMPAIGN_TEMPORARY_ID
                   ),
                 # Set the keyword theme to the given KeywordThemeInfo.
@@ -599,16 +597,16 @@ sub _create_campaign_criterion_operations {
   # to add corresponding location targeting to the Smart campaign.
   foreach my $location_info (@{$suggestion_info->{locationList}{locations}}) {
     push @$campaign_criterion_operations,
-      Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation
       ->new({
         campaignCriterionOperation =>
-          Google::Ads::GoogleAds::V10::Services::CampaignCriterionService::CampaignCriterionOperation
+          Google::Ads::GoogleAds::V11::Services::CampaignCriterionService::CampaignCriterionOperation
           ->new({
             create =>
-              Google::Ads::GoogleAds::V10::Resources::CampaignCriterion->new({
+              Google::Ads::GoogleAds::V11::Resources::CampaignCriterion->new({
                 # Set the campaign ID to a temporary ID.
                 campaign =>
-                  Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign(
+                  Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
                   $customer_id, SMART_CAMPAIGN_TEMPORARY_ID
                   ),
                 # Set the location to the given location.
@@ -631,21 +629,21 @@ sub _create_ad_group_operation {
   my ($customer_id) = @_;
 
   return
-    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
     new({
       adGroupOperation =>
-        Google::Ads::GoogleAds::V10::Services::AdGroupService::AdGroupOperation
+        Google::Ads::GoogleAds::V11::Services::AdGroupService::AdGroupOperation
         ->new({
-          create => Google::Ads::GoogleAds::V10::Resources::AdGroup->new({
+          create => Google::Ads::GoogleAds::V11::Resources::AdGroup->new({
               # Set the ad group ID to a temporary ID.
               resourceName =>
-                Google::Ads::GoogleAds::V10::Utils::ResourceNames::ad_group(
+                Google::Ads::GoogleAds::V11::Utils::ResourceNames::ad_group(
                 $customer_id, AD_GROUP_TEMPORARY_ID
                 ),
               name => "Smart campaign ad group #" . uniqid(),
               # Set the campaign ID to a temporary ID.
               campaign =>
-                Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign(
+                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
                 $customer_id, SMART_CAMPAIGN_TEMPORARY_ID
                 ),
               # The ad group type must be set to SMART_CAMPAIGN_ADS.
@@ -662,22 +660,22 @@ sub _create_ad_group_ad_operation {
   my ($customer_id, $ad_suggestions) = @_;
 
   my $mutate_operation =
-    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
     new({
       adGroupAdOperation =>
-        Google::Ads::GoogleAds::V10::Services::AdGroupAdService::AdGroupAdOperation
+        Google::Ads::GoogleAds::V11::Services::AdGroupAdService::AdGroupAdOperation
         ->new({
-          create => Google::Ads::GoogleAds::V10::Resources::AdGroupAd->new({
+          create => Google::Ads::GoogleAds::V11::Resources::AdGroupAd->new({
               adGroup =>
                 # Set the ad group ID to a temporary ID.
-                Google::Ads::GoogleAds::V10::Utils::ResourceNames::ad_group(
+                Google::Ads::GoogleAds::V11::Utils::ResourceNames::ad_group(
                 $customer_id, AD_GROUP_TEMPORARY_ID
                 ),
-              ad => Google::Ads::GoogleAds::V10::Resources::Ad->new({
+              ad => Google::Ads::GoogleAds::V11::Resources::Ad->new({
                   # Set the type to SMART_CAMPAIGN_AD.
                   type            => SMART_CAMPAIGN_AD,
                   smartCampaignAd =>
-                    Google::Ads::GoogleAds::V10::Common::SmartCampaignAdInfo->
+                    Google::Ads::GoogleAds::V11::Common::SmartCampaignAdInfo->
                     new({
                       headlines    => [],
                       descriptions => []})})})})});
@@ -705,7 +703,7 @@ sub _create_ad_group_ad_operation {
     REQUIRED_NUM_HEADLINES - scalar @{$smart_campaign_ad->{headlines}};
   for (my $i = 0 ; $i < $num_missing_headlines ; $i++) {
     push @{$smart_campaign_ad->{headlines}},
-      Google::Ads::GoogleAds::V10::Common::AdTextAsset->new({
+      Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
         text => "placeholder headline " . $i
       });
   }
@@ -720,7 +718,7 @@ sub _create_ad_group_ad_operation {
     REQUIRED_NUM_DESCRIPTIONS - scalar @{$smart_campaign_ad->{descriptions}};
   for (my $i = 0 ; $i < $num_missing_descriptions ; $i++) {
     push @{$smart_campaign_ad->{descriptions}},
-      Google::Ads::GoogleAds::V10::Common::AdTextAsset->new({
+      Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
         text => "placeholder description " . $i
       });
   }
@@ -766,28 +764,6 @@ sub _print_response_details {
   }
 }
 
-# [START add_smart_campaign_14]
-# Converts the business location ID from the format returned by Business Profile
-# to the format expected by the API.
-# The business location ID is an unsigned 64-bit integer. However, the Google Ads
-# API expects a signed 64-bit integer. This means that for business location IDs
-# that are too large, we have to do some extra steps to convert it to a form
-# the API can understand. Specifically, we perform the two's complement.
-sub _convert_business_location_id {
-  my ($business_location_id) = @_;
-
-  if ($business_location_id >= _64_BIT_RANGE_CEILING) {
-    die "The given business_location_id is outside of the range for " .
-      "a 64 bit integer.";
-  } elsif ($business_location_id >= _SIGNED_64_BIT_RANGE_CEILING) {
-    # Perform the two's complement.
-    return -1 * (_64_BIT_RANGE_CEILING - $business_location_id);
-  } else {
-    return $business_location_id;
-  }
-}
-# [END add_smart_campaign_14]
-
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {
   return 1;
@@ -801,11 +777,11 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"           => \$customer_id,
-  "keyword_text=s"          => \$keyword_text,
-  "freeform_keyword_text=s" => \$freeform_keyword_text,
-  "business_location_id=i"  => \$business_location_id,
-  "business_name=s"         => \$business_name
+  "customer_id=s"               => \$customer_id,
+  "keyword_text=s"              => \$keyword_text,
+  "freeform_keyword_text=s"     => \$freeform_keyword_text,
+  "business_profile_location=i" => \$business_profile_location,
+  "business_name=s"             => \$business_name
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -814,7 +790,8 @@ pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
 add_smart_campaign($api_client, $customer_id =~ s/-//gr,
-  $keyword_text, $freeform_keyword_text, $business_location_id, $business_name);
+  $keyword_text, $freeform_keyword_text, $business_profile_location,
+  $business_name);
 
 =pod
 
@@ -844,11 +821,12 @@ add_smart_campaign.pl [options]
                                 service. Using free-form keyword themes is typically not recommended
                                 because they are less effective than suggested keyword themes, however
                                 they are useful in situations where a very specific term needs to be targeted.
-    -business_location_id       [optional] The ID of a Business Profile location.
+    -business_profile_location  [optional] The resource name of a Business Profile location.
                                 This is required if a business name is not provided.
                                 This ID can be retrieved using the Business Profile API, for details see:
-                                https://developers.google.com/my-business/reference/rest/v4/accounts.locations
+                                https://developers.google.com/my-business/reference/businessinformation/rest/v1/accounts.locations
+                                or from the Business Profile UI (https://support.google.com/business/answer/10737668).
     -business_name              [optional] The name of a business in Business Profile.
-                                This is required if a business location ID is not provided.
+                                This is required if a business profile location is not provided.
 
 =cut

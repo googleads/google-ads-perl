@@ -36,31 +36,31 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V10::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V10::Resources::Campaign;
-use Google::Ads::GoogleAds::V10::Resources::AdGroup;
-use Google::Ads::GoogleAds::V10::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V10::Resources::Ad;
-use Google::Ads::GoogleAds::V10::Resources::Asset;
-use Google::Ads::GoogleAds::V10::Common::TargetCpa;
-use Google::Ads::GoogleAds::V10::Common::ResponsiveDisplayAdInfo;
-use Google::Ads::GoogleAds::V10::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V10::Common::AdImageAsset;
-use Google::Ads::GoogleAds::V10::Common::ImageAsset;
-use Google::Ads::GoogleAds::V10::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
-use Google::Ads::GoogleAds::V10::Enums::AdvertisingChannelTypeEnum qw(DISPLAY);
-use Google::Ads::GoogleAds::V10::Enums::AdvertisingChannelSubTypeEnum
+use Google::Ads::GoogleAds::V11::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V11::Resources::Campaign;
+use Google::Ads::GoogleAds::V11::Resources::AdGroup;
+use Google::Ads::GoogleAds::V11::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V11::Resources::Ad;
+use Google::Ads::GoogleAds::V11::Resources::Asset;
+use Google::Ads::GoogleAds::V11::Common::TargetCpa;
+use Google::Ads::GoogleAds::V11::Common::ResponsiveDisplayAdInfo;
+use Google::Ads::GoogleAds::V11::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V11::Common::AdImageAsset;
+use Google::Ads::GoogleAds::V11::Common::ImageAsset;
+use Google::Ads::GoogleAds::V11::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V11::Enums::AdvertisingChannelTypeEnum qw(DISPLAY);
+use Google::Ads::GoogleAds::V11::Enums::AdvertisingChannelSubTypeEnum
   qw(DISPLAY_SMART_CAMPAIGN);
-use Google::Ads::GoogleAds::V10::Enums::AdGroupStatusEnum;
-use Google::Ads::GoogleAds::V10::Enums::AdGroupAdStatusEnum;
-use Google::Ads::GoogleAds::V10::Enums::AssetTypeEnum qw(IMAGE);
+use Google::Ads::GoogleAds::V11::Enums::AdGroupStatusEnum;
+use Google::Ads::GoogleAds::V11::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V11::Enums::AssetTypeEnum qw(IMAGE);
 use
-  Google::Ads::GoogleAds::V10::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V10::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V10::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V10::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V10::Services::AssetService::AssetOperation;
-use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V11::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V11::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V11::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V11::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V11::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -115,7 +115,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V10::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V11::Resources::CampaignBudget->new({
       name           => "Interplanetary Cruise Budget #" . uniqid(),
       deliveryMethod => STANDARD,
       amountMicros   => 5000000
@@ -123,7 +123,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V10::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V11::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({
       create => $campaign_budget
     });
@@ -147,7 +147,7 @@ sub create_campaign_budget {
 sub create_smart_display_campaign {
   my ($api_client, $customer_id, $campaign_budget_resource_name) = @_;
 
-  my $campaign = Google::Ads::GoogleAds::V10::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V11::Resources::Campaign->new({
       name => "Smart Display Campaign #" . uniqid(),
       # Smart Display campaign requires the advertising_channel_type as 'DISPLAY'.
       advertisingChannelType => DISPLAY,
@@ -155,7 +155,7 @@ sub create_smart_display_campaign {
       # 'DISPLAY_SMART_CAMPAIGN'.
       advertisingChannelSubType => DISPLAY_SMART_CAMPAIGN,
       # Smart Display campaign requires the TargetCpa bidding strategy.
-      targetCpa => Google::Ads::GoogleAds::V10::Common::TargetCpa->new({
+      targetCpa => Google::Ads::GoogleAds::V11::Common::TargetCpa->new({
           targetCpaMicros => 5000000
         }
       ),
@@ -168,7 +168,7 @@ sub create_smart_display_campaign {
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V10::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V11::Services::CampaignService::CampaignOperation->
     new({
       create => $campaign
     });
@@ -194,15 +194,15 @@ sub create_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
   # Construct an ad group and set its type.
-  my $ad_group = Google::Ads::GoogleAds::V10::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V11::Resources::AdGroup->new({
     name     => "Earth to Mars Cruises #" . uniqid(),
     campaign => $campaign_resource_name,
-    status   => Google::Ads::GoogleAds::V10::Enums::AdGroupStatusEnum::PAUSED
+    status   => Google::Ads::GoogleAds::V11::Enums::AdGroupStatusEnum::PAUSED
   });
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V10::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V11::Services::AdGroupService::AdGroupOperation->
     new({
       create => $ad_group
     });
@@ -233,33 +233,33 @@ sub create_responsive_display_ad {
   # there are no assets' IDs specified.
   my $marketing_image_asset_resource_name =
     defined $marketing_image_asset_id
-    ? Google::Ads::GoogleAds::V10::Utils::ResourceNames::asset($customer_id,
+    ? Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset($customer_id,
     $marketing_image_asset_id)
     : create_image_asset($api_client, $customer_id, MARKETING_IMAGE_URL,
     "Marketing Image");
 
   my $square_marketing_image_asset_resource_name =
     defined $square_marketing_image_asset_id
-    ? Google::Ads::GoogleAds::V10::Utils::ResourceNames::asset($customer_id,
+    ? Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset($customer_id,
     $square_marketing_image_asset_id)
     : create_image_asset($api_client, $customer_id, SQUARE_MARKETING_IMAGE_URL,
     "Square Marketing Image");
 
   # Create a responsive display ad info.
   my $responsive_display_ad_info =
-    Google::Ads::GoogleAds::V10::Common::ResponsiveDisplayAdInfo->new({
+    Google::Ads::GoogleAds::V11::Common::ResponsiveDisplayAdInfo->new({
       # Set some basic required information for the responsive display ad.
       headlines => [
-        Google::Ads::GoogleAds::V10::Common::AdTextAsset->new({
+        Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
             text => "Travel"
           })
       ],
-      longHeadline => Google::Ads::GoogleAds::V10::Common::AdTextAsset->new({
+      longHeadline => Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
           text => "Travel the World"
         }
       ),
       descriptions => [
-        Google::Ads::GoogleAds::V10::Common::AdTextAsset->new({
+        Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
             text => "Take to the air!"
           })
       ],
@@ -267,12 +267,12 @@ sub create_responsive_display_ad {
       # Set the marketing image and square marketing image to the previously
       # created image assets.
       marketingImages => [
-        Google::Ads::GoogleAds::V10::Common::AdImageAsset->new({
+        Google::Ads::GoogleAds::V11::Common::AdImageAsset->new({
             asset => $marketing_image_asset_resource_name
           })
       ],
       squareMarketingImages => [
-        Google::Ads::GoogleAds::V10::Common::AdImageAsset->new({
+        Google::Ads::GoogleAds::V11::Common::AdImageAsset->new({
             asset => $square_marketing_image_asset_resource_name
           })
       ],
@@ -283,17 +283,17 @@ sub create_responsive_display_ad {
     });
 
   # Create an ad group ad with the created responsive display ad info.
-  my $ad_group_ad = Google::Ads::GoogleAds::V10::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V11::Resources::AdGroupAd->new({
       adGroup => $ad_group_resource_name,
-      status => Google::Ads::GoogleAds::V10::Enums::AdGroupAdStatusEnum::PAUSED,
-      ad     => Google::Ads::GoogleAds::V10::Resources::Ad->new({
+      status => Google::Ads::GoogleAds::V11::Enums::AdGroupAdStatusEnum::PAUSED,
+      ad     => Google::Ads::GoogleAds::V11::Resources::Ad->new({
           finalUrls           => ["https://www.example.com"],
           responsiveDisplayAd => $responsive_display_ad_info
         })});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V10::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V11::Services::AdGroupAdService::AdGroupAdOperation
     ->new({
       create => $ad_group_ad
     });
@@ -316,15 +316,15 @@ sub create_image_asset {
   my ($api_client, $customer_id, $image_url, $image_name) = @_;
 
   # Create an asset.
-  my $asset = Google::Ads::GoogleAds::V10::Resources::Asset->new({
+  my $asset = Google::Ads::GoogleAds::V11::Resources::Asset->new({
       name       => $image_name,
       type       => IMAGE,
-      imageAsset => Google::Ads::GoogleAds::V10::Common::ImageAsset->new({
+      imageAsset => Google::Ads::GoogleAds::V11::Common::ImageAsset->new({
           data => get_base64_data_from_url($image_url)})});
 
   # Create an asset operation.
   my $asset_operation =
-    Google::Ads::GoogleAds::V10::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V11::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 
