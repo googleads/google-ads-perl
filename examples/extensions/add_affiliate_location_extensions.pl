@@ -27,24 +27,24 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
-use Google::Ads::GoogleAds::V10::Resources::Feed;
-use Google::Ads::GoogleAds::V10::Resources::AffiliateLocationFeedData;
-use Google::Ads::GoogleAds::V10::Resources::CampaignFeed;
-use Google::Ads::GoogleAds::V10::Common::MatchingFunction;
+use Google::Ads::GoogleAds::V11::Resources::Feed;
+use Google::Ads::GoogleAds::V11::Resources::AffiliateLocationFeedData;
+use Google::Ads::GoogleAds::V11::Resources::CampaignFeed;
+use Google::Ads::GoogleAds::V11::Common::MatchingFunction;
 use
-  Google::Ads::GoogleAds::V10::Enums::AffiliateLocationFeedRelationshipTypeEnum
+  Google::Ads::GoogleAds::V11::Enums::AffiliateLocationFeedRelationshipTypeEnum
   qw(GENERAL_RETAILER);
-use Google::Ads::GoogleAds::V10::Enums::FeedOriginEnum qw(GOOGLE);
-use Google::Ads::GoogleAds::V10::Enums::PlaceholderTypeEnum
+use Google::Ads::GoogleAds::V11::Enums::FeedOriginEnum qw(GOOGLE);
+use Google::Ads::GoogleAds::V11::Enums::PlaceholderTypeEnum
   qw(AFFILIATE_LOCATION);
-use Google::Ads::GoogleAds::V10::Enums::AffiliateLocationPlaceholderFieldEnum
+use Google::Ads::GoogleAds::V11::Enums::AffiliateLocationPlaceholderFieldEnum
   qw(CHAIN_ID);
 use
-  Google::Ads::GoogleAds::V10::Services::CustomerFeedService::CustomerFeedOperation;
-use Google::Ads::GoogleAds::V10::Services::FeedService::FeedOperation;
+  Google::Ads::GoogleAds::V11::Services::CustomerFeedService::CustomerFeedOperation;
+use Google::Ads::GoogleAds::V11::Services::FeedService::FeedOperation;
 use
-  Google::Ads::GoogleAds::V10::Services::CampaignFeedService::CampaignFeedOperation;
-use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V11::Services::CampaignFeedService::CampaignFeedOperation;
+use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -79,7 +79,8 @@ my $delete_existing_feeds = 0;
 
 sub add_affiliate_location_extensions {
   my ($api_client, $customer_id, $chain_id, $campaign_id,
-    $delete_existing_feeds) = @_;
+    $delete_existing_feeds)
+    = @_;
 
   if ($delete_existing_feeds) {
     delete_location_extension_feeds($api_client, $customer_id);
@@ -163,7 +164,7 @@ sub remove_customer_feeds {
   my $operations = [];
   foreach my $customer_feed (@$customer_feeds) {
     push @$operations,
-      Google::Ads::GoogleAds::V10::Services::CustomerFeedService::CustomerFeedOperation
+      Google::Ads::GoogleAds::V11::Services::CustomerFeedService::CustomerFeedOperation
       ->new({remove => $customer_feed->{resourceName}});
   }
 
@@ -210,7 +211,7 @@ sub remove_feeds {
   my $operations = [];
   foreach my $feed (@$feeds) {
     push @$operations,
-      Google::Ads::GoogleAds::V10::Services::FeedService::FeedOperation->new(
+      Google::Ads::GoogleAds::V11::Services::FeedService::FeedOperation->new(
       {remove => $feed->{resourceName}});
   }
 
@@ -229,10 +230,10 @@ sub create_affiliate_location_extension_feed {
   # Create a feed that will sync to retail addresses for a given retail chain ID.
   # Do not add feed attributes, Google Ads will add them automatically because
   # this will be a system generated feed.
-  my $feed = Google::Ads::GoogleAds::V10::Resources::Feed->new({
+  my $feed = Google::Ads::GoogleAds::V11::Resources::Feed->new({
       name => "Affiliate Location Extension feed #" . uniqid(),
       affiliateLocationFeedData =>
-        Google::Ads::GoogleAds::V10::Resources::AffiliateLocationFeedData->new({
+        Google::Ads::GoogleAds::V11::Resources::AffiliateLocationFeedData->new({
           chainIds         => [$chain_id],
           relationshipType => GENERAL_RETAILER
         }
@@ -244,7 +245,7 @@ sub create_affiliate_location_extension_feed {
 
   # Create the feed operation.
   my $operation =
-    Google::Ads::GoogleAds::V10::Services::FeedService::FeedOperation->new({
+    Google::Ads::GoogleAds::V11::Services::FeedService::FeedOperation->new({
       create => $feed
     });
 
@@ -340,22 +341,22 @@ sub create_campaign_feed {
 
   # Add a campaign feed that associates the feed with this campaign for the
   # AFFILIATE_LOCATION placeholder type.
-  my $campaign_feed = Google::Ads::GoogleAds::V10::Resources::CampaignFeed->new(
+  my $campaign_feed = Google::Ads::GoogleAds::V11::Resources::CampaignFeed->new(
     {
       feed             => $feed_resource_name,
       placeholderTypes => AFFILIATE_LOCATION,
       matchingFunction =>
-        Google::Ads::GoogleAds::V10::Common::MatchingFunction->new({
+        Google::Ads::GoogleAds::V11::Common::MatchingFunction->new({
           functionString => $matching_function
         }
         ),
-      campaign => Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign(
+      campaign => Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       )});
 
   # Create the campaign feed operation.
   my $operation =
-    Google::Ads::GoogleAds::V10::Services::CampaignFeedService::CampaignFeedOperation
+    Google::Ads::GoogleAds::V11::Services::CampaignFeedService::CampaignFeedOperation
     ->new({
       create => $campaign_feed
     });

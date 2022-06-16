@@ -26,9 +26,9 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
-use Google::Ads::GoogleAds::V10::Enums::CriterionTypeEnum qw(KEYWORD);
+use Google::Ads::GoogleAds::V11::Enums::CriterionTypeEnum qw(KEYWORD);
 use
-  Google::Ads::GoogleAds::V10::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V11::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -61,7 +61,7 @@ sub get_campaign_targeting_criteria {
   # Create a search Google Ads request that will retrieve campaign criteria
   # using pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V10::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,

@@ -26,8 +26,8 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V10::Services::BillingSetupService::BillingSetupOperation;
-use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V11::Services::BillingSetupService::BillingSetupOperation;
+use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -50,12 +50,12 @@ sub remove_billing_setup {
 
   # Create the resource name of a billing setup to remove.
   my $billing_setup_resource_name =
-    Google::Ads::GoogleAds::V10::Utils::ResourceNames::billing_setup(
+    Google::Ads::GoogleAds::V11::Utils::ResourceNames::billing_setup(
     $customer_id, $billing_setup_id);
 
   # Create a billing setup operation.
   my $billing_setup_operation =
-    Google::Ads::GoogleAds::V10::Services::BillingSetupService::BillingSetupOperation
+    Google::Ads::GoogleAds::V11::Services::BillingSetupService::BillingSetupOperation
     ->new({
       remove => $billing_setup_resource_name
     });

@@ -25,15 +25,15 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V10::Resources::CampaignExtensionSetting;
-use Google::Ads::GoogleAds::V10::Resources::ExtensionFeedItem;
-use Google::Ads::GoogleAds::V10::Common::ImageFeedItem;
-use Google::Ads::GoogleAds::V10::Enums::ExtensionTypeEnum qw(IMAGE);
+use Google::Ads::GoogleAds::V11::Resources::CampaignExtensionSetting;
+use Google::Ads::GoogleAds::V11::Resources::ExtensionFeedItem;
+use Google::Ads::GoogleAds::V11::Common::ImageFeedItem;
+use Google::Ads::GoogleAds::V11::Enums::ExtensionTypeEnum qw(IMAGE);
 use
-  Google::Ads::GoogleAds::V10::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
+  Google::Ads::GoogleAds::V11::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
 use
-  Google::Ads::GoogleAds::V10::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
-use Google::Ads::GoogleAds::V10::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V11::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
+use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -59,19 +59,19 @@ sub add_image_extension {
     create_image_extension($api_client, $customer_id, $image_asset_id);
 
   my $campaign_resource_name =
-    Google::Ads::GoogleAds::V10::Utils::ResourceNames::campaign($customer_id,
+    Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign($customer_id,
     $campaign_id);
 
   # Create a campaign extension setting.
   my $campaign_extension_setting =
-    Google::Ads::GoogleAds::V10::Resources::CampaignExtensionSetting->new({
+    Google::Ads::GoogleAds::V11::Resources::CampaignExtensionSetting->new({
       campaign           => $campaign_resource_name,
       extensionType      => IMAGE,
       extensionFeedItems => [$image_extension_resource_name]});
 
   # Create a campaign extension setting operation.
   my $campaign_extension_setting_operation =
-    Google::Ads::GoogleAds::V10::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
+    Google::Ads::GoogleAds::V11::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
     ->new({
       create => $campaign_extension_setting
     });
@@ -94,21 +94,21 @@ sub create_image_extension {
   my ($api_client, $customer_id, $image_asset_id) = @_;
 
   # Create the image feed item using the provided image.
-  my $image_feed_item = Google::Ads::GoogleAds::V10::Common::ImageFeedItem->new(
+  my $image_feed_item = Google::Ads::GoogleAds::V11::Common::ImageFeedItem->new(
     {
-      imageAsset => Google::Ads::GoogleAds::V10::Utils::ResourceNames::asset(
+      imageAsset => Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset(
         $customer_id, $image_asset_id
       )});
 
   # Create an extension feed item from the image feed item.
   my $extension_feed_item =
-    Google::Ads::GoogleAds::V10::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V11::Resources::ExtensionFeedItem->new({
       imageFeedItem => $image_feed_item
     });
 
   # Create an extension feed item operation.
   my $extension_feed_item_operation =
-    Google::Ads::GoogleAds::V10::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V11::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       create => $extension_feed_item
     });
