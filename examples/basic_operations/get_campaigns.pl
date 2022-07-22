@@ -51,7 +51,7 @@ sub get_campaigns {
     ->new({
       customerId => $customer_id,
       query      =>
-"SELECT campaign.id, campaign.name, campaign.unknown_field FROM campaign ORDER BY campaign.id"
+        "SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id"
     });
 
   # Get the GoogleAdsService.
