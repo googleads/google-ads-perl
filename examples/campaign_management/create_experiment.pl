@@ -218,8 +218,8 @@ $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"   => \$customer_id,
-  "base_campaign=i" => \$campaign_id
+  "customer_id=s"      => \$customer_id,
+  "base_campaign_id=i" => \$campaign_id
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -246,6 +246,6 @@ create_experiment.pl [options]
 
     -help                            Show the help message.
     -customer_id                     The Google Ads customer ID.
-    -base_campaign                   The base campaign ID.
+    -base_campaign_id                The base campaign ID.
 
 =cut
