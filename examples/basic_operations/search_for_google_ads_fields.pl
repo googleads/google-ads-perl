@@ -50,7 +50,7 @@ sub search_for_google_ads_fields {
     });
 
   if (!$search_google_ads_fields_response->{results}) {
-    printf "No GoogleAdsField found with a name that beging with '%s'.\n",
+    printf "No GoogleAdsField found with a name that begins with '%s'.\n",
       $name_prefix;
     return;
   }
