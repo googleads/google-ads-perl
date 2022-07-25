@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example gets the metadata, such as whether the artifact is selectable,
-# filterable and sortable, of an artifact. The artifact can be either a
-# resource (such as customer, campaign) or a field (such as metrics.impressions,
-# campaign.id). It'll also show the data type and artifacts that are selectable
-# with the artifact.
+# This example searches for GoogleAdsFields that match a given prefix, retrieving
+# metadata such as whether the field is selectable, filterable, or sortable, along
+# with the data type and the fields that are selectable with the field. Each
+# GoogleAdsField represents either a resource (such as customer or campaign) or
+# a field (such as metrics.impressions or campaign.id).
 
 use strict;
 use warnings;
@@ -33,23 +33,16 @@ use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 use Cwd qw(abs_path);
 
-# The following parameter(s) should be provided to run the example. You can
-# either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-# the command line.
-#
-# Parameters passed on the command line will override any parameters set in
-# code.
-#
-# Running the example with -h will print the command line usage.
-my $artifact_name = "campaign";
+my $name_prefix = undef;
 
-sub get_artifact_metadata {
-  my ($api_client, $artifact_name) = @_;
+sub search_for_google_ads_fields {
+  my ($api_client, $name_prefix) = @_;
 
   # Create the search query.
+  # A single % is the wildcard token in the Google Ads Query language.
   my $search_query =
     "SELECT name, category, selectable, filterable, sortable, selectable_with, "
-    . "data_type, is_repeated WHERE name = '$artifact_name'";
+    . "data_type, is_repeated WHERE name LIKE '${name_prefix}%'";
 
   my $search_google_ads_fields_response =
     $api_client->GoogleAdsFieldService()->search({
@@ -57,28 +50,31 @@ sub get_artifact_metadata {
     });
 
   if (!$search_google_ads_fields_response->{results}) {
-    printf "The specified artifact '%s' doesn't exist.", $artifact_name;
+    printf "No GoogleAdsField found with a name that begins with '%s'.\n",
+      $name_prefix;
     return;
   }
 
-  # Get all returned artifacts and print out their metadata.
+  # Retrieves each matching GoogleAdsField and prints its metadata.
   foreach
     my $google_ads_field (@{$search_google_ads_fields_response->{results}})
   {
-    printf "An artifact named '%s' with category '%s' and data type '%s' " .
-      "%s selectable, %s filterable, %s sortable and %s repeated.\n\n",
-      $google_ads_field->{name},
-      $google_ads_field->{category},
-      $google_ads_field->{dataType},
-      is_or_not($google_ads_field->{selectable}),
-      is_or_not($google_ads_field->{filterable}),
-      is_or_not($google_ads_field->{sortable}),
-      is_or_not($google_ads_field->{isRepeated});
+    printf "%s:\n",        $google_ads_field->{name};
+    printf "  %-16s %s\n", "category:",   $google_ads_field->{category};
+    printf "  %-16s %s\n", "data type:",  $google_ads_field->{dataType};
+    printf "  %-16s %s\n", "selectable:", $google_ads_field->{selectable};
+    printf "  %-16s %s\n", "filterable:", $google_ads_field->{filterable};
+    printf "  %-16s %s\n", "sortable:",   $google_ads_field->{sortable};
+    printf "  %-16s %s\n", "repeated:",   $google_ads_field->{isRepeated};
 
+    # Prints the list of fields that are selectable with the field.
     if ($google_ads_field->{selectableWith}) {
-      print "The artifact can be selected with the following artifacts:\n";
+      # Sorts and then prints the list.
+      my $sorted_selectable_field = $google_ads_field->{selectableWith};
+      @$sorted_selectable_field = sort @$sorted_selectable_field;
+      printf "  %s\n", "selectable with:";
       foreach my $selectable_field (@{$google_ads_field->{selectableWith}}) {
-        print $selectable_field, "\n";
+        printf "    %s\n", $selectable_field;
       }
     }
   }
@@ -104,34 +100,34 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 $api_client->set_die_on_faults(1);
 
 # Parameters passed on the command line will override any parameters set in code.
-GetOptions("artifact_name=s" => \$artifact_name);
+GetOptions("name_prefix=s" => \$name_prefix);
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($artifact_name);
+pod2usage(2) if not check_params($name_prefix);
 
 # Call the example.
-get_artifact_metadata($api_client, $artifact_name);
+search_for_google_ads_fields($api_client, $name_prefix);
 
 =pod
 
 =head1 NAME
 
-get_artifact_metadata
+search_for_google_ads_fields
 
 =head1 DESCRIPTION
 
-This example gets the metadata, such as whether the artifact is selectable, filterable
-and sortable, of an artifact. The artifact can be either a resource (such as customer,
-campaign) or a field (such as metrics.impressions, campaign.id). It'll also show the data
-type and artifacts that are selectable with the artifact.
+This example searches for GoogleAdsFields that match a given prefix, retrieving
+metadata such as whether the field is selectable, filterable, or sortable, along
+with the data type and the fields that are selectable with the field. Each
+GoogleAdsField represents either a resource (such as customer or campaign) or
+a field (such as metrics.impressions or campaign.id).
 
 =head1 SYNOPSIS
 
-get_artifact_metadata.pl [options]
+search_for_google_ads_fields.pl [options]
 
     -help                       Show the help message.
-    -artifact_name              [optional] The artifact name, e.g. a resource such as customer,
-                                campaign or a field such as metrics.impressions, campaign.id.
+    -name_prefix				The name prefix to use in the query.
 
 =cut
