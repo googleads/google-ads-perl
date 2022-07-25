@@ -42,7 +42,7 @@ sub search_for_google_ads_fields {
   # A single % is the wildcard token in the Google Ads Query language.
   my $search_query =
     "SELECT name, category, selectable, filterable, sortable, selectable_with, "
-    . "data_type, is_repeated WHERE name LIKE '$name_prefix%'";
+    . "data_type, is_repeated WHERE name LIKE '${name_prefix}%'";
 
   my $search_google_ads_fields_response =
     $api_client->GoogleAdsFieldService()->search({
