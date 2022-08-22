@@ -48,6 +48,7 @@ sub new {
     assetSetError                   => $args->{assetSetError},
     assetSetLinkError               => $args->{assetSetLinkError},
     audienceError                   => $args->{audienceError},
+    audienceInsightsError           => $args->{audienceInsightsError},
     authenticationError             => $args->{authenticationError},
     authorizationError              => $args->{authorizationError},
     batchJobError                   => $args->{batchJobError},

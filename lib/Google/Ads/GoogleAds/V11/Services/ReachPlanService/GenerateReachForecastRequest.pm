@@ -28,6 +28,7 @@ sub new {
     cookieFrequencyCapSetting => $args->{cookieFrequencyCapSetting},
     currencyCode              => $args->{currencyCode},
     customerId                => $args->{customerId},
+    customerReachGroup        => $args->{customerReachGroup},
     effectiveFrequencyLimit   => $args->{effectiveFrequencyLimit},
     forecastMetricOptions     => $args->{forecastMetricOptions},
     minEffectiveFrequency     => $args->{minEffectiveFrequency},

@@ -1,3 +1,9 @@
+13.1.0 - 2022-08-22
+- Added support for Google Ads API v11_1.
+- Added code examples: generate_historical_metrics.
+- Improved code examples: set_custom_client_timeouts.
+- Updated examples to remove references to expanded text ads.
+
 13.0.0 - 2022-07-06
 - Removed support for Google Ads API v9.
 

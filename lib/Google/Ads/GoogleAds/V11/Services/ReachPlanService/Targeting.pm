@@ -24,6 +24,7 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     ageRange            => $args->{ageRange},
+    audienceTargeting   => $args->{audienceTargeting},
     devices             => $args->{devices},
     genders             => $args->{genders},
     network             => $args->{network},

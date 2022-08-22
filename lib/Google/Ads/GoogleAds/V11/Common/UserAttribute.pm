@@ -26,7 +26,10 @@ sub new {
     acquisitionDateTime        => $args->{acquisitionDateTime},
     averagePurchaseCount       => $args->{averagePurchaseCount},
     averagePurchaseValueMicros => $args->{averagePurchaseValueMicros},
+    eventAttribute             => $args->{eventAttribute},
+    firstPurchaseDateTime      => $args->{firstPurchaseDateTime},
     lastPurchaseDateTime       => $args->{lastPurchaseDateTime},
+    lifecycleStage             => $args->{lifecycleStage},
     lifetimeValueBucket        => $args->{lifetimeValueBucket},
     lifetimeValueMicros        => $args->{lifetimeValueMicros},
     shoppingLoyalty            => $args->{shoppingLoyalty}};
