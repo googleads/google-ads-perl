@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example illustrates the use of custom client timeouts in the context of
-# server streaming and unary calls.
+# This example illustrates the use of custom client timeouts and retry delays
+# in the context of server streaming and unary calls.
 
 use strict;
 use warnings;
@@ -42,6 +42,12 @@ use constant CLIENT_TIMEOUT_SECONDS => 5 * 60;
 use constant SEARCH_QUERY => "SELECT campaign.id FROM campaign";
 # The message returned in the HTTP response for request timeout.
 use constant HTTP_TIMEOUT_MESSAGE => "read timeout";
+# Maximum number of retries.
+use constant MAX_RETRIES => 3;
+# Number of seconds to wait on the first retry.
+use constant RETRY_INITIAL_DELAY_SECONDS => 15;
+# Retry delay multiplier for exponential backoffs.
+use constant RETRY_DELAY_MULTIPLIER => 2;
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -126,6 +132,21 @@ sub make_unary_call {
   # API client.
   $api_client->set_http_timeout(CLIENT_TIMEOUT_SECONDS);
 
+  # Override default retry setting, which can be found in the module of
+  # Google::Ads::GoogleAds::Constants.
+  #
+  # This sets the retry timing based on the initial delay, the delay multiplier,
+  # and the maximum number of retries.
+  my $http_retry_timing = "" . RETRY_INITIAL_DELAY_SECONDS;
+  if (MAX_RETRIES > 1) {
+    my $delay = RETRY_INITIAL_DELAY_SECONDS;
+    for my $i (1 .. (MAX_RETRIES - 1)) {
+      $delay             = $delay * RETRY_DELAY_MULTIPLIER;
+      $http_retry_timing = $http_retry_timing . "," . $delay;
+    }
+  }
+  $api_client->set_http_retry_timing($http_retry_timing);
+
   # Create a search Google Ads request that will retrieve all campaign IDs.
   my $search_request =
     Google::Ads::GoogleAds::V11::Services::GoogleAdsService::SearchGoogleAdsRequest
@@ -195,8 +216,8 @@ set_custom_client_timeouts
 
 =head1 DESCRIPTION
 
-This example illustrates the use of custom client timeouts in the context of
-server streaming and unary calls.
+This example illustrates the use of custom client timeouts and retry delays
+in the context of server streaming and unary calls.
 
 =head1 SYNOPSIS
 

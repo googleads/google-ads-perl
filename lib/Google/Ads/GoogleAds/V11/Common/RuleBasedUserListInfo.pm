@@ -25,6 +25,7 @@ sub new {
   my $self = {
     combinedRuleUserList   => $args->{combinedRuleUserList},
     expressionRuleUserList => $args->{expressionRuleUserList},
+    flexibleRuleUserList   => $args->{flexibleRuleUserList},
     prepopulationStatus    => $args->{prepopulationStatus}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload

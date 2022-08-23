@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V11::Resources::AssetGroup;
+package Google::Ads::GoogleAds::V11::Services::ReachPlanService::YouTubeSelectLineUp;
 
 use strict;
 use warnings;
@@ -23,16 +23,8 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    adStrength      => $args->{adStrength},
-    campaign        => $args->{campaign},
-    finalMobileUrls => $args->{finalMobileUrls},
-    finalUrls       => $args->{finalUrls},
-    id              => $args->{id},
-    name            => $args->{name},
-    path1           => $args->{path1},
-    path2           => $args->{path2},
-    resourceName    => $args->{resourceName},
-    status          => $args->{status}};
+    lineupId   => $args->{lineupId},
+    lineupName => $args->{lineupName}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

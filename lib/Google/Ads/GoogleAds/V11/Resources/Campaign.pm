@@ -31,6 +31,7 @@ sub new {
     audienceSetting               => $args->{audienceSetting},
     baseCampaign                  => $args->{baseCampaign},
     biddingStrategy               => $args->{biddingStrategy},
+    biddingStrategySystemStatus   => $args->{biddingStrategySystemStatus},
     biddingStrategyType           => $args->{biddingStrategyType},
     campaignBudget                => $args->{campaignBudget},
     campaignGroup                 => $args->{campaignGroup},

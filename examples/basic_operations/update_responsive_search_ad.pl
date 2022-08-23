@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 #
-# Copyright 2020, Google LLC
+# Copyright 2022, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example updates an expanded text ad. To get expanded text ads, run
-# get_expanded_text_ads.pl.
+# This example updates an responsive search ad. To get responsive search ads, run
+# get_responsive_search_ads.pl.
 
 use strict;
 use warnings;
@@ -27,13 +27,15 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
 use Google::Ads::GoogleAds::V11::Resources::Ad;
-use Google::Ads::GoogleAds::V11::Common::ExpandedTextAdInfo;
+use Google::Ads::GoogleAds::V11::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V11::Common::ResponsiveSearchAdInfo;
+use Google::Ads::GoogleAds::V11::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
 use Google::Ads::GoogleAds::V11::Services::AdService::AdOperation;
 use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
 
 # The following parameter(s) should be provided to run the example. You can
@@ -47,8 +49,8 @@ use Data::Uniqid qw(uniqid);
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 my $ad_id       = "INSERT_AD_ID_HERE";
 
-# [START update_expanded_text_ad]
-sub update_expanded_text_ad {
+# [START update_responsive_search_ad]
+sub update_responsive_search_ad {
   my ($api_client, $customer_id, $ad_id) = @_;
 
   # Create an ad with the proper resource name and any other changes.
@@ -56,13 +58,36 @@ sub update_expanded_text_ad {
       resourceName => Google::Ads::GoogleAds::V11::Utils::ResourceNames::ad(
         $customer_id, $ad_id
       ),
-      expandedTextAd =>
-        Google::Ads::GoogleAds::V11::Common::ExpandedTextAdInfo->new({
-          # Update some properties of the expanded text ad.
-          headlinePart1 => "Cruise to Pluto #" . uniqid(),
-          headlinePart2 => "Tickets on sale now",
-          description   => "Best space cruise ever."
-        }
+      responsiveSearchAd =>
+        Google::Ads::GoogleAds::V11::Common::ResponsiveSearchAdInfo->new({
+          # Update some properties of the responsive search ad.
+          headlines => [
+            Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                text        => "Cruise to Pluto #" . uniqid(),
+                pinnedField => HEADLINE_1
+              }
+            ),
+            Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                text => "Tickets on sale now"
+              }
+            ),
+            Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                text => "Buy your ticket now"
+              }
+            ),
+
+          ],
+          descriptions => [
+            Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                text => "Best space cruise ever."
+              }
+            ),
+            Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                text =>
+                  "The most wonderful space experience you will ever have."
+              }
+            ),
+          ]}
         ),
       finalUrls       => ["http://www.example.com/"],
       finalMobileUrls => ["http://www.example.com/mobile"]});
@@ -84,7 +109,7 @@ sub update_expanded_text_ad {
 
   return 1;
 }
-# [END update_expanded_text_ad]
+# [END update_responsive_search_ad]
 
 # Don't run the example if the file is being included.
 if (abs_path($0) ne abs_path(__FILE__)) {
@@ -108,22 +133,22 @@ GetOptions(
 pod2usage(2) if not check_params($customer_id, $ad_id);
 
 # Call the example.
-update_expanded_text_ad($api_client, $customer_id =~ s/-//gr, $ad_id);
+update_responsive_search_ad($api_client, $customer_id =~ s/-//gr, $ad_id);
 
 =pod
 
 =head1 NAME
 
-update_expanded_text_ad
+update_responsive_search_ad
 
 =head1 DESCRIPTION
 
-This example updates an expanded text ad. To get expanded text ads, run
-get_expanded_text_ads.pl.
+This example updates an responsive search ad. To get responsive search ads, run
+get_responsive_search_ads.pl.
 
 =head1 SYNOPSIS
 
-update_expanded_text_ad.pl [options]
+update_responsive_search_ad.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.

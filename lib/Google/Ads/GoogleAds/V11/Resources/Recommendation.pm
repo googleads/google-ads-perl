@@ -30,6 +30,8 @@ sub new {
     campaignBudget                 => $args->{campaignBudget},
     campaignBudgetRecommendation   => $args->{campaignBudgetRecommendation},
     dismissed                      => $args->{dismissed},
+    displayExpansionOptInRecommendation =>
+      $args->{displayExpansionOptInRecommendation},
     enhancedCpcOptInRecommendation => $args->{enhancedCpcOptInRecommendation},
     forecastingCampaignBudgetRecommendation =>
       $args->{forecastingCampaignBudgetRecommendation},
@@ -59,6 +61,8 @@ sub new {
     targetRoasOptInRecommendation   => $args->{targetRoasOptInRecommendation},
     textAdRecommendation            => $args->{textAdRecommendation},
     type                            => $args->{type},
+    upgradeLocalCampaignToPerformanceMaxRecommendation =>
+      $args->{upgradeLocalCampaignToPerformanceMaxRecommendation},
     upgradeSmartShoppingCampaignToPerformanceMaxRecommendation =>
       $args->{upgradeSmartShoppingCampaignToPerformanceMaxRecommendation},
     useBroadMatchKeywordRecommendation =>

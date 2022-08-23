@@ -82,6 +82,8 @@ sub new {
     customerNegativeCriterionResult => $args->{customerNegativeCriterionResult},
     customerResult                  => $args->{customerResult},
     customizerAttributeResult       => $args->{customizerAttributeResult},
+    experimentArmResult             => $args->{experimentArmResult},
+    experimentResult                => $args->{experimentResult},
     extensionFeedItemResult         => $args->{extensionFeedItemResult},
     feedItemResult                  => $args->{feedItemResult},
     feedItemSetLinkResult           => $args->{feedItemSetLinkResult},

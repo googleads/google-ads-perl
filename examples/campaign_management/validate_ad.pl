@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 #
-# Copyright 2020, Google LLC
+# Copyright 2022, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example shows how to use the validateOnly field to validate an expanded
-# text ad. No objects will be created, but exceptions will still be returned.
+# This example shows how to use the validateOnly field to validate a responsive
+# search ad. No objects will be created, but exceptions will still be returned.
 
 use strict;
 use warnings;
@@ -27,8 +27,10 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::V11::Resources::AdGroupAd;
 use Google::Ads::GoogleAds::V11::Resources::Ad;
-use Google::Ads::GoogleAds::V11::Common::ExpandedTextAdInfo;
-use Google::Ads::GoogleAds::V11::Enums::AdGroupAdStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V11::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V11::Common::ResponsiveSearchAdInfo;
+use Google::Ads::GoogleAds::V11::Enums::AdGroupAdStatusEnum      qw(PAUSED);
+use Google::Ads::GoogleAds::V11::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
 use Google::Ads::GoogleAds::V11::Services::AdGroupAdService::AdGroupAdOperation;
 use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
 
@@ -36,18 +38,7 @@ use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 use Cwd qw(abs_path);
 
-# The following parameter(s) should be provided to run the example. You can
-# either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-# the command line.
-#
-# Parameters passed on the command line will override any parameters set in
-# code.
-#
-# Running the example with -h will print the command line usage.
-my $customer_id = "INSERT_CUSTOMER_ID_HERE";
-my $ad_group_id = "INSERT_AD_GROUP_ID_HERE";
-
-sub validate_text_ad {
+sub validate_ad {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
   # Create an ad group ad object.
@@ -58,16 +49,35 @@ sub validate_text_ad {
       # Optional: Set the status.
       status => PAUSED,
       ad     => Google::Ads::GoogleAds::V11::Resources::Ad->new({
-          expandedTextAd =>
-            Google::Ads::GoogleAds::V11::Common::ExpandedTextAdInfo->new({
-              description   => "Luxury Cruise to Mars",
-              headlinePart1 => "Visit the Red Planet in style.",
-              # Add a headline that will trigger a policy violation to demonstrate
-              # error handling.
-              headlinePart2 => "Low-gravity fun for everyone!!"
-            }
+          responsiveSearchAd =>
+            Google::Ads::GoogleAds::V11::Common::ResponsiveSearchAdInfo->new({
+              headlines => [
+                Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                    text        => "Visit the Red Planet in style.",
+                    pinnedField => HEADLINE_1
+                  }
+                ),
+                Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                    text => "Low-gravity fun for everyone!!"
+                  }
+                ),
+                Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                    text => "Book your Cruise to Mars now"
+                  }
+                ),
+              ],
+              descriptions => [
+                Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                    text => "Luxury Cruise to Mars"
+                  }
+                ),
+                Google::Ads::GoogleAds::V11::Common::AdTextAsset->new({
+                    text => "Book your ticket now"
+                  }
+                ),
+              ]}
             ),
-          finalUrls => ["http://www.example.com/"]})});
+          finalUrls => ["https://www.example.com/"]})});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
@@ -83,29 +93,34 @@ sub validate_text_ad {
   });
 
   if (not $response->isa("Google::Ads::GoogleAds::GoogleAdsException")) {
-    # Since validateOnly is set to "true", result will be null.
-    print "Expanded text ad validated successfully.\n";
+    # This line will not be executed since the ad will fail validation.
+    print "Responsive search ad validated successfully.\n";
   } else {
     # This block will be hit if there is a validation error from the server.
-    print "There were validation error(s) while adding expanded text ad.\n";
+    print "There were validation error(s) while adding responsive search ad.\n";
 
     # Note: Policy violation errors are returned as PolicyFindingErrors. See
     # https://developers.google.com/google-ads/api/docs/policy-exemption/overview
     # for additional details.
-    my $count = 1;
-    foreach my $error (@{$response->get_google_ads_failure()->{errors}}) {
-      next
-        unless ($error->{errorCode}{policyFindingError}
-        and $error->{errorCode}{policyFindingError} eq "POLICY_FINDING");
-
-      foreach my $entry (
-        @{$error->{details}{policyFindingDetails}{policyTopicEntries}})
-      {
-        printf "%d) Policy topic entry with topic = '%s' and type = '%s' " .
-          "was found.\n", $count, $entry->{topic}, $entry->{type};
+    my $errors            = $response->get_google_ads_failure()->{errors};
+    my @policy_violations = grep {
+            $_->{errorCode}{policyFindingError}
+        and $_->{errorCode}{policyFindingError} eq "POLICY_FINDING"
+    } @{$errors};
+    if (@policy_violations) {
+      my $count = 1;
+      foreach my $error (@policy_violations) {
+        foreach my $entry (
+          @{$error->{details}{policyFindingDetails}{policyTopicEntries}})
+        {
+          printf "%d) Policy topic entry with topic = '%s' and type = '%s' " .
+            "was found.\n", $count, $entry->{topic}, $entry->{type};
+          $count++;
+        }
       }
-
-      $count++;
+    } else {
+      # Die if there were unexpected validation errors.
+      die $response->get_message();
     }
   }
 
@@ -123,6 +138,9 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(0);
 
+my $customer_id = undef;
+my $ad_group_id = undef;
+
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions("customer_id=s" => \$customer_id, "ad_group_id=i" => \$ad_group_id);
 
@@ -132,22 +150,22 @@ pod2usage(2)
   if not check_params($customer_id, $ad_group_id);
 
 # Call the example.
-validate_text_ad($api_client, $customer_id =~ s/-//gr, $ad_group_id);
+validate_ad($api_client, $customer_id =~ s/-//gr, $ad_group_id);
 
 =pod
 
 =head1 NAME
 
-validate_text_ad
+validate_ad
 
 =head1 DESCRIPTION
 
-This example shows how to use the validateOnly field to validate an expanded
-text ad. No objects will be created, but exceptions will still be returned.
+This example shows how to use the validateOnly field to validate a responsive
+search ad. No objects will be created, but exceptions will still be returned.
 
 =head1 SYNOPSIS
 
-validate_text_ad.pl [options]
+validate_ad.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.

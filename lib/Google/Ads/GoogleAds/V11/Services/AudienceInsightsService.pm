@@ -18,6 +18,19 @@ use strict;
 use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
+sub generate_audience_composition_insights {
+  my $self         = shift;
+  my $request_body = shift;
+  my $http_method  = 'POST';
+  my $request_path =
+    'v11/customers/{+customerId}:generateAudienceCompositionInsights';
+  my $response_type =
+'Google::Ads::GoogleAds::V11::Services::AudienceInsightsService::GenerateAudienceCompositionInsightsResponse';
+
+  return $self->SUPER::call($http_method, $request_path, $request_body,
+    $response_type);
+}
+
 sub generate_insights_finder_report {
   my $self         = shift;
   my $request_body = shift;
