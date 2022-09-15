@@ -1,3 +1,8 @@
+13.1.1 - 2022-09-15
+- Updated the default redirect_uri, used in generate_user_credentials example,
+  to remove OOB redirect. See relevant blog post:
+  https://developers.googleblog.com/2022/02/making-oauth-flows-safer.html.
+
 13.1.0 - 2022-08-22
 - Added support for Google Ads API v11_1.
 - Added code examples: generate_historical_metrics.

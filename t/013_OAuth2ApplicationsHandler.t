@@ -47,7 +47,7 @@ ok(!$handler->is_auth_enabled(), "The auth handler is not enabled yet.");
 is($handler->get_access_type(), "offline", "Default value of access_type.");
 is($handler->get_prompt(),      "consent", "Default value of prompt.");
 is($handler->get_redirect_uri(),
-  "urn:ietf:wg:oauth:2.0:oob", "Default value of redirect_uri.");
+  "http://127.0.0.1", "Default value of redirect_uri.");
 is($handler->get_additional_scopes(),
   undef, "Default value of additional_scopes.");
 is_deeply(
