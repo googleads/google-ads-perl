@@ -1,4 +1,4 @@
-# Copyright 2019, Google LLC
+# Copyright 2022, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ my %access_type_of : ATTR(:name<access_type> :default<offline>);
 my %prompt_of : ATTR(:name<prompt> :default<consent>);
 my %refresh_token_of : ATTR(:name<refresh_token> :default<>);
 my %redirect_uri_of :
-  ATTR(:name<redirect_uri> :default<urn:ietf:wg:oauth:2.0:oob>);
+  ATTR(:name<redirect_uri> :default<http://127.0.0.1>);
 my %additional_scopes_of : ATTR(:name<additional_scopes> :default<>);
 
 # Methods from Google::Ads::GoogleAds::Common::AuthHandlerInterface.
@@ -232,9 +232,10 @@ consent.
 
 =head2 redirect_uri
 
-Redirect URI as set for you in the Google APIs console, to which the
-authorization flow will callback with the authorization code. Defaults to
-urn:ietf:wg:oauth:2.0:oob for the desktop applications flow.
+Redirect URI to which the authorization flow will callback with the authorization
+code. If using Web flow, the redirect URI must match exactly what’s configured in
+GCP for the OAuth client. If using Desktop flow, the redirect must be a localhost
+URL and is not explicitly set in GCP. The default is http://127.0.0.1.
 
 =head2 access_token
 
@@ -332,7 +333,7 @@ The encoded URL string of OAuth2 scopes separated by pluses.
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2019 Google LLC
+Copyright 2022 Google LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
