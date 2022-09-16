@@ -1,4 +1,4 @@
-# Copyright 2019, Google LLC
+# Copyright 2022, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -74,14 +74,13 @@ Method to obtain/update an access token.
 
 =item *
 
-The authorization code returned to your callback URL or printed out if using 'oob'
-special callback URL.
+The authorization code returned to your callback URL.
 
 =back
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2019 Google LLC
+Copyright 2022 Google LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

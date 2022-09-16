@@ -1,4 +1,4 @@
-# Copyright 2019, Google LLC
+# Copyright 2022, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -232,9 +232,10 @@ consent.
 
 =head2 redirect_uri
 
-Redirect URI as set for you in the Google APIs console, to which the
-authorization flow will callback with the authorization code. Defaults to
-urn:ietf:wg:oauth:2.0:oob for the desktop applications flow.
+Redirect URI to which the authorization flow will callback with the authorization
+code. If using Web flow, the redirect URI must match exactly what’s configured in
+GCP for the OAuth client. If using Desktop flow, the redirect must be a localhost
+URL and is not explicitly set in GCP. The default is http://127.0.0.1.
 
 =head2 access_token
 
@@ -332,7 +333,7 @@ The encoded URL string of OAuth2 scopes separated by pluses.
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2019 Google LLC
+Copyright 2022 Google LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
