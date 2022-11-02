@@ -28,11 +28,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V11::Resources::CampaignExtensionSetting;
-use Google::Ads::GoogleAds::V11::Enums::ExtensionTypeEnum qw(SITELINK);
+use Google::Ads::GoogleAds::V12::Resources::CampaignExtensionSetting;
+use Google::Ads::GoogleAds::V12::Enums::ExtensionTypeEnum qw(SITELINK);
 use
-  Google::Ads::GoogleAds::V11::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
-use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V12::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
+use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -59,7 +59,7 @@ sub update_sitelink_campaign_extension_setting {
   # Transform the specified extension feed item IDs to the array of resource names.
   my $extension_feed_items = [
     map {
-      Google::Ads::GoogleAds::V11::Utils::ResourceNames::extension_feed_item(
+      Google::Ads::GoogleAds::V12::Utils::ResourceNames::extension_feed_item(
         $customer_id, $_)
     } @$feed_item_ids
   ];
@@ -67,9 +67,9 @@ sub update_sitelink_campaign_extension_setting {
   # Create a campaign extension setting using the specified campaign ID and
   # extension feed item resource names.
   my $campaign_extension_setting =
-    Google::Ads::GoogleAds::V11::Resources::CampaignExtensionSetting->new({
+    Google::Ads::GoogleAds::V12::Resources::CampaignExtensionSetting->new({
       resourceName =>
-        Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign_extension_setting(
+        Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign_extension_setting(
         $customer_id, $campaign_id, SITELINK
         ),
       extensionFeedItems => $extension_feed_items
@@ -79,7 +79,7 @@ sub update_sitelink_campaign_extension_setting {
   # the FieldMasks utility to derive the update mask. This mask tells the Google
   # Ads API which attributes of the campaign extension setting you want to change.
   my $campaign_extension_setting_operation =
-    Google::Ads::GoogleAds::V11::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
+    Google::Ads::GoogleAds::V12::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
     ->new({
       update     => $campaign_extension_setting,
       updateMask => all_set_fields_of($campaign_extension_setting)});

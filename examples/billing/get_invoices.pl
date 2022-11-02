@@ -25,11 +25,11 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd   qw(abs_path);
 use POSIX qw(strftime mktime);
 
 # The following parameter(s) should be provided to run the example. You can
@@ -56,7 +56,7 @@ sub get_invoices {
   my $response = $api_client->InvoiceService()->list({
       customerId   => $customer_id,
       billingSetup =>
-        Google::Ads::GoogleAds::V11::Utils::ResourceNames::billing_setup(
+        Google::Ads::GoogleAds::V12::Utils::ResourceNames::billing_setup(
         ($customer_id, $billing_setup_id)
         ),
       # The year needs to be 2019 or later.

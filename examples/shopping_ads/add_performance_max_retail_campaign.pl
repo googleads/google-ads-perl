@@ -45,56 +45,56 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V11::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V11::Resources::Campaign;
-use Google::Ads::GoogleAds::V11::Resources::ShoppingSetting;
-use Google::Ads::GoogleAds::V11::Resources::CampaignCriterion;
-use Google::Ads::GoogleAds::V11::Resources::Asset;
-use Google::Ads::GoogleAds::V11::Resources::AssetGroup;
-use Google::Ads::GoogleAds::V11::Resources::AssetGroupAsset;
-use Google::Ads::GoogleAds::V11::Resources::CampaignConversionGoal;
-use Google::Ads::GoogleAds::V11::Resources::AssetGroupListingGroupFilter;
-use Google::Ads::GoogleAds::V11::Common::MaximizeConversionValue;
-use Google::Ads::GoogleAds::V11::Common::LocationInfo;
-use Google::Ads::GoogleAds::V11::Common::LanguageInfo;
-use Google::Ads::GoogleAds::V11::Common::TextAsset;
-use Google::Ads::GoogleAds::V11::Common::ImageAsset;
-use Google::Ads::GoogleAds::V11::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
-use Google::Ads::GoogleAds::V11::Enums::CampaignStatusEnum;
-use Google::Ads::GoogleAds::V11::Enums::AdvertisingChannelTypeEnum
+use Google::Ads::GoogleAds::V12::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V12::Resources::Campaign;
+use Google::Ads::GoogleAds::V12::Resources::ShoppingSetting;
+use Google::Ads::GoogleAds::V12::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V12::Resources::Asset;
+use Google::Ads::GoogleAds::V12::Resources::AssetGroup;
+use Google::Ads::GoogleAds::V12::Resources::AssetGroupAsset;
+use Google::Ads::GoogleAds::V12::Resources::CampaignConversionGoal;
+use Google::Ads::GoogleAds::V12::Resources::AssetGroupListingGroupFilter;
+use Google::Ads::GoogleAds::V12::Common::MaximizeConversionValue;
+use Google::Ads::GoogleAds::V12::Common::LocationInfo;
+use Google::Ads::GoogleAds::V12::Common::LanguageInfo;
+use Google::Ads::GoogleAds::V12::Common::TextAsset;
+use Google::Ads::GoogleAds::V12::Common::ImageAsset;
+use Google::Ads::GoogleAds::V12::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V12::Enums::CampaignStatusEnum;
+use Google::Ads::GoogleAds::V12::Enums::AdvertisingChannelTypeEnum
   qw(PERFORMANCE_MAX);
-use Google::Ads::GoogleAds::V11::Enums::AssetGroupStatusEnum;
-use Google::Ads::GoogleAds::V11::Enums::AssetFieldTypeEnum
+use Google::Ads::GoogleAds::V12::Enums::AssetGroupStatusEnum;
+use Google::Ads::GoogleAds::V12::Enums::AssetFieldTypeEnum
   qw(HEADLINE DESCRIPTION LONG_HEADLINE BUSINESS_NAME LOGO MARKETING_IMAGE SQUARE_MARKETING_IMAGE);
-use Google::Ads::GoogleAds::V11::Enums::ConversionActionCategoryEnum
+use Google::Ads::GoogleAds::V12::Enums::ConversionActionCategoryEnum
   qw(PURCHASE);
-use Google::Ads::GoogleAds::V11::Enums::ConversionOriginEnum qw(WEBSITE);
-use Google::Ads::GoogleAds::V11::Enums::ListingGroupFilterTypeEnum
+use Google::Ads::GoogleAds::V12::Enums::ConversionOriginEnum qw(WEBSITE);
+use Google::Ads::GoogleAds::V12::Enums::ListingGroupFilterTypeEnum
   qw(UNIT_INCLUDED);
-use Google::Ads::GoogleAds::V11::Enums::ListingGroupFilterVerticalEnum
+use Google::Ads::GoogleAds::V12::Enums::ListingGroupFilterVerticalEnum
   qw(SHOPPING);
-use Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation;
+use Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation;
 use
-  Google::Ads::GoogleAds::V11::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V11::Services::CampaignService::CampaignOperation;
+  Google::Ads::GoogleAds::V12::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V12::Services::CampaignService::CampaignOperation;
 use
-  Google::Ads::GoogleAds::V11::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V11::Services::AssetService::AssetOperation;
+  Google::Ads::GoogleAds::V12::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V12::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V11::Services::AssetGroupService::AssetGroupOperation;
+  Google::Ads::GoogleAds::V12::Services::AssetGroupService::AssetGroupOperation;
 use
-  Google::Ads::GoogleAds::V11::Services::AssetGroupAssetService::AssetGroupAssetOperation;
+  Google::Ads::GoogleAds::V12::Services::AssetGroupAssetService::AssetGroupAssetOperation;
 use
-  Google::Ads::GoogleAds::V11::Services::CampaignConversionGoalService::CampaignConversionGoalOperation;
+  Google::Ads::GoogleAds::V12::Services::CampaignConversionGoalService::CampaignConversionGoalOperation;
 use
-  Google::Ads::GoogleAds::V11::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation;
-use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V12::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation;
+use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
-use POSIX qw(strftime);
+use POSIX        qw(strftime);
 
 # We specify temporary IDs that are specific to a single mutate request.
 # Temporary IDs are always negative and unique within one mutate request.
@@ -112,19 +112,6 @@ use constant ASSET_GROUP_TEMPORARY_ID              => -3;
 our $next_temp_id = ASSET_GROUP_TEMPORARY_ID - 1;
 
 use constant PAGE_SIZE => 1000;
-
-# The following parameter(s) should be provided to run the example. You can
-# either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-# the command line.
-#
-# Parameters passed on the command line will override any parameters set in
-# code.
-#
-# Running the example with -h will print the command line usage.
-my $customer_id                = "INSERT_CUSTOMER_ID_HERE";
-my $merchant_center_account_id = "INSERT_MERCHANT_CENTER_ACCOUNT_ID_HERE";
-my $sales_country              = "US";
-my $final_url                  = "http://www.example.com";
 
 # [START add_performance_max_retail_campaign]
 sub add_performance_max_retail_campaign {
@@ -167,20 +154,17 @@ sub add_performance_max_retail_campaign {
     create_performance_max_campaign_operation($customer_id,
     $merchant_center_account_id, $sales_country);
   push @$operations, @{create_campaign_criterion_operations($customer_id)};
+  push @$operations, create_asset_group_operation($customer_id, $final_url);
+  push @$operations, create_listing_group_filter_operation($customer_id);
   push @$operations,
     @{
-    create_asset_group_operations(
-      $customer_id,                   $final_url,
-      $headline_asset_resource_names, $description_asset_resource_names
+    create_asset_and_asset_group_asset_operations(
+      $customer_id, $headline_asset_resource_names,
+      $description_asset_resource_names
     )};
   push @$operations,
     @{create_conversion_goal_operations($customer_id,
       $customer_conversion_goals)};
-
-  # Retail Performance Max campaigns require listing groups, which are created
-  # via the AssetGroupListingGroupFilter resource.
-  push @$operations,
-    @{create_asset_group_listing_group_operations($customer_id)};
 
   # Issue a mutate request to create everything and print its information.
   my $mutate_google_ads_response = $api_client->GoogleAdsService()->mutate({
@@ -204,17 +188,17 @@ sub create_campaign_budget_operation {
 
   # Create a mutate operation that creates a campaign budget operation.
   return
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       campaignBudgetOperation =>
-        Google::Ads::GoogleAds::V11::Services::CampaignBudgetService::CampaignBudgetOperation
+        Google::Ads::GoogleAds::V12::Services::CampaignBudgetService::CampaignBudgetOperation
         ->new({
-          create => Google::Ads::GoogleAds::V11::Resources::CampaignBudget->new(
+          create => Google::Ads::GoogleAds::V12::Resources::CampaignBudget->new(
             {
               # Set a temporary ID in the budget's resource name so it can be
               # referenced by the campaign in later steps.
               resourceName =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign_budget(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign_budget(
                 $customer_id, BUDGET_TEMPORARY_ID
                 ),
               name => "Performance Max retail campaign budget #" . uniqid(),
@@ -237,27 +221,27 @@ sub create_performance_max_campaign_operation {
 
   # Create a mutate operation that creates a campaign operation.
   return
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       campaignOperation =>
-        Google::Ads::GoogleAds::V11::Services::CampaignService::CampaignOperation
+        Google::Ads::GoogleAds::V12::Services::CampaignService::CampaignOperation
         ->new({
-          create => Google::Ads::GoogleAds::V11::Resources::Campaign->new({
+          create => Google::Ads::GoogleAds::V12::Resources::Campaign->new({
               # Assign the resource name with a temporary ID.
               resourceName =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign(
                 $customer_id, PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID
                 ),
               name => "Performance Max retail campaign #'" . uniqid(),
               # Set the budget using the given budget resource name.
               campaignBudget =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign_budget(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign_budget(
                 $customer_id, BUDGET_TEMPORARY_ID
                 ),
               # Set the campaign status as PAUSED. The campaign is the only entity in
               # the mutate request that should have its status set.
               status =>
-                Google::Ads::GoogleAds::V11::Enums::CampaignStatusEnum::PAUSED,
+                Google::Ads::GoogleAds::V12::Enums::CampaignStatusEnum::PAUSED,
               # All Performance Max campaigns have an advertisingChannelType of
               # PERFORMANCE_MAX. The advertisingChannelSubType should not be set.
               advertisingChannelType => PERFORMANCE_MAX,
@@ -273,7 +257,7 @@ sub create_performance_max_campaign_operation {
               # http://support.google.com/google-ads/answer/7684216.
               # A targetRoas of 3.5 corresponds to a 350% return on ad spend.
               maximizeConversionValue =>
-                Google::Ads::GoogleAds::V11::Common::MaximizeConversionValue->
+                Google::Ads::GoogleAds::V12::Common::MaximizeConversionValue->
                 new({
                   targetRoas => 3.5
                 }
@@ -293,7 +277,7 @@ sub create_performance_max_campaign_operation {
 
               # Set the shopping settings.
               shoppingSetting =>
-                Google::Ads::GoogleAds::V11::Resources::ShoppingSetting->new({
+                Google::Ads::GoogleAds::V12::Resources::ShoppingSetting->new({
                   merchantId   => $merchant_center_account_id,
                   salesCountry => $sales_country
                 }
@@ -319,48 +303,46 @@ sub create_campaign_criterion_operations {
   # https://developers.google.com/google-ads/api/reference/data/geotargets
   # and they can also be retrieved using the GeoTargetConstantService as shown
   # here: https://developers.google.com/google-ads/api/docs/targeting/location-targeting.
-  #
-  # We will add one positive location target for New York City (ID=1023191)
-  # and one negative location target for Brooklyn (ID=1022762).
-  # First, add the positive (negative = false) for New York City.
   push @$operations,
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       campaignCriterionOperation =>
-        Google::Ads::GoogleAds::V11::Services::CampaignCriterionService::CampaignCriterionOperation
+        Google::Ads::GoogleAds::V12::Services::CampaignCriterionService::CampaignCriterionOperation
         ->new({
           create =>
-            Google::Ads::GoogleAds::V11::Resources::CampaignCriterion->new({
+            Google::Ads::GoogleAds::V12::Resources::CampaignCriterion->new({
               campaign =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign(
                 $customer_id, PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID
                 ),
+              # Adds one positive location target for New York City (ID=1023191),
+              # specifically adding the positive criteria before the negative one.
               location =>
-                Google::Ads::GoogleAds::V11::Common::LocationInfo->new({
+                Google::Ads::GoogleAds::V12::Common::LocationInfo->new({
                   geoTargetConstant =>
-                    Google::Ads::GoogleAds::V11::Utils::ResourceNames::geo_target_constant(
+                    Google::Ads::GoogleAds::V12::Utils::ResourceNames::geo_target_constant(
                     1023191)}
                 ),
               negative => "false"
             })})});
 
-  # Next add the negative target for Brooklyn.
+  # Next add the negative target for Brooklyn (ID=1022762).
   push @$operations,
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       campaignCriterionOperation =>
-        Google::Ads::GoogleAds::V11::Services::CampaignCriterionService::CampaignCriterionOperation
+        Google::Ads::GoogleAds::V12::Services::CampaignCriterionService::CampaignCriterionOperation
         ->new({
           create =>
-            Google::Ads::GoogleAds::V11::Resources::CampaignCriterion->new({
+            Google::Ads::GoogleAds::V12::Resources::CampaignCriterion->new({
               campaign =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign(
                 $customer_id, PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID
                 ),
               location =>
-                Google::Ads::GoogleAds::V11::Common::LocationInfo->new({
+                Google::Ads::GoogleAds::V12::Common::LocationInfo->new({
                   geoTargetConstant =>
-                    Google::Ads::GoogleAds::V11::Utils::ResourceNames::geo_target_constant(
+                    Google::Ads::GoogleAds::V12::Utils::ResourceNames::geo_target_constant(
                     1022762)}
                 ),
               negative => "true"
@@ -368,24 +350,24 @@ sub create_campaign_criterion_operations {
 
   # Set the LANGUAGE campaign criterion.
   push @$operations,
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       campaignCriterionOperation =>
-        Google::Ads::GoogleAds::V11::Services::CampaignCriterionService::CampaignCriterionOperation
+        Google::Ads::GoogleAds::V12::Services::CampaignCriterionService::CampaignCriterionOperation
         ->new({
           create =>
-            Google::Ads::GoogleAds::V11::Resources::CampaignCriterion->new({
+            Google::Ads::GoogleAds::V12::Resources::CampaignCriterion->new({
               campaign =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign(
                 $customer_id, PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID
                 ),
               # Set the language.
               # For a list of all language codes, see:
               # https://developers.google.com/google-ads/api/reference/data/codes-formats#expandable-7.
               language =>
-                Google::Ads::GoogleAds::V11::Common::LanguageInfo->new({
+                Google::Ads::GoogleAds::V12::Common::LanguageInfo->new({
                   languageConstant =>
-                    Google::Ads::GoogleAds::V11::Utils::ResourceNames::language_constant(
+                    Google::Ads::GoogleAds::V12::Utils::ResourceNames::language_constant(
                     1000)    # English
                 })})})});
 
@@ -394,6 +376,9 @@ sub create_campaign_criterion_operations {
 # [END add_performance_max_retail_campaign_4]
 
 # Creates multiple text assets and returns the list of resource names.
+#
+# These repeated assets must be created in a separate request prior to
+# creating the campaign.
 # [START add_performance_max_retail_campaign_5]
 sub create_multiple_text_assets {
   my ($api_client, $customer_id, $texts) = @_;
@@ -404,14 +389,14 @@ sub create_multiple_text_assets {
   foreach my $text (@$texts) {
     # Create a mutate operation for a text asset.
     push @$operations,
-      Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation
       ->new({
         assetOperation =>
-          Google::Ads::GoogleAds::V11::Services::AssetService::AssetOperation->
+          Google::Ads::GoogleAds::V12::Services::AssetService::AssetOperation->
           new({
-            create => Google::Ads::GoogleAds::V11::Resources::Asset->new({
+            create => Google::Ads::GoogleAds::V12::Resources::Asset->new({
                 textAsset =>
-                  Google::Ads::GoogleAds::V11::Common::TextAsset->new({
+                  Google::Ads::GoogleAds::V12::Common::TextAsset->new({
                     text => $text
                   })})})});
   }
@@ -434,42 +419,92 @@ sub create_multiple_text_assets {
 }
 # [END add_performance_max_retail_campaign_5]
 
-# Creates a list of MutateOperations that create a new asset group.
+# Creates a MutateOperation that creates a new asset group.
 #
 # A temporary ID will be assigned to this asset group so that it can be referenced
 # by other objects being created in the same mutate request.
-# [START add_performance_max_retail_campaign_6]
-sub create_asset_group_operations {
-  my (
-    $customer_id, $final_url,
-    $headline_asset_resource_names,
-    $description_asset_resource_names
-  ) = @_;
+# [START add_performance_max_retail_campaign_10]
+sub create_asset_group_operation {
+  my ($customer_id, $final_url) = @_;
 
-  my $operations = [];
   # Create a mutate operation that creates an asset group operation.
-  push @$operations,
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+  return
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupOperation =>
-        Google::Ads::GoogleAds::V11::Services::AssetGroupService::AssetGroupOperation
+        Google::Ads::GoogleAds::V12::Services::AssetGroupService::AssetGroupOperation
         ->new({
-          create => Google::Ads::GoogleAds::V11::Resources::AssetGroup->new({
+          create => Google::Ads::GoogleAds::V12::Resources::AssetGroup->new({
               resourceName =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset_group(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset_group(
                 $customer_id, ASSET_GROUP_TEMPORARY_ID
                 ),
               name     => "Performance Max retail asset group #" . uniqid(),
               campaign =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign(
                 $customer_id, PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID
                 ),
               finalUrls       => [$final_url],
               finalMobileUrls => [$final_url],
               status          =>
-                Google::Ads::GoogleAds::V11::Enums::AssetGroupStatusEnum::PAUSED
+                Google::Ads::GoogleAds::V12::Enums::AssetGroupStatusEnum::PAUSED
             })})});
+}
+# [END add_performance_max_retail_campaign_10]
 
+# Creates a MutateOperation that creates a new listing group filter.
+# A temporary ID will be assigned to this listing group filter so that it
+# can be referenced by other objects being created in the same Mutate request.
+# [START add_performance_max_retail_campaign_11]
+sub create_listing_group_filter_operation {
+  my ($customer_id) = @_;
+
+  # Creates a new ad group criterion containing the "default" listing group
+  # (All products).
+  my $listing_group_filter =
+    Google::Ads::GoogleAds::V12::Resources::AssetGroupListingGroupFilter->new({
+      assetGroup =>
+        Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset_group(
+        $customer_id, ASSET_GROUP_TEMPORARY_ID
+        ),
+
+      # Since this is the root node, do not set the parentListingGroupFilter.
+      # For all other nodes, this would refer to the parent listing group filter
+      # resource name.
+      # parentListingGroupFilter => "<PARENT FILTER NAME>"
+
+      # The subdivision type means this node has children. This type is used for
+      # the root node as well.
+      type => UNIT_INCLUDED,
+
+      # Because this is a Performance Max campaign for retail, we need to specify
+      # that this is in the shopping vertical.
+      vertical => SHOPPING
+    });
+
+  return
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
+    new({
+      assetGroupListingGroupFilterOperation =>
+        Google::Ads::GoogleAds::V12::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
+        ->new({
+          create => $listing_group_filter
+        })});
+}
+# [END add_performance_max_retail_campaign_11]
+
+# Creates a list of MutateOperations that create a new asset_group.
+# A temporary ID will be assigned to this asset group so that it can
+# be referenced by other objects being created in the same Mutate request.
+# [START add_performance_max_retail_campaign_6]
+sub create_asset_and_asset_group_asset_operations {
+  my (
+    $customer_id,
+    $headline_asset_resource_names,
+    $description_asset_resource_names
+  ) = @_;
+
+  my $operations = [];
   # For the list of required assets for a Performance Max campaign, see
   # https://developers.google.com/google-ads/api/docs/performance-max/assets.
 
@@ -487,16 +522,16 @@ sub create_asset_group_operations {
   # Link the headline assets.
   foreach my $resource_name (@$headline_asset_resource_names) {
     push @$operations,
-      Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation
       ->new({
         assetGroupAssetOperation =>
-          Google::Ads::GoogleAds::V11::Services::AssetGroupAssetService::AssetGroupAssetOperation
+          Google::Ads::GoogleAds::V12::Services::AssetGroupAssetService::AssetGroupAssetOperation
           ->new({
             create =>
-              Google::Ads::GoogleAds::V11::Resources::AssetGroupAsset->new({
+              Google::Ads::GoogleAds::V12::Resources::AssetGroupAsset->new({
                 asset      => $resource_name,
                 assetGroup =>
-                  Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset_group(
+                  Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset_group(
                   $customer_id, ASSET_GROUP_TEMPORARY_ID
                   ),
                 fieldType => HEADLINE
@@ -506,16 +541,16 @@ sub create_asset_group_operations {
   # Link the description assets.
   foreach my $resource_name (@$description_asset_resource_names) {
     push @$operations,
-      Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation
       ->new({
         assetGroupAssetOperation =>
-          Google::Ads::GoogleAds::V11::Services::AssetGroupAssetService::AssetGroupAssetOperation
+          Google::Ads::GoogleAds::V12::Services::AssetGroupAssetService::AssetGroupAssetOperation
           ->new({
             create =>
-              Google::Ads::GoogleAds::V11::Resources::AssetGroupAsset->new({
+              Google::Ads::GoogleAds::V12::Resources::AssetGroupAsset->new({
                 asset      => $resource_name,
                 assetGroup =>
-                  Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset_group(
+                  Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset_group(
                   $customer_id, ASSET_GROUP_TEMPORARY_ID
                   ),
                 fieldType => DESCRIPTION
@@ -538,7 +573,7 @@ sub create_asset_group_operations {
   # Create and link the logo asset.
   push @$operations,
     @{
-    create_and_link_image_asset($customer_id, "https://gaagl.page.link/bjYi",
+    create_and_link_image_asset($customer_id, "https://gaagl.page.link/1Crm",
       LOGO, "Logo Image")};
 
   # Create and link the marketing image asset.
@@ -557,7 +592,10 @@ sub create_asset_group_operations {
       SQUARE_MARKETING_IMAGE, "Square Marketing Image"
     )};
 
-  return $operations;
+  # After being created the list must be sorted so that all asset
+  # operations come before all the asset group asset operations,
+  # otherwise the API will reject the request.
+  return sort_asset_and_asset_group_asset_operations($operations);
 }
 # [END add_performance_max_retail_campaign_6]
 
@@ -569,34 +607,34 @@ sub create_and_link_text_asset {
   my $operations = [];
   # Create a new mutate operation for a text asset.
   push @$operations,
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       assetOperation =>
-        Google::Ads::GoogleAds::V11::Services::AssetService::AssetOperation->
+        Google::Ads::GoogleAds::V12::Services::AssetService::AssetOperation->
         new({
-          create => Google::Ads::GoogleAds::V11::Resources::Asset->new({
+          create => Google::Ads::GoogleAds::V12::Resources::Asset->new({
               resourceName =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset(
                 $customer_id, $next_temp_id
                 ),
-              textAsset => Google::Ads::GoogleAds::V11::Common::TextAsset->new({
+              textAsset => Google::Ads::GoogleAds::V12::Common::TextAsset->new({
                   text => $text
                 })})})});
 
   # Create an asset group asset to link the asset to the asset group.
   push @$operations,
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupAssetOperation =>
-        Google::Ads::GoogleAds::V11::Services::AssetGroupAssetService::AssetGroupAssetOperation
+        Google::Ads::GoogleAds::V12::Services::AssetGroupAssetService::AssetGroupAssetOperation
         ->new({
           create =>
-            Google::Ads::GoogleAds::V11::Resources::AssetGroupAsset->new({
-              asset => Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset(
+            Google::Ads::GoogleAds::V12::Resources::AssetGroupAsset->new({
+              asset => Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset(
                 $customer_id, $next_temp_id
               ),
               assetGroup =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset_group(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset_group(
                 $customer_id, ASSET_GROUP_TEMPORARY_ID
                 ),
               fieldType => $field_type
@@ -615,14 +653,14 @@ sub create_and_link_image_asset {
   my $operations = [];
   # Create a new mutate operation for an image asset.
   push @$operations,
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       assetOperation =>
-        Google::Ads::GoogleAds::V11::Services::AssetService::AssetOperation->
+        Google::Ads::GoogleAds::V12::Services::AssetService::AssetOperation->
         new({
-          create => Google::Ads::GoogleAds::V11::Resources::Asset->new({
+          create => Google::Ads::GoogleAds::V12::Resources::Asset->new({
               resourceName =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset(
                 $customer_id, $next_temp_id
                 ),
               # Provide a unique friendly name to identify your asset.
@@ -630,23 +668,23 @@ sub create_and_link_image_asset {
               # name, the new name will be dropped silently.
               name       => $asset_name,
               imageAsset =>
-                Google::Ads::GoogleAds::V11::Common::ImageAsset->new({
+                Google::Ads::GoogleAds::V12::Common::ImageAsset->new({
                   data => get_base64_data_from_url($url)})})})});
 
   # Create an asset group asset to link the asset to the asset group.
   push @$operations,
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupAssetOperation =>
-        Google::Ads::GoogleAds::V11::Services::AssetGroupAssetService::AssetGroupAssetOperation
+        Google::Ads::GoogleAds::V12::Services::AssetGroupAssetService::AssetGroupAssetOperation
         ->new({
           create =>
-            Google::Ads::GoogleAds::V11::Resources::AssetGroupAsset->new({
-              asset => Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset(
+            Google::Ads::GoogleAds::V12::Resources::AssetGroupAsset->new({
+              asset => Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset(
                 $customer_id, $next_temp_id
               ),
               assetGroup =>
-                Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset_group(
+                Google::Ads::GoogleAds::V12::Utils::ResourceNames::asset_group(
                 $customer_id, ASSET_GROUP_TEMPORARY_ID
                 ),
               fieldType => $field_type
@@ -656,6 +694,27 @@ sub create_and_link_image_asset {
   return $operations;
 }
 # [END add_performance_max_retail_campaign_8]
+
+# Sorts a list of asset and asset group asset operations.
+#
+# This sorts the list such that all asset operations precede
+# all asset group asset operations. If asset group assets are
+# created before assets then an error will be returned by the API.
+# [START add_performance_max_retail_campaign_12]
+sub sort_asset_and_asset_group_asset_operations {
+  my ($operations) = @_;
+
+  sub sorter {
+    if (defined $a->{assetOperation}) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+  my @operations_sorted = sort sorter @$operations;
+  return \@operations_sorted;
+}
+# [END add_performance_max_retail_campaign_12]
 
 # Retrieves the list of customer conversion goals.
 # [START add_performance_max_retail_campaign_9]
@@ -696,9 +755,9 @@ sub create_conversion_goal_operations {
   # is biddable in this campaign.
   foreach my $customer_conversion_goal (@$customer_conversion_goals) {
     my $campaign_conversion_goal =
-      Google::Ads::GoogleAds::V11::Resources::CampaignConversionGoal->new({
+      Google::Ads::GoogleAds::V12::Resources::CampaignConversionGoal->new({
         resourceName =>
-          Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign_conversion_goal(
+          Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign_conversion_goal(
           $customer_id,
           PERFORMANCE_MAX_CAMPAIGN_TEMPORARY_ID,
           $customer_conversion_goal->{category},
@@ -720,10 +779,10 @@ sub create_conversion_goal_operations {
     }
 
     push @$operations,
-      Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation
       ->new({
         campaignConversionGoalOperation =>
-          Google::Ads::GoogleAds::V11::Services::CampaignConversionGoalService::CampaignConversionGoalOperation
+          Google::Ads::GoogleAds::V12::Services::CampaignConversionGoalService::CampaignConversionGoalOperation
           ->new({
             update => $campaign_conversion_goal,
             # Set the update mask on the operation. Here the update mask will be
@@ -734,48 +793,6 @@ sub create_conversion_goal_operations {
   return $operations;
 }
 # [END add_performance_max_retail_campaign_9]
-
-# Creates a list of MutateOperations that create a new asset group listing group filter.
-# [START add_performance_max_retail_campaign_10]
-sub create_asset_group_listing_group_operations {
-  my ($customer_id) = @_;
-
-  my $operations = [];
-  # Create a new listing group filter containing the "default" listing group (All
-  # products).
-  my $listing_group_filter =
-    Google::Ads::GoogleAds::V11::Resources::AssetGroupListingGroupFilter->new({
-      assetGroup =>
-        Google::Ads::GoogleAds::V11::Utils::ResourceNames::asset_group(
-        $customer_id, ASSET_GROUP_TEMPORARY_ID
-        ),
-
-      # Since this is the root node, do not set the parentListingGroupFilter.
-      # For all other nodes, this would refer to the parent listing group filter
-      # resource name.
-      # parentListingGroupFilter => "<PARENT FILTER NAME>"
-
-      # The subdivision type means this node has children. This type is used for
-      # the root node as well.
-      type => UNIT_INCLUDED,
-
-      # Because this is a Performance Max campaign for retail, we need to specify
-      # that this is in the shopping vertical.
-      vertical => SHOPPING
-    });
-
-  push @$operations,
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::MutateOperation->
-    new({
-      assetGroupListingGroupFilterOperation =>
-        Google::Ads::GoogleAds::V11::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
-        ->new({
-          create => $listing_group_filter
-        })});
-
-  return $operations;
-}
-# [END add_performance_max_retail_campaign_10]
 
 # Prints the details of a MutateGoogleAdsResponse.
 # Parses the "response" oneof field name and uses it to extract the new entity's
@@ -805,6 +822,11 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);
+
+my $customer_id                = undef;
+my $merchant_center_account_id = undef;
+my $sales_country              = "US";
+my $final_url                  = "http://www.example.com";
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(

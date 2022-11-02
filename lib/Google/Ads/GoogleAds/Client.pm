@@ -21,7 +21,7 @@ package Google::Ads::GoogleAds::Client;
 use strict;
 use warnings;
 use version;
-our $VERSION = qv("13.1.1");
+our $VERSION = qv("14.0.0");
 
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::OAuth2ServiceAccountsHandler;
@@ -29,7 +29,7 @@ use Google::Ads::GoogleAds::Logging::GoogleAdsLogger;
 
 use Class::Std::Fast;
 
-use constant OAUTH2_APPLICATIONS_HANDLER     => "OAUTH2_APPLICATIONS_HANDLER";
+use constant OAUTH2_APPLICATIONS_HANDLER => "OAUTH2_APPLICATIONS_HANDLER";
 use constant OAUTH2_SERVICE_ACCOUNTS_HANDLER =>
   "OAUTH2_SERVICE_ACCOUNTS_HANDLER";
 use constant AUTH_HANDLERS_ORDER =>
@@ -523,8 +523,8 @@ instance is set to die() on API faults.
 
 The client object contains a method for each service provided by the Google Ads
 API. For example it can be invoked as $api_client->AdGroupService() and it will
-return an object of type L<Google::Ads::GoogleAds::V11::Services::AdGroupService>
-when using version V11 of the API.
+return an object of type L<Google::Ads::GoogleAds::V12::Services::AdGroupService>
+when using version V12 of the API.
 
 For a list of all the available services please refer to
 L<https://developers.google.com/google-ads/api/docs> and for code samples on

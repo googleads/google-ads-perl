@@ -25,14 +25,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Resources::CampaignDraft;
+use Google::Ads::GoogleAds::V12::Resources::CampaignDraft;
 use
-  Google::Ads::GoogleAds::V11::Services::CampaignDraftService::CampaignDraftOperation;
-use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V12::Services::CampaignDraftService::CampaignDraftOperation;
+use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
 
 # The following parameter(s) should be provided to run the example. You can
@@ -51,16 +51,16 @@ sub add_campaign_draft {
 
   # Create a campaign draft.
   my $campaign_draft =
-    Google::Ads::GoogleAds::V11::Resources::CampaignDraft->new({
+    Google::Ads::GoogleAds::V12::Resources::CampaignDraft->new({
       baseCampaign =>
-        Google::Ads::GoogleAds::V11::Utils::ResourceNames::campaign(
+        Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign(
         $customer_id, $base_campaign_id
         ),
       name => "Campaign Draft #" . uniqid()});
 
   # Create a campaign draft operation.
   my $campaign_draft_operation =
-    Google::Ads::GoogleAds::V11::Services::CampaignDraftService::CampaignDraftOperation
+    Google::Ads::GoogleAds::V12::Services::CampaignDraftService::CampaignDraftOperation
     ->new({
       create => $campaign_draft
     });

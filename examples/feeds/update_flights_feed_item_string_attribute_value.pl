@@ -28,9 +28,9 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V11::Resources::FeedItemAttributeValue;
-use Google::Ads::GoogleAds::V11::Services::FeedItemService::FeedItemOperation;
-use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V12::Resources::FeedItemAttributeValue;
+use Google::Ads::GoogleAds::V12::Services::FeedItemService::FeedItemOperation;
+use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -61,7 +61,7 @@ sub update_flights_feed_item_string_attribute_value {
 
   # Get the feed resource name.
   my $feed_resource_name =
-    Google::Ads::GoogleAds::V11::Utils::ResourceNames::feed($customer_id,
+    Google::Ads::GoogleAds::V12::Utils::ResourceNames::feed($customer_id,
     $feed_id);
 
   # Get a hash of the placeholder values and feed attributes.
@@ -74,7 +74,7 @@ sub update_flights_feed_item_string_attribute_value {
 
   # Get the feed item resource name.
   my $feed_item_resource_name =
-    Google::Ads::GoogleAds::V11::Utils::ResourceNames::feed_item($customer_id,
+    Google::Ads::GoogleAds::V12::Utils::ResourceNames::feed_item($customer_id,
     $feed_id, $feed_item_id);
 
   # Retrieve the feed item and its associated attributes based on its resource name.
@@ -83,7 +83,7 @@ sub update_flights_feed_item_string_attribute_value {
 
   # Create the updated FeedItemAttributeValue.
   my $feed_item_attribute_value =
-    Google::Ads::GoogleAds::V11::Resources::FeedItemAttributeValue->new({
+    Google::Ads::GoogleAds::V12::Resources::FeedItemAttributeValue->new({
       feedAttributeId => $attribute_id,
       stringValue     => $attribute_value
     });
@@ -97,7 +97,7 @@ sub update_flights_feed_item_string_attribute_value {
 
   # Create a feed item operation.
   my $feed_item_operation =
-    Google::Ads::GoogleAds::V11::Services::FeedItemService::FeedItemOperation->
+    Google::Ads::GoogleAds::V12::Services::FeedItemService::FeedItemOperation->
     new({
       update     => $feed_item,
       updateMask => all_set_fields_of($feed_item)});
