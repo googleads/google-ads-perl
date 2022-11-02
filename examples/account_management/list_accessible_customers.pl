@@ -30,7 +30,7 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 
 use Getopt::Long qw(:config auto_help);
-use Cwd qw(abs_path);
+use Cwd          qw(abs_path);
 
 # [START list_accessible_customers]
 sub list_accessible_customers {

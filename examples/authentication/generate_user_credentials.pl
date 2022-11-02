@@ -37,9 +37,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
-use Digest::SHA qw(sha1_hex);
+use Digest::SHA  qw(sha1_hex);
 
 use constant OAUTH2_CALLBACK_BASE_URI => "http://127.0.0.1";
 use constant PORT                     => 8080;

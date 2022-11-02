@@ -34,8 +34,7 @@ my %client_secret_of : ATTR(:name<client_secret> :default<>);
 my %access_type_of : ATTR(:name<access_type> :default<offline>);
 my %prompt_of : ATTR(:name<prompt> :default<consent>);
 my %refresh_token_of : ATTR(:name<refresh_token> :default<>);
-my %redirect_uri_of :
-  ATTR(:name<redirect_uri> :default<http://127.0.0.1>);
+my %redirect_uri_of : ATTR(:name<redirect_uri> :default<http://127.0.0.1>);
 my %additional_scopes_of : ATTR(:name<additional_scopes> :default<>);
 
 # Methods from Google::Ads::GoogleAds::Common::AuthHandlerInterface.

@@ -27,7 +27,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V11::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V12::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -63,7 +63,7 @@ sub get_billing_setup {
   # Create a search Google Ads request that will retrieve the billing setups
   # using pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V11::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,

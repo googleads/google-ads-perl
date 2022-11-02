@@ -25,7 +25,7 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -38,7 +38,7 @@ sub generate_historical_metrics {
   my $historical_metrics_response =
     $api_client->KeywordPlanService()->generate_historical_metrics({
       keywordPlan =>
-        Google::Ads::GoogleAds::V11::Utils::ResourceNames::keyword_plan(
+        Google::Ads::GoogleAds::V12::Utils::ResourceNames::keyword_plan(
         $customer_id, $keyword_plan_id
         )});
 

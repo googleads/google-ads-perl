@@ -33,11 +33,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V11::Resources::MerchantCenterLink;
-use Google::Ads::GoogleAds::V11::Enums::MerchantCenterLinkStatusEnum
+use Google::Ads::GoogleAds::V12::Resources::MerchantCenterLink;
+use Google::Ads::GoogleAds::V12::Enums::MerchantCenterLinkStatusEnum
   qw(ENABLED PENDING);
 use
-  Google::Ads::GoogleAds::V11::Services::MerchantCenterLinkService::MerchantCenterLinkOperation;
+  Google::Ads::GoogleAds::V12::Services::MerchantCenterLinkService::MerchantCenterLinkOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -106,7 +106,7 @@ sub update_merchant_center_link_status {
   # Create an updated MerchantCenterLink object derived from the original, but
   # with the specified status.
   my $merchant_center_link_to_update =
-    Google::Ads::GoogleAds::V11::Resources::MerchantCenterLink->new({
+    Google::Ads::GoogleAds::V12::Resources::MerchantCenterLink->new({
       resourceName => $merchant_center_link->{resourceName},
       status       => $new_merchant_center_link_status
     });
@@ -115,7 +115,7 @@ sub update_merchant_center_link_status {
   # FieldMasks utility to derive the update mask. This mask tells the Google Ads
   # API which attributes of the Merchant Center link you want to change.
   my $merchant_center_link_operation =
-    Google::Ads::GoogleAds::V11::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
+    Google::Ads::GoogleAds::V12::Services::MerchantCenterLinkService::MerchantCenterLinkOperation
     ->new({
       update     => $merchant_center_link_to_update,
       updateMask => all_set_fields_of($merchant_center_link_to_update)});

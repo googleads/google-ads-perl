@@ -24,18 +24,18 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Resources::ConversionAction;
-use Google::Ads::GoogleAds::V11::Resources::ValueSettings;
-use Google::Ads::GoogleAds::V11::Enums::ConversionActionCategoryEnum
+use Google::Ads::GoogleAds::V12::Resources::ConversionAction;
+use Google::Ads::GoogleAds::V12::Resources::ValueSettings;
+use Google::Ads::GoogleAds::V12::Enums::ConversionActionCategoryEnum
   qw(DEFAULT);
-use Google::Ads::GoogleAds::V11::Enums::ConversionActionTypeEnum qw(WEBPAGE);
-use Google::Ads::GoogleAds::V11::Enums::ConversionActionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V12::Enums::ConversionActionTypeEnum   qw(WEBPAGE);
+use Google::Ads::GoogleAds::V12::Enums::ConversionActionStatusEnum qw(ENABLED);
 use
-  Google::Ads::GoogleAds::V11::Services::ConversionActionService::ConversionActionOperation;
+  Google::Ads::GoogleAds::V12::Services::ConversionActionService::ConversionActionOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
 
 # The following parameter(s) should be provided to run the example. You can
@@ -54,21 +54,21 @@ sub add_conversion_action {
 
   # Create a conversion action.
   my $conversion_action =
-    Google::Ads::GoogleAds::V11::Resources::ConversionAction->new({
+    Google::Ads::GoogleAds::V12::Resources::ConversionAction->new({
       name     => "Earth to Mars Cruises Conversion #" . uniqid(),
       category => DEFAULT,
       type     => WEBPAGE,
       status   => ENABLED,
       viewThroughLookbackWindowDays => 15,
       valueSettings                 =>
-        Google::Ads::GoogleAds::V11::Resources::ValueSettings->new({
+        Google::Ads::GoogleAds::V12::Resources::ValueSettings->new({
           defaultValue          => 23.41,
           alwaysUseDefaultValue => "true"
         })});
 
   # Create a conversion action operation.
   my $conversion_action_operation =
-    Google::Ads::GoogleAds::V11::Services::ConversionActionService::ConversionActionOperation
+    Google::Ads::GoogleAds::V12::Services::ConversionActionService::ConversionActionOperation
     ->new({create => $conversion_action});
 
   # Add the conversion action.

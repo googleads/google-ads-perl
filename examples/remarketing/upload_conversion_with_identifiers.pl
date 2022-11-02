@@ -24,16 +24,16 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V11::Enums::UserIdentifierSourceEnum
+use Google::Ads::GoogleAds::V12::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V12::Enums::UserIdentifierSourceEnum
   qw(FIRST_PARTY);
 use
-  Google::Ads::GoogleAds::V11::Services::ConversionUploadService::ClickConversion;
-use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V12::Services::ConversionUploadService::ClickConversion;
+use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd         qw(abs_path);
 use Digest::SHA qw(sha256_hex);
 
 # The following parameter(s) should be provided to run the example. You can
@@ -62,10 +62,10 @@ sub upload_conversion_with_identifiers {
   # [START create_conversion]
   # Construct the click conversion.
   my $click_conversion =
-    Google::Ads::GoogleAds::V11::Services::ConversionUploadService::ClickConversion
+    Google::Ads::GoogleAds::V12::Services::ConversionUploadService::ClickConversion
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V11::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V12::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       conversionDateTime => $conversion_date_time,
@@ -83,7 +83,7 @@ sub upload_conversion_with_identifiers {
   # If using a phone number, use the normalize_and_hash() method instead.
   my $hashed_email = normalize_and_hash_email_address($email_address);
   my $user_identifier =
-    Google::Ads::GoogleAds::V11::Common::UserIdentifier->new({
+    Google::Ads::GoogleAds::V12::Common::UserIdentifier->new({
       hashedEmail => $hashed_email,
       # Optional: Specify the user identifier source.
       userIdentifierSource => FIRST_PARTY

@@ -36,13 +36,13 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V11::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V12::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd        qw(abs_path);
 use List::Util qw(min);
-use POSIX qw(ceil);
+use POSIX      qw(ceil);
 
 # The maximum number of results to retrieve.
 use constant RESULTS_LIMIT => 10;

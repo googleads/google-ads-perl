@@ -27,18 +27,18 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Resources::CustomAudience;
-use Google::Ads::GoogleAds::V11::Resources::CustomAudienceMember;
-use Google::Ads::GoogleAds::V11::Enums::CustomAudienceTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V11::Enums::CustomAudienceStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V11::Enums::CustomAudienceMemberTypeEnum
+use Google::Ads::GoogleAds::V12::Resources::CustomAudience;
+use Google::Ads::GoogleAds::V12::Resources::CustomAudienceMember;
+use Google::Ads::GoogleAds::V12::Enums::CustomAudienceTypeEnum   qw(SEARCH);
+use Google::Ads::GoogleAds::V12::Enums::CustomAudienceStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V12::Enums::CustomAudienceMemberTypeEnum
   qw(KEYWORD URL APP);
 use
-  Google::Ads::GoogleAds::V11::Services::CustomAudienceService::CustomAudienceOperation;
+  Google::Ads::GoogleAds::V12::Services::CustomAudienceService::CustomAudienceOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
 
 # The following parameter(s) should be provided to run the example. You can
@@ -56,7 +56,7 @@ sub add_custom_audience {
 
   # Create a custom audience.
   my $custom_audience =
-    Google::Ads::GoogleAds::V11::Resources::CustomAudience->new({
+    Google::Ads::GoogleAds::V12::Resources::CustomAudience->new({
       name        => "Example CustomAudience #" . uniqid(),
       description =>
         "Custom audiences who have searched specific terms on Google Search",
@@ -86,7 +86,7 @@ sub add_custom_audience {
 
   # Create a custom audience operation.
   my $custom_audience_operation =
-    Google::Ads::GoogleAds::V11::Services::CustomAudienceService::CustomAudienceOperation
+    Google::Ads::GoogleAds::V12::Services::CustomAudienceService::CustomAudienceOperation
     ->new({create => $custom_audience});
 
   # Add the custom audience.
@@ -104,7 +104,7 @@ sub add_custom_audience {
 sub create_custom_audience_member {
   my ($member_type, $value) = @_;
   my $custom_audience_member =
-    Google::Ads::GoogleAds::V11::Resources::CustomAudienceMember->new({
+    Google::Ads::GoogleAds::V12::Resources::CustomAudienceMember->new({
       memberType => $member_type
     });
 

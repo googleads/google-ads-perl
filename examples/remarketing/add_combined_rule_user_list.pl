@@ -25,25 +25,25 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Resources::UserList;
-use Google::Ads::GoogleAds::V11::Common::UserListRuleItemInfo;
-use Google::Ads::GoogleAds::V11::Common::UserListStringRuleItemInfo;
-use Google::Ads::GoogleAds::V11::Common::UserListRuleInfo;
-use Google::Ads::GoogleAds::V11::Common::UserListRuleItemGroupInfo;
-use Google::Ads::GoogleAds::V11::Common::CombinedRuleUserListInfo;
-use Google::Ads::GoogleAds::V11::Common::RuleBasedUserListInfo;
-use Google::Ads::GoogleAds::V11::Enums::UserListStringRuleItemOperatorEnum
+use Google::Ads::GoogleAds::V12::Resources::UserList;
+use Google::Ads::GoogleAds::V12::Common::UserListRuleItemInfo;
+use Google::Ads::GoogleAds::V12::Common::UserListStringRuleItemInfo;
+use Google::Ads::GoogleAds::V12::Common::UserListRuleInfo;
+use Google::Ads::GoogleAds::V12::Common::UserListRuleItemGroupInfo;
+use Google::Ads::GoogleAds::V12::Common::CombinedRuleUserListInfo;
+use Google::Ads::GoogleAds::V12::Common::RuleBasedUserListInfo;
+use Google::Ads::GoogleAds::V12::Enums::UserListStringRuleItemOperatorEnum
   qw(EQUALS);
-use Google::Ads::GoogleAds::V11::Enums::UserListCombinedRuleOperatorEnum
+use Google::Ads::GoogleAds::V12::Enums::UserListCombinedRuleOperatorEnum
   qw(AND);
-use Google::Ads::GoogleAds::V11::Enums::UserListPrepopulationStatusEnum
+use Google::Ads::GoogleAds::V12::Enums::UserListPrepopulationStatusEnum
   qw(REQUESTED);
-use Google::Ads::GoogleAds::V11::Enums::UserListMembershipStatusEnum qw(OPEN);
-use Google::Ads::GoogleAds::V11::Services::UserListService::UserListOperation;
+use Google::Ads::GoogleAds::V12::Enums::UserListMembershipStatusEnum qw(OPEN);
+use Google::Ads::GoogleAds::V12::Services::UserListService::UserListOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
 
 use constant URL_STRING => "url__";
@@ -65,46 +65,46 @@ sub add_combined_rule_user_list {
   # Create a rule targeting any user that visited a URL that equals
   # 'http://example.com/example1'.
   my $user_visited_site1_rule =
-    Google::Ads::GoogleAds::V11::Common::UserListRuleItemInfo->new({
+    Google::Ads::GoogleAds::V12::Common::UserListRuleItemInfo->new({
       # Use a built-in parameter to create a domain URL rule.
       name           => URL_STRING,
       stringRuleItem =>
-        Google::Ads::GoogleAds::V11::Common::UserListStringRuleItemInfo->new({
+        Google::Ads::GoogleAds::V12::Common::UserListStringRuleItemInfo->new({
           operator => EQUALS,
           value    => "http://example.com/example1"
         })});
 
   # Create a UserListRuleInfo object containing the first rule.
   my $user_visited_site1_rule_info =
-    Google::Ads::GoogleAds::V11::Common::UserListRuleInfo->new({
+    Google::Ads::GoogleAds::V12::Common::UserListRuleInfo->new({
       ruleItemGroups =>
-        Google::Ads::GoogleAds::V11::Common::UserListRuleItemGroupInfo->new({
+        Google::Ads::GoogleAds::V12::Common::UserListRuleItemGroupInfo->new({
           ruleItems => [$user_visited_site1_rule]})});
 
   # Create a rule targeting any user that visited a URL that equals
   # 'http://example.com/example2'.
   my $user_visited_site2_rule =
-    Google::Ads::GoogleAds::V11::Common::UserListRuleItemInfo->new({
+    Google::Ads::GoogleAds::V12::Common::UserListRuleItemInfo->new({
       # Use a built-in parameter to create a domain URL rule.
       name           => URL_STRING,
       stringRuleItem =>
-        Google::Ads::GoogleAds::V11::Common::UserListStringRuleItemInfo->new({
+        Google::Ads::GoogleAds::V12::Common::UserListStringRuleItemInfo->new({
           operator => EQUALS,
           value    => "http://example.com/example2"
         })});
 
   # Create a UserListRuleInfo object containing the second rule.
   my $user_visited_site2_rule_info =
-    Google::Ads::GoogleAds::V11::Common::UserListRuleInfo->new({
+    Google::Ads::GoogleAds::V12::Common::UserListRuleInfo->new({
       ruleItemGroups =>
-        Google::Ads::GoogleAds::V11::Common::UserListRuleItemGroupInfo->new({
+        Google::Ads::GoogleAds::V12::Common::UserListRuleItemGroupInfo->new({
           ruleItems => [$user_visited_site2_rule]})});
 
   # Create the user list where "Visitors of a page who did visit another page".
   # To create a user list where "Visitors of a page who did not visit another page",
   # change the UserListCombinedRuleOperator from AND to AND_NOT.
   my $combined_rule_user_list_info =
-    Google::Ads::GoogleAds::V11::Common::CombinedRuleUserListInfo->new({
+    Google::Ads::GoogleAds::V12::Common::CombinedRuleUserListInfo->new({
       leftOperand  => $user_visited_site1_rule_info,
       rightOperand => $user_visited_site2_rule_info,
       ruleOperator => AND
@@ -112,7 +112,7 @@ sub add_combined_rule_user_list {
 
   # Define a representation of a user list that is generated by a rule.
   my $rule_based_user_list_info =
-    Google::Ads::GoogleAds::V11::Common::RuleBasedUserListInfo->new({
+    Google::Ads::GoogleAds::V12::Common::RuleBasedUserListInfo->new({
       # Optional: To include past users in the user list, set the prepopulationStatus
       # to REQUESTED.
       prepopulationStatus  => REQUESTED,
@@ -120,7 +120,7 @@ sub add_combined_rule_user_list {
     });
 
   # Create a user list.
-  my $user_list = Google::Ads::GoogleAds::V11::Resources::UserList->new({
+  my $user_list = Google::Ads::GoogleAds::V12::Resources::UserList->new({
     name => "All visitors to http://example.com/example1 AND " .
       "http://example.com/example2 #" . uniqid(),
     description => "Visitors of both http://example.com/example1 AND " .
@@ -132,7 +132,7 @@ sub add_combined_rule_user_list {
 
   # Create the operation.
   my $user_list_operation =
-    Google::Ads::GoogleAds::V11::Services::UserListService::UserListOperation->
+    Google::Ads::GoogleAds::V12::Services::UserListService::UserListOperation->
     new({
       create => $user_list
     });

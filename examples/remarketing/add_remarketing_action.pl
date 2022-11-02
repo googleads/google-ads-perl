@@ -25,13 +25,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Resources::RemarketingAction;
+use Google::Ads::GoogleAds::V12::Resources::RemarketingAction;
 use
-  Google::Ads::GoogleAds::V11::Services::RemarketingActionService::RemarketingActionOperation;
+  Google::Ads::GoogleAds::V12::Services::RemarketingActionService::RemarketingActionOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
-use Cwd qw(abs_path);
+use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
 
 use constant PAGE_SIZE => 1000;
@@ -52,12 +52,12 @@ sub add_remarketing_action {
 
   # Create a remarketing action with the specified name.
   my $remarketing_action =
-    Google::Ads::GoogleAds::V11::Resources::RemarketingAction->new({
+    Google::Ads::GoogleAds::V12::Resources::RemarketingAction->new({
       name => "Remarketing action #" . uniqid()});
 
   # Create a remarketing action operation.
   my $remarketing_action_operation =
-    Google::Ads::GoogleAds::V11::Services::RemarketingActionService::RemarketingActionOperation
+    Google::Ads::GoogleAds::V12::Services::RemarketingActionService::RemarketingActionOperation
     ->new({
       create => $remarketing_action
     });

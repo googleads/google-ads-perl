@@ -26,20 +26,19 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Common::GenderInfo;
-use Google::Ads::GoogleAds::V11::Common::DeviceInfo;
-use Google::Ads::GoogleAds::V11::Enums::ReachPlanAdLengthEnum
+use Google::Ads::GoogleAds::V12::Common::GenderInfo;
+use Google::Ads::GoogleAds::V12::Common::DeviceInfo;
+use Google::Ads::GoogleAds::V12::Enums::ReachPlanAdLengthEnum
   qw(FIFTEEN_OR_TWENTY_SECONDS);
-use Google::Ads::GoogleAds::V11::Enums::GenderTypeEnum qw(MALE FEMALE);
-use Google::Ads::GoogleAds::V11::Enums::DeviceEnum qw(DESKTOP MOBILE TABLET);
-use Google::Ads::GoogleAds::V11::Enums::ReachPlanAgeRangeEnum
+use Google::Ads::GoogleAds::V12::Enums::GenderTypeEnum qw(MALE FEMALE);
+use Google::Ads::GoogleAds::V12::Enums::DeviceEnum qw(DESKTOP MOBILE TABLET);
+use Google::Ads::GoogleAds::V12::Enums::ReachPlanAgeRangeEnum
   qw(AGE_RANGE_18_65_UP);
-use Google::Ads::GoogleAds::V11::Services::ReachPlanService::PlannedProduct;
-use Google::Ads::GoogleAds::V11::Services::ReachPlanService::Preferences;
-use Google::Ads::GoogleAds::V11::Services::ReachPlanService::CampaignDuration;
-use Google::Ads::GoogleAds::V11::Services::ReachPlanService::Targeting;
+use Google::Ads::GoogleAds::V12::Services::ReachPlanService::PlannedProduct;
+use Google::Ads::GoogleAds::V12::Services::ReachPlanService::CampaignDuration;
+use Google::Ads::GoogleAds::V12::Services::ReachPlanService::Targeting;
 use
-  Google::Ads::GoogleAds::V11::Services::ReachPlanService::GenerateReachForecastRequest;
+  Google::Ads::GoogleAds::V12::Services::ReachPlanService::GenerateReachForecastRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -70,11 +69,7 @@ sub forecast_reach {
 
   show_plannable_locations($reach_plan_service);
   show_plannable_products($reach_plan_service, $location_id);
-  forecast_manual_mix(
-    $reach_plan_service, $customer_id, $location_id,
-    $currency_code,      $budget_micros
-  );
-  forecast_suggested_mix(
+  forecast_mix(
     $reach_plan_service, $customer_id, $location_id,
     $currency_code,      $budget_micros
   );
@@ -128,7 +123,7 @@ sub show_plannable_products {
 
 # Pulls a forecast for a budget split 15% and 85% between two products.
 # [START forecast_reach_3]
-sub forecast_manual_mix {
+sub forecast_mix {
   my (
     $reach_plan_service, $customer_id, $location_id,
     $currency_code,      $budget_micros
@@ -144,12 +139,12 @@ sub forecast_manual_mix {
   # plannable product codes for a given location:
   # https://developers.google.com/google-ads/api/reference/rpc/latest/ReachPlanService
   push @$product_mix,
-    Google::Ads::GoogleAds::V11::Services::ReachPlanService::PlannedProduct->
+    Google::Ads::GoogleAds::V12::Services::ReachPlanService::PlannedProduct->
     new({
       plannableProductCode => "TRUEVIEW_IN_STREAM",
       budgetMicros         => int($budget_micros * $trueview_allocation)});
   push @$product_mix,
-    Google::Ads::GoogleAds::V11::Services::ReachPlanService::PlannedProduct->
+    Google::Ads::GoogleAds::V12::Services::ReachPlanService::PlannedProduct->
     new({
       plannableProductCode => "BUMPER",
       budgetMicros         => int($budget_micros * $bumper_allocation)});
@@ -162,86 +157,41 @@ sub forecast_manual_mix {
 }
 # [END forecast_reach_3]
 
-# Pulls a forecast for a product mix suggested based on preferences for whether
-# the ad would have a guaranteed price, play with sound, would be skippable, would
-# include top content, and a desired ad length.
-# [START forecast_reach_1]
-sub forecast_suggested_mix {
-  my (
-    $reach_plan_service, $customer_id, $location_id,
-    $currency_code,      $budget_micros
-  ) = @_;
-
-  # Note: If preferences are too restrictive, then the response will be empty.
-  my $preferences =
-    Google::Ads::GoogleAds::V11::Services::ReachPlanService::Preferences->new({
-      hasGuaranteedPrice => "true",
-      startsWithSound    => "true",
-      isSkippable        => "false",
-      topContentOnly     => "true",
-      adLength           => FIFTEEN_OR_TWENTY_SECONDS
-    });
-
-  my $mix_response = $reach_plan_service->generate_product_mix_ideas({
-    customerId          => $customer_id,
-    plannableLocationId => $location_id,
-    preferences         => $preferences,
-    currencyCode        => $currency_code,
-    budgetMicros        => $budget_micros,
-  });
-
-  my $product_mix = [];
-  foreach my $product (@{$mix_response->{productAllocation}}) {
-    push @$product_mix,
-      Google::Ads::GoogleAds::V11::Services::ReachPlanService::PlannedProduct->
-      new({
-        plannableProductCode => $product->{plannableProductCode},
-        budgetMicros         => $product->{budgetMicros}});
-  }
-
-  my $reach_request =
-    build_reach_request($customer_id, $product_mix, $location_id,
-    $currency_code);
-
-  pull_reach_curve($reach_plan_service, $reach_request);
-}
-# [END forecast_reach_1]
-
 # Create a base request to generate a reach forecast.
 sub build_reach_request {
   my ($customer_id, $product_mix, $location_id, $currency_code) = @_;
 
   # Valid durations are between 1 and 90 days.
   my $duration =
-    Google::Ads::GoogleAds::V11::Services::ReachPlanService::CampaignDuration->
+    Google::Ads::GoogleAds::V12::Services::ReachPlanService::CampaignDuration->
     new({
       durationInDays => 28
     });
 
   my $genders = [
-    Google::Ads::GoogleAds::V11::Common::GenderInfo->new({
+    Google::Ads::GoogleAds::V12::Common::GenderInfo->new({
         type => FEMALE
       }
     ),
-    Google::Ads::GoogleAds::V11::Common::GenderInfo->new({
+    Google::Ads::GoogleAds::V12::Common::GenderInfo->new({
         type => MALE
       })];
 
   my $devices = [
-    Google::Ads::GoogleAds::V11::Common::DeviceInfo->new({
+    Google::Ads::GoogleAds::V12::Common::DeviceInfo->new({
         type => DESKTOP
       }
     ),
-    Google::Ads::GoogleAds::V11::Common::DeviceInfo->new({
+    Google::Ads::GoogleAds::V12::Common::DeviceInfo->new({
         type => MOBILE
       }
     ),
-    Google::Ads::GoogleAds::V11::Common::DeviceInfo->new({
+    Google::Ads::GoogleAds::V12::Common::DeviceInfo->new({
         type => TABLET
       })];
 
   my $targeting =
-    Google::Ads::GoogleAds::V11::Services::ReachPlanService::Targeting->new({
+    Google::Ads::GoogleAds::V12::Services::ReachPlanService::Targeting->new({
       plannableLocationId => $location_id,
       ageRange            => AGE_RANGE_18_65_UP,
       genders             => $genders,
@@ -251,7 +201,7 @@ sub build_reach_request {
   # See the docs for defaults and valid ranges:
   # https://developers.google.com/google-ads/api/reference/rpc/latest/GenerateReachForecastRequest
   return
-    Google::Ads::GoogleAds::V11::Services::ReachPlanService::GenerateReachForecastRequest
+    Google::Ads::GoogleAds::V12::Services::ReachPlanService::GenerateReachForecastRequest
     ->new({
       customerId            => $customer_id,
       currencyCode          => $currency_code,

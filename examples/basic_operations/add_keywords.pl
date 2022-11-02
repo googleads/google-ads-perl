@@ -25,13 +25,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V11::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V11::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V11::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V11::Enums::KeywordMatchTypeEnum qw(EXACT);
+use Google::Ads::GoogleAds::V12::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V12::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V12::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V12::Enums::KeywordMatchTypeEnum       qw(EXACT);
 use
-  Google::Ads::GoogleAds::V11::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V11::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V12::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,19 +54,19 @@ sub add_keywords {
 
   # Create a keyword.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V11::Resources::AdGroupCriterion->new({
-      adGroup => Google::Ads::GoogleAds::V11::Utils::ResourceNames::ad_group(
+    Google::Ads::GoogleAds::V12::Resources::AdGroupCriterion->new({
+      adGroup => Google::Ads::GoogleAds::V12::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       status  => ENABLED,
-      keyword => Google::Ads::GoogleAds::V11::Common::KeywordInfo->new({
+      keyword => Google::Ads::GoogleAds::V12::Common::KeywordInfo->new({
           text      => $keyword_text,
           matchType => EXACT
         })});
 
   # Create an ad group criterion operation.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V11::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V12::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({create => $ad_group_criterion});
 
   # Add the keyword.
