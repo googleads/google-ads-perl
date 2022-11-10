@@ -261,7 +261,7 @@ sub _get_keyword_text_auto_completions {
   # Map the keyword theme constants to KeywordTheme instances for consistency
   # with the response from SmartCampaignSuggestService.SuggestKeywordThemes.
   my $keyword_themes = [];
-  foreach my $keyword_theme_constant (@{response->{keywordThemeConstants}}) {
+  foreach my $keyword_theme_constant (@{$response->{keywordThemeConstants}}) {
     push @$keyword_themes,
       Google::Ads::GoogleAds::V12::Services::SmartCampaignSuggestService::KeywordTheme
       ->new({
