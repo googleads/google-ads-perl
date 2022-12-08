@@ -24,7 +24,7 @@ use File::HomeDir;
 use File::Spec::Functions;
 
 # Main version number that the rest of the modules pick up off of.
-our $VERSION = qv("14.0.0");
+our $VERSION = qv("14.0.1");
 
 use constant DEFAULT_PROPERTIES_FILE =>
   catfile(File::HomeDir->my_home, "googleads.properties");

@@ -21,7 +21,7 @@ package Google::Ads::GoogleAds::Client;
 use strict;
 use warnings;
 use version;
-our $VERSION = qv("14.0.0");
+our $VERSION = qv("14.0.1");
 
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::OAuth2ServiceAccountsHandler;

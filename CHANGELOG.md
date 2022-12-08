@@ -1,3 +1,7 @@
+14.0.1 - 2022-12-08
+-------------------
+- Decreased minimum perl version to 5.28.1.
+
 14.0.0 - 2022-11-02
 -------------------
 - Added support for Google Ads API v12.
