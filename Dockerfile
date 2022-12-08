@@ -1,4 +1,4 @@
-FROM perl:5.26
+FROM perl:5.30
 
 RUN cpan install Module::Build
 
