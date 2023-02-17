@@ -75,6 +75,9 @@ sub update_campaign_criterion_ip_block {
       Google::Ads::GoogleAds::V12::Services::CampaignCriterionService::CampaignCriterionOperation
       ->new({
         create => $campaign_criterion,
+
+        # for removing the IP from the campaign criterion
+        # 'remove' => <ip_resource_name>,
       },
       );
     push @{$operations}, $campaign_criterion_operation;
