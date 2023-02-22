@@ -57,7 +57,7 @@ my $google_ads_failure = $exception->get_google_ads_failure;
 
 ok(
   $google_ads_failure->isa(
-    "Google::Ads::GoogleAds::V12::Errors::GoogleAdsFailure"),
+    "Google::Ads::GoogleAds::V13::Errors::GoogleAdsFailure"),
   "GoogleAdsFailure : Get the GoogleAdsFailure object."
 );
 

@@ -24,16 +24,16 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V12::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V12::Resources::Campaign;
-use Google::Ads::GoogleAds::V12::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V12::Common::ManualCpc;
-use Google::Ads::GoogleAds::V12::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
-use Google::Ads::GoogleAds::V12::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V12::Enums::CampaignStatusEnum         qw(PAUSED);
+use Google::Ads::GoogleAds::V13::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V13::Resources::Campaign;
+use Google::Ads::GoogleAds::V13::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V13::Common::ManualCpc;
+use Google::Ads::GoogleAds::V13::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
+use Google::Ads::GoogleAds::V13::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V13::Enums::CampaignStatusEnum         qw(PAUSED);
 use
-  Google::Ads::GoogleAds::V12::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V12::Services::CampaignService::CampaignOperation;
+  Google::Ads::GoogleAds::V13::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V13::Services::CampaignService::CampaignOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -57,7 +57,7 @@ sub add_campaigns {
   # [START add_campaigns]
   # Create a campaign budget, which can be shared by multiple campaigns.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V12::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V13::Resources::CampaignBudget->new({
       name           => "Interplanetary budget #" . uniqid(),
       deliveryMethod => STANDARD,
       amountMicros   => 500000
@@ -65,7 +65,7 @@ sub add_campaigns {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V12::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V13::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Add the campaign budget.
@@ -76,7 +76,7 @@ sub add_campaigns {
 
   # [START add_campaigns_1]
   # Create a campaign.
-  my $campaign = Google::Ads::GoogleAds::V12::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V13::Resources::Campaign->new({
       name                   => "Interplanetary Cruise #" . uniqid(),
       advertisingChannelType => SEARCH,
       # Recommendation: Set the campaign to PAUSED when creating it to stop
@@ -84,13 +84,13 @@ sub add_campaigns {
       # targeting and the ads are ready to serve.
       status => PAUSED,
       # Set the bidding strategy and budget.
-      manualCpc => Google::Ads::GoogleAds::V12::Common::ManualCpc->new(
+      manualCpc => Google::Ads::GoogleAds::V13::Common::ManualCpc->new(
         {enhancedCpcEnabled => "true"}
       ),
       campaignBudget => $campaign_budgets_response->{results}[0]{resourceName},
       # Set the campaign network options.
       networkSettings =>
-        Google::Ads::GoogleAds::V12::Resources::NetworkSettings->new({
+        Google::Ads::GoogleAds::V13::Resources::NetworkSettings->new({
           targetGoogleSearch  => "true",
           targetSearchNetwork => "true",
           # Enable Display Expansion on Search campaigns. See
@@ -108,7 +108,7 @@ sub add_campaigns {
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V12::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V13::Services::CampaignService::CampaignOperation->
     new({create => $campaign});
 
   # Add the campaign.

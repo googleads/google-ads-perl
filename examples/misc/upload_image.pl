@@ -25,10 +25,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V12::Resources::MediaImage;
-use Google::Ads::GoogleAds::V12::Resources::MediaFile;
-use Google::Ads::GoogleAds::V12::Enums::MediaTypeEnum qw(IMAGE);
-use Google::Ads::GoogleAds::V12::Services::MediaFileService::MediaFileOperation;
+use Google::Ads::GoogleAds::V13::Resources::MediaImage;
+use Google::Ads::GoogleAds::V13::Resources::MediaFile;
+use Google::Ads::GoogleAds::V13::Enums::MediaTypeEnum qw(IMAGE);
+use Google::Ads::GoogleAds::V13::Services::MediaFileService::MediaFileOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -50,11 +50,11 @@ sub upload_image {
   my ($api_client, $customer_id) = @_;
 
   # Create a media image.
-  my $media_image = Google::Ads::GoogleAds::V12::Resources::MediaImage->new({
+  my $media_image = Google::Ads::GoogleAds::V13::Resources::MediaImage->new({
       data => get_base64_data_from_url(IMAGE_URL)});
 
   # Create a media file.
-  my $media_file = Google::Ads::GoogleAds::V12::Resources::MediaFile->new({
+  my $media_file = Google::Ads::GoogleAds::V13::Resources::MediaFile->new({
     name      => "Ad Images",
     type      => IMAGE,
     sourceUrl => IMAGE_URL,
@@ -63,7 +63,7 @@ sub upload_image {
 
   # Create a media file operation.
   my $media_file_operation =
-    Google::Ads::GoogleAds::V12::Services::MediaFileService::MediaFileOperation
+    Google::Ads::GoogleAds::V13::Services::MediaFileService::MediaFileOperation
     ->new({
       create => $media_file
     });

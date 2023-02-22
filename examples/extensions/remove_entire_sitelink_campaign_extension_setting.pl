@@ -31,15 +31,15 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
-use Google::Ads::GoogleAds::V12::Enums::ExtensionTypeEnum qw(SITELINK);
+use Google::Ads::GoogleAds::V13::Enums::ExtensionTypeEnum qw(SITELINK);
 use
-  Google::Ads::GoogleAds::V12::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
+  Google::Ads::GoogleAds::V13::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation;
 use
-  Google::Ads::GoogleAds::V12::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
-use Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation;
+  Google::Ads::GoogleAds::V13::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
+use Google::Ads::GoogleAds::V13::Services::GoogleAdsService::MutateOperation;
 use
-  Google::Ads::GoogleAds::V12::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
-use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V13::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+use Google::Ads::GoogleAds::V13::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -117,12 +117,12 @@ sub create_sitelink_campaign_extension_setting_mutate_operation {
 
   # Construct the resource name of the campaign extension setting to remove.
   my $campaign_extension_setting_resource_name =
-    Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign_extension_setting(
+    Google::Ads::GoogleAds::V13::Utils::ResourceNames::campaign_extension_setting(
     $customer_id, $campaign_id, SITELINK);
 
   # Create a campaign extension setting operation.
   my $campaign_extension_setting_operation =
-    Google::Ads::GoogleAds::V12::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
+    Google::Ads::GoogleAds::V13::Services::CampaignExtensionSettingService::CampaignExtensionSettingOperation
     ->new({
       remove => $campaign_extension_setting_resource_name
     });
@@ -130,7 +130,7 @@ sub create_sitelink_campaign_extension_setting_mutate_operation {
   # Create and return a mutate operation for the campaign extension setting
   # operation.
   return
-    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V13::Services::GoogleAdsService::MutateOperation->
     new({
       campaignExtensionSettingOperation => $campaign_extension_setting_operation
     });
@@ -146,7 +146,7 @@ sub get_all_sitelink_extension_feed_items {
 
   # Issue a search stream request, then iterate over all responses.
   my $search_stream_request =
-    Google::Ads::GoogleAds::V12::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V13::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => sprintf(
@@ -156,7 +156,7 @@ sub get_all_sitelink_extension_feed_items {
           "FROM campaign_extension_setting " .
           "WHERE campaign_extension_setting.campaign = '%s' " .
           "AND campaign_extension_setting.extension_type = 'SITELINK'",
-        Google::Ads::GoogleAds::V12::Utils::ResourceNames::campaign(
+        Google::Ads::GoogleAds::V13::Utils::ResourceNames::campaign(
           $customer_id, $campaign_id
         ))});
 
@@ -202,14 +202,14 @@ sub create_extension_feed_item_mutate_operations {
     my $extension_feed_item_resource_name (@$extension_feed_item_resource_names)
   {
     my $operation =
-      Google::Ads::GoogleAds::V12::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+      Google::Ads::GoogleAds::V13::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
       ->new({
         remove => $extension_feed_item_resource_name
       });
 
     push(
       @$operations,
-      Google::Ads::GoogleAds::V12::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V13::Services::GoogleAdsService::MutateOperation
         ->new({
           extensionFeedItemOperation => $operation
         }));

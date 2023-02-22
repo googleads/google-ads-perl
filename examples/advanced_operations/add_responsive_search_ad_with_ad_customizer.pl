@@ -26,21 +26,21 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V12::Resources::CustomizerAttribute;
-use Google::Ads::GoogleAds::V12::Resources::CustomerCustomizer;
-use Google::Ads::GoogleAds::V12::Resources::Ad;
-use Google::Ads::GoogleAds::V12::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V12::Common::CustomizerValue;
-use Google::Ads::GoogleAds::V12::Common::ResponsiveSearchAdInfo;
-use Google::Ads::GoogleAds::V12::Common::TextAsset;
-use Google::Ads::GoogleAds::V12::Enums::CustomizerAttributeTypeEnum qw(PRICE);
-use Google::Ads::GoogleAds::V12::Enums::AdGroupAdStatusEnum         qw(PAUSED);
+use Google::Ads::GoogleAds::V13::Resources::CustomizerAttribute;
+use Google::Ads::GoogleAds::V13::Resources::CustomerCustomizer;
+use Google::Ads::GoogleAds::V13::Resources::Ad;
+use Google::Ads::GoogleAds::V13::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V13::Common::CustomizerValue;
+use Google::Ads::GoogleAds::V13::Common::ResponsiveSearchAdInfo;
+use Google::Ads::GoogleAds::V13::Common::TextAsset;
+use Google::Ads::GoogleAds::V13::Enums::CustomizerAttributeTypeEnum qw(PRICE);
+use Google::Ads::GoogleAds::V13::Enums::AdGroupAdStatusEnum         qw(PAUSED);
 use
-  Google::Ads::GoogleAds::V12::Services::CustomizerAttributeService::CustomizerAttributeOperation;
+  Google::Ads::GoogleAds::V13::Services::CustomizerAttributeService::CustomizerAttributeOperation;
 use
-  Google::Ads::GoogleAds::V12::Services::CustomerCustomizerService::CustomerCustomizerOperation;
-use Google::Ads::GoogleAds::V12::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V13::Services::CustomerCustomizerService::CustomerCustomizerOperation;
+use Google::Ads::GoogleAds::V13::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V13::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -88,7 +88,7 @@ sub create_customizer_attribute {
 
   # Create a customizer attribute with the specified name.
   my $customizer_attribute =
-    Google::Ads::GoogleAds::V12::Resources::CustomizerAttribute->new({
+    Google::Ads::GoogleAds::V13::Resources::CustomizerAttribute->new({
       name => $customizer_attribute_name,
       # Specify the type to be 'PRICE' so that we can dynamically customize the part
       # of the ad's description that is a price of a product/service we advertise.
@@ -97,7 +97,7 @@ sub create_customizer_attribute {
 
   # Create a customizer attribute operation for creating a customizer attribute.
   my $operation =
-    Google::Ads::GoogleAds::V12::Services::CustomizerAttributeService::CustomizerAttributeOperation
+    Google::Ads::GoogleAds::V13::Services::CustomizerAttributeService::CustomizerAttributeOperation
     ->new({
       create => $customizer_attribute
     });
@@ -123,18 +123,18 @@ sub link_customizer_attribute_to_customer {
 
   # Create a customer customizer with the value to be used in the responsive search ad.
   my $customer_customizer =
-    Google::Ads::GoogleAds::V12::Resources::CustomerCustomizer->new({
+    Google::Ads::GoogleAds::V13::Resources::CustomerCustomizer->new({
       customizerAttribute => $customizer_attribute_resource_name,
       # Specify '100USD' as a text value. The ad customizer will dynamically replace
       # the placeholder with this value when the ad serves.
-      value => Google::Ads::GoogleAds::V12::Common::CustomizerValue->new({
+      value => Google::Ads::GoogleAds::V13::Common::CustomizerValue->new({
           type        => PRICE,
           stringValue => "100USD"
         })});
 
   # Create a customer customizer operation.
   my $operation =
-    Google::Ads::GoogleAds::V12::Services::CustomerCustomizerService::CustomerCustomizerOperation
+    Google::Ads::GoogleAds::V13::Services::CustomerCustomizerService::CustomerCustomizerOperation
     ->new({
       create => $customer_customizer
     });
@@ -154,24 +154,24 @@ sub create_responsive_search_ad_with_customization {
   my ($api_client, $customer_id, $ad_group_id, $customizer_attribute_name) = @_;
 
   # Create an ad and set responsive search ad info.
-  my $ad = Google::Ads::GoogleAds::V12::Resources::Ad->new({
+  my $ad = Google::Ads::GoogleAds::V13::Resources::Ad->new({
       responsiveSearchAd =>
-        Google::Ads::GoogleAds::V12::Common::ResponsiveSearchAdInfo->new({
+        Google::Ads::GoogleAds::V13::Common::ResponsiveSearchAdInfo->new({
           headlines => [
-            Google::Ads::GoogleAds::V12::Common::TextAsset->new({
+            Google::Ads::GoogleAds::V13::Common::TextAsset->new({
                 text => "Cruise to Mars"
               }
             ),
-            Google::Ads::GoogleAds::V12::Common::TextAsset->new({
+            Google::Ads::GoogleAds::V13::Common::TextAsset->new({
                 text => "Best Space Cruise Line"
               }
             ),
-            Google::Ads::GoogleAds::V12::Common::TextAsset->new({
+            Google::Ads::GoogleAds::V13::Common::TextAsset->new({
                 text => "Experience the Stars"
               })
           ],
           descriptions => [
-            Google::Ads::GoogleAds::V12::Common::TextAsset->new({
+            Google::Ads::GoogleAds::V13::Common::TextAsset->new({
                 text => "Buy your tickets now"
               }
             ),
@@ -180,7 +180,7 @@ sub create_responsive_search_ad_with_customization {
             # for details about the placeholder format.
             # The ad customizer replaces the placeholder with the value we previously
             # created and linked to the customer using `CustomerCustomizer`.
-            Google::Ads::GoogleAds::V12::Common::TextAsset->new({
+            Google::Ads::GoogleAds::V13::Common::TextAsset->new({
                 text => "Just {CUSTOMIZER.$customizer_attribute_name:10USD}"
               })
           ],
@@ -191,8 +191,8 @@ sub create_responsive_search_ad_with_customization {
       finalUrls => ["http://www.example.com"]});
 
   # Create an ad group ad to hold the above ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V12::Resources::AdGroupAd->new({
-      adGroup => Google::Ads::GoogleAds::V12::Utils::ResourceNames::ad_group(
+  my $ad_group_ad = Google::Ads::GoogleAds::V13::Resources::AdGroupAd->new({
+      adGroup => Google::Ads::GoogleAds::V13::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       status => PAUSED,
@@ -201,7 +201,7 @@ sub create_responsive_search_ad_with_customization {
 
   # Create an ad group ad operation.
   my $operation =
-    Google::Ads::GoogleAds::V12::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V13::Services::AdGroupAdService::AdGroupAdOperation
     ->new({
       create => $ad_group_ad
     });

@@ -25,19 +25,19 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V12::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V12::Common::OfflineUserAddressInfo;
-use Google::Ads::GoogleAds::V12::Enums::ConversionAdjustmentTypeEnum
+use Google::Ads::GoogleAds::V13::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V13::Common::OfflineUserAddressInfo;
+use Google::Ads::GoogleAds::V13::Enums::ConversionAdjustmentTypeEnum
   qw(ENHANCEMENT);
-use Google::Ads::GoogleAds::V12::Enums::UserIdentifierSourceEnum
+use Google::Ads::GoogleAds::V13::Enums::UserIdentifierSourceEnum
   qw(FIRST_PARTY);
 use
-  Google::Ads::GoogleAds::V12::Services::ConversionAdjustmentUploadService::ConversionAdjustment;
+  Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::ConversionAdjustment;
 use
-  Google::Ads::GoogleAds::V12::Services::ConversionAdjustmentUploadService::GclidDateTimePair;
+  Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::GclidDateTimePair;
 use
-  Google::Ads::GoogleAds::V12::Services::ConversionAdjustmentUploadService::RestatementValue;
-use Google::Ads::GoogleAds::V12::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::RestatementValue;
+use Google::Ads::GoogleAds::V13::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -73,10 +73,10 @@ sub upload_conversion_enhancement {
   # [START create_adjustment]
   # Construct the enhancement adjustment.
   my $enhancement =
-    Google::Ads::GoogleAds::V12::Services::ConversionAdjustmentUploadService::ConversionAdjustment
+    Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::ConversionAdjustment
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V12::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V13::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       adjustmentType => ENHANCEMENT,
@@ -88,7 +88,7 @@ sub upload_conversion_enhancement {
   # but recommended.
   if (defined $conversion_date_time) {
     $enhancement->{gclidDateTimePair} =
-      Google::Ads::GoogleAds::V12::Services::ConversionAdjustmentUploadService::GclidDateTimePair
+      Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::GclidDateTimePair
       ->new({
         conversionDateTime => $conversion_date_time
       });
@@ -98,9 +98,9 @@ sub upload_conversion_enhancement {
 
   # Create a user identifier using sample values for the user address.
   my $address_identifier =
-    Google::Ads::GoogleAds::V12::Common::UserIdentifier->new({
+    Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
       addressInfo =>
-        Google::Ads::GoogleAds::V12::Common::OfflineUserAddressInfo->new({
+        Google::Ads::GoogleAds::V13::Common::OfflineUserAddressInfo->new({
           hashedFirstName     => normalize_and_hash("Joanna"),
           hashedLastName      => normalize_and_hash("Smith"),
           hashedStreetAddress => normalize_and_hash("1600 Amphitheatre Pkwy"),
@@ -116,7 +116,7 @@ sub upload_conversion_enhancement {
 
   # Create a user identifier using the hashed email address.
   my $email_identifier =
-    Google::Ads::GoogleAds::V12::Common::UserIdentifier->new({
+    Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
       userIdentifierSource => FIRST_PARTY,
       # Use the normalize and hash method specifically for email addresses.
       hashedEmail => normalize_and_hash_email_address('joannasmith@example.com')
@@ -137,7 +137,7 @@ sub upload_conversion_enhancement {
   if (defined $restatement_value) {
     # Construct the restated conversion value.
     my $value =
-      Google::Ads::GoogleAds::V12::Services::ConversionAdjustmentUploadService::RestatementValue
+      Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::RestatementValue
       ->new({
         # Set the new value of the conversion.
         adjustedValue => $restatement_value
