@@ -1,3 +1,13 @@
+15.0.0 - 2023-02-22
+-------------------
+- Added support for Google Ads API v13.
+- Removed support for Google Ads API v10.
+- Reworked code examples to address the deprecation of combined rule user lists
+and expression rule user lists:
+  - Edited SetUpAdvancedRemarketing and SetUpRemarketing
+  - Renamed AddCombinedRuleUserList to AddFlexibleRuleUserList
+  - Removed AddExpressionRuleUserList
+
 14.0.1 - 2022-12-08
 -------------------
 - Decreased minimum perl version to 5.28.1.
