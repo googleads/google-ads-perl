@@ -45,7 +45,7 @@ use Cwd qw(abs_path);
 my $customer_id  = "INSERT_CUSTOMER_ID_HERE";
 my $campaign_id  = "INSERT_CAMPAIGN_ID_HERE";
 
-# ip_block_criterion_id
+# ip_block criterion ID
 my $CRITERION_ID = "27";
 my $ip_block;
 
@@ -58,7 +58,6 @@ sub update_campaign_criterion_ip_block {
 
   my $operations;
   foreach my $ip (split(',', $ip_block)) {
-
     # Create a campaign criterion with the specified resource name (ip_block) and
     # IP address which needs to be excluded.
     my $campaign_criterion =
@@ -68,7 +67,6 @@ sub update_campaign_criterion_ip_block {
         ipBlock      => {
           ip_address => $ip,
         },
-
       });
 
     # Create the campaign criterion operation.
@@ -76,14 +74,12 @@ sub update_campaign_criterion_ip_block {
       Google::Ads::GoogleAds::V13::Services::CampaignCriterionService::CampaignCriterionOperation
       ->new({
         create => $campaign_criterion,
-
         # To remove the IP block campaign criterion, use:
         # remove => <campaign_criterion_resource_name>
-      },
-      );
+      });
+
     push @{$operations}, $campaign_criterion_operation;
   }
-
   # Issue a mutate request to create the campaign criteria for the IP addresses to exclude.
   my $campaign_criteria_response =
     $api_client->CampaignCriterionService()->mutate({
@@ -92,7 +88,6 @@ sub update_campaign_criterion_ip_block {
     });
 
   foreach my $response (@{$campaign_criteria_response->{results}}) {
-
     # Print the resource name (ip_block) of the updated campaign criterion.
     printf "Campaign criterion with resource name '%s' was modified.\n",
       $response->{resourceName};
