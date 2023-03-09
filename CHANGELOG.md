@@ -1,3 +1,7 @@
+15.0.1 - 2023-03-08
+-------------------
+- Fixed bug in v13 CampaignBudget object.
+
 15.0.0 - 2023-02-22
 -------------------
 - Added support for Google Ads API v13.
