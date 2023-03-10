@@ -42,8 +42,8 @@ use Cwd qw(abs_path);
 # code.
 #
 # Running the example with -h will print the command line usage.
-my $customer_id  = "INSERT_CUSTOMER_ID_HERE";
-my $campaign_id  = "INSERT_CAMPAIGN_ID_HERE";
+my $customer_id = "INSERT_CUSTOMER_ID_HERE";
+my $campaign_id = "INSERT_CAMPAIGN_ID_HERE";
 
 # ip_block criterion ID
 my $CRITERION_ID = "27";

@@ -256,10 +256,28 @@ sub create_performance_max_campaign_operation {
               # For more information on Max Conversion Value, see the support article:
               # http://support.google.com/google-ads/answer/7684216.
               # A targetRoas of 3.5 corresponds to a 350% return on ad spend.
-              maximizeConversionValue =>
-                Google::Ads::GoogleAds::V13::Common::MaximizeConversionValue->
-                new({
-                  targetRoas => 3.5
+              # For first time users, it's recommended not to set a target ROAS.
+              # maximizeConversionValue =>
+              #   Google::Ads::GoogleAds::V13::Common::MaximizeConversionValue->
+              #   new({
+              #     targetRoas => 3.5
+              #   }
+              # ),
+              # Below is what you would use if you want to maximize conversions.
+              # maximizeConversions =>
+              #   Google::Ads::GoogleAds::V13::Common::MaximizeConversions->
+              #   new({
+              #     targetCpaMicros => 1000000
+              #   }
+              # ),
+              # The target CPA is optional. This is the average amount that you would
+              # like to spend per conversion action.
+
+              # Set the shopping settings.
+              shoppingSetting =>
+                Google::Ads::GoogleAds::V13::Resources::ShoppingSetting->new({
+                  merchantId   => $merchant_center_account_id,
+                  salesCountry => $sales_country
                 }
                 ),
 
@@ -274,14 +292,6 @@ sub create_performance_max_campaign_operation {
               # For a Retail campaign, we want the final URL to be limited to those
               # explicitly surfaced via GMC.
               urlExpansionOptOut => "true",
-
-              # Set the shopping settings.
-              shoppingSetting =>
-                Google::Ads::GoogleAds::V13::Resources::ShoppingSetting->new({
-                  merchantId   => $merchant_center_account_id,
-                  salesCountry => $sales_country
-                }
-                ),
 
               # Optional fields.
               startDate => strftime("%Y%m%d", localtime(time + 60 * 60 * 24)),

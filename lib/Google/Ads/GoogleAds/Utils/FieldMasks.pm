@@ -28,7 +28,7 @@ use Google::Ads::GoogleAds::Common::FieldMask;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 
 use Exporter 'import';
-our @EXPORT = qw(field_mask all_set_fields_of get_field_value);
+our @EXPORT = qw(field_mask all_set_fields_of get_field_value is_hash_ref);
 
 use Data::Compare;
 
@@ -85,7 +85,7 @@ sub __compare {
       # Array reference field.
       push @$paths, $field_path
         unless Compare($original_value, $modified_value);
-    } elsif (__is_hash_ref($original_value) || __is_hash_ref($modified_value)) {
+    } elsif (is_hash_ref($original_value) || is_hash_ref($modified_value)) {
       # Hash or class reference field whose ref name is not empty.
       next if Compare($original_value, $modified_value);
       if (!$original_key_exists) {
@@ -117,8 +117,8 @@ sub __compare {
   }
 }
 
-# The private method to check if a reference object is for a hash or a class instance.
-sub __is_hash_ref {
+# The method to check if a reference object is for a hash or a class instance.
+sub is_hash_ref {
   my $ref_type = ref shift;
   return 0 if !$ref_type;
 
@@ -263,9 +263,9 @@ I<modified>: the modified hash object.
 
 =back
 
-=head2 __is_hash_ref
+=head2 is_hash_ref
 
-The private method to check if a reference object is for a hash or a class instance.
+The method to check if a reference object is for a hash or a class instance.
 
 =head3 Parameters
 
