@@ -35,6 +35,7 @@ use
   Google::Ads::GoogleAds::V13::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
+use JSON::XS;
 use Pod::Usage;
 use Cwd qw(abs_path);
 
@@ -108,11 +109,15 @@ sub get_change_details {
         _get_changed_resources_for_resource_type($change_event);
 
       foreach my $changed_field (split /,/, $change_event->{changedFields}) {
-        my $new_value = get_field_value($new_resource, $changed_field) || "";
+        my $new_value =
+          _convert_to_string(get_field_value($new_resource, $changed_field))
+          || "";
         if ($change_event->{resourceChangeOperation} eq CREATE) {
           print "\t$changed_field set to '$new_value'.\n";
         } else {
-          my $old_value = get_field_value($old_resource, $changed_field) || "";
+          my $old_value =
+            _convert_to_string(get_field_value($old_resource, $changed_field))
+            || "";
           print "\t$changed_field changed from '$old_value' to '$new_value'.\n";
         }
       }
@@ -120,6 +125,29 @@ sub get_change_details {
   }
 
   return 1;
+}
+
+# This method converts the specified value to a string.
+sub _convert_to_string {
+  my $value        = shift;
+  my $string_value = "";
+
+  if (ref($value) eq "ARRAY") {
+    $string_value .= "[";
+    foreach my $item (@$value) {
+      if (is_hash_ref($item)) {
+        $string_value .= (JSON::XS->new->utf8->encode($item) . ",");
+      } else {
+        $string_value .= ($item . ",");
+      }
+    }
+    $string_value .= "]";
+  } elsif (is_hash_ref($value)) {
+    $string_value .= JSON::XS->new->utf8->encode($value);
+  } else {
+    $string_value = $value;
+  }
+  return $string_value;
 }
 
 # This method returns the old resource and new resource based on the change

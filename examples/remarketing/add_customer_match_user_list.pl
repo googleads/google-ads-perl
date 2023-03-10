@@ -14,16 +14,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example uses Customer Match to create a new user list (a.k.a. audience)
-# and adds users to it.
+# This example creates operations to add members to a user list (a.k.a. audience)
+# using an OfflineUserDataJob, and if requested, runs the job.
 #
-# This feature is only available to allowlisted accounts.
-# See https://support.google.com/adspolicy/answer/6299717 for more details.
+# If a job ID is specified, this examples add operations to that job. Otherwise,
+# it creates a new job for the operations.
 #
-# Note: It may take up to several hours for the list to be populated with users.
-# Email addresses must be associated with a Google account. For privacy purposes,
-# the user list size will show as zero until the list has at least 1,000 users.
-# After that, the size will be rounded to the two most significant digits.
+# Your application should create a single job containing all of the operations
+# for a user list. This will be far more efficient than creating and running
+# multiple jobs that each contain a small set of operations.
+#
+# Notes:
+#
+# * This feature is only available to accounts that meet the requirements described
+# at https://support.google.com/adspolicy/answer/6299717.
+# * It may take up to several hours for the list to be populated with users.
+# * Email addresses must be associated with a Google account.
+# * For privacy purposes, the user list size will show as zero until the list has
+# at least 1,000 users. After that, the size will be rounded to the two most
+# significant digits.
 
 use strict;
 use warnings;
@@ -52,6 +61,7 @@ use
   Google::Ads::GoogleAds::V13::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
 use
   Google::Ads::GoogleAds::V13::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+use Google::Ads::GoogleAds::V13::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -59,23 +69,26 @@ use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
 use Digest::SHA  qw(sha256_hex);
 
-# The following parameter(s) should be provided to run the example. You can
-# either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-# the command line.
-#
-# Parameters passed on the command line will override any parameters set in
-# code.
-#
-# Running the example with -h will print the command line usage.
-my $customer_id = "INSERT_CUSTOMER_ID_HERE";
-
 sub add_customer_match_user_list {
-  my ($api_client, $customer_id) = @_;
+  my ($api_client, $customer_id, $run_job, $user_list_id,
+    $offline_user_data_job_id)
+    = @_;
 
-  my $user_list_resource_name =
-    create_customer_match_user_list($api_client, $customer_id);
-  add_users_to_customer_match_user_list($api_client, $customer_id,
-    $user_list_resource_name);
+  my $user_list_resource_name = undef;
+  if (!defined $offline_user_data_job_id) {
+    if (!defined $user_list_id) {
+      # Create a Customer Match user list.
+      $user_list_resource_name =
+        create_customer_match_user_list($api_client, $customer_id);
+    } else {
+      # Uses the specified Customer Match user list.
+      $user_list_resource_name =
+        Google::Ads::GoogleAds::V13::Utils::ResourceNames::user_list(
+        $customer_id, $user_list_id);
+    }
+  }
+  add_users_to_customer_match_user_list($api_client, $customer_id, $run_job,
+    $user_list_resource_name, $offline_user_data_job_id);
   print_customer_match_user_list_info($api_client, $customer_id,
     $user_list_resource_name);
 
@@ -95,7 +108,10 @@ sub create_customer_match_user_list {
       # indicate unlimited; otherwise normal values apply.
       # Set the membership life span to 30 days.
       membershipLifeSpan => 30,
-      crmBasedUserList   =>
+      # Set the upload key type to indicate the type of identifier that will be
+      # used to add users to the list. This field is immutable and required for
+      # a CREATE operation.
+      crmBasedUserList =>
         Google::Ads::GoogleAds::V13::Common::CrmBasedUserListInfo->new({
           uploadKeyType => CONTACT_INFO
         })});
@@ -123,33 +139,50 @@ sub create_customer_match_user_list {
 # user list.
 # [START add_customer_match_user_list]
 sub add_users_to_customer_match_user_list {
-  my ($api_client, $customer_id, $user_list_resource_name) = @_;
+  my ($api_client, $customer_id, $run_job, $user_list_resource_name,
+    $offline_user_data_job_id)
+    = @_;
 
   my $offline_user_data_job_service = $api_client->OfflineUserDataJobService();
 
-  # Create a new offline user data job.
-  my $offline_user_data_job =
-    Google::Ads::GoogleAds::V13::Resources::OfflineUserDataJob->new({
-      type                          => CUSTOMER_MATCH_USER_LIST,
-      customerMatchUserListMetadata =>
-        Google::Ads::GoogleAds::V13::Common::CustomerMatchUserListMetadata->new(
-        {
-          userList => $user_list_resource_name
-        })});
+  my $offline_user_data_job_resource_name = undef;
+  if (!defined $offline_user_data_job_id) {
+    # Create a new offline user data job.
+    my $offline_user_data_job =
+      Google::Ads::GoogleAds::V13::Resources::OfflineUserDataJob->new({
+        type                          => CUSTOMER_MATCH_USER_LIST,
+        customerMatchUserListMetadata =>
+          Google::Ads::GoogleAds::V13::Common::CustomerMatchUserListMetadata->
+          new({
+            userList => $user_list_resource_name
+          })});
 
-  # Issue a request to create the offline user data job.
-  my $create_offline_user_data_job_response =
-    $offline_user_data_job_service->create({
-      customerId => $customer_id,
-      job        => $offline_user_data_job
-    });
-  my $offline_user_data_job_resource_name =
-    $create_offline_user_data_job_response->{resourceName};
-  printf
-    "Created an offline user data job with resource name: '%s'.\n",
-    $offline_user_data_job_resource_name;
+    # Issue a request to create the offline user data job.
+    my $create_offline_user_data_job_response =
+      $offline_user_data_job_service->create({
+        customerId => $customer_id,
+        job        => $offline_user_data_job
+      });
+    $offline_user_data_job_resource_name =
+      $create_offline_user_data_job_response->{resourceName};
+    printf
+      "Created an offline user data job with resource name: '%s'.\n",
+      $offline_user_data_job_resource_name;
+  } else {
+    # Reuse the specified offline user data job.
+    $offline_user_data_job_resource_name =
+      Google::Ads::GoogleAds::V13::Utils::ResourceNames::offline_user_data_job(
+      $customer_id, $offline_user_data_job_id);
+  }
 
   # Issue a request to add the operations to the offline user data job.
+  # This example only adds a few operations, so it only sends one AddOfflineUserDataJobOperations
+  # request. If your application is adding a large number of operations, split
+  # the operations into batches and send multiple AddOfflineUserDataJobOperations
+  # requests for the SAME job. See
+  # https://developers.google.com/google-ads/api/docs/remarketing/audience-types/customer-match#customer_match_considerations
+  # and https://developers.google.com/google-ads/api/docs/best-practices/quotas#user_data
+  # for more information on the per-request limits.
   my $user_data_job_operations = build_offline_user_data_job_operations();
   my $response                 = $offline_user_data_job_service->add_operations(
     {
@@ -174,6 +207,12 @@ sub add_users_to_customer_match_user_list {
       scalar @$user_data_job_operations;
   }
 
+  if (!defined $run_job) {
+    print
+"Not running offline user data job $offline_user_data_job_resource_name, as requested.\n";
+    return;
+  }
+
   # Issue an asynchronous request to run the offline user data job for executing
   # all added operations.
   my $operation_response = $offline_user_data_job_service->run({
@@ -185,21 +224,19 @@ sub add_users_to_customer_match_user_list {
   # If the job is completed successfully, it prints information about the user list.
   # Otherwise, it prints, the query to use to check the job status again later.
   check_job_status($api_client, $customer_id,
-    $offline_user_data_job_resource_name,
-    $user_list_resource_name);
+    $offline_user_data_job_resource_name);
 }
 # [END add_customer_match_user_list]
 
 # Retrieves, checks, and prints the status of the offline user data job.
 sub check_job_status() {
-  my ($api_client, $customer_id, $offline_user_data_job_resource_name,
-    $user_list_resource_name)
-    = @_;
+  my ($api_client, $customer_id, $offline_user_data_job_resource_name) = @_;
 
   my $search_query =
     "SELECT offline_user_data_job.resource_name, " .
     "offline_user_data_job.id, offline_user_data_job.status, " .
-    "offline_user_data_job.type, offline_user_data_job.failure_reason " .
+    "offline_user_data_job.type, offline_user_data_job.failure_reason, " .
+    "offline_user_data_job.customer_match_user_list_metadata.user_list " .
     "FROM offline_user_data_job " .
     "WHERE offline_user_data_job.resource_name = " .
     "$offline_user_data_job_resource_name LIMIT 1";
@@ -232,7 +269,7 @@ sub check_job_status() {
 
   if ($status eq SUCCESS) {
     print_customer_match_user_list_info($api_client, $customer_id,
-      $user_list_resource_name);
+      $offline_user_data_job->{customerMatchUserListMetadata}{userList});
   } elsif ($status eq FAILED) {
     print "Failure reason: $offline_user_data_job->{failure_reason}";
   } elsif (grep /$status/, (PENDING, RUNNING)) {
@@ -248,41 +285,127 @@ sub check_job_status() {
 # by an email address and one user identified based on a physical address.
 sub build_offline_user_data_job_operations() {
   # [START add_customer_match_user_list_2]
-  # Create a first user data based on an email address.
-  my $user_data_with_email_address =
-    Google::Ads::GoogleAds::V13::Common::UserData->new({
-      userIdentifiers => [
-        Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
-            # Hash normalized email addresses based on SHA-256 hashing algorithm.
-            hashedEmail => normalize_and_hash('customer@example.com')})]});
+  # The first user data has an email address and a phone number.
+  my $raw_record_1 = {
+    email => 'test@gmail.com',
+    # Phone number to be converted to E.164 format, with a leading '+' as
+    # required. This includes whitespace that will be removed later.
+    phone => '+1 234 5678910',
+  };
 
-  # Create a second user data based on a physical address.
-  my $user_data_with_physical_address =
-    Google::Ads::GoogleAds::V13::Common::UserData->new({
-      userIdentifiers => [
-        Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
-            addressInfo =>
-              Google::Ads::GoogleAds::V13::Common::OfflineUserAddressInfo->new({
-                # First and last name must be normalized and hashed.
-                hashedFirstName => normalize_and_hash("John"),
-                hashedLastName  => normalize_and_hash("Doe"),
-                # Country code and zip code are sent in plain text.
-                countryCode => "US",
-                postalCode  => "10011"
-              })})]});
-  # [END add_customer_match_user_list_2]
+  # The second user data has an email address, a mailing address, and a phone
+  # number.
+  my $raw_record_2 = {
+    # Email address that includes a period (.) before the Gmail domain.
+    email => 'test.2@gmail.com',
+    # Address that includes all four required elements: first name, last
+    # name, country code, and postal code.
+    firstName   => 'John',
+    lastName    => 'Doe',
+    countryCode => 'US',
+    postalCode  => '10011',
+    # Phone number to be converted to E.164 format, with a leading '+' as
+    # required.
+    phone => '+1 234 5678910',
+  };
 
-  # Create the operations to add the two users.
-  my $operations = [
-    Google::Ads::GoogleAds::V13::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
-      ->new({
-        create => $user_data_with_email_address
+  # The third user data only has an email address.
+  my $raw_record_3 = {email => 'test3@gmail.com',};
+
+  my $raw_records = [$raw_record_1, $raw_record_2, $raw_record_3];
+
+  my $operations = [];
+  foreach my $record (@$raw_records) {
+    # Check if the record has email, phone, or address information, and adds a
+    # SEPARATE UserIdentifier object for each one found. For example, a record
+    # with an email address and a phone number will result in a UserData with two
+    # UserIdentifiers.
+    #
+    # IMPORTANT: Since the identifier attribute of UserIdentifier
+    # (https://developers.google.com/google-ads/api/reference/rpc/latest/UserIdentifier)
+    # is a oneof
+    # (https://protobuf.dev/programming-guides/proto3/#oneof-features), you must set
+    # only ONE of hashed_email, hashed_phone_number, mobile_id, third_party_user_id,
+    # or address-info. Setting more than one of these attributes on the same UserIdentifier
+    # will clear all the other members of the oneof. For example, the following code is
+    # INCORRECT and will result in a UserIdentifier with ONLY a hashed_phone_number:
+    #
+    # my $incorrect_user_identifier = Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
+    #   hashedEmail => '...',
+    #   hashedPhoneNumber => '...',
+    # });
+    #
+    # The separate 'if' statements below demonstrate the correct approach for creating a
+    # UserData object for a member with multiple UserIdentifiers.
+
+    my $user_identifiers = [];
+
+    # Check if the record has an email address, and if so, add a UserIdentifier for it.
+    if (defined $record->{email}) {
+      # Add the hashed email identifier to the list of UserIdentifiers.
+      push(
+        @$user_identifiers,
+        Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
+            hashedEmail => normalize_and_hash($record->{email}, 1)}));
+    }
+
+    # Check if the record has a phone number, and if so, add a UserIdentifier for it.
+    if (defined $record->{phone}) {
+      # Add the hashed phone number identifier to the list of UserIdentifiers.
+      push(
+        @$user_identifiers,
+        Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
+            hashedEmail => normalize_and_hash($record->{phone}, 1)}));
+    }
+
+    # Check if the record has all the required mailing address elements, and if so, add
+    # a UserIdentifier for the mailing address.
+    if (defined $record->{firstName}) {
+      my $required_keys = ["lastName", "countryCode", "postalCode"];
+      my $missing_keys  = [];
+
+      foreach my $key (@$required_keys) {
+        if (!defined $record->{$key}) {
+          push(@$missing_keys, $key);
+        }
       }
-      ),
-    Google::Ads::GoogleAds::V13::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
-      ->new({
-        create => $user_data_with_physical_address
-      })];
+
+      if (@$missing_keys) {
+        print
+"Skipping addition of mailing address information because the following"
+          . "keys are missing: "
+          . join(",", @$missing_keys);
+      } else {
+        push(
+          @$user_identifiers,
+          Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
+              addressInfo =>
+                Google::Ads::GoogleAds::V13::Common::OfflineUserAddressInfo->
+                new({
+                  # First and last name must be normalized and hashed.
+                  hashedFirstName => normalize_and_hash($record->{firstName}),
+                  hashedLastName  => normalize_and_hash($record->{lastName}),
+                  # Country code and zip code are sent in plain text.
+                  countryCode => $record->{countryCode},
+                  postalCode  => $record->{postalCode},
+                })}));
+      }
+    }
+    # [END add_customer_match_user_list_2]
+
+    # If the user_identifiers array is not empty, create a new
+    # OfflineUserDataJobOperation and add the UserData to it.
+    if (@$user_identifiers) {
+      my $user_data = Google::Ads::GoogleAds::V13::Common::UserData->new({
+          userIdentifiers => [$user_identifiers]});
+      push(
+        @$operations,
+        Google::Ads::GoogleAds::V13::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+          ->new({
+            create => $user_data
+          }));
+    }
+  }
 
   return $operations;
 }
@@ -335,9 +458,14 @@ sub print_customer_match_user_list_info {
 
 # Normalizes and hashes a string value.
 sub normalize_and_hash {
-  my $value = shift;
+  my $value                    = shift;
+  my $trim_intermediate_spaces = shift;
 
-  $value =~ s/^\s+|\s+$//g;
+  if ($trim_intermediate_spaces) {
+    $value =~ s/\s+|\s+$//g;
+  } else {
+    $value =~ s/^\s+|\s+$//g;
+  }
   return sha256_hex(lc $value);
 }
 
@@ -352,15 +480,24 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);
 
+my $customer_id              = undef;
+my $run_job                  = undef;
+my $user_list_id             = undef;
+my $offline_user_data_job_id = undef;
+
 # Parameters passed on the command line will override any parameters set in code.
-GetOptions("customer_id=s" => \$customer_id);
+GetOptions("customer_id=s"              => \$customer_id);
+GetOptions("run_job=s"                  => \$run_job);
+GetOptions("user_list_id=i"             => \$user_list_id);
+GetOptions("offline_user_data_job_id=i" => \$offline_user_data_job_id);
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
-add_customer_match_user_list($api_client, $customer_id =~ s/-//gr);
+add_customer_match_user_list($api_client, $customer_id =~ s/-//gr,
+  $run_job, $user_list_id, $offline_user_data_job_id);
 
 =pod
 
@@ -387,5 +524,8 @@ add_customer_match_user_list.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
+	-run_job					[optional] Run the OfflineUserDataJob after adding operations. Otherwise, only adds operations to the job.
+    -user_list_id				[optional] ID of an existing user list. If undef, creates a new user list.
+	-offline_user_data_job_id	[optional] ID of an existing OfflineUserDataJob in the PENDING state. If undef, creates a new job.
 
 =cut

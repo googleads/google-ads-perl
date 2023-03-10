@@ -34,17 +34,6 @@ use Cwd qw(abs_path);
 
 use constant PAGE_SIZE => 1000;
 
-# The following parameter(s) should be provided to run the example. You can
-# either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-# the command line.
-#
-# Parameters passed on the command line will override any parameters set in
-# code.
-#
-# Running the example with -h will print the command line usage.
-my $customer_id = "INSERT_CUSTOMER_ID_HERE";
-my $ad_group_id = undef;
-
 sub get_ad_group_bid_modifiers {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
@@ -60,8 +49,7 @@ sub get_ad_group_bid_modifiers {
     "ad_group_bid_modifier.hotel_length_of_stay.max_nights, " .
     "ad_group_bid_modifier.hotel_check_in_day.day_of_week, " .
     "ad_group_bid_modifier.hotel_check_in_date_range.start_date, " .
-    "ad_group_bid_modifier.hotel_check_in_date_range.end_date, " .
-    "ad_group_bid_modifier.preferred_content.type " .
+    "ad_group_bid_modifier.hotel_check_in_date_range.end_date " .
     "FROM ad_group_bid_modifier";
 
   if ($ad_group_id) {
@@ -134,10 +122,6 @@ sub get_ad_group_bid_modifiers {
       $criterion_details .= sprintf "Min Nights: %d, Max Nights: %d",
         $ad_group_bid_modifier->{hotelLengthOfStay}{minNights},
         $ad_group_bid_modifier->{hotelLengthOfStay}{maxNights};
-    } elsif ($ad_group_bid_modifier->{preferredContent}) {
-      $criterion_details = sprintf $criterion_details, "PreferredContent";
-      $criterion_details .= sprintf "Type: '%s'",
-        $ad_group_bid_modifier->{preferredContent}{type};
     }
 
     print $criterion_details, "\n";
@@ -156,6 +140,9 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);
+
+my $customer_id = undef;
+my $ad_group_id = undef;
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
