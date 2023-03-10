@@ -524,8 +524,8 @@ add_customer_match_user_list.pl [options]
 
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
-	-run_job					[optional] Run the OfflineUserDataJob after adding operations. Otherwise, only adds operations to the job.
-    -user_list_id				[optional] ID of an existing user list. If undef, creates a new user list.
-	-offline_user_data_job_id	[optional] ID of an existing OfflineUserDataJob in the PENDING state. If undef, creates a new job.
+    -run_job			[optional] Run the OfflineUserDataJob after adding operations. Otherwise, only adds operations to the job.
+    -user_list_id		[optional] ID of an existing user list. If undef, creates a new user list.
+    -offline_user_data_job_id	[optional] ID of an existing OfflineUserDataJob in the PENDING state. If undef, creates a new job.
 
 =cut
