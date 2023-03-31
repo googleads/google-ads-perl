@@ -28,6 +28,8 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
 use Google::Ads::GoogleAds::V13::Enums::ExperimentStatusEnum qw(SETUP);
 use Google::Ads::GoogleAds::V13::Enums::ExperimentTypeEnum   qw(SEARCH_CUSTOM);
+use Google::Ads::GoogleAds::V13::Enums::ResponseContentTypeEnum
+  qw(MUTABLE_RESOURCE);
 use Google::Ads::GoogleAds::V13::Resources::Campaign;
 use Google::Ads::GoogleAds::V13::Resources::Experiment;
 use Google::Ads::GoogleAds::V13::Resources::ExperimentArm;
@@ -44,18 +46,13 @@ use Cwd          qw(abs_path);
 use Data::Uniqid qw(uniqid);
 use POSIX        qw(strftime);
 
-my $customer_id;
-my $campaign_id;
-
 sub create_experiment {
-  my ($api_client, $customer_id, $campaign_id) = @_;
+  my ($api_client, $customer_id, $base_campaign_id) = @_;
 
   my $experiment = create_experiment_resource($api_client, $customer_id);
-  my $treatment_arm =
-    create_experiment_arms($api_client, $customer_id, $campaign_id,
-    $experiment);
   my $draft_campaign =
-    fetch_draft_campaign($api_client, $customer_id, $treatment_arm);
+    create_experiment_arms($api_client, $customer_id, $base_campaign_id,
+    $experiment);
 
   modify_draft_campaign($api_client, $customer_id, $draft_campaign);
 
@@ -99,7 +96,7 @@ sub create_experiment_resource {
 
 # [START create_experiment_2]
 sub create_experiment_arms {
-  my ($api_client, $customer_id, $campaign_id, $experiment) = @_;
+  my ($api_client, $customer_id, $base_campaign_id, $experiment) = @_;
 
   my $operations = [];
   push @$operations,
@@ -110,7 +107,7 @@ sub create_experiment_arms {
           control   => "true",
           campaigns => [
             Google::Ads::GoogleAds::V13::Utils::ResourceNames::campaign(
-              $customer_id, $campaign_id
+              $customer_id, $base_campaign_id
             )
           ],
           experiment   => $experiment,
@@ -133,46 +130,25 @@ sub create_experiment_arms {
 
   my $response = $api_client->ExperimentArmService()->mutate({
     customerId => $customer_id,
-    operations => $operations
+    operations => $operations,
+    # We want to fetch the draft campaign IDs from the treatment arm, so the
+    # easiest way to do that is to have the response return the newly created
+    # entities.
+    responseContentType => MUTABLE_RESOURCE
   });
 
   # Results always return in the order that you specify them in the request.
-  # Since we created the treatment arm last, it will be the last result.  If
-  # you don't remember which arm is the treatment arm, you can always filter
-  # the query in the next section with `experiment_arm.control = false`.
-  my $control_arm   = $response->{results}[0]{resourceName};
-  my $treatment_arm = $response->{results}[1]{resourceName};
+  # Since we created the treatment arm last, it will be the last result.
+  my $control_arm_result   = $response->{results}[0];
+  my $treatment_arm_result = $response->{results}[1];
 
-  printf "Created control arm with resource name '%s'.\n",   $control_arm;
-  printf "Created treatment arm with resource name '%s'.\n", $treatment_arm;
-  return $treatment_arm;
+  printf "Created control arm with resource name '%s'.\n",
+    $control_arm_result->{resourceName};
+  printf "Created treatment arm with resource name '%s'.\n",
+    $treatment_arm_result->{resourceName};
+  return $treatment_arm_result->{experimentArm}{inDesignCampaigns}[0];
 }
 # [END create_experiment_2]
-
-# [START create_experiment_3]
-sub fetch_draft_campaign {
-  my ($api_client, $customer_id, $treatment_arm) = @_;
-
-  # The 'in_design_campaigns' represent campaign drafts, which you can modify
-  # before starting the experiment.
-  my $query =
-    "SELECT experiment_arm.in_design_campaigns FROM experiment_arm " .
-    "WHERE experiment_arm.resource_name = '$treatment_arm'";
-
-  my $response = $api_client->GoogleAdsService()->search({
-    customerId => $customer_id,
-    query      => $query
-  });
-
-  # In design campaigns returns as an array, but for now it can only ever
-  # contain a single ID, so we just grab the first one.
-  my $draft_campaign =
-    $response->{results}[0]->{experimentArm}{inDesignCampaigns}[0];
-
-  printf "Found draft campaign with resource name '%s'.\n", $draft_campaign;
-  return $draft_campaign;
-}
-# [END create_experiment_3]
 
 sub modify_draft_campaign {
   my ($api_client, $customer_id, $draft_campaign) = @_;
@@ -216,18 +192,21 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);
 
+my $customer_id;
+my $base_campaign_id;
+
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
   "customer_id=s"      => \$customer_id,
-  "base_campaign_id=i" => \$campaign_id
+  "base_campaign_id=i" => \$base_campaign_id
 );
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
-pod2usage(2) if not check_params($customer_id, $campaign_id);
+pod2usage(2) if not check_params($customer_id, $base_campaign_id);
 
 # Call the example.
-create_experiment($api_client, $customer_id =~ s/-//gr, $campaign_id);
+create_experiment($api_client, $customer_id =~ s/-//gr, $base_campaign_id);
 
 =pod
 

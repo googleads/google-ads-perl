@@ -1,3 +1,9 @@
+16.0.0 - 2023-03-31
+-------------------
+- Removed support for Google Ads API v11.
+- Added code example: add_performance_max_for_travel_goals_campaign.
+- Updated code example: create_experiment.
+
 15.0.1 - 2023-03-08
 -------------------
 - Fixed bug in v13 CampaignBudget object.
@@ -8,9 +14,9 @@
 - Removed support for Google Ads API v10.
 - Reworked code examples to address the deprecation of combined rule user lists
 and expression rule user lists:
-  - Edited SetUpAdvancedRemarketing and SetUpRemarketing
-  - Renamed AddCombinedRuleUserList to AddFlexibleRuleUserList
-  - Removed AddExpressionRuleUserList
+  - Edited set_up_advanced_remarketing and set_up_remarketing
+  - Renamed add_combined_rule_user_list to add_flexible_rule_user_list
+  - Removed add_expression_rule_user_list
 
 14.0.1 - 2022-12-08
 -------------------
