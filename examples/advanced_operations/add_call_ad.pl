@@ -174,7 +174,7 @@ add_call_ad.pl [options]
     -customer_id                The Google Ads customer ID.
     -ad_group_id                The ad group ID to add a call ad to.
     -phone_country              [optional] The phone country (2-letter code).
-    -phone_number               The raw phone number, e.g. "(123) 456-7890".
+    -phone_number               The raw phone number, e.g. "(800) 555-0100".
     -conversion_action_id       [optional] The conversion action ID to attribute conversions to.
 
 =cut

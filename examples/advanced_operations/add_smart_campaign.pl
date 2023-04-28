@@ -92,7 +92,7 @@ use constant COUNTRY_CODE => "US";
 # https://developers.google.com/google-ads/api/reference/data/codes-formats#expandable-7
 use constant LANGUAGE_CODE               => "en";
 use constant LANDING_PAGE_URL            => "http://www.example.com";
-use constant PHONE_NUMBER                => "555-555-5555";
+use constant PHONE_NUMBER                => "800-555-0100";
 use constant BUDGET_TEMPORARY_ID         => -1;
 use constant SMART_CAMPAIGN_TEMPORARY_ID => -2;
 use constant AD_GROUP_TEMPORARY_ID       => -3;

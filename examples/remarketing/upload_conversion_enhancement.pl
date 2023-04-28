@@ -35,8 +35,6 @@ use
   Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::ConversionAdjustment;
 use
   Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::GclidDateTimePair;
-use
-  Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::RestatementValue;
 use Google::Ads::GoogleAds::V13::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
@@ -55,19 +53,15 @@ use Digest::SHA qw(sha256_hex);
 my $customer_id          = "INSERT_CUSTOMER_ID_HERE";
 my $conversion_action_id = "INSERT_CONVERSION_ACTION_ID_HERE";
 my $order_id             = "INSERT_ORDER_ID_HERE";
-# Optional: Specify the conversion date/time, user agent restatement value and
-# restatement currency code.
+# Optional: Specify the conversion date/time and user agent.
 my $conversion_date_time = undef;
 my $user_agent           = undef;
-my $restatement_value    = undef;
-my $currency_code        = undef;
 
 # [START upload_conversion_enhancement]
 sub upload_conversion_enhancement {
   my (
-    $api_client,        $customer_id,          $conversion_action_id,
-    $order_id,          $conversion_date_time, $user_agent,
-    $restatement_value, $currency_code
+    $api_client, $customer_id,          $conversion_action_id,
+    $order_id,   $conversion_date_time, $user_agent
   ) = @_;
 
   # [START create_adjustment]
@@ -101,8 +95,8 @@ sub upload_conversion_enhancement {
     Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
       addressInfo =>
         Google::Ads::GoogleAds::V13::Common::OfflineUserAddressInfo->new({
-          hashedFirstName     => normalize_and_hash("Joanna"),
-          hashedLastName      => normalize_and_hash("Smith"),
+          hashedFirstName     => normalize_and_hash("Dana"),
+          hashedLastName      => normalize_and_hash("Quinn"),
           hashedStreetAddress => normalize_and_hash("1600 Amphitheatre Pkwy"),
           city                => "Mountain View",
           state               => "CA",
@@ -119,8 +113,7 @@ sub upload_conversion_enhancement {
     Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
       userIdentifierSource => FIRST_PARTY,
       # Use the normalize and hash method specifically for email addresses.
-      hashedEmail => normalize_and_hash_email_address('joannasmith@example.com')
-    });
+      hashedEmail => normalize_and_hash_email_address('dana@example.com')});
 
   # Add the user identifiers to the enhancement adjustment.
   $enhancement->{userIdentifiers} = [$address_identifier, $email_identifier];
@@ -133,26 +126,6 @@ sub upload_conversion_enhancement {
     # either both attributed as same-device or both attributed as cross-device.
     $enhancement->{userAgent} = $user_agent;
   }
-
-  if (defined $restatement_value) {
-    # Construct the restated conversion value.
-    my $value =
-      Google::Ads::GoogleAds::V13::Services::ConversionAdjustmentUploadService::RestatementValue
-      ->new({
-        # Set the new value of the conversion.
-        adjustedValue => $restatement_value
-      });
-
-    # Set the currency of the new value, if provided. Otherwise, the default
-    # currency from the conversion action is used, and if that is not set then
-    # the account currency is used.
-    if (defined $currency_code) {
-      $value->{currencyCode} = $currency_code;
-    }
-
-    $enhancement->{restatementValue} = $value;
-  }
-  # [END create_adjustment]
 
   # Upload the enhancement adjustment. Partial failure should always be set to true.
   my $response =
@@ -227,9 +200,7 @@ GetOptions(
   "conversion_action_id=i" => \$conversion_action_id,
   "order_id=s"             => \$order_id,
   "conversion_date_time=s" => \$conversion_date_time,
-  "user_agent=s"           => \$user_agent,
-  "restatement_value=f"    => \$restatement_value,
-  "currency_code=s"        => \$currency_code
+  "user_agent=s"           => \$user_agent
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -239,8 +210,7 @@ pod2usage(2)
 
 # Call the example.
 upload_conversion_enhancement($api_client, $customer_id =~ s/-//gr,
-  $conversion_action_id, $order_id, $conversion_date_time, $user_agent,
-  $restatement_value,    $currency_code);
+  $conversion_action_id, $order_id, $conversion_date_time, $user_agent);
 
 =pod
 
@@ -266,7 +236,5 @@ upload_conversion_enhancement.pl [options]
                                 The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. "2019-01-01 12:32:45-08:00".
                                 Setting this field is optional, but recommended.
     -user_agent                 [optional] The HTTP user agent of the conversion.
-    -restatement_value          [optional] The enhancement value.
-    -currency_code              [optional] The currency of the enhancement value.
 
 =cut

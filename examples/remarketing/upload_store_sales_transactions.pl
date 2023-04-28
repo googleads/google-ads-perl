@@ -328,7 +328,7 @@ sub build_offline_user_data_job_operations {
       userIdentifiers => [
         Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
             # Hash normalized email addresses based on SHA-256 hashing algorithm.
-            hashedEmail => normalize_and_hash('customer@example.com')}
+            hashedEmail => normalize_and_hash('dana@example.com')}
         ),
         Google::Ads::GoogleAds::V13::Common::UserIdentifier->new({
             addressInfo =>
@@ -368,8 +368,8 @@ sub build_offline_user_data_job_operations {
             addressInfo =>
               Google::Ads::GoogleAds::V13::Common::OfflineUserAddressInfo->new({
                 # First and last name must be normalized and hashed.
-                hashedFirstName => normalize_and_hash("John"),
-                hashedLastName  => normalize_and_hash("Doe"),
+                hashedFirstName => normalize_and_hash("Dana"),
+                hashedLastName  => normalize_and_hash("Quinn"),
                 # Country code and zip code are sent in plain text.
                 countryCode => "US",
                 postalCode  => "10011"

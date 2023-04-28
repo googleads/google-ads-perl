@@ -287,30 +287,30 @@ sub build_offline_user_data_job_operations() {
   # [START add_customer_match_user_list_2]
   # The first user data has an email address and a phone number.
   my $raw_record_1 = {
-    email => 'test@gmail.com',
+    email => 'dana@example.com',
     # Phone number to be converted to E.164 format, with a leading '+' as
     # required. This includes whitespace that will be removed later.
-    phone => '+1 234 5678910',
+    phone => '+1 800 5550101',
   };
 
   # The second user data has an email address, a mailing address, and a phone
   # number.
   my $raw_record_2 = {
     # Email address that includes a period (.) before the Gmail domain.
-    email => 'test.2@gmail.com',
+    email => 'alex.2@example.com',
     # Address that includes all four required elements: first name, last
     # name, country code, and postal code.
-    firstName   => 'John',
-    lastName    => 'Doe',
+    firstName   => 'Alex',
+    lastName    => 'Quinn',
     countryCode => 'US',
-    postalCode  => '10011',
+    postalCode  => '94045',
     # Phone number to be converted to E.164 format, with a leading '+' as
     # required.
-    phone => '+1 234 5678910',
+    phone => '+1 800 5550102',
   };
 
   # The third user data only has an email address.
-  my $raw_record_3 = {email => 'test3@gmail.com',};
+  my $raw_record_3 = {email => 'charlie@example.com',};
 
   my $raw_records = [$raw_record_1, $raw_record_2, $raw_record_3];
 

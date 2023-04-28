@@ -23,6 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    hasLocationAnswer   => $args->{hasLocationAnswer},
     inputType           => $args->{inputType},
     singleChoiceAnswers => $args->{singleChoiceAnswers}};
 

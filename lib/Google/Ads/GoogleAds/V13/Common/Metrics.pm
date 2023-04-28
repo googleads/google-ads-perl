@@ -80,6 +80,8 @@ sub new {
     averageCpm                        => $args->{averageCpm},
     averageCpv                        => $args->{averageCpv},
     averagePageViews                  => $args->{averagePageViews},
+    averageTargetCpaMicros            => $args->{averageTargetCpaMicros},
+    averageTargetRoas                 => $args->{averageTargetRoas},
     averageTimeOnSite                 => $args->{averageTimeOnSite},
     benchmarkAverageMaxCpc            => $args->{benchmarkAverageMaxCpc},
     benchmarkCtr                      => $args->{benchmarkCtr},

@@ -12,26 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V13::Common::LeadFormCustomQuestionField;
+package Google::Ads::GoogleAds::V13::Services::CustomerSkAdNetworkConversionValueSchemaService;
 
 use strict;
 use warnings;
-use base qw(Google::Ads::GoogleAds::BaseEntity);
+use base qw(Google::Ads::GoogleAds::BaseService);
 
-use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
+sub mutate {
+  my $self         = shift;
+  my $request_body = shift;
+  my $http_method  = 'POST';
+  my $request_path =
+'v13/customers/{+customerId}/customerSkAdNetworkConversionValueSchemas:mutate';
+  my $response_type =
+'Google::Ads::GoogleAds::V13::Services::CustomerSkAdNetworkConversionValueSchemaService::MutateCustomerSkAdNetworkConversionValueSchemaResponse';
 
-sub new {
-  my ($class, $args) = @_;
-  my $self = {
-    customQuestionText  => $args->{customQuestionText},
-    hasLocationAnswer   => $args->{hasLocationAnswer},
-    singleChoiceAnswers => $args->{singleChoiceAnswers}};
-
-  # Delete the unassigned fields in this object for a more concise JSON payload
-  remove_unassigned_fields($self, $args);
-
-  bless $self, $class;
-  return $self;
+  return $self->SUPER::call($http_method, $request_path, $request_body,
+    $response_type);
 }
 
 1;
