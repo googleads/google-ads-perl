@@ -48,6 +48,7 @@ sub new {
     hotelSetting                  => $args->{hotelSetting},
     id                            => $args->{id},
     labels                        => $args->{labels},
+    listingType                   => $args->{listingType},
     localCampaignSetting          => $args->{localCampaignSetting},
     localServicesCampaignSettings => $args->{localServicesCampaignSettings},
     manualCpa                     => $args->{manualCpa},

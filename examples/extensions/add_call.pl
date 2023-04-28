@@ -191,7 +191,7 @@ add_call.pl [options]
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
     -phone_country              [optional] The phone country (2-letter code).
-    -phone_number               The raw phone number, e.g. "(123) 456-7890".
+    -phone_number               The raw phone number, e.g. "(800) 555-0100".
     -conversion_action_id       [optional] The conversion action ID to attribute conversions to.
 
 =cut

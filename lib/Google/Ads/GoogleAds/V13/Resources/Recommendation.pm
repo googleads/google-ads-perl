@@ -61,6 +61,28 @@ sub new {
       $args->{responsiveSearchAdRecommendation},
     searchPartnersOptInRecommendation =>
       $args->{searchPartnersOptInRecommendation},
+    shoppingAddAgeGroupRecommendation =>
+      $args->{shoppingAddAgeGroupRecommendation},
+    shoppingAddColorRecommendation  => $args->{shoppingAddColorRecommendation},
+    shoppingAddGenderRecommendation => $args->{shoppingAddGenderRecommendation},
+    shoppingAddGtinRecommendation   => $args->{shoppingAddGtinRecommendation},
+    shoppingAddMoreIdentifiersRecommendation =>
+      $args->{shoppingAddMoreIdentifiersRecommendation},
+    shoppingAddProductsToCampaignRecommendation =>
+      $args->{shoppingAddProductsToCampaignRecommendation},
+    shoppingAddSizeRecommendation => $args->{shoppingAddSizeRecommendation},
+    shoppingFixDisapprovedProductsRecommendation =>
+      $args->{shoppingFixDisapprovedProductsRecommendation},
+    shoppingFixMerchantCenterAccountSuspensionWarningRecommendation =>
+      $args->{shoppingFixMerchantCenterAccountSuspensionWarningRecommendation},
+    shoppingFixSuspendedMerchantCenterAccountRecommendation =>
+      $args->{shoppingFixSuspendedMerchantCenterAccountRecommendation},
+    shoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation =>
+      $args->
+      {shoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation}
+    ,
+    shoppingTargetAllOffersRecommendation =>
+      $args->{shoppingTargetAllOffersRecommendation},
     sitelinkAssetRecommendation   => $args->{sitelinkAssetRecommendation},
     targetCpaOptInRecommendation  => $args->{targetCpaOptInRecommendation},
     targetRoasOptInRecommendation => $args->{targetRoasOptInRecommendation},

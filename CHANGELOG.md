@@ -1,3 +1,13 @@
+16.1.0 - 2023-04-28
+-------------------
+- Added support for Google Ads API v13.1.
+- Added code example: add_things_to_do_ad.
+- Renamed hotel directory to travel.
+- Updated examples: upload_conversion_enhancement, add_call_ad,
+  add_smart_campaign, add_call, add_customer_match_user_list,
+  upload_call_conversion, upload_conversion_enhancement,
+  upload_store_sales_transactions.
+
 16.0.0 - 2023-03-31
 -------------------
 - Removed support for Google Ads API v11.
