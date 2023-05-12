@@ -96,6 +96,7 @@ sub add_customer_match_user_list {
 }
 
 # Creates a Customer Match user list.
+# [START add_customer_match_user_list_3]
 sub create_customer_match_user_list {
   my ($api_client, $customer_id) = @_;
 
@@ -134,6 +135,7 @@ sub create_customer_match_user_list {
 
   return $user_list_resource_name;
 }
+# [END add_customer_match_user_list_3]
 
 # Creates and executes an asynchronous job to add users to the Customer Match
 # user list.
@@ -229,6 +231,7 @@ sub add_users_to_customer_match_user_list {
 # [END add_customer_match_user_list]
 
 # Retrieves, checks, and prints the status of the offline user data job.
+# [START add_customer_match_user_list_4]
 sub check_job_status() {
   my ($api_client, $customer_id, $offline_user_data_job_resource_name) = @_;
 
@@ -280,6 +283,7 @@ sub check_job_status() {
 
   return 1;
 }
+# [END add_customer_match_user_list_4]
 
 # Builds and returns offline user data job operations to add one user identified
 # by an email address and one user identified based on a physical address.
@@ -391,7 +395,6 @@ sub build_offline_user_data_job_operations() {
                 })}));
       }
     }
-    # [END add_customer_match_user_list_2]
 
     # If the user_identifiers array is not empty, create a new
     # OfflineUserDataJobOperation and add the UserData to it.
@@ -406,11 +409,12 @@ sub build_offline_user_data_job_operations() {
           }));
     }
   }
-
+  # [END add_customer_match_user_list_2]
   return $operations;
 }
 
 # Prints information about the Customer Match user list.
+# [START add_customer_match_user_list_5]
 sub print_customer_match_user_list_info {
   my ($api_client, $customer_id, $user_list_resource_name) = @_;
 
@@ -455,6 +459,7 @@ sub print_customer_match_user_list_info {
     "Reminder: It may take several hours for the user list to be populated " .
     "with the users so getting zeros for the estimations is expected.\n";
 }
+# [END add_customer_match_user_list_5]
 
 # Normalizes and hashes a string value.
 sub normalize_and_hash {
