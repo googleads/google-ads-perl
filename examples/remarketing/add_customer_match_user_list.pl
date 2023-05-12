@@ -414,10 +414,10 @@ sub build_offline_user_data_job_operations() {
 }
 
 # Prints information about the Customer Match user list.
-# [START add_customer_match_user_list_5]
 sub print_customer_match_user_list_info {
   my ($api_client, $customer_id, $user_list_resource_name) = @_;
 
+  # [START add_customer_match_user_list_5]
   # Create a query that retrieves the user list.
   my $search_query =
     "SELECT user_list.size_for_display, user_list.size_for_search " .
@@ -440,6 +440,7 @@ sub print_customer_match_user_list_info {
       service => $google_ads_service,
       request => $search_stream_request
     });
+  # [END add_customer_match_user_list_5]
 
   # Issue a search request and process the stream response to print out some
   # information about the user list.
@@ -459,7 +460,6 @@ sub print_customer_match_user_list_info {
     "Reminder: It may take several hours for the user list to be populated " .
     "with the users so getting zeros for the estimations is expected.\n";
 }
-# [END add_customer_match_user_list_5]
 
 # Normalizes and hashes a string value.
 sub normalize_and_hash {
