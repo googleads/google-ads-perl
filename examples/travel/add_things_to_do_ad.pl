@@ -128,7 +128,7 @@ sub add_things_to_do_campaign {
       advertisingChannelSubType => TRAVEL_ACTIVITIES,
       travelCampaignSettings    =>
         Google::Ads::GoogleAds::V13::Resources::TravelCampaignSettings->new({
-          thingsToDoCenterId => $things_to_do_center_account_id
+          travelAccountId => $things_to_do_center_account_id
         }
         ),
       # Recommendation: Set the campaign to PAUSED when creating it to prevent
