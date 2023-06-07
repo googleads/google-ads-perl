@@ -24,8 +24,8 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V13::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V13::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V14::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -48,9 +48,9 @@ sub remove_ad {
 
   # Create a single remove operation, specifying the ad's resource name.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V13::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V14::Services::AdGroupAdService::AdGroupAdOperation
     ->new({
-      remove => Google::Ads::GoogleAds::V13::Utils::ResourceNames::ad_group_ad(
+      remove => Google::Ads::GoogleAds::V14::Utils::ResourceNames::ad_group_ad(
         $customer_id, $ad_group_id, $ad_id
       )});
 

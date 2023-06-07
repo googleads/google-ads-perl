@@ -27,10 +27,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V13::Services::ConversionUploadService::CallConversion;
+  Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CallConversion;
 use
-  Google::Ads::GoogleAds::V13::Services::ConversionUploadService::CustomVariable;
-use Google::Ads::GoogleAds::V13::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CustomVariable;
+use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -67,10 +67,10 @@ sub upload_call_conversion {
 
   # Create a call conversion by specifying currency as USD.
   my $call_conversion =
-    Google::Ads::GoogleAds::V13::Services::ConversionUploadService::CallConversion
+    Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CallConversion
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V13::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V14::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       callerId           => $caller_id,
@@ -82,10 +82,10 @@ sub upload_call_conversion {
 
   if ($conversion_custom_variable_id && $conversion_custom_variable_value) {
     $call_conversion->{customVariables} = [
-      Google::Ads::GoogleAds::V13::Services::ConversionUploadService::CustomVariable
+      Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CustomVariable
         ->new({
           conversionCustomVariable =>
-            Google::Ads::GoogleAds::V13::Utils::ResourceNames::conversion_custom_variable(
+            Google::Ads::GoogleAds::V14::Utils::ResourceNames::conversion_custom_variable(
             $customer_id, $conversion_custom_variable_id
             ),
           value => $conversion_custom_variable_value

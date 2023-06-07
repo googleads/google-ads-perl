@@ -1,3 +1,13 @@
+17.0.0 - 2023-06-08
+-------------------
+- Added support for Google Ads API v14.
+- Removed examples: generate_forecast_metrics, generate_historical_metrics,
+  get_campaign_criterion_bid_modifier_simulations.
+
+16.1.2 - 2023-05-17
+-------------------
+- Mark namespaces as no_index to avoid PAUSE indexing issues.
+
 16.1.0 - 2023-04-28
 -------------------
 - Added support for Google Ads API v13.1.

@@ -26,20 +26,20 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Constants;
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V13::Resources::Feed;
-use Google::Ads::GoogleAds::V13::Resources::PlacesLocationFeedData;
-use Google::Ads::GoogleAds::V13::Resources::OAuthInfo;
-use Google::Ads::GoogleAds::V13::Resources::CustomerFeed;
-use Google::Ads::GoogleAds::V13::Common::MatchingFunction;
-use Google::Ads::GoogleAds::V13::Common::Operand;
-use Google::Ads::GoogleAds::V13::Common::ConstantOperand;
-use Google::Ads::GoogleAds::V13::Enums::FeedOriginEnum      qw(GOOGLE);
-use Google::Ads::GoogleAds::V13::Enums::PlaceholderTypeEnum qw(LOCATION);
-use Google::Ads::GoogleAds::V13::Enums::MatchingFunctionOperatorEnum
+use Google::Ads::GoogleAds::V14::Resources::Feed;
+use Google::Ads::GoogleAds::V14::Resources::PlacesLocationFeedData;
+use Google::Ads::GoogleAds::V14::Resources::OAuthInfo;
+use Google::Ads::GoogleAds::V14::Resources::CustomerFeed;
+use Google::Ads::GoogleAds::V14::Common::MatchingFunction;
+use Google::Ads::GoogleAds::V14::Common::Operand;
+use Google::Ads::GoogleAds::V14::Common::ConstantOperand;
+use Google::Ads::GoogleAds::V14::Enums::FeedOriginEnum      qw(GOOGLE);
+use Google::Ads::GoogleAds::V14::Enums::PlaceholderTypeEnum qw(LOCATION);
+use Google::Ads::GoogleAds::V14::Enums::MatchingFunctionOperatorEnum
   qw(IDENTITY);
-use Google::Ads::GoogleAds::V13::Services::FeedService::FeedOperation;
+use Google::Ads::GoogleAds::V14::Services::FeedService::FeedOperation;
 use
-  Google::Ads::GoogleAds::V13::Services::CustomerFeedService::CustomerFeedOperation;
+  Google::Ads::GoogleAds::V14::Services::CustomerFeedService::CustomerFeedOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -71,12 +71,12 @@ sub add_business_profile_location_extensions {
   # Create a feed that will sync to the Business Profile account specified by
   # $business_profile_email. Do not add FeedAttributes to this object as Google Ads
   # will add them automatically because this will be a system generated feed.
-  my $business_profile_feed = Google::Ads::GoogleAds::V13::Resources::Feed->new(
+  my $business_profile_feed = Google::Ads::GoogleAds::V14::Resources::Feed->new(
     {
       name => "Business Profile feed #" . uniqid(),
       # Configure the location feed populated from Business Profile Locations.
       placesLocationFeedData =>
-        Google::Ads::GoogleAds::V13::Resources::PlacesLocationFeedData->new({
+        Google::Ads::GoogleAds::V14::Resources::PlacesLocationFeedData->new({
           emailAddress      => $business_profile_email,
           businessAccountId => $business_profile_account_id,
           # Used to filter Business Profile listings by labels. If entries exist in
@@ -86,7 +86,7 @@ sub add_business_profile_location_extensions {
           labelFilters => ["Stores in New York"],
           # Set the authentication info to be able to connect Google Ads to the
           # Business Profile account.
-          oauthInfo => Google::Ads::GoogleAds::V13::Resources::OAuthInfo->new({
+          oauthInfo => Google::Ads::GoogleAds::V14::Resources::OAuthInfo->new({
               httpMethod     => "GET",
               httpRequestUrl =>
                 Google::Ads::GoogleAds::Constants::DEFAULT_OAUTH2_SCOPE,
@@ -102,7 +102,7 @@ sub add_business_profile_location_extensions {
 
   # Create a feed operation.
   my $feed_operation =
-    Google::Ads::GoogleAds::V13::Services::FeedService::FeedOperation->new(
+    Google::Ads::GoogleAds::V14::Services::FeedService::FeedOperation->new(
     {create => $business_profile_feed});
 
   # [START add_business_profile_location_extensions_1]
@@ -123,17 +123,17 @@ sub add_business_profile_location_extensions {
   # [START add_business_profile_location_extensions_2]
   # Add a CustomerFeed that associates the feed with this customer for the LOCATION
   # placeholder type.
-  my $customer_feed = Google::Ads::GoogleAds::V13::Resources::CustomerFeed->new(
+  my $customer_feed = Google::Ads::GoogleAds::V14::Resources::CustomerFeed->new(
     {
       feed             => $feed_resource_name,
       placeholderTypes => LOCATION,
       # Create a matching function that will always evaluate to true.
       matchingFunction =>
-        Google::Ads::GoogleAds::V13::Common::MatchingFunction->new({
+        Google::Ads::GoogleAds::V14::Common::MatchingFunction->new({
           leftOperands => [
-            Google::Ads::GoogleAds::V13::Common::Operand->new({
+            Google::Ads::GoogleAds::V14::Common::Operand->new({
                 constantOperand =>
-                  Google::Ads::GoogleAds::V13::Common::ConstantOperand->new({
+                  Google::Ads::GoogleAds::V14::Common::ConstantOperand->new({
                     booleanValue => "true"
                   })})
           ],
@@ -144,7 +144,7 @@ sub add_business_profile_location_extensions {
 
   # Create a customer feed operation.
   my $customer_feed_operation =
-    Google::Ads::GoogleAds::V13::Services::CustomerFeedService::CustomerFeedOperation
+    Google::Ads::GoogleAds::V14::Services::CustomerFeedService::CustomerFeedOperation
     ->new({create => $customer_feed});
 
   # [START add_business_profile_location_extensions_3]
