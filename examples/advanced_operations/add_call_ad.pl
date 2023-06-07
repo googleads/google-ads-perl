@@ -26,14 +26,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V13::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V13::Resources::Ad;
-use Google::Ads::GoogleAds::V13::Common::CallAdInfo;
-use Google::Ads::GoogleAds::V13::Enums::AdGroupAdStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V13::Enums::CallConversionReportingStateEnum
+use Google::Ads::GoogleAds::V14::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V14::Resources::Ad;
+use Google::Ads::GoogleAds::V14::Common::CallAdInfo;
+use Google::Ads::GoogleAds::V14::Enums::AdGroupAdStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V14::Enums::CallConversionReportingStateEnum
   qw(USE_RESOURCE_LEVEL_CALL_CONVERSION_ACTION);
-use Google::Ads::GoogleAds::V13::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V13::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V14::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -64,15 +64,15 @@ sub add_call_ad {
     = @_;
 
   # Create an ad group ad for the new ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V13::Resources::AdGroupAd->new({
-      adGroup => Google::Ads::GoogleAds::V13::Utils::ResourceNames::ad_group(
+  my $ad_group_ad = Google::Ads::GoogleAds::V14::Resources::AdGroupAd->new({
+      adGroup => Google::Ads::GoogleAds::V14::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       status => PAUSED,
-      ad     => Google::Ads::GoogleAds::V13::Resources::Ad->new({
+      ad     => Google::Ads::GoogleAds::V14::Resources::Ad->new({
           # The URL of the webpage to refer to.
           finalUrls => ["https://www.example.com"],
-          callAd    => Google::Ads::GoogleAds::V13::Common::CallAdInfo->new({
+          callAd    => Google::Ads::GoogleAds::V14::Common::CallAdInfo->new({
               # Set basic information.
               businessName => "Google",
               headline1    => "Travel",
@@ -97,7 +97,7 @@ sub add_call_ad {
   # Set the conversion action ID to the one provided if any.
   if (defined $conversion_action_id) {
     $ad_group_ad->{ad}{callAd}{conversionAction} =
-      Google::Ads::GoogleAds::V13::Utils::ResourceNames::conversion_action(
+      Google::Ads::GoogleAds::V14::Utils::ResourceNames::conversion_action(
       $customer_id, $conversion_action_id);
     $ad_group_ad->{ad}{callAd}{conversionReportingState} =
       USE_RESOURCE_LEVEL_CALL_CONVERSION_ACTION;
@@ -105,7 +105,7 @@ sub add_call_ad {
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V13::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V14::Services::AdGroupAdService::AdGroupAdOperation
     ->new({
       create => $ad_group_ad
     });

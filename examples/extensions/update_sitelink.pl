@@ -25,11 +25,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V13::Resources::ExtensionFeedItem;
-use Google::Ads::GoogleAds::V13::Common::SitelinkFeedItem;
+use Google::Ads::GoogleAds::V14::Resources::ExtensionFeedItem;
+use Google::Ads::GoogleAds::V14::Common::SitelinkFeedItem;
 use
-  Google::Ads::GoogleAds::V13::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
-use Google::Ads::GoogleAds::V13::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V14::Services::ExtensionFeedItemService::ExtensionFeedItemOperation;
+use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -53,13 +53,13 @@ sub update_sitelink {
 
   # Create an extension feed item using the specified feed item ID and sitelink text.
   my $extension_feed_item =
-    Google::Ads::GoogleAds::V13::Resources::ExtensionFeedItem->new({
+    Google::Ads::GoogleAds::V14::Resources::ExtensionFeedItem->new({
       resourceName =>
-        Google::Ads::GoogleAds::V13::Utils::ResourceNames::extension_feed_item(
+        Google::Ads::GoogleAds::V14::Utils::ResourceNames::extension_feed_item(
         $customer_id, $feed_item_id
         ),
       sitelinkFeedItem =>
-        Google::Ads::GoogleAds::V13::Common::SitelinkFeedItem->new({
+        Google::Ads::GoogleAds::V14::Common::SitelinkFeedItem->new({
           linkText => $sitelink_text
         })});
 
@@ -67,7 +67,7 @@ sub update_sitelink {
   # FieldMasks utility to derive the update mask. This mask tells the Google Ads
   # API which attributes of the extension feed item you want to change.
   my $extension_feed_item_operation =
-    Google::Ads::GoogleAds::V13::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
+    Google::Ads::GoogleAds::V14::Services::ExtensionFeedItemService::ExtensionFeedItemOperation
     ->new({
       update     => $extension_feed_item,
       updateMask => all_set_fields_of($extension_feed_item)});
