@@ -57,7 +57,7 @@ sub generate_forecast_metrics {
       # Set the forecast range. Repeat forecasts with different horizons
       # to get a holistic picture.
       forecastPeriod => Google::Ads::GoogleAds::V14::Common::DateRange->new({
-          # SSet the forecast start date to tomorrow.
+          # Set the forecast start date to tomorrow.
           startDate => strftime("%Y-%m-%d", localtime(time + 60 * 60 * 24)),
           # Set the forecast end date to 30 days from today.
           endDate => strftime("%Y-%m-%d", localtime(time + 60 * 60 * 24 * 30))})
