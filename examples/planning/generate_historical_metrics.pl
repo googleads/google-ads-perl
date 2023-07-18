@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 # This example generates historical metrics for keyword planning.
+# Guide: https://developers.google.com/google-ads/api/docs/keyword-planning/generate-historical-metrics
 
 use strict;
 use warnings;
@@ -44,7 +45,9 @@ sub generate_historical_metrics {
           2840)
       ],
       keywordPlanNetwork => 'GOOGLE_SEARCH',
-      # Language criteria 1000 is for English.
+      # Language criteria 1000 is for English. See
+      # https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
+      # for the list of language criteria IDs.
       language =>
         Google::Ads::GoogleAds::V14::Utils::ResourceNames::language_constant(
         1000)});

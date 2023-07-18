@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 # This example generates forecast metrics for keyword planning.
+# Guide: https://developers.google.com/google-ads/api/docs/keyword-planning/generate-forecast-metrics
 
 use strict;
 use warnings;
@@ -43,16 +44,6 @@ use Pod::Usage;
 use Cwd   qw(abs_path);
 use POSIX qw(strftime);
 
-# The following parameter(s) should be provided to run the example. You can
-# either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-# the command line.
-#
-# Parameters passed on the command line will override any parameters set in
-# code.
-#
-# Running the example with -h will print the command line usage.
-my $customer_id = "INSERT_CUSTOMER_ID_HERE";
-
 # [START generate_forecast_metrics]
 sub generate_forecast_metrics {
   my ($api_client, $customer_id) = @_;
@@ -63,12 +54,12 @@ sub generate_forecast_metrics {
     $api_client->KeywordPlanIdeaService()->generate_keyword_forecast_metrics({
       customerId => $customer_id,
       campaign   => $campaign_to_forecast,
-
-      # Set the forecast range.
+      # Set the forecast range. Repeat forecasts with different horizons
+      # to get a holistic picture.
       forecastPeriod => Google::Ads::GoogleAds::V14::Common::DateRange->new({
-          # Set the start date. The forecast starts tomorrow.
+          # SSet the forecast start date to tomorrow.
           startDate => strftime("%Y-%m-%d", localtime(time + 60 * 60 * 24)),
-          # Set the end date. The forecast ends in 30 days.
+          # Set the forecast end date to 30 days from today.
           endDate => strftime("%Y-%m-%d", localtime(time + 60 * 60 * 24 * 30))})
     });
 
@@ -84,7 +75,12 @@ sub generate_forecast_metrics {
   return 1;
 }
 
-# Creates the campaign to forecast.
+# Creates the campaign to forecast. A campaign to forecast lets you try out
+# various configuration and keywords to find the best optimization for your
+# future campaigns. Once you've found the best campaign configuration,
+# create a serving campaign in your Google Ads account with similar values
+# and keywords. For more details, see:
+# https://support.google.com/google-ads/answer/3022575
 sub create_campaign_to_forecast {
   my ($api_client, $customer_id) = @_;
 
@@ -111,11 +107,11 @@ sub create_campaign_to_forecast {
   # See https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
   # for the list of language criteria IDs.
   $campaign_to_forecast->{languageConstants} = [
-
     # Language criteria 1000 is for English.
     Google::Ads::GoogleAds::V14::Utils::ResourceNames::language_constant(1000)];
 
-  # Create a forecast ad group.
+  # Create forecast ad groups based on themes such as creative relevance,
+  # product category, or cost per click.
   $campaign_to_forecast->{adGroups} = [
     Google::Ads::GoogleAds::V14::Services::KeywordPlanIdeaService::ForecastAdGroup
       ->new({
@@ -165,6 +161,8 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);
+
+my $customer_id = undef;
 
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions("customer_id=s" => \$customer_id);
