@@ -70,7 +70,7 @@ sub generate_forecast_metrics {
   printf "Estimated daily impressions: %s.\n",
     defined $metrics->{impressions} ? $metrics->{impressions} : "undef";
   printf "Estimated average cpc (micros): %s.\n\n",
-    defined $metrics->{averageCpc} ? $metrics->{averageCpc} : "undef";
+    defined $metrics->{averageCpcMicros} ? $metrics->{averageCpcMicros} : "undef";
 
   return 1;
 }
