@@ -82,7 +82,7 @@ sub generate_forecast_metrics {
 # and keywords. For more details, see:
 # https://support.google.com/google-ads/answer/3022575
 sub create_campaign_to_forecast {
-  my ($api_client, $customer_id) = @_;
+  my ($api_client) = @_;
 
   # Create a campaign to forecast.
   my $campaign_to_forecast =
