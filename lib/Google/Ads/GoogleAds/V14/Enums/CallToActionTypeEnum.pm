@@ -28,7 +28,15 @@ use Const::Exporter enums => [
   SUBSCRIBE   => "SUBSCRIBE",
   DOWNLOAD    => "DOWNLOAD",
   BOOK_NOW    => "BOOK_NOW",
-  SHOP_NOW    => "SHOP_NOW"
+  SHOP_NOW    => "SHOP_NOW",
+  BUY_NOW     => "BUY_NOW",
+  DONATE_NOW  => "DONATE_NOW",
+  ORDER_NOW   => "ORDER_NOW",
+  PLAY_NOW    => "PLAY_NOW",
+  SEE_MORE    => "SEE_MORE",
+  START_NOW   => "START_NOW",
+  VISIT_SITE  => "VISIT_SITE",
+  WATCH_NOW   => "WATCH_NOW"
 ];
 
 1;

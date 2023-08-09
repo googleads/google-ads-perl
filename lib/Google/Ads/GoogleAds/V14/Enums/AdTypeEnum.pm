@@ -49,7 +49,8 @@ use Const::Exporter enums => [
   IN_FEED_VIDEO_AD                 => "IN_FEED_VIDEO_AD",
   DISCOVERY_MULTI_ASSET_AD         => "DISCOVERY_MULTI_ASSET_AD",
   DISCOVERY_CAROUSEL_AD            => "DISCOVERY_CAROUSEL_AD",
-  TRAVEL_AD                        => "TRAVEL_AD"
+  TRAVEL_AD                        => "TRAVEL_AD",
+  DISCOVERY_VIDEO_RESPONSIVE_AD    => "DISCOVERY_VIDEO_RESPONSIVE_AD"
 ];
 
 1;

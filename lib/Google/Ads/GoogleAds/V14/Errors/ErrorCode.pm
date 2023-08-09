@@ -157,6 +157,7 @@ sub new {
     requestError                    => $args->{requestError},
     resourceAccessDeniedError       => $args->{resourceAccessDeniedError},
     resourceCountLimitExceededError => $args->{resourceCountLimitExceededError},
+    searchTermInsightError          => $args->{searchTermInsightError},
     settingError                    => $args->{settingError},
     sharedCriterionError            => $args->{sharedCriterionError},
     sharedSetError                  => $args->{sharedSetError},

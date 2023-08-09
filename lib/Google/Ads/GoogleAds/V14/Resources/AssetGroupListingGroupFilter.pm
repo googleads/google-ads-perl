@@ -27,6 +27,7 @@ sub new {
     caseValue                => $args->{caseValue},
     id                       => $args->{id},
     parentListingGroupFilter => $args->{parentListingGroupFilter},
+    path                     => $args->{path},
     resourceName             => $args->{resourceName},
     type                     => $args->{type},
     vertical                 => $args->{vertical}};

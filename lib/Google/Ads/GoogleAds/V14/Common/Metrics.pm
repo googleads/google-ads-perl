@@ -62,7 +62,8 @@ sub new {
     allConversionsValue            => $args->{allConversionsValue},
     allConversionsValueByConversionDate =>
       $args->{allConversionsValueByConversionDate},
-    allConversionsValuePerCost => $args->{allConversionsValuePerCost},
+    allConversionsValuePerCost  => $args->{allConversionsValuePerCost},
+    allNewCustomerLifetimeValue => $args->{allNewCustomerLifetimeValue},
     auctionInsightSearchAbsoluteTopImpressionPercentage =>
       $args->{auctionInsightSearchAbsoluteTopImpressionPercentage},
     auctionInsightSearchImpressionShare =>
@@ -155,6 +156,7 @@ sub new {
     messageChats                     => $args->{messageChats},
     messageImpressions               => $args->{messageImpressions},
     mobileFriendlyClicksPercentage   => $args->{mobileFriendlyClicksPercentage},
+    newCustomerLifetimeValue         => $args->{newCustomerLifetimeValue},
     optimizationScoreUplift          => $args->{optimizationScoreUplift},
     optimizationScoreUrl             => $args->{optimizationScoreUrl},
     organicClicks                    => $args->{organicClicks},
@@ -186,6 +188,7 @@ sub new {
     searchRankLostTopImpressionShare =>
       $args->{searchRankLostTopImpressionShare},
     searchTopImpressionShare => $args->{searchTopImpressionShare},
+    searchVolume             => $args->{searchVolume},
     skAdNetworkConversions   => $args->{skAdNetworkConversions},
     speedScore               => $args->{speedScore},
     topImpressionPercentage  => $args->{topImpressionPercentage},

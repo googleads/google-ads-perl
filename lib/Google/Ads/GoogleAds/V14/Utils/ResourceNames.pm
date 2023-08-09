@@ -679,6 +679,17 @@ sub campaign_label {
     [$customer_id, $campaign_id, $label_id]);
 }
 
+# Returns the campaign_search_term_insight resource name for the specified components.
+sub campaign_search_term_insight {
+  my ($customer_id, $campaign_id, $category_id) = @_;
+
+  my $path_template =
+'customers/{customer_id}/campaignSearchTermInsights/{campaign_id}~{category_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $campaign_id, $category_id]);
+}
+
 # Returns the campaign_shared_set resource name for the specified components.
 sub campaign_shared_set {
   my ($customer_id, $campaign_id, $shared_set_id) = @_;
@@ -974,6 +985,16 @@ sub customer_negative_criterion {
     'customers/{customer_id}/customerNegativeCriteria/{criterion_id}';
 
   return expand_path_template($path_template, [$customer_id, $criterion_id]);
+}
+
+# Returns the customer_search_term_insight resource name for the specified components.
+sub customer_search_term_insight {
+  my ($customer_id, $category_id) = @_;
+
+  my $path_template =
+    'customers/{customer_id}/customerSearchTermInsights/{category_id}';
+
+  return expand_path_template($path_template, [$customer_id, $category_id]);
 }
 
 # Returns the customer_user_access resource name for the specified components.

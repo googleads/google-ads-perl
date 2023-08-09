@@ -27,6 +27,7 @@ sub new {
     callReportingSetting                => $args->{callReportingSetting},
     conversionTrackingSetting           => $args->{conversionTrackingSetting},
     currencyCode                        => $args->{currencyCode},
+    customerAgreementSetting            => $args->{customerAgreementSetting},
     descriptiveName                     => $args->{descriptiveName},
     finalUrlSuffix                      => $args->{finalUrlSuffix},
     hasPartnersBadge                    => $args->{hasPartnersBadge},

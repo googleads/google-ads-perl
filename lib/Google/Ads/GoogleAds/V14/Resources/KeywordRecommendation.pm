@@ -24,7 +24,8 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     keyword                 => $args->{keyword},
-    recommendedCpcBidMicros => $args->{recommendedCpcBidMicros}};
+    recommendedCpcBidMicros => $args->{recommendedCpcBidMicros},
+    searchTerms             => $args->{searchTerms}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);
