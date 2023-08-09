@@ -41,6 +41,10 @@ sub new {
       $args->{excessCreditAdjustmentTaxAmountMicros},
     excessCreditAdjustmentTotalAmountMicros =>
       $args->{excessCreditAdjustmentTotalAmountMicros},
+    exportChargeSubtotalAmountMicros =>
+      $args->{exportChargeSubtotalAmountMicros},
+    exportChargeTaxAmountMicros   => $args->{exportChargeTaxAmountMicros},
+    exportChargeTotalAmountMicros => $args->{exportChargeTotalAmountMicros},
     regulatoryCostsSubtotalAmountMicros =>
       $args->{regulatoryCostsSubtotalAmountMicros},
     regulatoryCostsTaxAmountMicros   => $args->{regulatoryCostsTaxAmountMicros},

@@ -36,6 +36,7 @@ sub new {
     campaignBudget                => $args->{campaignBudget},
     campaignGroup                 => $args->{campaignGroup},
     commission                    => $args->{commission},
+    discoveryCampaignSettings     => $args->{discoveryCampaignSettings},
     dynamicSearchAdsSetting       => $args->{dynamicSearchAdsSetting},
     endDate                       => $args->{endDate},
     excludedParentAssetFieldTypes => $args->{excludedParentAssetFieldTypes},

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V14::Common::ListingGroupInfo;
+package Google::Ads::GoogleAds::V14::Common::DiscoveryVideoResponsiveAdInfo;
 
 use strict;
 use warnings;
@@ -23,10 +23,15 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    caseValue              => $args->{caseValue},
-    parentAdGroupCriterion => $args->{parentAdGroupCriterion},
-    path                   => $args->{path},
-    type                   => $args->{type}};
+    breadcrumb1   => $args->{breadcrumb1},
+    breadcrumb2   => $args->{breadcrumb2},
+    businessName  => $args->{businessName},
+    callToActions => $args->{callToActions},
+    descriptions  => $args->{descriptions},
+    headlines     => $args->{headlines},
+    logoImages    => $args->{logoImages},
+    longHeadlines => $args->{longHeadlines},
+    videos        => $args->{videos}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

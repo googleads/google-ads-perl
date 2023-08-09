@@ -31,6 +31,7 @@ sub new {
     devicePreference            => $args->{devicePreference},
     discoveryCarouselAd         => $args->{discoveryCarouselAd},
     discoveryMultiAssetAd       => $args->{discoveryMultiAssetAd},
+    discoveryVideoResponsiveAd  => $args->{discoveryVideoResponsiveAd},
     displayUploadAd             => $args->{displayUploadAd},
     displayUrl                  => $args->{displayUrl},
     expandedDynamicSearchAd     => $args->{expandedDynamicSearchAd},

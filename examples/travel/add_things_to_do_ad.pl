@@ -127,7 +127,7 @@ sub add_things_to_do_campaign {
       advertisingChannelType    => TRAVEL,
       advertisingChannelSubType => TRAVEL_ACTIVITIES,
       travelCampaignSettings    =>
-        Google::Ads::GoogleAds::V13::Resources::TravelCampaignSettings->new({
+        Google::Ads::GoogleAds::V14::Resources::TravelCampaignSettings->new({
           travelAccountId => $things_to_do_center_account_id
         }
         ),

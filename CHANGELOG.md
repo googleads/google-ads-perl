@@ -1,3 +1,10 @@
+18.0.0 - 2023-08-08
+-------------------
+- Added support for Google Ads API v14.1.
+- Removed support for Google Ads API v12.
+- Removed add_keyword_plan code example.
+- Added code examples: generate_forecast_metrics, generate_historical_metrics.
+
 17.0.0 - 2023-06-08
 -------------------
 - Added support for Google Ads API v14.

@@ -40,7 +40,9 @@ sub new {
       $args->{forecastingCampaignBudgetRecommendation},
     forecastingSetTargetRoasRecommendation =>
       $args->{forecastingSetTargetRoasRecommendation},
-    impact                         => $args->{impact},
+    impact                                        => $args->{impact},
+    improvePerformanceMaxAdStrengthRecommendation =>
+      $args->{improvePerformanceMaxAdStrengthRecommendation},
     keywordMatchTypeRecommendation => $args->{keywordMatchTypeRecommendation},
     keywordRecommendation          => $args->{keywordRecommendation},
     lowerTargetRoasRecommendation  => $args->{lowerTargetRoasRecommendation},
@@ -50,9 +52,13 @@ sub new {
       $args->{maximizeClicksOptInRecommendation},
     maximizeConversionsOptInRecommendation =>
       $args->{maximizeConversionsOptInRecommendation},
+    migrateDynamicSearchAdsCampaignToPerformanceMaxRecommendation =>
+      $args->{migrateDynamicSearchAdsCampaignToPerformanceMaxRecommendation},
     moveUnusedBudgetRecommendation   => $args->{moveUnusedBudgetRecommendation},
     optimizeAdRotationRecommendation =>
       $args->{optimizeAdRotationRecommendation},
+    performanceMaxOptInRecommendation =>
+      $args->{performanceMaxOptInRecommendation},
     raiseTargetCpaBidTooLowRecommendation =>
       $args->{raiseTargetCpaBidTooLowRecommendation},
     raiseTargetCpaRecommendation => $args->{raiseTargetCpaRecommendation},

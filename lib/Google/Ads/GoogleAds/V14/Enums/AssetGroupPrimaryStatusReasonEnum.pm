@@ -12,18 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V14::Enums::OfflineConversionDiagnosticStatusEnum;
+package Google::Ads::GoogleAds::V14::Enums::AssetGroupPrimaryStatusReasonEnum;
 
 use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
-  EXCELLENT        => "EXCELLENT",
-  GOOD             => "GOOD",
-  NEEDS_ATTENTION  => "NEEDS_ATTENTION",
-  NO_RECENT_UPLOAD => "NO_RECENT_UPLOAD"
+  UNSPECIFIED              => "UNSPECIFIED",
+  UNKNOWN                  => "UNKNOWN",
+  ASSET_GROUP_PAUSED       => "ASSET_GROUP_PAUSED",
+  ASSET_GROUP_REMOVED      => "ASSET_GROUP_REMOVED",
+  CAMPAIGN_REMOVED         => "CAMPAIGN_REMOVED",
+  CAMPAIGN_PAUSED          => "CAMPAIGN_PAUSED",
+  CAMPAIGN_PENDING         => "CAMPAIGN_PENDING",
+  CAMPAIGN_ENDED           => "CAMPAIGN_ENDED",
+  ASSET_GROUP_LIMITED      => "ASSET_GROUP_LIMITED",
+  ASSET_GROUP_DISAPPROVED  => "ASSET_GROUP_DISAPPROVED",
+  ASSET_GROUP_UNDER_REVIEW => "ASSET_GROUP_UNDER_REVIEW"
 ];
 
 1;
