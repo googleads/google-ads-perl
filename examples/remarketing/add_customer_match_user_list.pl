@@ -359,7 +359,7 @@ sub build_offline_user_data_job_operations() {
       push(
         @$user_identifiers,
         Google::Ads::GoogleAds::V14::Common::UserIdentifier->new({
-            hashedEmail => normalize_and_hash($record->{phone}, 1)}));
+            hashedPhoneNumber => normalize_and_hash($record->{phone}, 1)}));
     }
 
     # Check if the record has all the required mailing address elements, and if so, add
