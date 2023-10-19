@@ -28,9 +28,9 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V14::Resources::FeedItemAttributeValue;
-use Google::Ads::GoogleAds::V14::Services::FeedItemService::FeedItemOperation;
-use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V15::Resources::FeedItemAttributeValue;
+use Google::Ads::GoogleAds::V15::Services::FeedItemService::FeedItemOperation;
+use Google::Ads::GoogleAds::V15::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -59,7 +59,7 @@ sub remove_flights_feed_item_attribute_value {
   # [START remove_flights_feed_item_attribute_value]
   # Get the feed resource name.
   my $feed_resource_name =
-    Google::Ads::GoogleAds::V14::Utils::ResourceNames::feed($customer_id,
+    Google::Ads::GoogleAds::V15::Utils::ResourceNames::feed($customer_id,
     $feed_id);
 
   # Get a hash of the placeholder values and feed attributes.
@@ -68,7 +68,7 @@ sub remove_flights_feed_item_attribute_value {
 
   # Get the feed item resource name.
   my $feed_item_resource_name =
-    Google::Ads::GoogleAds::V14::Utils::ResourceNames::feed_item($customer_id,
+    Google::Ads::GoogleAds::V15::Utils::ResourceNames::feed_item($customer_id,
     $feed_id, $feed_item_id);
 
   # Remove the attribute from the feed item.
@@ -81,7 +81,7 @@ sub remove_flights_feed_item_attribute_value {
   # [START remove_flights_feed_item_attribute_value_1]
   # Create a feed item operation.
   my $feed_item_operation =
-    Google::Ads::GoogleAds::V14::Services::FeedItemService::FeedItemOperation->
+    Google::Ads::GoogleAds::V15::Services::FeedItemService::FeedItemOperation->
     new({
       update     => $feed_item,
       updateMask => all_set_fields_of($feed_item)});

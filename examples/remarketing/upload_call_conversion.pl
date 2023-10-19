@@ -26,11 +26,12 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
+use Google::Ads::GoogleAds::V15::Common::Consent;
 use
-  Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CallConversion;
+  Google::Ads::GoogleAds::V15::Services::ConversionUploadService::CallConversion;
 use
-  Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CustomVariable;
-use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V15::Services::ConversionUploadService::CustomVariable;
+use Google::Ads::GoogleAds::V15::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,23 +55,25 @@ my $conversion_value     = "INSERT_CONVERSION_VALUE_HERE";
 # associate with the call conversion upload.
 my $conversion_custom_variable_id    = undef;
 my $conversion_custom_variable_value = undef;
+# Optional: Specify the ad user data consent for the call.
+my $ad_user_data_consent = undef;
 
 # [START upload_call_conversion]
 sub upload_call_conversion {
   my (
-    $api_client,           $customer_id,
-    $conversion_action_id, $caller_id,
-    $call_start_date_time, $conversion_date_time,
-    $conversion_value,     $conversion_custom_variable_id,
-    $conversion_custom_variable_value
+    $api_client,                       $customer_id,
+    $conversion_action_id,             $caller_id,
+    $call_start_date_time,             $conversion_date_time,
+    $conversion_value,                 $conversion_custom_variable_id,
+    $conversion_custom_variable_value, $ad_user_data_consent
   ) = @_;
 
   # Create a call conversion by specifying currency as USD.
   my $call_conversion =
-    Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CallConversion
+    Google::Ads::GoogleAds::V15::Services::ConversionUploadService::CallConversion
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V14::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V15::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       callerId           => $caller_id,
@@ -82,17 +85,32 @@ sub upload_call_conversion {
 
   if ($conversion_custom_variable_id && $conversion_custom_variable_value) {
     $call_conversion->{customVariables} = [
-      Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CustomVariable
+      Google::Ads::GoogleAds::V15::Services::ConversionUploadService::CustomVariable
         ->new({
           conversionCustomVariable =>
-            Google::Ads::GoogleAds::V14::Utils::ResourceNames::conversion_custom_variable(
+            Google::Ads::GoogleAds::V15::Utils::ResourceNames::conversion_custom_variable(
             $customer_id, $conversion_custom_variable_id
             ),
           value => $conversion_custom_variable_value
         })];
   }
 
+  # Set the consent information, if provided.
+  if ($ad_user_data_consent) {
+    # Specify whether user consent was obtained for the data you are uploading.
+    # See https://www.google.com/about/company/user-consent-policy for details.
+    $call_conversion->{consent} =
+      Google::Ads::GoogleAds::V15::Common::Consent->new({
+        adUserData => $ad_user_data_consent
+      });
+  }
+
   # Issue a request to upload the call conversion.
+  # NOTE: This request contains a single conversion as a demonstration.
+  # However, if you have multiple conversions to upload, it's best to
+  # upload multiple conversions per request instead of sending a separate
+  # request per conversion. See the following for per-request limits:
+  # https://developers.google.com/google-ads/api/docs/best-practices/quotas#conversion_upload_service
   my $upload_call_conversions_response =
     $api_client->ConversionUploadService()->upload_call_conversions({
       customerId     => $customer_id,
@@ -141,7 +159,8 @@ GetOptions(
   "conversion_date_time=s"             => \$conversion_date_time,
   "conversion_value=f"                 => \$conversion_value,
   "conversion_custom_variable_id=s"    => \$conversion_custom_variable_id,
-  "conversion_custom_variable_value=s" => \$conversion_custom_variable_value
+  "conversion_custom_variable_value=s" => \$conversion_custom_variable_value,
+  "ad_user_data_consent=s"             => \$ad_user_data_consent
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -152,11 +171,11 @@ pod2usage(2)
 
 # Call the example.
 upload_call_conversion(
-  $api_client,           $customer_id =~ s/-//gr,
-  $conversion_action_id, $caller_id,
-  $call_start_date_time, $conversion_date_time,
-  $conversion_value,     $conversion_custom_variable_id,
-  $conversion_custom_variable_value
+  $api_client,                       $customer_id =~ s/-//gr,
+  $conversion_action_id,             $caller_id,
+  $call_start_date_time,             $conversion_date_time,
+  $conversion_value,                 $conversion_custom_variable_id,
+  $conversion_custom_variable_value, $ad_user_data_consent
 );
 
 =pod
@@ -187,5 +206,6 @@ upload_call_conversion.pl [options]
     -conversion_value                   The value of the conversion.
     -conversion_custom_variable_id      [optional] The ID of the conversion custom variable to associate with the upload.
     -conversion_custom_variable_value   [optional] The value of the conversion custom variable to associate with the upload.
+	-ad_user_data_consent				[optional] The ad user data consent.
     
 =cut

@@ -22,6 +22,10 @@
 #
 # To run this example, you must use the Merchant Center UI or the Content API for
 # Shopping to send a link request between your Merchant Center and Google Ads accounts.
+#
+# Note: This code example uses v14 of the Google Ads API. v15 of the Google Ads API
+# replaces MerchantCenterLinkService with ProductLinkInvitationService and
+# ProductLinkService.
 
 use strict;
 use warnings;

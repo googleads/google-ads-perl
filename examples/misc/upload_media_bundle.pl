@@ -44,6 +44,14 @@ use constant BUNDLE_URL => "https://gaagl.page.link/ib87";
 # code.
 #
 # Running the example with -h will print the command line usage.
+# Note: This code example uses v14 of the Google Ads API. Google Ads is
+# migrating from individual media files to assets, and v15 of the API removed
+# support for MediaFileService as part of this migration. Once your Ads
+# account is migrated, this code example will stop working, and you should
+# reference upload_image_asset.pl instead. This code example will be removed once
+# the migration completes. See
+# https://ads-developers.googleblog.com/2023/07/image-and-location-auto-migration.html
+# for more details.
 my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 
 sub upload_media_bundle {

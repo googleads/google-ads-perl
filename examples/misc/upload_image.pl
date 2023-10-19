@@ -15,6 +15,14 @@
 # limitations under the License.
 #
 # This example uploads an image.
+# Note: This code example uses v14 of the Google Ads API. Google Ads is
+# migrating from individual media files to assets, and v15 of the API removed
+# support for MediaFileService as part of this migration. Once your Ads
+# account is migrated, this code example will stop working, and you should use
+# upload_image_asset.pl instead. This code example will be removed once the
+# migration completes. See
+# https://ads-developers.googleblog.com/2023/07/image-and-location-auto-migration.html
+# for more details.
 
 use strict;
 use warnings;

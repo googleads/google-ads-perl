@@ -33,9 +33,9 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
-  Google::Ads::GoogleAds::V14::Services::RecommendationService::ApplyRecommendationOperation;
+  Google::Ads::GoogleAds::V15::Services::RecommendationService::ApplyRecommendationOperation;
 use
-  Google::Ads::GoogleAds::V14::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V15::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -82,7 +82,7 @@ sub detect_and_apply_recommendations {
       sub {
         my $google_ads_row = shift;
         push @$apply_recommendation_operations,
-          Google::Ads::GoogleAds::V14::Services::RecommendationService::ApplyRecommendationOperation
+          Google::Ads::GoogleAds::V15::Services::RecommendationService::ApplyRecommendationOperation
           ->new({
             resourceName => $google_ads_row->{recommendation}{resource_name}});
       });
