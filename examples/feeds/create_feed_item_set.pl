@@ -27,15 +27,15 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V14::Resources::FeedItemSet;
-use Google::Ads::GoogleAds::V14::Common::DynamicLocationSetFilter;
-use Google::Ads::GoogleAds::V14::Common::BusinessNameFilter;
-use Google::Ads::GoogleAds::V14::Common::DynamicAffiliateLocationSetFilter;
-use Google::Ads::GoogleAds::V14::Enums::FeedItemSetStringFilterTypeEnum
+use Google::Ads::GoogleAds::V15::Resources::FeedItemSet;
+use Google::Ads::GoogleAds::V15::Common::DynamicLocationSetFilter;
+use Google::Ads::GoogleAds::V15::Common::BusinessNameFilter;
+use Google::Ads::GoogleAds::V15::Common::DynamicAffiliateLocationSetFilter;
+use Google::Ads::GoogleAds::V15::Enums::FeedItemSetStringFilterTypeEnum
   qw(EXACT);
 use
-  Google::Ads::GoogleAds::V14::Services::FeedItemSetService::FeedItemSetOperation;
-use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V15::Services::FeedItemSetService::FeedItemSetOperation;
+use Google::Ads::GoogleAds::V15::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -57,8 +57,8 @@ sub create_feed_item_set {
   my ($api_client, $customer_id, $feed_id) = @_;
 
   # Create a new feed item set.
-  my $feed_item_set = Google::Ads::GoogleAds::V14::Resources::FeedItemSet->new({
-      feed => Google::Ads::GoogleAds::V14::Utils::ResourceNames::feed(
+  my $feed_item_set = Google::Ads::GoogleAds::V15::Resources::FeedItemSet->new({
+      feed => Google::Ads::GoogleAds::V15::Utils::ResourceNames::feed(
         $customer_id, $feed_id
       ),
       displayName => "Feed Item Set #" . uniqid()});
@@ -69,21 +69,21 @@ sub create_feed_item_set {
   # 'dynamicAffiliateLocationSetFilter' instead.
   # 1) Location extension.
   # $feed_item_set->{dynamicLocationSetFilter} =
-  #   Google::Ads::GoogleAds::V14::Common::DynamicLocationSetFilter->new({
+  #   Google::Ads::GoogleAds::V15::Common::DynamicLocationSetFilter->new({
   #     # Add a filter for a business name using exact matching.
   #     businessNameFilter =>
-  #       Google::Ads::GoogleAds::V14::Common::BusinessNameFilter->new({
+  #       Google::Ads::GoogleAds::V15::Common::BusinessNameFilter->new({
   #         businessName => "INSERT_YOUR_BUSINESS_NAME_HERE",
   #         filterType   => EXACT
   #       })});
   # 2) Affiliate extension.
   # $feed_item_set->{dynamicAffiliateLocationSetFilter} =
-  #   Google::Ads::GoogleAds::V14::Common::DynamicAffiliateLocationSetFilter->new({
+  #   Google::Ads::GoogleAds::V15::Common::DynamicAffiliateLocationSetFilter->new({
   #     chainIds => [INSERT_CHAIN_IDS_HERE]});
 
   # Construct an operation that will create a new feed item set.
   my $feed_item_set_operation =
-    Google::Ads::GoogleAds::V14::Services::FeedItemSetService::FeedItemSetOperation
+    Google::Ads::GoogleAds::V15::Services::FeedItemSetService::FeedItemSetOperation
     ->new({
       create => $feed_item_set
     });

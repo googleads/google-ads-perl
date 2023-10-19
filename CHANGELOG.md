@@ -1,3 +1,15 @@
+19.0.0 - 2023-10-19
+-------------------
+- Added support for Google Ads API v15.0.
+- Renamed upload_conversion_with_identifiers to
+  upload_enhanced_conversions_for_leads and upload_conversion_enhancement to
+  upload_enhanced_conversions_for_web, and updated these examples.
+- Renamed get_product_bidding_category_constant to
+  get_product_category_constants and updated.
+- Updated examples: upload_offline_conversion, add_customer_match_user_list,
+  upload_call_conversion, upload_store_sales_transactions,
+  add_merchant_center_dynamic_remarketing_campaign, add_performance_max_product_listing_group_tree, add_performance_max_retail_campaign, add_shopping_product_ad.
+
 18.0.0 - 2023-08-08
 -------------------
 - Added support for Google Ads API v14.1.

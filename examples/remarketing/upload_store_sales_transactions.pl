@@ -28,19 +28,20 @@ use lib "$Bin/../../lib";
 
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V14::Resources::OfflineUserDataJob;
-use Google::Ads::GoogleAds::V14::Common::ItemAttribute;
-use Google::Ads::GoogleAds::V14::Common::OfflineUserAddressInfo;
-use Google::Ads::GoogleAds::V14::Common::StoreSalesMetadata;
-use Google::Ads::GoogleAds::V14::Common::StoreSalesThirdPartyMetadata;
-use Google::Ads::GoogleAds::V14::Common::TransactionAttribute;
-use Google::Ads::GoogleAds::V14::Common::UserData;
-use Google::Ads::GoogleAds::V14::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V14::Enums::OfflineUserDataJobTypeEnum
+use Google::Ads::GoogleAds::V15::Resources::OfflineUserDataJob;
+use Google::Ads::GoogleAds::V15::Common::Consent;
+use Google::Ads::GoogleAds::V15::Common::ItemAttribute;
+use Google::Ads::GoogleAds::V15::Common::OfflineUserAddressInfo;
+use Google::Ads::GoogleAds::V15::Common::StoreSalesMetadata;
+use Google::Ads::GoogleAds::V15::Common::StoreSalesThirdPartyMetadata;
+use Google::Ads::GoogleAds::V15::Common::TransactionAttribute;
+use Google::Ads::GoogleAds::V15::Common::UserData;
+use Google::Ads::GoogleAds::V15::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V15::Enums::OfflineUserDataJobTypeEnum
   qw(STORE_SALES_UPLOAD_FIRST_PARTY STORE_SALES_UPLOAD_THIRD_PARTY);
 use
-  Google::Ads::GoogleAds::V14::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
-use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V15::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
+use Google::Ads::GoogleAds::V15::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -97,6 +98,10 @@ my $language_code = undef;
 # Optional: Specify a number of items sold. Only required if uploading with item
 # attributes.
 my $quantity = 1;
+# Optional: Specify the ad personalization consent status.
+my $ad_personalization_consent = undef;
+# Optional: Specify the ad user data consent status.
+my $ad_user_data_consent = undef;
 
 sub upload_store_sales_transactions {
   my (
@@ -106,7 +111,8 @@ sub upload_store_sales_transactions {
     $advertiser_upload_date_time, $bridge_map_version_id,
     $partner_id,                  $item_id,
     $merchant_center_account_id,  $country_code,
-    $language_code,               $quantity
+    $language_code,               $quantity,
+    $$ad_personalization_consent, $ad_user_data_consent
   ) = @_;
 
   my $offline_user_data_job_service = $api_client->OfflineUserDataJobService();
@@ -173,7 +179,7 @@ sub create_offline_user_data_job {
   my $store_sales_metadata =
     # Please refer to https://support.google.com/google-ads/answer/7506124 for
     # additional details.
-    Google::Ads::GoogleAds::V14::Common::StoreSalesMetadata->new({
+    Google::Ads::GoogleAds::V15::Common::StoreSalesMetadata->new({
       # Set the fraction of your overall sales that you (or the advertiser,
       # in the third party case) can associate with a customer (email, phone
       # number, address, etc.) in your database or loyalty program.
@@ -196,7 +202,7 @@ sub create_offline_user_data_job {
   if ($offline_user_data_job_type eq STORE_SALES_UPLOAD_THIRD_PARTY) {
     # Create additional metadata required for uploading third party data.
     my $store_sales_third_party_metadata =
-      Google::Ads::GoogleAds::V14::Common::StoreSalesThirdPartyMetadata->new({
+      Google::Ads::GoogleAds::V15::Common::StoreSalesThirdPartyMetadata->new({
         # The date/time must be in the format "yyyy-MM-dd hh:mm:ss".
         advertiserUploadDateTime => $advertiser_upload_date_time,
 
@@ -236,7 +242,7 @@ sub create_offline_user_data_job {
 
   # Create a new offline user data job.
   my $offline_user_data_job =
-    Google::Ads::GoogleAds::V14::Resources::OfflineUserDataJob->new({
+    Google::Ads::GoogleAds::V15::Resources::OfflineUserDataJob->new({
       type               => $offline_user_data_job_type,
       storeSalesMetadata => $store_sales_metadata,
       external_id        => $external_id,
@@ -267,10 +273,13 @@ sub add_transactions_to_offline_user_data_job {
   ) = @_;
 
   # Construct the operation for each transaction.
-  my $user_data_job_operations =
-    build_offline_user_data_job_operations($customer_id, $conversion_action_id,
-    $custom_key,    $item_id, $merchant_center_account_id, $country_code,
-    $language_code, $quantity,);
+  my $user_data_job_operations = build_offline_user_data_job_operations(
+    $customer_id,                $conversion_action_id,
+    $custom_key,                 $item_id,
+    $merchant_center_account_id, $country_code,
+    $language_code,              $quantity,
+    $ad_personalization_consent, $ad_user_data_consent
+  );
 
   # [START enable_warnings_1]
   # Issue a request to add the operations to the offline user data job.
@@ -318,28 +327,32 @@ sub add_transactions_to_offline_user_data_job {
 # Creates a list of offline user data job operations for sample transactions.
 # Returns a list of operations.
 sub build_offline_user_data_job_operations {
-  my ($customer_id, $conversion_action_id, $custom_key, $item_id,
-    $merchant_center_account_id, $country_code, $language_code, $quantity)
-    = @_;
+  my (
+    $customer_id,                $conversion_action_id,
+    $custom_key,                 $item_id,
+    $merchant_center_account_id, $country_code,
+    $language_code,              $quantity,
+    $ad_personalization_consent, $ad_user_data_consent
+  ) = @_;
 
   # Create the first transaction for upload based on an email address and state.
   my $user_data_with_email_address =
-    Google::Ads::GoogleAds::V14::Common::UserData->new({
+    Google::Ads::GoogleAds::V15::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V14::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V15::Common::UserIdentifier->new({
             # Hash normalized email addresses based on SHA-256 hashing algorithm.
             hashedEmail => normalize_and_hash('dana@example.com')}
         ),
-        Google::Ads::GoogleAds::V14::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V15::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V14::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V15::Common::OfflineUserAddressInfo->new({
                 state => "NY"
               })})
       ],
       transactionAttribute =>
-        Google::Ads::GoogleAds::V14::Common::TransactionAttribute->new({
+        Google::Ads::GoogleAds::V15::Common::TransactionAttribute->new({
           conversionAction =>
-            Google::Ads::GoogleAds::V14::Utils::ResourceNames::conversion_action(
+            Google::Ads::GoogleAds::V15::Utils::ResourceNames::conversion_action(
             $customer_id, $conversion_action_id
             ),
           currencyCode => "USD",
@@ -353,6 +366,17 @@ sub build_offline_user_data_job_operations {
           transactionDateTime => "2020-05-01 23:52:12",
         })});
 
+  # Add consent information if specified.
+  if ($ad_personalization_consent or $ad_user_data_consent) {
+    # Specify whether user consent was obtained for the data you are uploading.
+    # See https://www.google.com/about/company/user-consent-policy for details.
+    $user_data_with_email_address->{consent} =
+      Google::Ads::GoogleAds::V15::Common::Consent({
+        adPersonalization => $ad_personalization_consent,
+        adUserData        => $ad_user_data_consent
+      });
+  }
+
   # Optional: If uploading data with custom key and values, also assign the
   # custom value.
   if (defined($custom_key)) {
@@ -362,11 +386,11 @@ sub build_offline_user_data_job_operations {
 
   # Create the second transaction for upload based on a physical address.
   my $user_data_with_physical_address =
-    Google::Ads::GoogleAds::V14::Common::UserData->new({
+    Google::Ads::GoogleAds::V15::Common::UserData->new({
       userIdentifiers => [
-        Google::Ads::GoogleAds::V14::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V15::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V14::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V15::Common::OfflineUserAddressInfo->new({
                 # First and last name must be normalized and hashed.
                 hashedFirstName => normalize_and_hash("Dana"),
                 hashedLastName  => normalize_and_hash("Quinn"),
@@ -376,9 +400,9 @@ sub build_offline_user_data_job_operations {
               })})
       ],
       transactionAttribute =>
-        Google::Ads::GoogleAds::V14::Common::TransactionAttribute->new({
+        Google::Ads::GoogleAds::V15::Common::TransactionAttribute->new({
           conversionAction =>
-            Google::Ads::GoogleAds::V14::Utils::ResourceNames::conversion_action(
+            Google::Ads::GoogleAds::V15::Utils::ResourceNames::conversion_action(
             $customer_id,
             $conversion_action_id
             ),
@@ -396,7 +420,7 @@ sub build_offline_user_data_job_operations {
   # in the transaction attribute.
   if (defined($item_id)) {
     $user_data_with_physical_address->{transactionAttribute}{itemAttribute} =
-      Google::Ads::GoogleAds::V14::Common::ItemAttribute->new({
+      Google::Ads::GoogleAds::V15::Common::ItemAttribute->new({
         itemId       => $item_id,
         merchantId   => $merchant_center_account_id,
         countryCode  => $country_code,
@@ -410,12 +434,12 @@ sub build_offline_user_data_job_operations {
 
   # Create the operations to add the two transactions.
   my $operations = [
-    Google::Ads::GoogleAds::V14::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V15::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_email_address
       }
       ),
-    Google::Ads::GoogleAds::V14::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+    Google::Ads::GoogleAds::V15::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
       ->new({
         create => $user_data_with_physical_address
       })];
@@ -459,6 +483,8 @@ GetOptions(
   "country_code=s"                => \$country_code,
   "language_code=s"               => \$language_code,
   "quantity=i"                    => \$quantity,
+  "ad_personalization_consent=s"  => \$ad_personalization_consent,
+  "ad_user_data_consent=s"        => \$ad_user_data_consent
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -475,6 +501,7 @@ upload_store_sales_transactions(
   $partner_id,                  $item_id,
   $merchant_center_account_id,  $country_code,
   $language_code,               $quantity,
+  $ad_personalization_consent,  $ad_user_data_consent
 );
 
 =pod
@@ -519,5 +546,7 @@ upload_store_sales_transactions.pl [options]
                                     For a list of language codes see: https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
     -quantity                       [optional] The number of items sold. Can only be set when at least one other item attribute has been provided.
                                     Only required if uploading with item attributes.
+    -ad_personalization_consent		[optional] The ad personalization consent status.
+	-ad_user_data_consent			[optional] The ad user data consent status.
 
 =cut

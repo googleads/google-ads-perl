@@ -43,25 +43,26 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
-use Google::Ads::GoogleAds::V14::Resources::UserList;
-use Google::Ads::GoogleAds::V14::Resources::OfflineUserDataJob;
-use Google::Ads::GoogleAds::V14::Common::CrmBasedUserListInfo;
-use Google::Ads::GoogleAds::V14::Common::CustomerMatchUserListMetadata;
-use Google::Ads::GoogleAds::V14::Common::UserData;
-use Google::Ads::GoogleAds::V14::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V14::Common::OfflineUserAddressInfo;
-use Google::Ads::GoogleAds::V14::Enums::CustomerMatchUploadKeyTypeEnum
+use Google::Ads::GoogleAds::V15::Resources::UserList;
+use Google::Ads::GoogleAds::V15::Resources::OfflineUserDataJob;
+use Google::Ads::GoogleAds::V15::Common::Consent;
+use Google::Ads::GoogleAds::V15::Common::CrmBasedUserListInfo;
+use Google::Ads::GoogleAds::V15::Common::CustomerMatchUserListMetadata;
+use Google::Ads::GoogleAds::V15::Common::UserData;
+use Google::Ads::GoogleAds::V15::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V15::Common::OfflineUserAddressInfo;
+use Google::Ads::GoogleAds::V15::Enums::CustomerMatchUploadKeyTypeEnum
   qw(CONTACT_INFO);
-use Google::Ads::GoogleAds::V14::Enums::OfflineUserDataJobStatusEnum
+use Google::Ads::GoogleAds::V15::Enums::OfflineUserDataJobStatusEnum
   qw(SUCCESS FAILED PENDING RUNNING);
-use Google::Ads::GoogleAds::V14::Enums::OfflineUserDataJobTypeEnum
+use Google::Ads::GoogleAds::V15::Enums::OfflineUserDataJobTypeEnum
   qw(CUSTOMER_MATCH_USER_LIST);
-use Google::Ads::GoogleAds::V14::Services::UserListService::UserListOperation;
+use Google::Ads::GoogleAds::V15::Services::UserListService::UserListOperation;
 use
-  Google::Ads::GoogleAds::V14::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
+  Google::Ads::GoogleAds::V15::Services::OfflineUserDataJobService::OfflineUserDataJobOperation;
 use
-  Google::Ads::GoogleAds::V14::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
-use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V15::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+use Google::Ads::GoogleAds::V15::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -71,9 +72,9 @@ use Digest::SHA  qw(sha256_hex);
 
 sub add_customer_match_user_list {
   my ($api_client, $customer_id, $run_job, $user_list_id,
-    $offline_user_data_job_id)
+    $offline_user_data_job_id, $ad_personalization_consent,
+    $ad_user_data_consent)
     = @_;
-
   my $user_list_resource_name = undef;
   if (!defined $offline_user_data_job_id) {
     if (!defined $user_list_id) {
@@ -83,12 +84,13 @@ sub add_customer_match_user_list {
     } else {
       # Uses the specified Customer Match user list.
       $user_list_resource_name =
-        Google::Ads::GoogleAds::V14::Utils::ResourceNames::user_list(
+        Google::Ads::GoogleAds::V15::Utils::ResourceNames::user_list(
         $customer_id, $user_list_id);
     }
   }
   add_users_to_customer_match_user_list($api_client, $customer_id, $run_job,
-    $user_list_resource_name, $offline_user_data_job_id);
+    $user_list_resource_name,    $offline_user_data_job_id,
+    $ad_personalization_consent, $ad_user_data_consent);
   print_customer_match_user_list_info($api_client, $customer_id,
     $user_list_resource_name);
 
@@ -101,7 +103,7 @@ sub create_customer_match_user_list {
   my ($api_client, $customer_id) = @_;
 
   # Create the user list.
-  my $user_list = Google::Ads::GoogleAds::V14::Resources::UserList->new({
+  my $user_list = Google::Ads::GoogleAds::V15::Resources::UserList->new({
       name        => "Customer Match list #" . uniqid(),
       description =>
         "A list of customers that originated from email and physical addresses",
@@ -113,13 +115,13 @@ sub create_customer_match_user_list {
       # used to add users to the list. This field is immutable and required for
       # a CREATE operation.
       crmBasedUserList =>
-        Google::Ads::GoogleAds::V14::Common::CrmBasedUserListInfo->new({
+        Google::Ads::GoogleAds::V15::Common::CrmBasedUserListInfo->new({
           uploadKeyType => CONTACT_INFO
         })});
 
   # Create the user list operation.
   my $user_list_operation =
-    Google::Ads::GoogleAds::V14::Services::UserListService::UserListOperation->
+    Google::Ads::GoogleAds::V15::Services::UserListService::UserListOperation->
     new({
       create => $user_list
     });
@@ -142,7 +144,8 @@ sub create_customer_match_user_list {
 # [START add_customer_match_user_list]
 sub add_users_to_customer_match_user_list {
   my ($api_client, $customer_id, $run_job, $user_list_resource_name,
-    $offline_user_data_job_id)
+    $offline_user_data_job_id, $ad_personalization_consent,
+    $ad_user_data_consent)
     = @_;
 
   my $offline_user_data_job_service = $api_client->OfflineUserDataJobService();
@@ -151,13 +154,28 @@ sub add_users_to_customer_match_user_list {
   if (!defined $offline_user_data_job_id) {
     # Create a new offline user data job.
     my $offline_user_data_job =
-      Google::Ads::GoogleAds::V14::Resources::OfflineUserDataJob->new({
+      Google::Ads::GoogleAds::V15::Resources::OfflineUserDataJob->new({
         type                          => CUSTOMER_MATCH_USER_LIST,
         customerMatchUserListMetadata =>
-          Google::Ads::GoogleAds::V14::Common::CustomerMatchUserListMetadata->
+          Google::Ads::GoogleAds::V15::Common::CustomerMatchUserListMetadata->
           new({
             userList => $user_list_resource_name
           })});
+
+    # Add consent information to the job if specified.
+    if ($ad_personalization_consent or $ad_user_data_consent) {
+      my $consent = Google::Ads::GoogleAds::V15::Common::Consent->new({});
+      if ($ad_personalization_consent) {
+        $consent->{adPersonalization} = $ad_personalization_consent;
+      }
+      if ($ad_user_data_consent) {
+        $consent->{adUserData} = $ad_user_data_consent;
+      }
+      # Specify whether user consent was obtained for the data you are uploading.
+      # See https://www.google.com/about/company/user-consent-policy for details.
+      $offline_user_data_job->{customerMatchUserListMetadata}{consent} =
+        $consent;
+    }
 
     # Issue a request to create the offline user data job.
     my $create_offline_user_data_job_response =
@@ -173,7 +191,7 @@ sub add_users_to_customer_match_user_list {
   } else {
     # Reuse the specified offline user data job.
     $offline_user_data_job_resource_name =
-      Google::Ads::GoogleAds::V14::Utils::ResourceNames::offline_user_data_job(
+      Google::Ads::GoogleAds::V15::Utils::ResourceNames::offline_user_data_job(
       $customer_id, $offline_user_data_job_id);
   }
 
@@ -245,7 +263,7 @@ sub check_job_status() {
     "$offline_user_data_job_resource_name LIMIT 1";
 
   my $search_request =
-    Google::Ads::GoogleAds::V14::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V15::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query
@@ -334,7 +352,7 @@ sub build_offline_user_data_job_operations() {
     # will clear all the other members of the oneof. For example, the following code is
     # INCORRECT and will result in a UserIdentifier with ONLY a hashed_phone_number:
     #
-    # my $incorrect_user_identifier = Google::Ads::GoogleAds::V14::Common::UserIdentifier->new({
+    # my $incorrect_user_identifier = Google::Ads::GoogleAds::V15::Common::UserIdentifier->new({
     #   hashedEmail => '...',
     #   hashedPhoneNumber => '...',
     # });
@@ -349,7 +367,7 @@ sub build_offline_user_data_job_operations() {
       # Add the hashed email identifier to the list of UserIdentifiers.
       push(
         @$user_identifiers,
-        Google::Ads::GoogleAds::V14::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V15::Common::UserIdentifier->new({
             hashedEmail => normalize_and_hash($record->{email}, 1)}));
     }
 
@@ -358,7 +376,7 @@ sub build_offline_user_data_job_operations() {
       # Add the hashed phone number identifier to the list of UserIdentifiers.
       push(
         @$user_identifiers,
-        Google::Ads::GoogleAds::V14::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V15::Common::UserIdentifier->new({
             hashedPhoneNumber => normalize_and_hash($record->{phone}, 1)}));
     }
 
@@ -382,9 +400,9 @@ sub build_offline_user_data_job_operations() {
       } else {
         push(
           @$user_identifiers,
-          Google::Ads::GoogleAds::V14::Common::UserIdentifier->new({
+          Google::Ads::GoogleAds::V15::Common::UserIdentifier->new({
               addressInfo =>
-                Google::Ads::GoogleAds::V14::Common::OfflineUserAddressInfo->
+                Google::Ads::GoogleAds::V15::Common::OfflineUserAddressInfo->
                 new({
                   # First and last name must be normalized and hashed.
                   hashedFirstName => normalize_and_hash($record->{firstName}),
@@ -399,11 +417,11 @@ sub build_offline_user_data_job_operations() {
     # If the user_identifiers array is not empty, create a new
     # OfflineUserDataJobOperation and add the UserData to it.
     if (@$user_identifiers) {
-      my $user_data = Google::Ads::GoogleAds::V14::Common::UserData->new({
+      my $user_data = Google::Ads::GoogleAds::V15::Common::UserData->new({
           userIdentifiers => [$user_identifiers]});
       push(
         @$operations,
-        Google::Ads::GoogleAds::V14::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
+        Google::Ads::GoogleAds::V15::Services::OfflineUserDataJobService::OfflineUserDataJobOperation
           ->new({
             create => $user_data
           }));
@@ -426,7 +444,7 @@ sub print_customer_match_user_list_info {
 
   # Create a search Google Ads stream request that will retrieve the user list.
   my $search_stream_request =
-    Google::Ads::GoogleAds::V14::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V15::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query,
@@ -485,16 +503,22 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);
 
-my $customer_id              = undef;
-my $run_job                  = undef;
-my $user_list_id             = undef;
-my $offline_user_data_job_id = undef;
+my $customer_id                = undef;
+my $run_job                    = undef;
+my $user_list_id               = undef;
+my $offline_user_data_job_id   = undef;
+my $ad_personalization_consent = undef;
+my $ad_user_data_consent       = undef;
 
 # Parameters passed on the command line will override any parameters set in code.
-GetOptions("customer_id=s"              => \$customer_id);
-GetOptions("run_job=s"                  => \$run_job);
-GetOptions("user_list_id=i"             => \$user_list_id);
-GetOptions("offline_user_data_job_id=i" => \$offline_user_data_job_id);
+GetOptions(
+  "customer_id=s"                => \$customer_id,
+  "run_job=s"                    => \$run_job,
+  "user_list_id=i"               => \$user_list_id,
+  "offline_user_data_job_id=i"   => \$offline_user_data_job_id,
+  "ad_personalization_consent=s" => \$ad_personalization_consent,
+  "ad_user_data_consent=s"       => \$ad_user_data_consent
+);
 
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
@@ -502,7 +526,8 @@ pod2usage(2) if not check_params($customer_id);
 
 # Call the example.
 add_customer_match_user_list($api_client, $customer_id =~ s/-//gr,
-  $run_job, $user_list_id, $offline_user_data_job_id);
+  $run_job, $user_list_id, $offline_user_data_job_id,
+  $ad_personalization_consent, $ad_user_data_consent);
 
 =pod
 
@@ -532,5 +557,7 @@ add_customer_match_user_list.pl [options]
     -run_job			[optional] Run the OfflineUserDataJob after adding operations. Otherwise, only adds operations to the job.
     -user_list_id		[optional] ID of an existing user list. If undef, creates a new user list.
     -offline_user_data_job_id	[optional] ID of an existing OfflineUserDataJob in the PENDING state. If undef, creates a new job.
+	-ad_personalization_consent	[optional] Consent status for ad personalization for all members in the job. Only used if offline_user_data_job_id is undef.
+	-ad_user_data_consent		[optional] Consent status for ad user data for all members in the job. Only used if offline_user_data_job_id is undef.
 
 =cut

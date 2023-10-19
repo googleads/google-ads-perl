@@ -28,10 +28,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V14::Services::ConversionUploadService::ClickConversion;
+  Google::Ads::GoogleAds::V15::Services::ConversionUploadService::ClickConversion;
 use
-  Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CustomVariable;
-use Google::Ads::GoogleAds::V14::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V15::Services::ConversionUploadService::CustomVariable;
+use Google::Ads::GoogleAds::V15::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -82,10 +82,10 @@ sub upload_offline_conversion {
 
   # Create a click conversion by specifying currency as USD.
   my $click_conversion =
-    Google::Ads::GoogleAds::V14::Services::ConversionUploadService::ClickConversion
+    Google::Ads::GoogleAds::V15::Services::ConversionUploadService::ClickConversion
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V14::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V15::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       conversionDateTime => $conversion_date_time,
@@ -104,10 +104,10 @@ sub upload_offline_conversion {
 
   if ($conversion_custom_variable_id && $conversion_custom_variable_value) {
     $click_conversion->{customVariables} = [
-      Google::Ads::GoogleAds::V14::Services::ConversionUploadService::CustomVariable
+      Google::Ads::GoogleAds::V15::Services::ConversionUploadService::CustomVariable
         ->new({
           conversionCustomVariable =>
-            Google::Ads::GoogleAds::V14::Utils::ResourceNames::conversion_custom_variable(
+            Google::Ads::GoogleAds::V15::Utils::ResourceNames::conversion_custom_variable(
             $customer_id, $conversion_custom_variable_id
             ),
           value => $conversion_custom_variable_value
@@ -115,13 +115,18 @@ sub upload_offline_conversion {
   }
 
   if (defined $order_id) {
-    # Set the order ID (unique transaction ID), if provided. An order ID is
-    # required in order to upload enhancements as shown in the
-    # upload_conversion_enhancement.pl example.
+    # Set the order ID (unique transaction ID), if provided.
     $click_conversion->{orderId} = $order_id;
   }
 
-  # Issue a request to upload the click conversion.
+  # Issue a request to upload the click conversion. Partial failure should
+  # always be set to true.
+  #
+  # NOTE: This request contains a single conversion as a demonstration.
+  # However, if you have multiple conversions to upload, it's best to
+  # upload multiple conversions per request instead of sending a separate
+  # request per conversion. See the following for per-request limits:
+  # https://developers.google.com/google-ads/api/docs/best-practices/quotas#conversion_upload_service
   my $upload_click_conversions_response =
     $api_client->ConversionUploadService()->upload_click_conversions({
       customerId     => $customer_id,
