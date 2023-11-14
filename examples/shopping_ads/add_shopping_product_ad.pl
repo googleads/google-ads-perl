@@ -165,7 +165,7 @@ sub add_standard_shopping_campaign {
       # the ads from immediately serving. Set to ENABLED once you've added
       # targeting and the ads are ready to serve.
       status => Google::Ads::GoogleAds::V15::Enums::CampaignStatusEnum::PAUSED,
-      # Sets the bidding strategy to Manual CPC (with eCPC disabled). eCPC for
+      # Set the bidding strategy to Manual CPC (with eCPC disabled). eCPC for
       # standard Shopping campaigns is deprecated. If eCPC is set to true,
       # Google Ads ignores the setting and behaves as if the setting was false.
       # See this blog post for more information:
