@@ -22,7 +22,7 @@
 #   (e) Targeting a user list with a campaign criterion.
 #   (f) Updating the bid modifier on a campaign criterion.
 # It is unlikely that users will need to perform all of these operations
-# consecutively, and all of the operations contained herein are meant of for
+# consecutively, and all of the operations contained herein are meant for
 # illustrative purposes.
 #
 # Note: you can use user lists to target at the campaign or ad group level, but
