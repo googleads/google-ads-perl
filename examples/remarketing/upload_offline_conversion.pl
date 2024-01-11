@@ -27,6 +27,7 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
+use Google::Ads::GoogleAds::V15::Common::Consent;
 use
   Google::Ads::GoogleAds::V15::Services::ConversionUploadService::ClickConversion;
 use
@@ -59,6 +60,8 @@ my $conversion_custom_variable_id    = undef;
 my $conversion_custom_variable_value = undef;
 # Optional: Specify the unique order ID for the click conversion.
 my $order_id = undef;
+# Optional: Specify the ad user data consent for the click.
+my $ad_user_data_consent = undef;
 
 # [START upload_offline_conversion]
 sub upload_offline_conversion {
@@ -68,7 +71,7 @@ sub upload_offline_conversion {
     $gbraid,                        $wbraid,
     $conversion_date_time,          $conversion_value,
     $conversion_custom_variable_id, $conversion_custom_variable_value,
-    $order_id
+    $order_id,                      $ad_user_data_consent
   ) = @_;
 
   # Verify that exactly one of gclid, gbraid, and wbraid is specified, as required.
@@ -117,6 +120,16 @@ sub upload_offline_conversion {
   if (defined $order_id) {
     # Set the order ID (unique transaction ID), if provided.
     $click_conversion->{orderId} = $order_id;
+  }
+
+  # Set the consent information, if provided.
+  if ($ad_user_data_consent) {
+    # Specify whether user consent was obtained for the data you are uploading.
+    # See https://www.google.com/about/company/user-consent-policy for details.
+    $click_conversion->{consent} =
+      Google::Ads::GoogleAds::V15::Common::Consent->new({
+        adUserData => $ad_user_data_consent
+      });
   }
 
   # Issue a request to upload the click conversion. Partial failure should
@@ -178,7 +191,8 @@ GetOptions(
   "conversion_value=f"                 => \$conversion_value,
   "conversion_custom_variable_id=s"    => \$conversion_custom_variable_id,
   "conversion_custom_variable_value=s" => \$conversion_custom_variable_value,
-  "order_id=s"                         => \$order_id
+  "order_id=s"                         => \$order_id,
+  "ad_user_data_consent=s"             => \$ad_user_data_consent
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -196,7 +210,7 @@ upload_offline_conversion(
   $gbraid,                        $wbraid,
   $conversion_date_time,          $conversion_value,
   $conversion_custom_variable_id, $conversion_custom_variable_value,
-  $order_id
+  $order_id,                      $ad_user_data_consent
 );
 
 =pod
@@ -231,6 +245,6 @@ upload_offline_conversion.pl [options]
     -conversion_custom_variable_id      [optional] The ID of the conversion custom variable to associate with the upload.
     -conversion_custom_variable_value   [optional] The value of the conversion custom variable to associate with the upload.
     -order_id                           [optional] The unique ID (transaction ID) of the conversion.
-
-
+    -ad_user_data_consent               [optional] The ad user data consent for the click.
+    
 =cut
