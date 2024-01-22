@@ -1,3 +1,7 @@
+20.0.0 - 2024-01-22
+-------------------
+- Removed support for Google Ads API v13.
+
 19.0.0 - 2023-10-19
 -------------------
 - Added support for Google Ads API v15.0.
