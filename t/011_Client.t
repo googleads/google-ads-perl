@@ -26,7 +26,7 @@ use Google::Ads::GoogleAds::Constants;
 
 use File::Basename;
 use File::Spec;
-use Test::More (tests => 22);
+use Test::More (tests => 23);
 
 # Tests use Google::Ads::GoogleAds::Client.
 use_ok("Google::Ads::GoogleAds::Client")
@@ -57,6 +57,8 @@ is(
   "http://user:password\@proxy_hostname:8080",
   "Read of proxy."
 );
+# use_cloud_org_for_api_access should be 0 by default.
+is($api_client->get_use_cloud_org_for_api_access(), 0, "Read of use_cloud_org_for_api_access.");
 
 is($api_client->get_oauth2_handler()->get_client_id(),
   "client_1+user\@domain.com", "Read of client ID.");

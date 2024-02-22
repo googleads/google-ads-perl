@@ -21,7 +21,7 @@ package Google::Ads::GoogleAds::Client;
 use strict;
 use warnings;
 use version;
-our $VERSION = qv("20.0.0");
+our $VERSION = qv("21.0.0");
 
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::OAuth2ServiceAccountsHandler;
@@ -47,6 +47,7 @@ my %http_timeout_of : ATTR(:name<http_timeout> :default<>);
 my %http_retry_timing_of : ATTR(:name<http_retry_timing> :default<>);
 my %version_of : ATTR(:name<version> :default<>);
 my %die_on_faults_of : ATTR(:name<die_on_faults> :default<0>);
+my %use_cloud_org_for_api_access_of: ATTR(:name<use_cloud_org_for_api_access> :default<0>);
 
 my %properties_file_of : ATTR(:init_arg<properties_file> :default<>);
 my %services_of : ATTR(:name<services> :default<{}>);
@@ -523,8 +524,8 @@ instance is set to die() on API faults.
 
 The client object contains a method for each service provided by the Google Ads
 API. For example it can be invoked as $api_client->AdGroupService() and it will
-return an object of type L<Google::Ads::GoogleAds::V15::Services::AdGroupService>
-when using version V15 of the API.
+return an object of type L<Google::Ads::GoogleAds::V16::Services::AdGroupService>
+when using version V16 of the API.
 
 For a list of all the available services please refer to
 L<https://developers.google.com/google-ads/api/docs> and for code samples on

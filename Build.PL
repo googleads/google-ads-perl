@@ -42,10 +42,10 @@ $build_sc->new(
   create_makefile_pl => "traditional",
   dist_abstract      => "Google Ads API Client Library for Perl",
   dist_name          => "Google-Ads-GoogleAds-Client",
-  dist_version       => "20.0.0",
+  dist_version       => "21.0.0",
   no_index           => {
     namespace => [
-	  "Google::Ads::GoogleAds::V14::Enums",
+      "Google::Ads::GoogleAds::V14::Enums",
       "Google::Ads::GoogleAds::V14::Common",
       "Google::Ads::GoogleAds::V14::Resources",
       "Google::Ads::GoogleAds::V14::Services",
@@ -53,6 +53,10 @@ $build_sc->new(
       "Google::Ads::GoogleAds::V15::Common",
       "Google::Ads::GoogleAds::V15::Resources",
       "Google::Ads::GoogleAds::V15::Services",
+      "Google::Ads::GoogleAds::V16::Enums",
+      "Google::Ads::GoogleAds::V16::Common",
+      "Google::Ads::GoogleAds::V16::Resources",
+      "Google::Ads::GoogleAds::V16::Services",
     ],
   },
   requires           => {

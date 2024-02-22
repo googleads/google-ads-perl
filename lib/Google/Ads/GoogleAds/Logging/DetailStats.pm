@@ -45,6 +45,8 @@ use constant SCRUBBED_GAQL_FIELDS => qw(customer_user_access\.email_address
   customer_user_access\.inviter_user_email_address
   customer_user_access_invitation\.email_address
   change_event\.user_email feed\.places_location_feed_data\.email_address
+  local_services_lead\.contact_details
+  local_services_lead_conversation\.message_details\.text
 );
 
 my %host_of : ATTR(:name<host> :default<>);

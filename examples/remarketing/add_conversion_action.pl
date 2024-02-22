@@ -24,14 +24,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V15::Resources::ConversionAction;
-use Google::Ads::GoogleAds::V15::Resources::ValueSettings;
-use Google::Ads::GoogleAds::V15::Enums::ConversionActionCategoryEnum
+use Google::Ads::GoogleAds::V16::Resources::ConversionAction;
+use Google::Ads::GoogleAds::V16::Resources::ValueSettings;
+use Google::Ads::GoogleAds::V16::Enums::ConversionActionCategoryEnum
   qw(DEFAULT);
-use Google::Ads::GoogleAds::V15::Enums::ConversionActionTypeEnum   qw(WEBPAGE);
-use Google::Ads::GoogleAds::V15::Enums::ConversionActionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V16::Enums::ConversionActionTypeEnum   qw(WEBPAGE);
+use Google::Ads::GoogleAds::V16::Enums::ConversionActionStatusEnum qw(ENABLED);
 use
-  Google::Ads::GoogleAds::V15::Services::ConversionActionService::ConversionActionOperation;
+  Google::Ads::GoogleAds::V16::Services::ConversionActionService::ConversionActionOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,23 +52,28 @@ my $customer_id = "INSERT_CUSTOMER_ID_HERE";
 sub add_conversion_action {
   my ($api_client, $customer_id) = @_;
 
+  # Note that conversion action names must be unique.
+  # If a conversion action already exists with the specified conversion_action_name,
+  # the create operation fails with error ConversionActionError.DUPLICATE_NAME.
+  my $conversion_action_name = "Earth to Mars Cruises Conversion #" . uniqid();
+
   # Create a conversion action.
   my $conversion_action =
-    Google::Ads::GoogleAds::V15::Resources::ConversionAction->new({
-      name     => "Earth to Mars Cruises Conversion #" . uniqid(),
-      category => DEFAULT,
-      type     => WEBPAGE,
-      status   => ENABLED,
+    Google::Ads::GoogleAds::V16::Resources::ConversionAction->new({
+      name                          => $conversion_action_name,
+      category                      => DEFAULT,
+      type                          => WEBPAGE,
+      status                        => ENABLED,
       viewThroughLookbackWindowDays => 15,
       valueSettings                 =>
-        Google::Ads::GoogleAds::V15::Resources::ValueSettings->new({
+        Google::Ads::GoogleAds::V16::Resources::ValueSettings->new({
           defaultValue          => 23.41,
           alwaysUseDefaultValue => "true"
         })});
 
   # Create a conversion action operation.
   my $conversion_action_operation =
-    Google::Ads::GoogleAds::V15::Services::ConversionActionService::ConversionActionOperation
+    Google::Ads::GoogleAds::V16::Services::ConversionActionService::ConversionActionOperation
     ->new({create => $conversion_action});
 
   # Add the conversion action.

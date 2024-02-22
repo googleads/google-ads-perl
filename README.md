@@ -77,7 +77,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
         OAuth2 flow.
 
     *   Run the
-        [authenticate_in_desktop_application](examples/authentication/authenticate_in_desktop_application.pl)
+        [generate_user_credentials](examples/authentication/generate_user_credentials.pl)
         example, by providing your OAuth2 client ID and secret as the parameters.
 
     *   Copy the output from the last step of the example into the
@@ -95,7 +95,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
         OAuth2 flow.
 
     *   Run the
-        [authenticate_in_web_application](examples/authentication/authenticate_in_web_application.pl)
+        [generate_user_credentials](examples/authentication/generate_user_credentials.pl)
         example, by providing your OAuth2 client ID and secret as the parameters.
 
     *   Copy the output from the last step of the example into the
