@@ -31,20 +31,20 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V15::Resources::AssetGroupListingGroupFilter;
-use Google::Ads::GoogleAds::V15::Resources::ListingGroupFilterDimension;
-use Google::Ads::GoogleAds::V15::Resources::ProductCondition;
-use Google::Ads::GoogleAds::V15::Resources::ProductBrand;
-use Google::Ads::GoogleAds::V15::Enums::ListingGroupFilterTypeEnum
+use Google::Ads::GoogleAds::V16::Resources::AssetGroupListingGroupFilter;
+use Google::Ads::GoogleAds::V16::Resources::ListingGroupFilterDimension;
+use Google::Ads::GoogleAds::V16::Resources::ProductCondition;
+use Google::Ads::GoogleAds::V16::Resources::ProductBrand;
+use Google::Ads::GoogleAds::V16::Enums::ListingGroupFilterTypeEnum
   qw(SUBDIVISION UNIT_INCLUDED);
-use Google::Ads::GoogleAds::V15::Enums::ListingGroupFilterListingSourceEnum
+use Google::Ads::GoogleAds::V16::Enums::ListingGroupFilterListingSourceEnum
   qw(SHOPPING);
-use Google::Ads::GoogleAds::V15::Enums::ListingGroupFilterProductConditionEnum
+use Google::Ads::GoogleAds::V16::Enums::ListingGroupFilterProductConditionEnum
   qw(NEW USED);
-use Google::Ads::GoogleAds::V15::Services::GoogleAdsService::MutateOperation;
+use Google::Ads::GoogleAds::V16::Services::GoogleAdsService::MutateOperation;
 use
-  Google::Ads::GoogleAds::V15::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation;
-use Google::Ads::GoogleAds::V15::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V16::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation;
+use Google::Ads::GoogleAds::V16::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -94,7 +94,7 @@ sub add_performance_max_product_listing_group_tree {
       get_all_existing_listing_group_filter_assets_in_asset_group(
       $api_client,
       $customer_id,
-      Google::Ads::GoogleAds::V15::Utils::ResourceNames::asset_group(
+      Google::Ads::GoogleAds::V16::Utils::ResourceNames::asset_group(
         $customer_id, $asset_group_id
       ));
 
@@ -121,9 +121,9 @@ sub add_performance_max_product_listing_group_tree {
     $asset_group_id,
     $temp_id--,
     LISTING_GROUP_ROOT_TEMPORARY_ID,
-    Google::Ads::GoogleAds::V15::Resources::ListingGroupFilterDimension->new({
+    Google::Ads::GoogleAds::V16::Resources::ListingGroupFilterDimension->new({
         productCondition =>
-          Google::Ads::GoogleAds::V15::Resources::ProductCondition->new({
+          Google::Ads::GoogleAds::V16::Resources::ProductCondition->new({
             condition => NEW
           })}));
 
@@ -133,9 +133,9 @@ sub add_performance_max_product_listing_group_tree {
     $asset_group_id,
     $temp_id--,
     LISTING_GROUP_ROOT_TEMPORARY_ID,
-    Google::Ads::GoogleAds::V15::Resources::ListingGroupFilterDimension->new({
+    Google::Ads::GoogleAds::V16::Resources::ListingGroupFilterDimension->new({
         productCondition =>
-          Google::Ads::GoogleAds::V15::Resources::ProductCondition->new({
+          Google::Ads::GoogleAds::V16::Resources::ProductCondition->new({
             condition => USED
           })}));
 
@@ -149,11 +149,11 @@ sub add_performance_max_product_listing_group_tree {
     $asset_group_id,
     $condition_other_subdivision_id,
     LISTING_GROUP_ROOT_TEMPORARY_ID,
-    Google::Ads::GoogleAds::V15::Resources::ListingGroupFilterDimension->new({
+    Google::Ads::GoogleAds::V16::Resources::ListingGroupFilterDimension->new({
         # All sibling nodes must have the same dimension type. We use an empty
         # ProductCondition to indicate that this is an "Other" partition.
         productCondition =>
-          Google::Ads::GoogleAds::V15::Resources::ProductCondition->new({})}));
+          Google::Ads::GoogleAds::V16::Resources::ProductCondition->new({})}));
 
   push @$mutate_operations,
     create_mutate_operation_for_unit(
@@ -161,9 +161,9 @@ sub add_performance_max_product_listing_group_tree {
     $asset_group_id,
     $temp_id--,
     $condition_other_subdivision_id,
-    Google::Ads::GoogleAds::V15::Resources::ListingGroupFilterDimension->new({
+    Google::Ads::GoogleAds::V16::Resources::ListingGroupFilterDimension->new({
         productBrand =>
-          Google::Ads::GoogleAds::V15::Resources::ProductBrand->new({
+          Google::Ads::GoogleAds::V16::Resources::ProductBrand->new({
             value => "CoolBrand"
           })}));
 
@@ -173,9 +173,9 @@ sub add_performance_max_product_listing_group_tree {
     $asset_group_id,
     $temp_id--,
     $condition_other_subdivision_id,
-    Google::Ads::GoogleAds::V15::Resources::ListingGroupFilterDimension->new({
+    Google::Ads::GoogleAds::V16::Resources::ListingGroupFilterDimension->new({
         productBrand =>
-          Google::Ads::GoogleAds::V15::Resources::ProductBrand->new({
+          Google::Ads::GoogleAds::V16::Resources::ProductBrand->new({
             value => "CheapBrand"
           })}));
 
@@ -185,9 +185,9 @@ sub add_performance_max_product_listing_group_tree {
     $temp_id--,
     $condition_other_subdivision_id,
     # All other product brands.
-    Google::Ads::GoogleAds::V15::Resources::ListingGroupFilterDimension->new({
+    Google::Ads::GoogleAds::V16::Resources::ListingGroupFilterDimension->new({
         productBrand =>
-          Google::Ads::GoogleAds::V15::Resources::ProductBrand->new({})}));
+          Google::Ads::GoogleAds::V16::Resources::ProductBrand->new({})}));
 
   # Issue a mutate request to create everything and print its information.
   my $response = $api_client->GoogleAdsService()->mutate({
@@ -311,10 +311,10 @@ sub create_mutate_operations_for_removing_descendents {
   }
 
   push @$operations,
-    Google::Ads::GoogleAds::V15::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V16::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupListingGroupFilterOperation =>
-        Google::Ads::GoogleAds::V15::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
+        Google::Ads::GoogleAds::V16::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
         ->new({
           remove => $asset_group_listing_group_filter_resource_name
         })});
@@ -332,13 +332,13 @@ sub create_mutate_operation_for_root {
   my ($customer_id, $asset_group_id, $root_listing_group_id) = @_;
 
   my $asset_group_listing_group_filter =
-    Google::Ads::GoogleAds::V15::Resources::AssetGroupListingGroupFilter->new({
+    Google::Ads::GoogleAds::V16::Resources::AssetGroupListingGroupFilter->new({
       resourceName =>
-        Google::Ads::GoogleAds::V15::Utils::ResourceNames::asset_group_listing_group_filter(
+        Google::Ads::GoogleAds::V16::Utils::ResourceNames::asset_group_listing_group_filter(
         $customer_id, $asset_group_id, $root_listing_group_id
         ),
       assetGroup =>
-        Google::Ads::GoogleAds::V15::Utils::ResourceNames::asset_group(
+        Google::Ads::GoogleAds::V16::Utils::ResourceNames::asset_group(
         $customer_id, $asset_group_id
         ),
       # Since this is the root node, do not set the 'parentListingGroupFilter' field.
@@ -354,10 +354,10 @@ sub create_mutate_operation_for_root {
     });
 
   return
-    Google::Ads::GoogleAds::V15::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V16::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupListingGroupFilterOperation =>
-        Google::Ads::GoogleAds::V15::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
+        Google::Ads::GoogleAds::V16::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
         ->new({
           create => $asset_group_listing_group_filter
         })});
@@ -372,13 +372,13 @@ sub create_mutate_operation_for_subdivision {
     = @_;
 
   my $asset_group_listing_group_filter =
-    Google::Ads::GoogleAds::V15::Resources::AssetGroupListingGroupFilter->new({
+    Google::Ads::GoogleAds::V16::Resources::AssetGroupListingGroupFilter->new({
       resourceName =>
-        Google::Ads::GoogleAds::V15::Utils::ResourceNames::asset_group_listing_group_filter(
+        Google::Ads::GoogleAds::V16::Utils::ResourceNames::asset_group_listing_group_filter(
         $customer_id, $asset_group_id, $asset_group_listing_group_filter_id
         ),
       assetGroup =>
-        Google::Ads::GoogleAds::V15::Utils::ResourceNames::asset_group(
+        Google::Ads::GoogleAds::V16::Utils::ResourceNames::asset_group(
         $customer_id, $asset_group_id
         ),
       # Set the type as a SUBDIVISION, which will allow the node to be the parent
@@ -388,7 +388,7 @@ sub create_mutate_operation_for_subdivision {
       # that this is in the shopping listing source.
       listingSource            => SHOPPING,
       parentListingGroupFilter =>
-        Google::Ads::GoogleAds::V15::Utils::ResourceNames::asset_group_listing_group_filter(
+        Google::Ads::GoogleAds::V16::Utils::ResourceNames::asset_group_listing_group_filter(
         $customer_id, $asset_group_id, $parent_id
         ),
       # Case values contain the listing dimension used for the node.
@@ -396,10 +396,10 @@ sub create_mutate_operation_for_subdivision {
     });
 
   return
-    Google::Ads::GoogleAds::V15::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V16::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupListingGroupFilterOperation =>
-        Google::Ads::GoogleAds::V15::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
+        Google::Ads::GoogleAds::V16::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
         ->new({
           create => $asset_group_listing_group_filter
         })});
@@ -418,17 +418,17 @@ sub create_mutate_operation_for_unit {
     = @_;
 
   my $asset_group_listing_group_filter =
-    Google::Ads::GoogleAds::V15::Resources::AssetGroupListingGroupFilter->new({
+    Google::Ads::GoogleAds::V16::Resources::AssetGroupListingGroupFilter->new({
       resourceName =>
-        Google::Ads::GoogleAds::V15::Utils::ResourceNames::asset_group_listing_group_filter(
+        Google::Ads::GoogleAds::V16::Utils::ResourceNames::asset_group_listing_group_filter(
         $customer_id, $asset_group_id, $asset_group_listing_group_filter_id
         ),
       assetGroup =>
-        Google::Ads::GoogleAds::V15::Utils::ResourceNames::asset_group(
+        Google::Ads::GoogleAds::V16::Utils::ResourceNames::asset_group(
         $customer_id, $asset_group_id
         ),
       parentListingGroupFilter =>
-        Google::Ads::GoogleAds::V15::Utils::ResourceNames::asset_group_listing_group_filter(
+        Google::Ads::GoogleAds::V16::Utils::ResourceNames::asset_group_listing_group_filter(
         $customer_id, $asset_group_id, $parent_id
         ),
       # Set the type as a UNIT_INCLUDED to indicate that this asset group listing
@@ -441,10 +441,10 @@ sub create_mutate_operation_for_unit {
     });
 
   return
-    Google::Ads::GoogleAds::V15::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V16::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupListingGroupFilterOperation =>
-        Google::Ads::GoogleAds::V15::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
+        Google::Ads::GoogleAds::V16::Services::AssetGroupListingGroupFilterService::AssetGroupListingGroupFilterOperation
         ->new({
           create => $asset_group_listing_group_filter
         })});

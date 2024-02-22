@@ -1,3 +1,14 @@
+21.0.0 - 2024-02-22
+-------------------
+- Added support for Google Ads API v16.0.
+- Updated examples to remove references to extensions.
+- Added support for a flag on the client that allows making requests
+  without a developer token. This is in preparation for the pilot
+  that uses Google Cloud orgs for API Access levels.
+- Added local_services_lead.contact_details and
+  local_services_lead_conversation.message_details.text to the fields
+  to mask from logs.
+
 20.0.0 - 2024-01-22
 -------------------
 - Removed support for Google Ads API v13.

@@ -68,11 +68,11 @@ sub call {
   ##############################################################################
   if ($http_method eq GET) {
     # HTTP GET request scenarios:
-    #  GET: v15/customers:listAccessibleCustomers
-    #  GET: v15/{+resourceName}
-    #  GET: v15/{+resourceName}:listResults
-    #  GET: v15/customers/{+customerId}/paymentsAccounts
-    #  GET: v15/customers/{+customerId}/merchantCenterLinks
+    #  GET: v16/customers:listAccessibleCustomers
+    #  GET: v16/{+resourceName}
+    #  GET: v16/{+resourceName}:listResults
+    #  GET: v16/customers/{+customerId}/paymentsAccounts
+    #  GET: v16/customers/{+customerId}/merchantCenterLinks
     $request_path = expand_path_template($request_path, $request_body);
 
     # GET: When the $request_body is a hash reference, use the path parameters
@@ -87,13 +87,13 @@ sub call {
     }
   } elsif ($http_method eq POST) {
     # HTTP POST request scenarios:
-    #  POST: v15/geoTargetConstants:suggest
-    #  POST: v15/googleAdsFields:search
-    #  POST: v15/customers/{+customerId}/googleAds:search
-    #  POST: v15/customers/{+customerId}/campaigns:mutate
-    #  POST: v15/{+keywordPlan}:generateForecastMetrics
-    #  POST: v15/{+campaignDraft}:promote
-    #  POST: v15/{+resourceName}:addOperations
+    #  POST: v16/geoTargetConstants:suggest
+    #  POST: v16/googleAdsFields:search
+    #  POST: v16/customers/{+customerId}/googleAds:search
+    #  POST: v16/customers/{+customerId}/campaigns:mutate
+    #  POST: v16/{+keywordPlan}:generateForecastMetrics
+    #  POST: v16/{+campaignDraft}:promote
+    #  POST: v16/{+resourceName}:addOperations
 
     # POST: Retain the 'customerId' variable in the $request_body hash
     # reference after the $request_path is expanded.
@@ -104,7 +104,7 @@ sub call {
     $request_body->{customerId} = $customer_id if defined $customer_id;
   } else {
     # Other HTTP request scenarios:
-    #  DELETE: v15/{+name} for OperationService
+    #  DELETE: v16/{+name} for OperationService
     $request_path = expand_path_template($request_path, $request_body);
   }
 
@@ -240,9 +240,12 @@ sub _get_http_headers {
     join(' ',
       Google::Ads::GoogleAds::Constants::DEFAULT_USER_AGENT,
       "gccl/" . Google::Ads::GoogleAds::BaseService->VERSION,
-      "rest/" . $LWP::UserAgent::Determined::VERSION),
-    "developer-token",
-    $api_client->get_developer_token()];
+      "rest/" . $LWP::UserAgent::Determined::VERSION)];
+
+  # Add the developer-token header if the client is not configured to
+  # use Google Cloud Organization for API access.
+  push @$headers, ("developer-token", $api_client->get_developer_token())
+    if !$api_client->get_use_cloud_org_for_api_access();
 
   my $login_customer_id = $api_client->get_login_customer_id();
   push @$headers, ("login-customer-id", $login_customer_id =~ s/-//gr)

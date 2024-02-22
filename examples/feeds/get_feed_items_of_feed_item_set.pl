@@ -28,8 +28,8 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
-  Google::Ads::GoogleAds::V15::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
-use Google::Ads::GoogleAds::V15::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V16::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+use Google::Ads::GoogleAds::V16::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -55,12 +55,12 @@ sub get_feed_items_of_feed_item_set {
   my $search_query =
     sprintf "SELECT feed_item_set_link.feed_item FROM feed_item_set_link " .
     "WHERE feed_item_set_link.feed_item_set = '%s'",
-    Google::Ads::GoogleAds::V15::Utils::ResourceNames::feed_item_set(
+    Google::Ads::GoogleAds::V16::Utils::ResourceNames::feed_item_set(
     $customer_id, $feed_id, $feed_item_set_id);
 
   # Create a search Google Ads stream request that will retrieve the feed item set links.
   my $search_stream_request =
-    Google::Ads::GoogleAds::V15::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V16::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query
