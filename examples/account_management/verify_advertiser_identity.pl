@@ -38,7 +38,7 @@ use Cwd qw(abs_path);
 sub verify_advertiser_identity {
   my ($api_client, $customer_id) = @_;
 
-  # Retrieve the current Advertiser Identity Verification status.
+  # Retrieve the current advertiser identity verification status.
   my $identity_verification =
     get_identity_verification($api_client, $customer_id);
 
