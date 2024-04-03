@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# This example dismisses a given recommendation. To retrieve recommendations for
-# text ads, run get_text_ad_recommendations.pl.
+# This example dismisses a given recommendation.
 
 use strict;
 use warnings;
