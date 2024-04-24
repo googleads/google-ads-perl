@@ -26,7 +26,8 @@ sub new {
     appId                              => $args->{appId},
     fineGrainedConversionValueMappings =>
       $args->{fineGrainedConversionValueMappings},
-    measurementWindowHours => $args->{measurementWindowHours}};
+    measurementWindowHours => $args->{measurementWindowHours},
+    postbackMappings       => $args->{postbackMappings}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

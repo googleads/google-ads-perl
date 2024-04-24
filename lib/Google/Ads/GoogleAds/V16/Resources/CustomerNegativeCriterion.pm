@@ -25,6 +25,7 @@ sub new {
   my $self = {
     contentLabel        => $args->{contentLabel},
     id                  => $args->{id},
+    ipBlock             => $args->{ipBlock},
     mobileAppCategory   => $args->{mobileAppCategory},
     mobileApplication   => $args->{mobileApplication},
     negativeKeywordList => $args->{negativeKeywordList},

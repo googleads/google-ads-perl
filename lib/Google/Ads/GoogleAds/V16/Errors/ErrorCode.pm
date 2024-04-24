@@ -177,6 +177,7 @@ sub new {
     urlFieldError                   => $args->{urlFieldError},
     userDataError                   => $args->{userDataError},
     userListError                   => $args->{userListError},
+    videoCampaignError              => $args->{videoCampaignError},
     youtubeVideoRegistrationError   => $args->{youtubeVideoRegistrationError}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload

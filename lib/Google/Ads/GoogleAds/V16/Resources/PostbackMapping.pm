@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V16::Common::BrandInfo;
+package Google::Ads::GoogleAds::V16::Resources::PostbackMapping;
 
 use strict;
 use warnings;
@@ -23,11 +23,12 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    displayName     => $args->{displayName},
-    entityId        => $args->{entityId},
-    primaryUrl      => $args->{primaryUrl},
-    rejectionReason => $args->{rejectionReason},
-    status          => $args->{status}};
+    coarseGrainedConversionValueMappings =>
+      $args->{coarseGrainedConversionValueMappings},
+    lockWindowCoarseConversionValue => $args->{lockWindowCoarseConversionValue},
+    lockWindowEvent                 => $args->{lockWindowEvent},
+    lockWindowFineConversionValue   => $args->{lockWindowFineConversionValue},
+    postbackSequenceIndex           => $args->{postbackSequenceIndex}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

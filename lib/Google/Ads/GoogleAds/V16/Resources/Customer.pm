@@ -44,12 +44,13 @@ sub new {
     optimizationScoreWeight => $args->{optimizationScoreWeight},
     payPerConversionEligibilityFailureReasons =>
       $args->{payPerConversionEligibilityFailureReasons},
-    remarketingSetting  => $args->{remarketingSetting},
-    resourceName        => $args->{resourceName},
-    status              => $args->{status},
-    testAccount         => $args->{testAccount},
-    timeZone            => $args->{timeZone},
-    trackingUrlTemplate => $args->{trackingUrlTemplate}};
+    remarketingSetting          => $args->{remarketingSetting},
+    resourceName                => $args->{resourceName},
+    status                      => $args->{status},
+    testAccount                 => $args->{testAccount},
+    timeZone                    => $args->{timeZone},
+    trackingUrlTemplate         => $args->{trackingUrlTemplate},
+    videoBrandSafetySuitability => $args->{videoBrandSafetySuitability}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);
