@@ -49,10 +49,12 @@ use Cwd qw(abs_path);
 # Running the example with -h will print the command line usage.
 my $customer_id          = "INSERT_CUSTOMER_ID_HERE";
 my $conversion_action_id = "INSERT_CONVERSION_ACTION_ID_HERE";
-my $gclid                = "INSERT_GCLID_HERE";
+# The transaction ID of the conversion to adjust. Required if the conversion
+# being adjusted meets the criteria described at
+# https://developers.google.com/google-ads/api/docs/conversions/upload-adjustments#requirements.
+my $order_id = "INSERT_ORDER_ID_HERE";
 # RETRACTION negates a conversion, and RESTATEMENT changes the value of a conversion.
 my $adjustment_type      = "INSERT_ADJUSTMENT_TYPE_HERE";
-my $conversion_date_time = "INSERT_CONVERSION_DATE_TIME_HERE";
 my $adjustment_date_time = "INSERT_ADJUSTMENT_DATE_TIME_HERE";
 # Optional: Specify an adjusted value below for adjustment type RESTATEMENT.
 # This value will be ignored if you specify RETRACTION as adjustment type.
@@ -60,13 +62,11 @@ my $restatement_value = undef;
 
 # [START upload_conversion_adjustment]
 sub upload_conversion_adjustment {
-  my ($api_client, $customer_id, $conversion_action_id, $gclid,
-    $adjustment_type, $conversion_date_time, $adjustment_date_time,
-    $restatement_value)
+  my ($api_client, $customer_id, $conversion_action_id, $order_id,
+    $adjustment_type, $adjustment_date_time, $restatement_value)
     = @_;
 
-  # Associate conversion adjustments with the existing conversion action.
-  # The GCLID should have been uploaded before with a conversion.
+  # Applies the conversion adjustment to the existing conversion.
   my $conversion_adjustment =
     Google::Ads::GoogleAds::V16::Services::ConversionAdjustmentUploadService::ConversionAdjustment
     ->new({
@@ -74,14 +74,18 @@ sub upload_conversion_adjustment {
         Google::Ads::GoogleAds::V16::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
-      adjustmentType    => $adjustment_type,
-      gclidDateTimePair =>
-        Google::Ads::GoogleAds::V16::Services::ConversionAdjustmentUploadService::GclidDateTimePair
-        ->new({
-          gclid              => $gclid,
-          conversionDateTime => $conversion_date_time
-        }
-        ),
+      adjustmentType => $adjustment_type,
+      # Sets the orderId to identify the conversion to adjust.
+      orderId => $order_id,
+      # As an alternative to setting orderId, you can provide a 'gclid_date_time_pair',
+      # but setting 'order_id' instead is strongly recommended.
+      # gclidDateTimePair =>
+      #  Google::Ads::GoogleAds::V16::Services::ConversionAdjustmentUploadService::GclidDateTimePair
+      #  ->new({
+      #    gclid              => $gclid,
+      #    conversionDateTime => $conversion_date_time
+      #  }
+      #  ),
       adjustmentDateTime => $adjustment_date_time,
     });
 
@@ -112,9 +116,9 @@ sub upload_conversion_adjustment {
     $upload_conversion_adjustments_response->{results}[0];
   if (%$uploaded_conversion_adjustment) {
     printf "Uploaded conversion adjustment of the conversion action " .
-      "with resource name '%s' for Google Click ID '%s'.\n",
+      "with resource name '%s' for order ID '%s'.\n",
       $uploaded_conversion_adjustment->{conversionAction},
-      $uploaded_conversion_adjustment->{gclidDateTimePair}{gclid};
+      $uploaded_conversion_adjustment->{orderId};
   }
 
   return 1;
@@ -136,9 +140,8 @@ $api_client->set_die_on_faults(1);
 GetOptions(
   "customer_id=s"          => \$customer_id,
   "conversion_action_id=i" => \$conversion_action_id,
-  "gclid=s"                => \$gclid,
+  "order_id=s"             => \$order_id,
   "adjustment_type=s"      => \$adjustment_type,
-  "conversion_date_time=s" => \$conversion_date_time,
   "adjustment_date_time=s" => \$adjustment_date_time,
   "restatement_value=f"    => \$restatement_value
 );
@@ -146,14 +149,13 @@ GetOptions(
 # Print the help message if the parameters are not initialized in the code nor
 # in the command line.
 pod2usage(2)
-  if not check_params($customer_id, $conversion_action_id, $gclid,
-  $adjustment_type, $conversion_date_time, $adjustment_date_time);
+  if not check_params($customer_id, $conversion_action_id, $order_id,
+  $adjustment_type, $adjustment_date_time);
 
 # Call the example.
 upload_conversion_adjustment($api_client, $customer_id =~ s/-//gr,
-  $conversion_action_id, $gclid,
-  $adjustment_type, $conversion_date_time, $adjustment_date_time,
-  $restatement_value);
+  $conversion_action_id, $order_id,
+  $adjustment_type, $adjustment_date_time, $restatement_value);
 
 =pod
 
@@ -173,10 +175,8 @@ upload_conversion_adjustment.pl [options]
     -help                       Show the help message.
     -customer_id                The Google Ads customer ID.
     -conversion_action_id       The ID of the conversion action to upload to.
-    -gclid                      The GCLID for the conversion.
+    -order_id                   The order ID of the conversion. Strongly recommended instead of using GCLID and conversion date time.
     -adjustment_type            The type of adjustment, e.g. RETRACTION, RESTATEMENT.
-    -conversion_date_time       The date and time of the conversion.
-                                The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. "2019-01-01 12:32:45-08:00".
     -adjustment_date_time       The date and time of the adjustment.
                                 The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", e.g. "2019-01-01 12:32:45-08:00".
     -restatement_value          [optional] The adjusted value for adjustment type RESTATEMENT.

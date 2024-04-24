@@ -26,6 +26,7 @@ sub new {
     categoryId       => $args->{categoryId},
     contactDetails   => $args->{contactDetails},
     creationDateTime => $args->{creationDateTime},
+    creditDetails    => $args->{creditDetails},
     id               => $args->{id},
     leadCharged      => $args->{leadCharged},
     leadStatus       => $args->{leadStatus},

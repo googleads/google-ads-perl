@@ -58,7 +58,8 @@ use Const::Exporter enums => [
   LOCAL_SERVICE_ID         => "LOCAL_SERVICE_ID",
   SEARCH_THEME             => "SEARCH_THEME",
   BRAND                    => "BRAND",
-  BRAND_LIST               => "BRAND_LIST"
+  BRAND_LIST               => "BRAND_LIST",
+  LIFE_EVENT               => "LIFE_EVENT"
 ];
 
 1;

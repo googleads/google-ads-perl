@@ -12,28 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V16::Common::BrandInfo;
+package Google::Ads::GoogleAds::V16::Enums::BrandRequestRejectionReasonEnum;
 
 use strict;
 use warnings;
-use base qw(Google::Ads::GoogleAds::BaseEntity);
 
-use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-
-sub new {
-  my ($class, $args) = @_;
-  my $self = {
-    displayName     => $args->{displayName},
-    entityId        => $args->{entityId},
-    primaryUrl      => $args->{primaryUrl},
-    rejectionReason => $args->{rejectionReason},
-    status          => $args->{status}};
-
-  # Delete the unassigned fields in this object for a more concise JSON payload
-  remove_unassigned_fields($self, $args);
-
-  bless $self, $class;
-  return $self;
-}
+use Const::Exporter enums => [
+  UNSPECIFIED            => "UNSPECIFIED",
+  UNKNOWN                => "UNKNOWN",
+  EXISTING_BRAND         => "EXISTING_BRAND",
+  EXISTING_BRAND_VARIANT => "EXISTING_BRAND_VARIANT",
+  INCORRECT_INFORMATION  => "INCORRECT_INFORMATION",
+  NOT_A_BRAND            => "NOT_A_BRAND"
+];
 
 1;

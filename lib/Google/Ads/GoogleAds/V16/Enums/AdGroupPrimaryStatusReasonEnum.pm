@@ -18,23 +18,24 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED               => "UNSPECIFIED",
-  UNKNOWN                   => "UNKNOWN",
-  CAMPAIGN_REMOVED          => "CAMPAIGN_REMOVED",
-  CAMPAIGN_PAUSED           => "CAMPAIGN_PAUSED",
-  CAMPAIGN_PENDING          => "CAMPAIGN_PENDING",
-  CAMPAIGN_ENDED            => "CAMPAIGN_ENDED",
-  AD_GROUP_PAUSED           => "AD_GROUP_PAUSED",
-  AD_GROUP_REMOVED          => "AD_GROUP_REMOVED",
-  AD_GROUP_INCOMPLETE       => "AD_GROUP_INCOMPLETE",
-  KEYWORDS_PAUSED           => "KEYWORDS_PAUSED",
-  NO_KEYWORDS               => "NO_KEYWORDS",
-  AD_GROUP_ADS_PAUSED       => "AD_GROUP_ADS_PAUSED",
-  NO_AD_GROUP_ADS           => "NO_AD_GROUP_ADS",
-  HAS_ADS_DISAPPROVED       => "HAS_ADS_DISAPPROVED",
-  HAS_ADS_LIMITED_BY_POLICY => "HAS_ADS_LIMITED_BY_POLICY",
-  MOST_ADS_UNDER_REVIEW     => "MOST_ADS_UNDER_REVIEW",
-  CAMPAIGN_DRAFT            => "CAMPAIGN_DRAFT"
+  UNSPECIFIED                         => "UNSPECIFIED",
+  UNKNOWN                             => "UNKNOWN",
+  CAMPAIGN_REMOVED                    => "CAMPAIGN_REMOVED",
+  CAMPAIGN_PAUSED                     => "CAMPAIGN_PAUSED",
+  CAMPAIGN_PENDING                    => "CAMPAIGN_PENDING",
+  CAMPAIGN_ENDED                      => "CAMPAIGN_ENDED",
+  AD_GROUP_PAUSED                     => "AD_GROUP_PAUSED",
+  AD_GROUP_REMOVED                    => "AD_GROUP_REMOVED",
+  AD_GROUP_INCOMPLETE                 => "AD_GROUP_INCOMPLETE",
+  KEYWORDS_PAUSED                     => "KEYWORDS_PAUSED",
+  NO_KEYWORDS                         => "NO_KEYWORDS",
+  AD_GROUP_ADS_PAUSED                 => "AD_GROUP_ADS_PAUSED",
+  NO_AD_GROUP_ADS                     => "NO_AD_GROUP_ADS",
+  HAS_ADS_DISAPPROVED                 => "HAS_ADS_DISAPPROVED",
+  HAS_ADS_LIMITED_BY_POLICY           => "HAS_ADS_LIMITED_BY_POLICY",
+  MOST_ADS_UNDER_REVIEW               => "MOST_ADS_UNDER_REVIEW",
+  CAMPAIGN_DRAFT                      => "CAMPAIGN_DRAFT",
+  AD_GROUP_PAUSED_DUE_TO_LOW_ACTIVITY => "AD_GROUP_PAUSED_DUE_TO_LOW_ACTIVITY"
 ];
 
 1;

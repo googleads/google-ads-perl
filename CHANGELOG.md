@@ -1,3 +1,11 @@
+22.0.0 - 2024-04-24
+-------------------
+- Added support for Google Ads API v16.1.
+- Removed support for Google Ads API v14.
+- Removed examples: approve_merchant_center_link, reject_merchant_center_link,
+  remove_flights_feed_item_attribute_value, update_flights_feed_item_string_attribute_value,
+  add_real_estate_feed, add_flights_feed.
+
 21.0.0 - 2024-02-22
 -------------------
 - Added support for Google Ads API v16.0.
