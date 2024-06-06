@@ -27,19 +27,17 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V16::Enums::ResourceChangeOperationEnum
+use Google::Ads::GoogleAds::V17::Enums::ResourceChangeOperationEnum
   qw(CREATE UPDATE);
-use Google::Ads::GoogleAds::V16::Enums::ChangeEventResourceTypeEnum
+use Google::Ads::GoogleAds::V17::Enums::ChangeEventResourceTypeEnum
   qw(AD AD_GROUP AD_GROUP_AD AD_GROUP_ASSET AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER ASSET ASSET_SET ASSET_SET_ASSET CAMPAIGN CAMPAIGN_ASSET CAMPAIGN_ASSET_SET CAMPAIGN_BUDGET CAMPAIGN_CRITERION AD_GROUP_FEED CAMPAIGN_FEED CUSTOMER_ASSET FEED FEED_ITEM);
 use
-  Google::Ads::GoogleAds::V16::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V17::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use JSON::XS;
 use Pod::Usage;
 use Cwd qw(abs_path);
-
-use constant PAGE_SIZE => 1000;
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -74,14 +72,10 @@ sub get_change_details {
   # Create a search Google Ads request that will retrieve all change events using
   # pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V16::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V17::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
-      query      => $search_query,
-      # The page size is superfluous with the default limit set above, but it's
-      # shown here since it's a good practice to use a reasonable page size
-      # when you set a higher limit.
-      pageSize => PAGE_SIZE
+      query      => $search_query
     });
 
   # Get the GoogleAdsService.

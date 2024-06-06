@@ -25,7 +25,7 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V16::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V17::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,7 +56,7 @@ sub get_invoices {
   my $response = $api_client->InvoiceService()->list({
       customerId   => $customer_id,
       billingSetup =>
-        Google::Ads::GoogleAds::V16::Utils::ResourceNames::billing_setup(
+        Google::Ads::GoogleAds::V17::Utils::ResourceNames::billing_setup(
         ($customer_id, $billing_setup_id)
         ),
       # The year needs to be 2019 or later.
@@ -69,18 +69,21 @@ sub get_invoices {
   foreach my $invoice (@$response) {
     printf "- Found the invoice '%s':\n" .
       "  ID (also known as Invoice Number): '%s'\n" .
-      "  Type: %s\n" . "  Billing setup ID: '%s'\n" .
+      "  Type: %s\n" .
+      "  Billing setup ID: '%s'\n" .
       "  Payments account ID (also known as Billing Account Number): '%s'\n" .
       "  Payments profile ID (also known as Billing ID): '%s'\n" .
       "  Issue date (also known as Invoice Date): %s\n" .
-      "  Due date: %s\n" . "  Currency code: %s\n" .
+      "  Due date: %s\n" .
+      "  Currency code: %s\n" .
       "  Service date range (inclusive): from %s to %s\n" .
       "  Adjustments: subtotal '%.2f', tax '%.2f', total '%.2f'\n" .
       "  Regulatory costs: subtotal '%.2f', tax '%.2f', total '%.2f'\n" .
       "  Replaced invoices: '%s'\n" .
       "  Amounts: subtotal '%.2f', tax '%.2f', total '%.2f'\n" .
       "  Corrected invoice: '%s'\n" .
-      "  PDF URL: '%s'\n" . "  Account budgets:\n",
+      "  PDF URL: '%s'\n" .
+      "  Account budgets:\n",
       $invoice->{resourceName},
       $invoice->{id},
       $invoice->{type},

@@ -27,10 +27,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V16::Resources::FeedItemSetLink;
+use Google::Ads::GoogleAds::V17::Resources::FeedItemSetLink;
 use
-  Google::Ads::GoogleAds::V16::Services::FeedItemSetLinkService::FeedItemSetLinkOperation;
-use Google::Ads::GoogleAds::V16::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V17::Services::FeedItemSetLinkService::FeedItemSetLinkOperation;
+use Google::Ads::GoogleAds::V17::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,18 +56,18 @@ sub link_feed_item_set {
   # Create a new feed item set link that binds the specified feed item set and
   # feed item.
   my $feed_item_set_link =
-    Google::Ads::GoogleAds::V16::Resources::FeedItemSetLink->new({
+    Google::Ads::GoogleAds::V17::Resources::FeedItemSetLink->new({
       feedItemSet =>
-        Google::Ads::GoogleAds::V16::Utils::ResourceNames::feed_item_set(
+        Google::Ads::GoogleAds::V17::Utils::ResourceNames::feed_item_set(
         $customer_id, $feed_id, $feed_item_set_id
         ),
-      feedItem => Google::Ads::GoogleAds::V16::Utils::ResourceNames::feed_item(
+      feedItem => Google::Ads::GoogleAds::V17::Utils::ResourceNames::feed_item(
         $customer_id, $feed_id, $feed_item_id
       )});
 
   # Construct a feed item set link operation.
   my $feed_item_set_link_operation =
-    Google::Ads::GoogleAds::V16::Services::FeedItemSetLinkService::FeedItemSetLinkOperation
+    Google::Ads::GoogleAds::V17::Services::FeedItemSetLinkService::FeedItemSetLinkOperation
     ->new({
       create => $feed_item_set_link
     });

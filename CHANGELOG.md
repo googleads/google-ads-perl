@@ -1,3 +1,9 @@
+23.0.0 - 2024-06-07
+-------------------
+- Added support for Google Ads API v17.
+- Updated examples to remove usage of the page size parameter in Search
+  requests.
+
 22.0.0 - 2024-04-24
 -------------------
 - Added support for Google Ads API v16.1.

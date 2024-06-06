@@ -34,13 +34,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V16::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V16::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V16::Enums::KeywordMatchTypeEnum       qw(EXACT);
-use Google::Ads::GoogleAds::V16::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V17::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V17::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V17::Enums::KeywordMatchTypeEnum       qw(EXACT);
+use Google::Ads::GoogleAds::V17::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
 use
-  Google::Ads::GoogleAds::V16::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V16::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V17::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V17::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -62,15 +62,15 @@ sub handle_keyword_policy_violations {
   my ($api_client, $customer_id, $ad_group_id, $keyword_text) = @_;
 
   # Configure the keyword text and match type settings.
-  my $keyword_info = Google::Ads::GoogleAds::V16::Common::KeywordInfo->new({
+  my $keyword_info = Google::Ads::GoogleAds::V17::Common::KeywordInfo->new({
     text      => $keyword_text,
     matchType => EXACT
   });
 
   # Construct an ad group criterion using the keyword info above.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V16::Resources::AdGroupCriterion->new({
-      adGroup => Google::Ads::GoogleAds::V16::Utils::ResourceNames::ad_group(
+    Google::Ads::GoogleAds::V17::Resources::AdGroupCriterion->new({
+      adGroup => Google::Ads::GoogleAds::V17::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       status  => ENABLED,
@@ -79,7 +79,7 @@ sub handle_keyword_policy_violations {
 
   # Create an ad group criterion operation.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V16::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V17::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({create => $ad_group_criterion});
 
   # Try sending a mutate request to add the keyword.
