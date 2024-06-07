@@ -26,16 +26,14 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
-use Google::Ads::GoogleAds::V16::Enums::ChangeStatusResourceTypeEnum
+use Google::Ads::GoogleAds::V17::Enums::ChangeStatusResourceTypeEnum
   qw(AD_GROUP AD_GROUP_AD AD_GROUP_CRITERION CAMPAIGN CAMPAIGN_CRITERION FEED FEED_ITEM AD_GROUP_FEED CAMPAIGN_FEED AD_GROUP_BID_MODIFIER);
 use
-  Google::Ads::GoogleAds::V16::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V17::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
 use Cwd qw(abs_path);
-
-use constant PAGE_SIZE => 1000;
 
 # The following parameter(s) should be provided to run the example. You can
 # either specify these by changing the INSERT_XXX_ID_HERE values below, or on
@@ -75,11 +73,10 @@ sub get_change_summary {
   # Create a search Google Ads request that will retrieve all change statuses using
   # pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V16::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V17::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
-      query      => $search_query,
-      pageSize   => PAGE_SIZE
+      query      => $search_query
     });
 
   # Get the GoogleAdsService.
