@@ -1683,6 +1683,17 @@ sub offline_conversion_upload_client_summary {
   return expand_path_template($path_template, [$customer_id, $client]);
 }
 
+# Returns the offline_conversion_upload_conversion_action_summary resource name for the specified components.
+sub offline_conversion_upload_conversion_action_summary {
+  my ($customer_id, $conversion_action_id, $client) = @_;
+
+  my $path_template =
+'customers/{customer_id}/offlineConversionUploadConversionActionSummaries/{conversion_action_id}~{client}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $conversion_action_id, $client]);
+}
+
 # Returns the offline_user_data_job resource name for the specified components.
 sub offline_user_data_job {
   my ($customer_id, $offline_user_data_job_id) = @_;

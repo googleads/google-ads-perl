@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V17::Resources::OfflineConversionSummary;
+package Google::Ads::GoogleAds::V17::Services::AudienceInsightsService::DimensionOverlapResult;
 
 use strict;
 use warnings;
@@ -23,11 +23,8 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    failedCount     => $args->{failedCount},
-    jobId           => $args->{jobId},
-    pendingCount    => $args->{pendingCount},
-    successfulCount => $args->{successfulCount},
-    uploadDate      => $args->{uploadDate}};
+    dimension => $args->{dimension},
+    items     => $args->{items}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

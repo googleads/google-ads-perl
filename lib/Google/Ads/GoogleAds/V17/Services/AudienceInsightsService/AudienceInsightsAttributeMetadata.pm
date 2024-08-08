@@ -29,6 +29,7 @@ sub new {
     displayName               => $args->{displayName},
     dynamicAttributeMetadata  => $args->{dynamicAttributeMetadata},
     locationAttributeMetadata => $args->{locationAttributeMetadata},
+    potentialYoutubeReach     => $args->{potentialYoutubeReach},
     youtubeChannelMetadata    => $args->{youtubeChannelMetadata}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload

@@ -30,6 +30,7 @@ sub new {
     adGroupCriterion   => $args->{adGroupCriterion},
     adGroupFeed        => $args->{adGroupFeed},
     asset              => $args->{asset},
+    assetGroup         => $args->{assetGroup},
     campaign           => $args->{campaign},
     campaignAsset      => $args->{campaignAsset},
     campaignCriterion  => $args->{campaignCriterion},
