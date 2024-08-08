@@ -12,30 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V17::Services::AdGroupAdService;
+package Google::Ads::GoogleAds::V17::Services::ShareablePreviewService;
 
 use strict;
 use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
-sub mutate {
+sub generate_shareable_previews {
   my $self         = shift;
   my $request_body = shift;
   my $http_method  = 'POST';
-  my $request_path = 'v17/customers/{+customerId}/adGroupAds:mutate';
+  my $request_path = 'v17/customers/{+customerId}:generateShareablePreviews';
   my $response_type =
-'Google::Ads::GoogleAds::V17::Services::AdGroupAdService::MutateAdGroupAdsResponse';
-
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
-}
-
-sub remove_automatically_created_assets {
-  my $self          = shift;
-  my $request_body  = shift;
-  my $http_method   = 'POST';
-  my $request_path  = 'v17/{+adGroupAd}:removeAutomaticallyCreatedAssets';
-  my $response_type = '';
+'Google::Ads::GoogleAds::V17::Services::ShareablePreviewService::GenerateShareablePreviewsResponse';
 
   return $self->SUPER::call($http_method, $request_path, $request_body,
     $response_type);

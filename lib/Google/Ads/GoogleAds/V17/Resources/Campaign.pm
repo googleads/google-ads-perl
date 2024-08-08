@@ -44,6 +44,7 @@ sub new {
     excludedParentAssetSetTypes   => $args->{excludedParentAssetSetTypes},
     experimentType                => $args->{experimentType},
     finalUrlSuffix                => $args->{finalUrlSuffix},
+    fixedCpm                      => $args->{fixedCpm},
     frequencyCaps                 => $args->{frequencyCaps},
     geoTargetTypeSetting          => $args->{geoTargetTypeSetting},
     hotelPropertyAssetSet         => $args->{hotelPropertyAssetSet},
@@ -78,6 +79,7 @@ sub new {
     status                        => $args->{status},
     targetCpa                     => $args->{targetCpa},
     targetCpm                     => $args->{targetCpm},
+    targetCpv                     => $args->{targetCpv},
     targetImpressionShare         => $args->{targetImpressionShare},
     targetRoas                    => $args->{targetRoas},
     targetSpend                   => $args->{targetSpend},
@@ -88,7 +90,8 @@ sub new {
     urlCustomParameters           => $args->{urlCustomParameters},
     urlExpansionOptOut            => $args->{urlExpansionOptOut},
     vanityPharma                  => $args->{vanityPharma},
-    videoBrandSafetySuitability   => $args->{videoBrandSafetySuitability}};
+    videoBrandSafetySuitability   => $args->{videoBrandSafetySuitability},
+    videoCampaignSettings         => $args->{videoCampaignSettings}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

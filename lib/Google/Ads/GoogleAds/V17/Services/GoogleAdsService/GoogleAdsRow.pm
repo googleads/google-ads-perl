@@ -175,6 +175,8 @@ sub new {
     mobileDeviceConstant                 => $args->{mobileDeviceConstant},
     offlineConversionUploadClientSummary =>
       $args->{offlineConversionUploadClientSummary},
+    offlineConversionUploadConversionActionSummary =>
+      $args->{offlineConversionUploadConversionActionSummary},
     offlineUserDataJob             => $args->{offlineUserDataJob},
     operatingSystemVersionConstant => $args->{operatingSystemVersionConstant},
     paidOrganicSearchTermView      => $args->{paidOrganicSearchTermView},

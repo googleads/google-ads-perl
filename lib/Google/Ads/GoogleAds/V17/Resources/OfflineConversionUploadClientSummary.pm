@@ -28,6 +28,8 @@ sub new {
     dailySummaries       => $args->{dailySummaries},
     jobSummaries         => $args->{jobSummaries},
     lastUploadDateTime   => $args->{lastUploadDateTime},
+    pendingEventCount    => $args->{pendingEventCount},
+    pendingRate          => $args->{pendingRate},
     resourceName         => $args->{resourceName},
     status               => $args->{status},
     successRate          => $args->{successRate},

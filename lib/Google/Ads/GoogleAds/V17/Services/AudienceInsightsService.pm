@@ -31,6 +31,19 @@ sub generate_audience_composition_insights {
     $response_type);
 }
 
+sub generate_audience_overlap_insights {
+  my $self         = shift;
+  my $request_body = shift;
+  my $http_method  = 'POST';
+  my $request_path =
+    'v17/customers/{+customerId}:generateAudienceOverlapInsights';
+  my $response_type =
+'Google::Ads::GoogleAds::V17::Services::AudienceInsightsService::GenerateAudienceOverlapInsightsResponse';
+
+  return $self->SUPER::call($http_method, $request_path, $request_body,
+    $response_type);
+}
+
 sub generate_insights_finder_report {
   my $self         = shift;
   my $request_body = shift;
