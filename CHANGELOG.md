@@ -1,3 +1,9 @@
+25.0.0 - 2024-10-16
+-------------------
+- Added support for Google Ads API v18.
+- Updated example get_all_disapproved_ads to set returnTotalResultsCount
+  on new searchSettings request field.
+
 24.0.0 - 2024-08-08
 -------------------
 - Added support for Google Ads API v17_1.
