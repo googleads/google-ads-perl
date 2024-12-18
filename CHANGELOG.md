@@ -1,3 +1,7 @@
+25.0.1 - 2024-12-18
+-------------------
+- Fixed bug in Google::Ads::GoogleAds::V18::Resources::CampaignBudget.
+
 25.0.0 - 2024-10-16
 -------------------
 - Added support for Google Ads API v18.
