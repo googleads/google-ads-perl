@@ -84,9 +84,7 @@ sub add_campaigns {
       # targeting and the ads are ready to serve.
       status => PAUSED,
       # Set the bidding strategy and budget.
-      manualCpc => Google::Ads::GoogleAds::V18::Common::ManualCpc->new(
-        {enhancedCpcEnabled => "true"}
-      ),
+      manualCpc      => Google::Ads::GoogleAds::V18::Common::ManualCpc->new(),
       campaignBudget => $campaign_budgets_response->{results}[0]{resourceName},
       # Set the campaign network options.
       networkSettings =>
