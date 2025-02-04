@@ -45,10 +45,6 @@ $build_sc->new(
   dist_version       => "25.0.1",
   no_index           => {
     namespace => [
-      "Google::Ads::GoogleAds::V16::Enums",
-      "Google::Ads::GoogleAds::V16::Common",
-      "Google::Ads::GoogleAds::V16::Resources",
-      "Google::Ads::GoogleAds::V16::Services",
       "Google::Ads::GoogleAds::V17::Enums",
       "Google::Ads::GoogleAds::V17::Common",
       "Google::Ads::GoogleAds::V17::Resources",
