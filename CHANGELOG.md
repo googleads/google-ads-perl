@@ -1,3 +1,11 @@
+26.0.0 - 2024-02-26
+-------------------
+- Added support for Google Ads API v19.
+- Removed support for Google Ads API v16.
+- Removed feed-related examples.
+- Updated PMax campaign creation examples to use brand guidelines.
+- Updated add_shopping_product_ad example to remove usage of enhancedCpc.
+
 25.0.1 - 2024-12-18
 -------------------
 - Fixed bug in Google::Ads::GoogleAds::V18::Resources::CampaignBudget.
