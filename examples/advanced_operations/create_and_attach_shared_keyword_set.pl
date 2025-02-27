@@ -25,18 +25,18 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V18::Resources::SharedSet;
-use Google::Ads::GoogleAds::V18::Resources::SharedCriterion;
-use Google::Ads::GoogleAds::V18::Resources::CampaignSharedSet;
-use Google::Ads::GoogleAds::V18::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V18::Enums::SharedSetTypeEnum qw(NEGATIVE_KEYWORDS);
-use Google::Ads::GoogleAds::V18::Enums::KeywordMatchTypeEnum qw(BROAD);
-use Google::Ads::GoogleAds::V18::Services::SharedSetService::SharedSetOperation;
+use Google::Ads::GoogleAds::V19::Resources::SharedSet;
+use Google::Ads::GoogleAds::V19::Resources::SharedCriterion;
+use Google::Ads::GoogleAds::V19::Resources::CampaignSharedSet;
+use Google::Ads::GoogleAds::V19::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V19::Enums::SharedSetTypeEnum qw(NEGATIVE_KEYWORDS);
+use Google::Ads::GoogleAds::V19::Enums::KeywordMatchTypeEnum qw(BROAD);
+use Google::Ads::GoogleAds::V19::Services::SharedSetService::SharedSetOperation;
 use
-  Google::Ads::GoogleAds::V18::Services::SharedCriterionService::SharedCriterionOperation;
+  Google::Ads::GoogleAds::V19::Services::SharedCriterionService::SharedCriterionOperation;
 use
-  Google::Ads::GoogleAds::V18::Services::CampaignSharedSetService::CampaignSharedSetOperation;
-use Google::Ads::GoogleAds::V18::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V19::Services::CampaignSharedSetService::CampaignSharedSetOperation;
+use Google::Ads::GoogleAds::V19::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -58,13 +58,13 @@ sub create_and_attach_shared_keyword_set {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   # Create shared negative keyword set.
-  my $shared_set = Google::Ads::GoogleAds::V18::Resources::SharedSet->new({
+  my $shared_set = Google::Ads::GoogleAds::V19::Resources::SharedSet->new({
     name => "API Negative keyword list - " . uniqid(),
     type => NEGATIVE_KEYWORDS
   });
 
   my $shared_set_operation =
-    Google::Ads::GoogleAds::V18::Services::SharedSetService::SharedSetOperation
+    Google::Ads::GoogleAds::V19::Services::SharedSetService::SharedSetOperation
     ->new({
       create => $shared_set
     });
@@ -83,8 +83,8 @@ sub create_and_attach_shared_keyword_set {
   my $keywords = ['mars cruise', 'mars hotels'];
   foreach my $keyword (@$keywords) {
     my $shared_criterion =
-      Google::Ads::GoogleAds::V18::Resources::SharedCriterion->new({
-        keyword => Google::Ads::GoogleAds::V18::Common::KeywordInfo->new({
+      Google::Ads::GoogleAds::V19::Resources::SharedCriterion->new({
+        keyword => Google::Ads::GoogleAds::V19::Common::KeywordInfo->new({
             text      => $keyword,
             matchType => BROAD
           }
@@ -93,7 +93,7 @@ sub create_and_attach_shared_keyword_set {
       });
 
     my $shared_criterion_operation =
-      Google::Ads::GoogleAds::V18::Services::SharedCriterionService::SharedCriterionOperation
+      Google::Ads::GoogleAds::V19::Services::SharedCriterionService::SharedCriterionOperation
       ->new({
         create => $shared_criterion
       });
@@ -113,15 +113,15 @@ sub create_and_attach_shared_keyword_set {
 
   # Create campaign shared set.
   my $campaign_shared_set =
-    Google::Ads::GoogleAds::V18::Resources::CampaignSharedSet->new({
-      campaign => Google::Ads::GoogleAds::V18::Utils::ResourceNames::campaign(
+    Google::Ads::GoogleAds::V19::Resources::CampaignSharedSet->new({
+      campaign => Google::Ads::GoogleAds::V19::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       sharedSet => $shared_set_resource_name
     });
 
   my $campaign_shared_set_operation =
-    Google::Ads::GoogleAds::V18::Services::CampaignSharedSetService::CampaignSharedSetOperation
+    Google::Ads::GoogleAds::V19::Services::CampaignSharedSetService::CampaignSharedSetOperation
     ->new({
       create => $campaign_shared_set
     });

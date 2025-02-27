@@ -27,12 +27,12 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V18::Enums::ResourceChangeOperationEnum
+use Google::Ads::GoogleAds::V19::Enums::ResourceChangeOperationEnum
   qw(CREATE UPDATE);
-use Google::Ads::GoogleAds::V18::Enums::ChangeEventResourceTypeEnum
-  qw(AD AD_GROUP AD_GROUP_AD AD_GROUP_ASSET AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER ASSET ASSET_SET ASSET_SET_ASSET CAMPAIGN CAMPAIGN_ASSET CAMPAIGN_ASSET_SET CAMPAIGN_BUDGET CAMPAIGN_CRITERION AD_GROUP_FEED CAMPAIGN_FEED CUSTOMER_ASSET FEED FEED_ITEM);
+use Google::Ads::GoogleAds::V19::Enums::ChangeEventResourceTypeEnum
+  qw(AD AD_GROUP AD_GROUP_AD AD_GROUP_ASSET AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER ASSET ASSET_SET ASSET_SET_ASSET CAMPAIGN CAMPAIGN_ASSET CAMPAIGN_ASSET_SET CAMPAIGN_BUDGET CAMPAIGN_CRITERION CUSTOMER_ASSET);
 use
-  Google::Ads::GoogleAds::V18::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V19::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use JSON::XS;
@@ -72,7 +72,7 @@ sub get_change_details {
   # Create a search Google Ads request that will retrieve all change events using
   # pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V18::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V19::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query
@@ -166,9 +166,6 @@ sub _get_changed_resources_for_resource_type {
   } elsif ($resource_type eq AD_GROUP_BID_MODIFIER) {
     return $change_event->{oldResource}{adGroupBidModifier},
       $change_event->{newResource}{adGroupBidModifier};
-  } elsif ($resource_type eq AD_GROUP_FEED) {
-    return $change_event->{oldResource}{adGroupFeed},
-      $change_event->{newResource}{adGroupFeed};
   } elsif ($resource_type eq ASSET) {
     return $change_event->{oldResource}{asset},
       $change_event->{newResource}{asset};
@@ -193,18 +190,9 @@ sub _get_changed_resources_for_resource_type {
   } elsif ($resource_type eq CAMPAIGN_CRITERION) {
     return $change_event->{oldResource}{campaignCriterion},
       $change_event->{newResource}{campaignCriterion};
-  } elsif ($resource_type eq CAMPAIGN_FEED) {
-    return $change_event->{oldResource}{campaignFeed},
-      $change_event->{newResource}{campaignFeed};
   } elsif ($resource_type eq CUSTOMER_ASSET) {
     return $change_event->{oldResource}{customerAsset},
       $change_event->{newResource}{customerAsset};
-  } elsif ($resource_type eq FEED) {
-    return $change_event->{oldResource}{feed},
-      $change_event->{newResource}{feed};
-  } elsif ($resource_type eq FEED_ITEM) {
-    return $change_event->{oldResource}{feedItem},
-      $change_event->{newResource}{feedItem};
   } else {
     print "Unknown change_resource_type $resource_type.\n";
   }
