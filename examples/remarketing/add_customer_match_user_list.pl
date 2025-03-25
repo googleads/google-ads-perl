@@ -260,7 +260,7 @@ sub check_job_status {
     "offline_user_data_job.customer_match_user_list_metadata.user_list " .
     "FROM offline_user_data_job " .
     "WHERE offline_user_data_job.resource_name = " .
-    "$offline_user_data_job_resource_name LIMIT 1";
+    "'$offline_user_data_job_resource_name' LIMIT 1";
 
   my $search_request =
     Google::Ads::GoogleAds::V19::Services::GoogleAdsService::SearchGoogleAdsRequest
