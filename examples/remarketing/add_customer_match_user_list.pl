@@ -292,7 +292,7 @@ sub check_job_status {
     print_customer_match_user_list_info($api_client, $customer_id,
       $offline_user_data_job->{customerMatchUserListMetadata}{userList});
   } elsif ($status eq FAILED) {
-    print "Failure reason: $offline_user_data_job->{failure_reason}";
+    print "Failure reason: $offline_user_data_job->{failureReason}";
   } elsif (grep /$status/, (PENDING, RUNNING)) {
     print
       "To check the status of the job periodically, use the following GAQL " .
