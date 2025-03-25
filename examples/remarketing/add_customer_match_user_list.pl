@@ -250,7 +250,7 @@ sub add_users_to_customer_match_user_list {
 
 # Retrieves, checks, and prints the status of the offline user data job.
 # [START add_customer_match_user_list_4]
-sub check_job_status() {
+sub check_job_status {
   my ($api_client, $customer_id, $offline_user_data_job_resource_name) = @_;
 
   my $search_query =
