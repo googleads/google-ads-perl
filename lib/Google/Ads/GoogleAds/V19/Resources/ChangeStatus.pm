@@ -32,6 +32,7 @@ sub new {
     assetGroup         => $args->{assetGroup},
     campaign           => $args->{campaign},
     campaignAsset      => $args->{campaignAsset},
+    campaignBudget     => $args->{campaignBudget},
     campaignCriterion  => $args->{campaignCriterion},
     campaignSharedSet  => $args->{campaignSharedSet},
     combinedAudience   => $args->{combinedAudience},

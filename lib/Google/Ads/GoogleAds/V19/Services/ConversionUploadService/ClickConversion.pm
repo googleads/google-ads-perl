@@ -23,20 +23,23 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    cartData                => $args->{cartData},
-    consent                 => $args->{consent},
-    conversionAction        => $args->{conversionAction},
-    conversionDateTime      => $args->{conversionDateTime},
-    conversionEnvironment   => $args->{conversionEnvironment},
-    conversionValue         => $args->{conversionValue},
-    currencyCode            => $args->{currencyCode},
-    customVariables         => $args->{customVariables},
-    externalAttributionData => $args->{externalAttributionData},
-    gbraid                  => $args->{gbraid},
-    gclid                   => $args->{gclid},
-    orderId                 => $args->{orderId},
-    userIdentifiers         => $args->{userIdentifiers},
-    wbraid                  => $args->{wbraid}};
+    cartData                       => $args->{cartData},
+    consent                        => $args->{consent},
+    conversionAction               => $args->{conversionAction},
+    conversionDateTime             => $args->{conversionDateTime},
+    conversionEnvironment          => $args->{conversionEnvironment},
+    conversionValue                => $args->{conversionValue},
+    currencyCode                   => $args->{currencyCode},
+    customVariables                => $args->{customVariables},
+    customerType                   => $args->{customerType},
+    externalAttributionData        => $args->{externalAttributionData},
+    gbraid                         => $args->{gbraid},
+    gclid                          => $args->{gclid},
+    orderId                        => $args->{orderId},
+    sessionAttributesEncoded       => $args->{sessionAttributesEncoded},
+    sessionAttributesKeyValuePairs => $args->{sessionAttributesKeyValuePairs},
+    userIdentifiers                => $args->{userIdentifiers},
+    wbraid                         => $args->{wbraid}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

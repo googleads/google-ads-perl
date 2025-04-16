@@ -32,6 +32,8 @@ sub new {
     adFormatType                    => $args->{adFormatType},
     adGroup                         => $args->{adGroup},
     adNetworkType                   => $args->{adNetworkType},
+    adjustedAgeRange                => $args->{adjustedAgeRange},
+    adjustedGender                  => $args->{adjustedGender},
     assetGroup                      => $args->{assetGroup},
     assetInteractionTarget          => $args->{assetInteractionTarget},
     auctionInsightDomain            => $args->{auctionInsightDomain},

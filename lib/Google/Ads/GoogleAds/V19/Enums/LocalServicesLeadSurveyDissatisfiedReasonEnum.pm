@@ -12,25 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V19::Resources::ImprovePerformanceMaxAdStrengthRecommendation;
+package Google::Ads::GoogleAds::V19::Enums::LocalServicesLeadSurveyDissatisfiedReasonEnum;
 
 use strict;
 use warnings;
-use base qw(Google::Ads::GoogleAds::BaseEntity);
 
-use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-
-sub new {
-  my ($class, $args) = @_;
-  my $self = {
-    adStrength => $args->{adStrength},
-    assetGroup => $args->{assetGroup}};
-
-  # Delete the unassigned fields in this object for a more concise JSON payload
-  remove_unassigned_fields($self, $args);
-
-  bless $self, $class;
-  return $self;
-}
+use Const::Exporter enums => [
+  UNSPECIFIED               => "UNSPECIFIED",
+  UNKNOWN                   => "UNKNOWN",
+  OTHER_DISSATISFIED_REASON => "OTHER_DISSATISFIED_REASON",
+  GEO_MISMATCH              => "GEO_MISMATCH",
+  JOB_TYPE_MISMATCH         => "JOB_TYPE_MISMATCH",
+  NOT_READY_TO_BOOK         => "NOT_READY_TO_BOOK",
+  SPAM                      => "SPAM",
+  DUPLICATE                 => "DUPLICATE",
+  SOLICITATION              => "SOLICITATION"
+];
 
 1;

@@ -50,7 +50,8 @@ use Const::Exporter enums => [
   DEMAND_GEN_CAROUSEL_AD           => "DEMAND_GEN_CAROUSEL_AD",
   TRAVEL_AD                        => "TRAVEL_AD",
   DEMAND_GEN_VIDEO_RESPONSIVE_AD   => "DEMAND_GEN_VIDEO_RESPONSIVE_AD",
-  DEMAND_GEN_PRODUCT_AD            => "DEMAND_GEN_PRODUCT_AD"
+  DEMAND_GEN_PRODUCT_AD            => "DEMAND_GEN_PRODUCT_AD",
+  YOUTUBE_AUDIO_AD                 => "YOUTUBE_AUDIO_AD"
 ];
 
 1;

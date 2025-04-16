@@ -31,4 +31,16 @@ sub append_lead_conversation {
     $response_type);
 }
 
+sub provide_lead_feedback {
+  my $self         = shift;
+  my $request_body = shift;
+  my $http_method  = 'POST';
+  my $request_path = 'v19/{+resourceName}:provideLeadFeedback';
+  my $response_type =
+'Google::Ads::GoogleAds::V19::Services::LocalServicesLeadService::ProvideLeadFeedbackResponse';
+
+  return $self->SUPER::call($http_method, $request_path, $request_body,
+    $response_type);
+}
+
 1;

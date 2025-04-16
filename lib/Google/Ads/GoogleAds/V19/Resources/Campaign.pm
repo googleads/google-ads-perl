@@ -70,6 +70,7 @@ sub new {
     paymentMode                   => $args->{paymentMode},
     percentCpc                    => $args->{percentCpc},
     performanceMaxUpgrade         => $args->{performanceMaxUpgrade},
+    pmaxCampaignSettings          => $args->{pmaxCampaignSettings},
     primaryStatus                 => $args->{primaryStatus},
     primaryStatusReasons          => $args->{primaryStatusReasons},
     realTimeBiddingSetting        => $args->{realTimeBiddingSetting},

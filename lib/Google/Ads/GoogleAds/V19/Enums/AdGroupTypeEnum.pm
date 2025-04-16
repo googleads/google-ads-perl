@@ -35,7 +35,8 @@ use Const::Exporter enums => [
   VIDEO_RESPONSIVE                => "VIDEO_RESPONSIVE",
   VIDEO_EFFICIENT_REACH           => "VIDEO_EFFICIENT_REACH",
   SMART_CAMPAIGN_ADS              => "SMART_CAMPAIGN_ADS",
-  TRAVEL_ADS                      => "TRAVEL_ADS"
+  TRAVEL_ADS                      => "TRAVEL_ADS",
+  YOUTUBE_AUDIO                   => "YOUTUBE_AUDIO"
 ];
 
 1;

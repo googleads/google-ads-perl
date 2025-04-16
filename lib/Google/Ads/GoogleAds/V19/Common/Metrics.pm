@@ -124,6 +124,8 @@ sub new {
     biddableAppInstallConversions     => $args->{biddableAppInstallConversions},
     biddableAppPostInstallConversions =>
       $args->{biddableAppPostInstallConversions},
+    biddableCohortAppPostInstallConversions =>
+      $args->{biddableCohortAppPostInstallConversions},
     bounceRate                       => $args->{bounceRate},
     clicks                           => $args->{clicks},
     combinedClicks                   => $args->{combinedClicks},
@@ -151,6 +153,7 @@ sub new {
     costPerConversion                       => $args->{costPerConversion},
     costPerCurrentModelAttributedConversion =>
       $args->{costPerCurrentModelAttributedConversion},
+    coviewedImpressions               => $args->{coviewedImpressions},
     crossDeviceConversions            => $args->{crossDeviceConversions},
     crossDeviceConversionsValueMicros =>
       $args->{crossDeviceConversionsValueMicros},
@@ -221,6 +224,7 @@ sub new {
     phoneCalls                     => $args->{phoneCalls},
     phoneImpressions               => $args->{phoneImpressions},
     phoneThroughRate               => $args->{phoneThroughRate},
+    primaryImpressions             => $args->{primaryImpressions},
     publisherOrganicClicks         => $args->{publisherOrganicClicks},
     publisherPurchasedClicks       => $args->{publisherPurchasedClicks},
     publisherUnknownClicks         => $args->{publisherUnknownClicks},

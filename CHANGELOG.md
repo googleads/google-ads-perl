@@ -1,3 +1,8 @@
+26.1.0 - 2024-04-16
+-------------------
+- Added support for Google Ads API v19_1.
+- Updated upload_enhanced_conversions_for_leads example to use session attributes.
+
 26.0.0 - 2024-02-26
 -------------------
 - Added support for Google Ads API v19.
