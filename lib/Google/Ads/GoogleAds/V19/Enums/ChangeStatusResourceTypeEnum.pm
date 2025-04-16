@@ -25,6 +25,7 @@ use Const::Exporter enums => [
   AD_GROUP_CRITERION    => "AD_GROUP_CRITERION",
   CAMPAIGN              => "CAMPAIGN",
   CAMPAIGN_CRITERION    => "CAMPAIGN_CRITERION",
+  CAMPAIGN_BUDGET       => "CAMPAIGN_BUDGET",
   FEED                  => "FEED",
   FEED_ITEM             => "FEED_ITEM",
   AD_GROUP_FEED         => "AD_GROUP_FEED",
@@ -37,7 +38,9 @@ use Const::Exporter enums => [
   CAMPAIGN_ASSET        => "CAMPAIGN_ASSET",
   AD_GROUP_ASSET        => "AD_GROUP_ASSET",
   COMBINED_AUDIENCE     => "COMBINED_AUDIENCE",
-  ASSET_GROUP           => "ASSET_GROUP"
+  ASSET_GROUP           => "ASSET_GROUP",
+  ASSET_SET             => "ASSET_SET",
+  CAMPAIGN_ASSET_SET    => "CAMPAIGN_ASSET_SET"
 ];
 
 1;

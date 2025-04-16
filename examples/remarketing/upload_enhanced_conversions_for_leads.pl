@@ -34,6 +34,8 @@ use Google::Ads::GoogleAds::V19::Enums::UserIdentifierSourceEnum
   qw(FIRST_PARTY);
 use
   Google::Ads::GoogleAds::V19::Services::ConversionUploadService::ClickConversion;
+use
+  Google::Ads::GoogleAds::V19::Services::ConversionUploadService::SessionAttributeKeyValuePair;
 use Google::Ads::GoogleAds::V19::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
@@ -41,29 +43,14 @@ use Pod::Usage;
 use Cwd         qw(abs_path);
 use Digest::SHA qw(sha256_hex);
 
-# The following parameter(s) should be provided to run the example. You can
-# either specify these by changing the INSERT_XXX_ID_HERE values below, or on
-# the command line.
-#
-# Parameters passed on the command line will override any parameters set in
-# code.
-#
-# Running the example with -h will print the command line usage.
-my $customer_id          = "INSERT_CUSTOMER_ID_HERE";
-my $conversion_action_id = "INSERT_CONVERSION_ACTION_ID_HERE";
-my $conversion_date_time = "INSERT_CONVERSION_DATE_TIME_HERE";
-my $conversion_value     = "INSERT_CONVERSION_VALUE_HERE";
-# Optional: Specify the unique order ID for the click conversion.
-my $order_id = undef;
-# Optional: Specify the Google click ID (gclid) for the click conversion.
-my $gclid = undef;
-# Optional: Specify the ad user data consent for the click.
-my $ad_user_data_consent = undef;
-
 sub upload_enhanced_conversions_for_leads {
-  my ($api_client, $customer_id, $conversion_action_id, $conversion_date_time,
-    $conversion_value, $order_id, $gclid, $ad_user_data_consent)
-    = @_;
+  my (
+    $api_client,                 $customer_id,
+    $conversion_action_id,       $conversion_date_time,
+    $conversion_value,           $order_id,
+    $gclid,                      $ad_user_data_consent,
+    $session_attributes_encoded, $session_attributes_hash
+  ) = @_;
 
   # [START add_user_identifiers]
   # Create an empty click conversion.
@@ -159,6 +146,22 @@ sub upload_enhanced_conversions_for_leads {
       Google::Ads::GoogleAds::V19::Common::Consent->new({
         adUserData => $raw_record->{adUserDataConsent}});
   }
+
+  # [START add_session_attributes]
+  # Set one of the session_attributes_encoded or session_attributes_key_value_pairs
+  # fields if either are provided.
+  if (defined $session_attributes_encoded) {
+    $click_conversion->{sessionAttributesEncoded} = $session_attributes_encoded;
+  } elsif (defined $session_attributes_hash) {
+    while (my ($key, $value) = each %$session_attributes_hash) {
+      my $pair =
+        Google::Ads::GoogleAds::V19::Services::ConversionUploadService::SessionAttributeKeyValuePair
+        ->new({sessionAttributeKey => $key, sessionAttributeValue => $value});
+      push @{$click_conversion->{sessionAttributesKeyValuePairs}{keyValuePairs}
+      }, $pair;
+    }
+  }
+  # [END add_session_attributes]
   # [END add_conversion_details]
 
   # [START upload_conversion]
@@ -241,15 +244,29 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 # By default examples are set to die on any server returned fault.
 $api_client->set_die_on_faults(1);
 
+my $customer_id;
+my $conversion_action_id;
+my $conversion_date_time;
+my $conversion_value;
+my $order_id;
+my $gclid;
+my $ad_user_data_consent;
+my $session_attributes_encoded;
+my $session_attributes_hash;
+my $session_attributes_key_value_pairs;
+
 # Parameters passed on the command line will override any parameters set in code.
 GetOptions(
-  "customer_id=s"          => \$customer_id,
-  "conversion_action_id=i" => \$conversion_action_id,
-  "conversion_date_time=s" => \$conversion_date_time,
-  "conversion_value=f"     => \$conversion_value,
-  "order_id=s"             => \$order_id,
-  "gclid=s"                => \$gclid,
-  "ad_user_data_consent=s" => \$ad_user_data_consent,
+  "customer_id=s"                        => \$customer_id,
+  "conversion_action_id=i"               => \$conversion_action_id,
+  "conversion_date_time=s"               => \$conversion_date_time,
+  "conversion_value=f"                   => \$conversion_value,
+  "order_id=s"                           => \$order_id,
+  "gclid=s"                              => \$gclid,
+  "ad_user_data_consent=s"               => \$ad_user_data_consent,
+  "session_attributes_encoded=s"         => \$session_attributes_encoded,
+  "session_attributes_key_value_pairs=s" =>
+    \$session_attributes_key_value_pairs,
 );
 
 # Print the help message if the parameters are not initialized in the code nor
@@ -260,10 +277,27 @@ pod2usage(2)
   $conversion_date_time, $conversion_value
   );
 
+if ( defined $session_attributes_encoded
+  && defined $session_attributes_key_value_pairs)
+{
+  die
+"session_attributes_encoded and session_attributes_key_value_pairs cannot be passed in at the same time.";
+}
+
+# Convert session_attributes_key_value_pairs to a hash.
+foreach my $key_value_pair (split ' ', $session_attributes_key_value_pairs) {
+  my ($key, $value) = split('=', $key_value_pair);
+  $session_attributes_hash->{$key} = $value;
+}
+
 # Call the example.
-upload_enhanced_conversions_for_leads($api_client, $customer_id =~ s/-//gr,
-  $conversion_action_id, $conversion_date_time,
-  $conversion_value,     $order_id, $gclid, $ad_user_data_consent);
+upload_enhanced_conversions_for_leads(
+  $api_client,                 $customer_id =~ s/-//gr,
+  $conversion_action_id,       $conversion_date_time,
+  $conversion_value,           $order_id,
+  $gclid,                      $ad_user_data_consent,
+  $session_attributes_encoded, $session_attributes_hash
+);
 
 =pod
 
@@ -290,5 +324,7 @@ upload_enhanced_conversions_for_leads.pl [options]
     -order_id                   [optional] The unique ID (transaction ID) of the conversion. We recommend including if available.
     -gclid                      [optional] The Google click ID associated with the conversion. We recommend including if available.
 	-ad_user_data_consent		[optional] The ad user data consent for the click.
+-session_attributes_encoded     [optional]
+-session_attributes_key_value_pairs [optional] A space-delimited list of session attribute key value pairs. Each pair should be separated by an equal sign, for example: "gad_campaignid=12345 gad_source=1"
 
 =cut

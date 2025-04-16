@@ -24,6 +24,7 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     adStrength           => $args->{adStrength},
+    assetCoverage        => $args->{assetCoverage},
     campaign             => $args->{campaign},
     finalMobileUrls      => $args->{finalMobileUrls},
     finalUrls            => $args->{finalUrls},

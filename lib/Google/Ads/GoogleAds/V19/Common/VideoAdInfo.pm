@@ -23,6 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    audio        => $args->{audio},
     bumper       => $args->{bumper},
     inFeed       => $args->{inFeed},
     inStream     => $args->{inStream},

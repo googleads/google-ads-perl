@@ -20,6 +20,8 @@ use warnings;
 use Const::Exporter enums => [
   UNSPECIFIED             => "UNSPECIFIED",
   UNKNOWN                 => "UNKNOWN",
+  DISCOVER_FEED           => "DISCOVER_FEED",
+  GMAIL                   => "GMAIL",
   IN_FEED                 => "IN_FEED",
   IN_STREAM_BUMPER        => "IN_STREAM_BUMPER",
   IN_STREAM_NON_SKIPPABLE => "IN_STREAM_NON_SKIPPABLE",

@@ -18,6 +18,18 @@ use strict;
 use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
+sub generate_conversion_rates {
+  my $self         = shift;
+  my $request_body = shift;
+  my $http_method  = 'POST';
+  my $request_path = 'v19:generateConversionRates';
+  my $response_type =
+'Google::Ads::GoogleAds::V19::Services::ReachPlanService::GenerateConversionRatesResponse';
+
+  return $self->SUPER::call($http_method, $request_path, $request_body,
+    $response_type);
+}
+
 sub generate_reach_forecast {
   my $self         = shift;
   my $request_body = shift;

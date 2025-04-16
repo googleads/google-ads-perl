@@ -30,6 +30,7 @@ sub new {
     cpcBidMicros                  => $args->{cpcBidMicros},
     cpmBidMicros                  => $args->{cpmBidMicros},
     cpvBidMicros                  => $args->{cpvBidMicros},
+    demandGenAdGroupSettings      => $args->{demandGenAdGroupSettings},
     displayCustomBidDimension     => $args->{displayCustomBidDimension},
     effectiveCpcBidMicros         => $args->{effectiveCpcBidMicros},
     effectiveTargetCpaMicros      => $args->{effectiveTargetCpaMicros},
