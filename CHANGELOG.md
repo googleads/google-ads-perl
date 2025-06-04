@@ -1,3 +1,8 @@
+27.0.0 - 2025-06-04
+-------------------
+- Added support for Google Ads API v20.
+- Removed support for Google Ads API v17.
+
 26.1.0 - 2024-04-16
 -------------------
 - Added support for Google Ads API v19_1.
