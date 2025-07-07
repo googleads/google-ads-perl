@@ -42,7 +42,7 @@ $build_sc->new(
   create_makefile_pl => "traditional",
   dist_abstract      => "Google Ads API Client Library for Perl",
   dist_name          => "Google-Ads-GoogleAds-Client",
-  dist_version       => "27.0.0",
+  dist_version       => "27.0.1",
   no_index           => {
     namespace => [
       "Google::Ads::GoogleAds::V18::Enums",
