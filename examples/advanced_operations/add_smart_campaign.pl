@@ -148,7 +148,7 @@ sub add_smart_campaign {
 
   # Map the KeywordThemeConstants retrieved by the previous two steps to
   # KeywordThemeInfo instances.
-  my $keyword_theme_infos = _map_keyword_themes_to_infos($keyword_themes);
+  my $keyword_theme_infos = _map_keyword_themes_to_keyword_infos($keyword_themes);
 
   # If a free-form keyword text is given we create a KeywordThemeInfo instance
   # from it and add it to the existing list.
