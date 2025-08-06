@@ -25,17 +25,17 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V20::Common::OfflineUserAddressInfo;
-use Google::Ads::GoogleAds::V20::Enums::ConversionAdjustmentTypeEnum
+use Google::Ads::GoogleAds::V21::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V21::Common::OfflineUserAddressInfo;
+use Google::Ads::GoogleAds::V21::Enums::ConversionAdjustmentTypeEnum
   qw(ENHANCEMENT);
-use Google::Ads::GoogleAds::V20::Enums::UserIdentifierSourceEnum
+use Google::Ads::GoogleAds::V21::Enums::UserIdentifierSourceEnum
   qw(FIRST_PARTY);
 use
-  Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::ConversionAdjustment;
+  Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::ConversionAdjustment;
 use
-  Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::GclidDateTimePair;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::GclidDateTimePair;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -66,7 +66,7 @@ sub upload_enhanced_conversions_for_web {
   # [START add_user_identifiers]
   # Construct the enhancement adjustment.
   my $enhancement =
-    Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::ConversionAdjustment
+    Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::ConversionAdjustment
     ->new({
       adjustmentType => ENHANCEMENT
     });
@@ -86,7 +86,7 @@ sub upload_enhanced_conversions_for_web {
   # will clear all the other members of the oneof. For example, the following code is
   # INCORRECT and will result in a UserIdentifier with ONLY a hashed_phone_number:
   #
-  # my $incorrect_user_identifier = Google::Ads::GoogleAds::V20::Common::UserIdentifier->new({
+  # my $incorrect_user_identifier = Google::Ads::GoogleAds::V21::Common::UserIdentifier->new({
   #   hashedEmail => '...',
   #   hashedPhoneNumber => '...',
   # });
@@ -118,7 +118,7 @@ sub upload_enhanced_conversions_for_web {
   my $hashed_email = normalize_and_hash_email_address($raw_record->{email});
   push(
     @$user_identifiers,
-    Google::Ads::GoogleAds::V20::Common::UserIdentifier->new({
+    Google::Ads::GoogleAds::V21::Common::UserIdentifier->new({
         hashedEmail => $hashed_email,
         # Optional: Specify the user identifier source.
         userIdentifierSource => FIRST_PARTY
@@ -129,7 +129,7 @@ sub upload_enhanced_conversions_for_web {
     # Add the hashed phone number identifier to the list of UserIdentifiers.
     push(
       @$user_identifiers,
-      Google::Ads::GoogleAds::V20::Common::UserIdentifier->new({
+      Google::Ads::GoogleAds::V21::Common::UserIdentifier->new({
           hashedPhoneNumber => normalize_and_hash($raw_record->{phone}, 1)}));
   }
 
@@ -153,9 +153,9 @@ sub upload_enhanced_conversions_for_web {
     } else {
       push(
         @$user_identifiers,
-        Google::Ads::GoogleAds::V20::Common::UserIdentifier->new({
+        Google::Ads::GoogleAds::V21::Common::UserIdentifier->new({
             addressInfo =>
-              Google::Ads::GoogleAds::V20::Common::OfflineUserAddressInfo->new({
+              Google::Ads::GoogleAds::V21::Common::OfflineUserAddressInfo->new({
                 # First and last name must be normalized and hashed.
                 hashedFirstName => normalize_and_hash($raw_record->{firstName}),
                 hashedLastName  => normalize_and_hash($raw_record->{lastName}),
@@ -173,7 +173,7 @@ sub upload_enhanced_conversions_for_web {
   # [START add_conversion_details]
   # Set the conversion action.
   $enhancement->{conversionAction} =
-    Google::Ads::GoogleAds::V20::Utils::ResourceNames::conversion_action(
+    Google::Ads::GoogleAds::V21::Utils::ResourceNames::conversion_action(
     $customer_id, $raw_record->{conversionActionId});
 
   # Set the order ID. Enhancements MUST use order ID instead of GCLID date/time pair.
@@ -183,7 +183,7 @@ sub upload_enhanced_conversions_for_web {
   # but recommended.
   if (defined $raw_record->{conversionDateTime}) {
     $enhancement->{gclidDateTimePair} =
-      Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::GclidDateTimePair
+      Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::GclidDateTimePair
       ->new({
         conversionDateTime => $raw_record->{conversionDateTime}});
   }

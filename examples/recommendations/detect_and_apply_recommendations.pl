@@ -39,9 +39,9 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
-  Google::Ads::GoogleAds::V20::Services::RecommendationService::ApplyRecommendationOperation;
+  Google::Ads::GoogleAds::V21::Services::RecommendationService::ApplyRecommendationOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -118,23 +118,23 @@ sub build_recommendation_operation {
   # If you have a recommendation ID instead of a resource name, you can create a resource
   # name like this:
   # my $recommendation_resource_name =
-  #   Google::Ads::GoogleAds::V20::Utils::ResourceNames::recommendation(
+  #   Google::Ads::GoogleAds::V21::Utils::ResourceNames::recommendation(
   #   $customer_id, $recommendation_id);
 
   # Each recommendation type has optional parameters to override the recommended values.
   # Below is an example showing how to override a recommended ad when a TextAdRecommendation
   # is applied.
-  # my $overriding_ad = Google::Ads::GoogleAds::V20::Resources::Ad->new({
+  # my $overriding_ad = Google::Ads::GoogleAds::V21::Resources::Ad->new({
   #   id => "INSERT_AD_ID_AS_INTEGER_HERE"
   # });
   # my $text_ad_parameters =
-  #   Google::Ads::GoogleAds::V20::Services::RecommendationService::TextAdParameters
+  #   Google::Ads::GoogleAds::V21::Services::RecommendationService::TextAdParameters
   #   ->new({ad => $overriding_ad});
   # $apply_recommendation_operation->{textAd} = $text_ad_parameters;
 
   # Create an apply recommendation operation.
   my $apply_recommendation_operation =
-    Google::Ads::GoogleAds::V20::Services::RecommendationService::ApplyRecommendationOperation
+    Google::Ads::GoogleAds::V21::Services::RecommendationService::ApplyRecommendationOperation
     ->new({
       resourceName => $recommendation->{resourceName}});
 

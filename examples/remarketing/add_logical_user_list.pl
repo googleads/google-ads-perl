@@ -25,13 +25,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::UserList;
-use Google::Ads::GoogleAds::V20::Common::LogicalUserListOperandInfo;
-use Google::Ads::GoogleAds::V20::Common::UserListLogicalRuleInfo;
-use Google::Ads::GoogleAds::V20::Common::LogicalUserListInfo;
-use Google::Ads::GoogleAds::V20::Enums::UserListLogicalRuleOperatorEnum qw(ANY);
-use Google::Ads::GoogleAds::V20::Services::UserListService::UserListOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V21::Resources::UserList;
+use Google::Ads::GoogleAds::V21::Common::LogicalUserListOperandInfo;
+use Google::Ads::GoogleAds::V21::Common::UserListLogicalRuleInfo;
+use Google::Ads::GoogleAds::V21::Common::LogicalUserListInfo;
+use Google::Ads::GoogleAds::V21::Enums::UserListLogicalRuleOperatorEnum qw(ANY);
+use Google::Ads::GoogleAds::V21::Services::UserListService::UserListOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -60,9 +60,9 @@ sub add_logical_user_list {
   my $logical_user_list_operand_info_list = [];
   foreach my $user_list_id (@$user_list_ids) {
     push @$logical_user_list_operand_info_list,
-      Google::Ads::GoogleAds::V20::Common::LogicalUserListOperandInfo->new({
+      Google::Ads::GoogleAds::V21::Common::LogicalUserListOperandInfo->new({
         userList =>
-          Google::Ads::GoogleAds::V20::Utils::ResourceNames::user_list(
+          Google::Ads::GoogleAds::V21::Utils::ResourceNames::user_list(
           $customer_id, $user_list_id
           )});
   }
@@ -70,7 +70,7 @@ sub add_logical_user_list {
   # Create the UserListLogicalRuleInfo specifying that a user should be added to
   # the new list if they are present in any of the provided lists.
   my $user_list_logical_rule_info =
-    Google::Ads::GoogleAds::V20::Common::UserListLogicalRuleInfo->new({
+    Google::Ads::GoogleAds::V21::Common::UserListLogicalRuleInfo->new({
       # Using ANY means that a user should be added to the combined list if they
       # are present on any of the lists targeted in the LogicalUserListOperandInfo.
       # Use ALL to add users present on all of the provided lists or NONE to add
@@ -80,15 +80,15 @@ sub add_logical_user_list {
     });
 
   # Create the new combination user list.
-  my $user_list = Google::Ads::GoogleAds::V20::Resources::UserList->new({
+  my $user_list = Google::Ads::GoogleAds::V21::Resources::UserList->new({
       name            => "My combination list of other user lists #" . uniqid(),
       logicalUserList =>
-        Google::Ads::GoogleAds::V20::Common::LogicalUserListInfo->new({
+        Google::Ads::GoogleAds::V21::Common::LogicalUserListInfo->new({
           rules => [$user_list_logical_rule_info]})});
 
   # Create the operation.
   my $user_list_operation =
-    Google::Ads::GoogleAds::V20::Services::UserListService::UserListOperation->
+    Google::Ads::GoogleAds::V21::Services::UserListService::UserListOperation->
     new({
       create => $user_list
     });

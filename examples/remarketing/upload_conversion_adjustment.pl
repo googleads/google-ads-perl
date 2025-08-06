@@ -25,15 +25,15 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Enums::ConversionAdjustmentTypeEnum
+use Google::Ads::GoogleAds::V21::Enums::ConversionAdjustmentTypeEnum
   qw(RESTATEMENT);
 use
-  Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::ConversionAdjustment;
+  Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::ConversionAdjustment;
 use
-  Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::GclidDateTimePair;
+  Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::GclidDateTimePair;
 use
-  Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::RestatementValue;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::RestatementValue;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -68,10 +68,10 @@ sub upload_conversion_adjustment {
 
   # Applies the conversion adjustment to the existing conversion.
   my $conversion_adjustment =
-    Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::ConversionAdjustment
+    Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::ConversionAdjustment
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V20::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V21::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       adjustmentType => $adjustment_type,
@@ -80,7 +80,7 @@ sub upload_conversion_adjustment {
       # As an alternative to setting orderId, you can provide a 'gclid_date_time_pair',
       # but setting 'order_id' instead is strongly recommended.
       # gclidDateTimePair =>
-      #  Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::GclidDateTimePair
+      #  Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::GclidDateTimePair
       #  ->new({
       #    gclid              => $gclid,
       #    conversionDateTime => $conversion_date_time
@@ -91,7 +91,7 @@ sub upload_conversion_adjustment {
 
   # Set adjusted value for adjustment type RESTATEMENT.
   $conversion_adjustment->{restatementValue} =
-    Google::Ads::GoogleAds::V20::Services::ConversionAdjustmentUploadService::RestatementValue
+    Google::Ads::GoogleAds::V21::Services::ConversionAdjustmentUploadService::RestatementValue
     ->new({
       adjustedValue => $restatement_value
     }) if defined $restatement_value && $adjustment_type eq RESTATEMENT;

@@ -30,12 +30,12 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V20::Resources::CustomerUserAccess;
+use Google::Ads::GoogleAds::V21::Resources::CustomerUserAccess;
 use
-  Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsRequest;
 use
-  Google::Ads::GoogleAds::V20::Services::CustomerUserAccessService::CustomerUserAccessOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::CustomerUserAccessService::CustomerUserAccessOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -51,7 +51,7 @@ use Cwd qw(abs_path);
 # Running the example with -h will print the command line usage.
 my $customer_id   = "INSERT_CUSTOMER_ID_HERE";
 my $email_address = "INSERT_EMAIL_ADDRESS_HERE";
-# See Google::Ads::GoogleAds::V20::Enums::AccessRoleEnum for optional values.
+# See Google::Ads::GoogleAds::V21::Enums::AccessRoleEnum for optional values.
 my $access_role = "INSERT_ACCESS_ROLE_HERE";
 
 sub update_user_access {
@@ -79,7 +79,7 @@ sub get_user_access {
 
   # Create a search Google Ads request that will retrieve the customer user access.
   my $search_request =
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query
@@ -115,9 +115,9 @@ sub modify_user_access {
 
   # Create the modified user access.
   my $user_access =
-    Google::Ads::GoogleAds::V20::Resources::CustomerUserAccess->new({
+    Google::Ads::GoogleAds::V21::Resources::CustomerUserAccess->new({
       resourceName =>
-        Google::Ads::GoogleAds::V20::Utils::ResourceNames::customer_user_access(
+        Google::Ads::GoogleAds::V21::Utils::ResourceNames::customer_user_access(
         $customer_id, $user_id
         ),
       accessRole => $access_role
@@ -125,7 +125,7 @@ sub modify_user_access {
 
   # Create the operation.
   my $user_access_operation =
-    Google::Ads::GoogleAds::V20::Services::CustomerUserAccessService::CustomerUserAccessOperation
+    Google::Ads::GoogleAds::V21::Services::CustomerUserAccessService::CustomerUserAccessOperation
     ->new({
       update     => $user_access,
       updateMask => all_set_fields_of($user_access)});

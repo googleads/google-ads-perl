@@ -30,26 +30,28 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V20::Resources::Campaign;
-use Google::Ads::GoogleAds::V20::Resources::HotelSettingInfo;
-use Google::Ads::GoogleAds::V20::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V20::Resources::AdGroup;
-use Google::Ads::GoogleAds::V20::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V20::Resources::Ad;
-use Google::Ads::GoogleAds::V20::Common::PercentCpc;
-use Google::Ads::GoogleAds::V20::Common::HotelAdInfo;
-use Google::Ads::GoogleAds::V20::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
-use Google::Ads::GoogleAds::V20::Enums::AdvertisingChannelTypeEnum qw(HOTEL);
-use Google::Ads::GoogleAds::V20::Enums::AdGroupTypeEnum qw(HOTEL_ADS);
-use Google::Ads::GoogleAds::V20::Enums::CampaignStatusEnum;
-use Google::Ads::GoogleAds::V20::Enums::AdGroupStatusEnum;
-use Google::Ads::GoogleAds::V20::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V21::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V21::Resources::Campaign;
+use Google::Ads::GoogleAds::V21::Resources::HotelSettingInfo;
+use Google::Ads::GoogleAds::V21::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V21::Resources::AdGroup;
+use Google::Ads::GoogleAds::V21::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V21::Resources::Ad;
+use Google::Ads::GoogleAds::V21::Common::PercentCpc;
+use Google::Ads::GoogleAds::V21::Common::HotelAdInfo;
+use Google::Ads::GoogleAds::V21::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
+use Google::Ads::GoogleAds::V21::Enums::AdvertisingChannelTypeEnum qw(HOTEL);
+use Google::Ads::GoogleAds::V21::Enums::AdGroupTypeEnum qw(HOTEL_ADS);
+use Google::Ads::GoogleAds::V21::Enums::CampaignStatusEnum;
+use Google::Ads::GoogleAds::V21::Enums::AdGroupStatusEnum;
+use Google::Ads::GoogleAds::V21::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V21::Enums::EuPoliticalAdvertisingStatusEnum
+  qw(DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING);
 use
-  Google::Ads::GoogleAds::V20::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V20::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V20::Services::AdGroupAdService::AdGroupAdOperation;
+  Google::Ads::GoogleAds::V21::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V21::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V21::Services::AdGroupAdService::AdGroupAdOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -106,7 +108,7 @@ sub add_campaign_budget {
 
   # Create a campaign budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V20::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V21::Resources::CampaignBudget->new({
       name           => "Interplanetary Cruise Budget #" . uniqid(),
       deliveryMethod => STANDARD,
       # Set the amount of budget.
@@ -117,7 +119,7 @@ sub add_campaign_budget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V20::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V21::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Add the campaign budget.
@@ -141,38 +143,43 @@ sub add_hotel_campaign {
 
   # [START add_hotel_ad_1]
   # Create a hotel campaign.
-  my $campaign = Google::Ads::GoogleAds::V20::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V21::Resources::Campaign->new({
       name => "Interplanetary Cruise Campaign #" . uniqid(),
       # Configure settings related to hotel campaigns including advertising
       # channel type and hotel setting info.
       advertisingChannelType => HOTEL,
       hotelSetting           =>
-        Google::Ads::GoogleAds::V20::Resources::HotelSettingInfo->new({
+        Google::Ads::GoogleAds::V21::Resources::HotelSettingInfo->new({
           hotelCenterId => $hotel_center_account_id
         }
         ),
       # Recommendation: Set the campaign to PAUSED when creating it to prevent
       # the ads from immediately serving. Set to ENABLED once you've added
       # targeting and the ads are ready to serve.
-      status => Google::Ads::GoogleAds::V20::Enums::CampaignStatusEnum::PAUSED,
+      status => Google::Ads::GoogleAds::V21::Enums::CampaignStatusEnum::PAUSED,
       # Set the bidding strategy to PercentCpc. Only Manual CPC and Percent CPC
       # can be used for hotel campaigns.
-      percentCpc => Google::Ads::GoogleAds::V20::Common::PercentCpc->new(
+      percentCpc => Google::Ads::GoogleAds::V21::Common::PercentCpc->new(
         {cpcBidCeilingMicros => $cpc_bid_ceiling_micro_amount}
       ),
+      # Declare whether or not this campaign serves political ads targeting the EU.
+      # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+      # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+      containsEuPoliticalAdvertising =>
+        DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING,
       # Set the budget.
       campaignBudget => $budget_resource_name,
       # Configure the campaign network options. Only Google Search is allowed for
       # hotel campaigns.
       networkSettings =>
-        Google::Ads::GoogleAds::V20::Resources::NetworkSettings->new({
+        Google::Ads::GoogleAds::V21::Resources::NetworkSettings->new({
           targetGoogleSearch => "true"
         })});
   # [END add_hotel_ad_1]
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V20::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V21::Services::CampaignService::CampaignOperation->
     new({create => $campaign});
 
   # Add the campaign.
@@ -193,7 +200,7 @@ sub add_hotel_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
   # Create an ad group.
-  my $ad_group = Google::Ads::GoogleAds::V20::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V21::Resources::AdGroup->new({
     name => "Earth to Mars Cruise #" . uniqid(),
     # Set the campaign.
     campaign => $campaign_resource_name,
@@ -201,12 +208,12 @@ sub add_hotel_ad_group {
     # This cannot be set to other types.
     type         => HOTEL_ADS,
     cpcBidMicros => 1000000,
-    status => Google::Ads::GoogleAds::V20::Enums::AdGroupStatusEnum::ENABLED
+    status => Google::Ads::GoogleAds::V21::Enums::AdGroupStatusEnum::ENABLED
   });
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
   # Add the ad group.
@@ -227,19 +234,19 @@ sub add_hotel_ad_group_ad {
   my ($api_client, $customer_id, $ad_group_resource_name) = @_;
 
   # Create an ad group ad and set a hotel ad to it.
-  my $ad_group_ad = Google::Ads::GoogleAds::V20::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V21::Resources::AdGroupAd->new({
       # Set the ad group.
       adGroup => $ad_group_resource_name,
       # Set the ad to a new shopping product ad.
-      ad => Google::Ads::GoogleAds::V20::Resources::Ad->new({
-          hotelAd => Google::Ads::GoogleAds::V20::Common::HotelAdInfo->new()}
+      ad => Google::Ads::GoogleAds::V21::Resources::Ad->new({
+          hotelAd => Google::Ads::GoogleAds::V21::Common::HotelAdInfo->new()}
       ),
-      status => Google::Ads::GoogleAds::V20::Enums::AdGroupAdStatusEnum::ENABLED
+      status => Google::Ads::GoogleAds::V21::Enums::AdGroupAdStatusEnum::ENABLED
     });
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V20::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V21::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad.

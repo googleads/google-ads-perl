@@ -26,10 +26,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V20::Resources::AdGroup;
-use Google::Ads::GoogleAds::V20::Enums::AdGroupStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V21::Resources::AdGroup;
+use Google::Ads::GoogleAds::V21::Enums::AdGroupStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,9 +52,9 @@ sub update_ad_group {
   my ($api_client, $customer_id, $ad_group_id, $cpc_bid_micro_amount) = @_;
 
   # Create an ad group with the proper resource name and any other changes.
-  my $ad_group = Google::Ads::GoogleAds::V20::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V21::Resources::AdGroup->new({
       resourceName =>
-        Google::Ads::GoogleAds::V20::Utils::ResourceNames::ad_group(
+        Google::Ads::GoogleAds::V21::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
         ),
       status       => PAUSED,
@@ -64,7 +64,7 @@ sub update_ad_group {
   # Create an ad group operation for update, using the FieldMasks utility to
   # derive the update mask.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation->
     new({
       update     => $ad_group,
       updateMask => all_set_fields_of($ad_group)});

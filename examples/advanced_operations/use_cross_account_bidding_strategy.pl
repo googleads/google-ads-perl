@@ -32,15 +32,15 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V20::Resources::BiddingStrategy;
-use Google::Ads::GoogleAds::V20::Resources::Campaign;
-use Google::Ads::GoogleAds::V20::Common::TargetSpend;
+use Google::Ads::GoogleAds::V21::Resources::BiddingStrategy;
+use Google::Ads::GoogleAds::V21::Resources::Campaign;
+use Google::Ads::GoogleAds::V21::Common::TargetSpend;
 use
-  Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 use
-  Google::Ads::GoogleAds::V20::Services::BiddingStrategyService::BiddingStrategyOperation;
-use Google::Ads::GoogleAds::V20::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::BiddingStrategyService::BiddingStrategyOperation;
+use Google::Ads::GoogleAds::V21::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -81,9 +81,9 @@ sub _create_bidding_strategy {
   # Create a portfolio bidding strategy.
   # [START set_currency_code]
   my $portfolio_bidding_strategy =
-    Google::Ads::GoogleAds::V20::Resources::BiddingStrategy->new({
+    Google::Ads::GoogleAds::V21::Resources::BiddingStrategy->new({
       name        => "Maximize clicks #" . uniqid(),
-      targetSpend => Google::Ads::GoogleAds::V20::Common::TargetSpend->new(),
+      targetSpend => Google::Ads::GoogleAds::V21::Common::TargetSpend->new(),
       # Sets the currency of the new bidding strategy. If not provided, the
       # bidding strategy uses the manager account's default currency.
       currencyCode => "USD"
@@ -95,7 +95,7 @@ sub _create_bidding_strategy {
     $api_client->BiddingStrategyService()->mutate({
       customerId => $manager_customer_id,
       operations => [
-        Google::Ads::GoogleAds::V20::Services::BiddingStrategyService::BiddingStrategyOperation
+        Google::Ads::GoogleAds::V21::Services::BiddingStrategyService::BiddingStrategyOperation
           ->new({
             create => $portfolio_bidding_strategy
           })]});
@@ -130,7 +130,7 @@ sub _list_manager_owned_bidding_strategies {
     Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
       service => $api_client->GoogleAdsService(),
       request =>
-        Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+        Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
         ->new({
           customerId => $manager_customer_id,
           query      => $query
@@ -180,7 +180,7 @@ sub _list_customer_accessible_bidding_strategies {
     Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
       service => $api_client->GoogleAdsService(),
       request =>
-        Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+        Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
         ->new({
           customerId => $customer_id,
           query      => $query
@@ -207,16 +207,16 @@ sub _attach_cross_account_bidding_strategy_to_campaign {
   my ($api_client, $customer_id, $campaign_id, $bidding_strategy_resource_name)
     = @_;
 
-  my $campaign = Google::Ads::GoogleAds::V20::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V21::Resources::Campaign->new({
       resourceName =>
-        Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign(
+        Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
         ),
       biddingStrategy => $bidding_strategy_resource_name
     });
 
   my $campaign_operation =
-    Google::Ads::GoogleAds::V20::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V21::Services::CampaignService::CampaignOperation->
     new({
       update     => $campaign,
       updateMask => all_set_fields_of($campaign)});

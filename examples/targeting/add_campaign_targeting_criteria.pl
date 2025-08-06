@@ -25,16 +25,16 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::CampaignCriterion;
-use Google::Ads::GoogleAds::V20::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V20::Common::LocationInfo;
-use Google::Ads::GoogleAds::V20::Common::ProximityInfo;
-use Google::Ads::GoogleAds::V20::Common::AddressInfo;
-use Google::Ads::GoogleAds::V20::Enums::KeywordMatchTypeEnum     qw(BROAD);
-use Google::Ads::GoogleAds::V20::Enums::ProximityRadiusUnitsEnum qw(MILES);
+use Google::Ads::GoogleAds::V21::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V21::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V21::Common::LocationInfo;
+use Google::Ads::GoogleAds::V21::Common::ProximityInfo;
+use Google::Ads::GoogleAds::V21::Common::AddressInfo;
+use Google::Ads::GoogleAds::V21::Enums::KeywordMatchTypeEnum     qw(BROAD);
+use Google::Ads::GoogleAds::V21::Enums::ProximityRadiusUnitsEnum qw(MILES);
 use
-  Google::Ads::GoogleAds::V20::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -62,7 +62,7 @@ sub add_campaign_targeting_criteria {
     @_;
 
   my $campaign_resource_name =
-    Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign($customer_id,
+    Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign($customer_id,
     $campaign_id);
 
   my $operations = [
@@ -99,9 +99,9 @@ sub create_negative_keyword_campaign_criterion_operation {
   # Construct a negative campaign criterion for the specified campaign
   # using the specified keyword text info.
   my $campaign_criterion =
-    Google::Ads::GoogleAds::V20::Resources::CampaignCriterion->new({
+    Google::Ads::GoogleAds::V21::Resources::CampaignCriterion->new({
       # Create a keyword with BROAD match type.
-      keyword => Google::Ads::GoogleAds::V20::Common::KeywordInfo->new({
+      keyword => Google::Ads::GoogleAds::V21::Common::KeywordInfo->new({
           text      => $keyword,
           matchType => BROAD
         }
@@ -112,7 +112,7 @@ sub create_negative_keyword_campaign_criterion_operation {
     });
 
   return
-    Google::Ads::GoogleAds::V20::Services::CampaignCriterionService::CampaignCriterionOperation
+    Google::Ads::GoogleAds::V21::Services::CampaignCriterionService::CampaignCriterionOperation
     ->new({
       create => $campaign_criterion
     });
@@ -126,22 +126,22 @@ sub create_location_campaign_criterion_operation {
   # Construct a campaign criterion for the specified campaign using the
   # specified location ID.
   my $campaign_criterion =
-    Google::Ads::GoogleAds::V20::Resources::CampaignCriterion->new({
+    Google::Ads::GoogleAds::V21::Resources::CampaignCriterion->new({
       # Create a location using the specified location ID.
-      location => Google::Ads::GoogleAds::V20::Common::LocationInfo->new({
+      location => Google::Ads::GoogleAds::V21::Common::LocationInfo->new({
           # Besides using location ID, you can also search by location names
           # using GeoTargetConstantService::suggest() and directly apply
           # GeoTargetConstant->{resourceName} here. An example can be found
           # in get_geo_target_constants_by_names.pl.
           geoTargetConstant =>
-            Google::Ads::GoogleAds::V20::Utils::ResourceNames::geo_target_constant(
+            Google::Ads::GoogleAds::V21::Utils::ResourceNames::geo_target_constant(
             $location_id)}
       ),
       campaign => $campaign_resource_name
     });
 
   return
-    Google::Ads::GoogleAds::V20::Services::CampaignCriterionService::CampaignCriterionOperation
+    Google::Ads::GoogleAds::V21::Services::CampaignCriterionService::CampaignCriterionOperation
     ->new({
       create => $campaign_criterion
     });
@@ -156,9 +156,9 @@ sub create_proximity_campaign_criterion_operation {
 
   # Construct a campaign criterion as a proximity.
   my $campaign_criterion =
-    Google::Ads::GoogleAds::V20::Resources::CampaignCriterion->new({
-      proximity => Google::Ads::GoogleAds::V20::Common::ProximityInfo->new({
-          address => Google::Ads::GoogleAds::V20::Common::AddressInfo->new({
+    Google::Ads::GoogleAds::V21::Resources::CampaignCriterion->new({
+      proximity => Google::Ads::GoogleAds::V21::Common::ProximityInfo->new({
+          address => Google::Ads::GoogleAds::V21::Common::AddressInfo->new({
               streetAddress => "38 avenue de l'Opéra",
               cityName      => "cityName",
               postalCode    => "75002",
@@ -174,7 +174,7 @@ sub create_proximity_campaign_criterion_operation {
     });
 
   return
-    Google::Ads::GoogleAds::V20::Services::CampaignCriterionService::CampaignCriterionOperation
+    Google::Ads::GoogleAds::V21::Services::CampaignCriterionService::CampaignCriterionOperation
     ->new({
       create => $campaign_criterion
     });

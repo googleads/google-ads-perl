@@ -25,12 +25,12 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::AdGroupBidModifier;
-use Google::Ads::GoogleAds::V20::Common::DeviceInfo;
-use Google::Ads::GoogleAds::V20::Enums::DeviceEnum qw(MOBILE);
+use Google::Ads::GoogleAds::V21::Resources::AdGroupBidModifier;
+use Google::Ads::GoogleAds::V21::Common::DeviceInfo;
+use Google::Ads::GoogleAds::V21::Enums::DeviceEnum qw(MOBILE);
 use
-  Google::Ads::GoogleAds::V20::Services::AdGroupBidModifierService::AdGroupBidModifierOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::AdGroupBidModifierService::AdGroupBidModifierOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,18 +56,18 @@ sub add_ad_group_bid_modifier {
   # Create an ad group bid modifier for mobile devices with the specified ad group ID and
   # bid modifier value.
   my $ad_group_bid_modifier =
-    Google::Ads::GoogleAds::V20::Resources::AdGroupBidModifier->new({
-      adGroup => Google::Ads::GoogleAds::V20::Utils::ResourceNames::ad_group(
+    Google::Ads::GoogleAds::V21::Resources::AdGroupBidModifier->new({
+      adGroup => Google::Ads::GoogleAds::V21::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       bidModifier => $bid_modifier_value,
-      device      => Google::Ads::GoogleAds::V20::Common::DeviceInfo->new({
+      device      => Google::Ads::GoogleAds::V21::Common::DeviceInfo->new({
           type => MOBILE
         })});
 
   # Create an ad group bid modifier operation.
   my $ad_group_bid_modifier_operation =
-    Google::Ads::GoogleAds::V20::Services::AdGroupBidModifierService::AdGroupBidModifierOperation
+    Google::Ads::GoogleAds::V21::Services::AdGroupBidModifierService::AdGroupBidModifierOperation
     ->new({
       create => $ad_group_bid_modifier
     });

@@ -24,20 +24,20 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::Asset;
-use Google::Ads::GoogleAds::V20::Resources::CustomerAsset;
-use Google::Ads::GoogleAds::V20::Common::PriceAsset;
-use Google::Ads::GoogleAds::V20::Common::PriceOffering;
-use Google::Ads::GoogleAds::V20::Common::Money;
-use Google::Ads::GoogleAds::V20::Enums::PriceExtensionTypeEnum qw(SERVICES);
-use Google::Ads::GoogleAds::V20::Enums::PriceExtensionPriceQualifierEnum
+use Google::Ads::GoogleAds::V21::Resources::Asset;
+use Google::Ads::GoogleAds::V21::Resources::CustomerAsset;
+use Google::Ads::GoogleAds::V21::Common::PriceAsset;
+use Google::Ads::GoogleAds::V21::Common::PriceOffering;
+use Google::Ads::GoogleAds::V21::Common::Money;
+use Google::Ads::GoogleAds::V21::Enums::PriceExtensionTypeEnum qw(SERVICES);
+use Google::Ads::GoogleAds::V21::Enums::PriceExtensionPriceQualifierEnum
   qw(FROM);
-use Google::Ads::GoogleAds::V20::Enums::PriceExtensionPriceUnitEnum
+use Google::Ads::GoogleAds::V21::Enums::PriceExtensionPriceUnitEnum
   qw(PER_HOUR PER_MONTH);
-use Google::Ads::GoogleAds::V20::Enums::AssetFieldTypeEnum qw(PRICE);
-use Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V21::Enums::AssetFieldTypeEnum qw(PRICE);
+use Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::CustomerAssetService::CustomerAssetOperation;
+  Google::Ads::GoogleAds::V21::Services::CustomerAssetService::CustomerAssetOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -72,7 +72,7 @@ sub create_price_asset {
   my ($api_client, $customer_id) = @_;
 
   # Create the price asset.
-  my $price_asset = Google::Ads::GoogleAds::V20::Common::PriceAsset->new({
+  my $price_asset = Google::Ads::GoogleAds::V21::Common::PriceAsset->new({
       type => SERVICES,
       # Price qualifier is optional.
       priceQualifier => FROM,
@@ -107,7 +107,7 @@ sub create_price_asset {
         )]});
 
   # Create an asset.
-  my $asset = Google::Ads::GoogleAds::V20::Resources::Asset->new({
+  my $asset = Google::Ads::GoogleAds::V21::Resources::Asset->new({
     name                => "Price Asset #" . uniqid(),
     trackingUrlTemplate => "http://tracker.example.com/?u={lpurl}",
     priceAsset          => $price_asset
@@ -115,7 +115,7 @@ sub create_price_asset {
 
   # Create an asset operation.
   my $operation =
-    Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 
@@ -138,14 +138,14 @@ sub add_asset_to_account {
 
   # Create a customer asset, set its type to PRICE and attach the price asset.
   my $customer_asset =
-    Google::Ads::GoogleAds::V20::Resources::CustomerAsset->new({
+    Google::Ads::GoogleAds::V21::Resources::CustomerAsset->new({
       asset     => $price_asset_resource_name,
       fieldType => PRICE
     });
 
   # Create a customer asset operation.
   my $operation =
-    Google::Ads::GoogleAds::V20::Services::CustomerAssetService::CustomerAssetOperation
+    Google::Ads::GoogleAds::V21::Services::CustomerAssetService::CustomerAssetOperation
     ->new({
       create => $customer_asset
     });
@@ -165,11 +165,11 @@ sub create_price_offering {
     $currency_code, $unit)
     = @_;
 
-  my $price_offering = Google::Ads::GoogleAds::V20::Common::PriceOffering->new({
+  my $price_offering = Google::Ads::GoogleAds::V21::Common::PriceOffering->new({
       header      => $header,
       description => $description,
       finalUrl    => $final_url,
-      price       => Google::Ads::GoogleAds::V20::Common::Money->new({
+      price       => Google::Ads::GoogleAds::V21::Common::Money->new({
           amountMicros => $price_in_micros,
           currencyCode => $currency_code
         }

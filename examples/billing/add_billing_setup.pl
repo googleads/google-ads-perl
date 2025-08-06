@@ -34,11 +34,11 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::BillingSetup;
-use Google::Ads::GoogleAds::V20::Resources::PaymentsAccountInfo;
+use Google::Ads::GoogleAds::V21::Resources::BillingSetup;
+use Google::Ads::GoogleAds::V21::Resources::PaymentsAccountInfo;
 use
-  Google::Ads::GoogleAds::V20::Services::BillingSetupService::BillingSetupOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::BillingSetupService::BillingSetupOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -78,7 +78,7 @@ sub add_billing_setup {
   set_billing_setup_date_times($api_client, $customer_id, $billing_setup);
 
   my $billing_setup_operation =
-    Google::Ads::GoogleAds::V20::Services::BillingSetupService::BillingSetupOperation
+    Google::Ads::GoogleAds::V21::Services::BillingSetupService::BillingSetupOperation
     ->new({
       create => $billing_setup
     });
@@ -102,7 +102,7 @@ sub create_billing_setup {
   my ($customer_id, $payments_account_id, $payments_profile_id) = @_;
 
   my $billing_setup =
-    Google::Ads::GoogleAds::V20::Resources::BillingSetup->new();
+    Google::Ads::GoogleAds::V21::Resources::BillingSetup->new();
 
   # Set the appropriate payments account field.
   if (defined $payments_account_id) {
@@ -110,14 +110,14 @@ sub create_billing_setup {
     # You can list available payments accounts via the PaymentsAccountService's
     # list method.
     $billing_setup->{paymentsAccount} =
-      Google::Ads::GoogleAds::V20::Utils::ResourceNames::payments_account(
+      Google::Ads::GoogleAds::V21::Utils::ResourceNames::payments_account(
       $customer_id, $payments_account_id);
   } elsif (defined $payments_profile_id) {
     # Otherwise, create a new payments account by setting the payments account
     # info. See https://support.google.com/google-ads/answer/7268503 for more
     # information about payments profiles.
     $billing_setup->{paymentsAccountInfo} =
-      Google::Ads::GoogleAds::V20::Resources::PaymentsAccountInfo->new({
+      Google::Ads::GoogleAds::V21::Resources::PaymentsAccountInfo->new({
         paymentsAccountName => "Payments Account #" . uniqid(),
         paymentsProfileId   => $payments_profile_id
       });

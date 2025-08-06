@@ -120,12 +120,12 @@ The detailed information of this exception, which may contain failure messages.
 
 =head2 get_google_ads_failure
 
-Extracts a L<Google::Ads::GoogleAds::V20::Errors::GoogleAdsFailure> object from the
+Extracts a L<Google::Ads::GoogleAds::V21::Errors::GoogleAdsFailure> object from the
 L</details> attribute of the current exception object.
 
 =head3 Returns
 
-A L<Google::Ads::GoogleAds::V20::Errors::GoogleAdsFailure> object or undef if not found.
+A L<Google::Ads::GoogleAds::V21::Errors::GoogleAdsFailure> object or undef if not found.
 
 =head1 LICENSE AND COPYRIGHT
 

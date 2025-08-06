@@ -27,7 +27,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -53,14 +53,14 @@ sub campaign_report_to_csv {
 
   # Create a query that retrieves campaigns.
   my $query =
-    "SELECT campaign.id, campaign.name, segments.date, " .
-    "metrics.impressions, metrics.clicks, metrics.cost_micros " .
-    "FROM campaign WHERE segments.date DURING LAST_7_DAYS " .
-    "AND campaign.status = 'ENABLED' ORDER BY segments.date DESC";
+"SELECT campaign.id, campaign.name, campaign.contains_eu_political_advertising, segments.date, "
+    . "metrics.impressions, metrics.clicks, metrics.cost_micros "
+    . "FROM campaign WHERE segments.date DURING LAST_7_DAYS "
+    . "AND campaign.status = 'ENABLED' ORDER BY segments.date DESC";
 
   # Create a search Google Ads request that that retrieves campaigns.
   my $search_request =
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $query
@@ -82,6 +82,7 @@ sub campaign_report_to_csv {
       [
       $google_ads_row->{campaign}{id},
       $google_ads_row->{campaign}{name},
+      $google_ads_row->{campaign}{containsEuPoliticalAdvertising},
       $google_ads_row->{segments}{date},
       $google_ads_row->{metrics}{impressions},
       $google_ads_row->{metrics}{clicks},
@@ -105,9 +106,10 @@ sub campaign_report_to_csv {
   print CSV join(
     ",",
     (
-      "campaign.id",    "campaign.name",
-      "segments.date",  "metrics.impressions",
-      "metrics.clicks", "metrics.cost_micros"
+      "campaign.id",                                "campaign.name",
+      "campaign.contains_eu_political_advertising", "segments.date",
+      "metrics.impressions",                        "metrics.clicks",
+      "metrics.cost_micros"
     )
     ),
     "\n";

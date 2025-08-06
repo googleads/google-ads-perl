@@ -27,9 +27,9 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::PartialFailureUtils;
-use Google::Ads::GoogleAds::V20::Resources::AdGroup;
-use Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V21::Resources::AdGroup;
+use Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -64,39 +64,39 @@ sub create_ad_groups {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   my $campaign_resource_name =
-    Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign($customer_id,
+    Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign($customer_id,
     $campaign_id);
 
   # This ad group should be created successfully - assuming the campaign in the
   # params exists.
-  my $ad_group1 = Google::Ads::GoogleAds::V20::Resources::AdGroup->new({
+  my $ad_group1 = Google::Ads::GoogleAds::V21::Resources::AdGroup->new({
     name     => "Valid AdGroup: " . uniqid(),
     campaign => $campaign_resource_name
   });
 
   # This ad group will always fail - campaign ID 0 in the resource name is never
   # valid.
-  my $ad_group2 = Google::Ads::GoogleAds::V20::Resources::AdGroup->new({
+  my $ad_group2 = Google::Ads::GoogleAds::V21::Resources::AdGroup->new({
       name     => "Broken AdGroup: " . uniqid(),
-      campaign => Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign(
+      campaign => Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign(
         $customer_id, 0
       )});
 
   # This ad group will always fail - duplicate ad group names are not allowed.
-  my $ad_group3 = Google::Ads::GoogleAds::V20::Resources::AdGroup->new({
+  my $ad_group3 = Google::Ads::GoogleAds::V21::Resources::AdGroup->new({
     name     => $ad_group1->{name},
     campaign => $campaign_resource_name
   });
 
   # Create ad group operations.
   my $ad_group_operation1 =
-    Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group1});
   my $ad_group_operation2 =
-    Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group2});
   my $ad_group_operation3 =
-    Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group3});
 
   # Issue the mutate request, enabling partial failure mode.

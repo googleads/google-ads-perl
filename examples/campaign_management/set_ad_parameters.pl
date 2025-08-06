@@ -24,10 +24,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::AdParameter;
+use Google::Ads::GoogleAds::V21::Resources::AdParameter;
 use
-  Google::Ads::GoogleAds::V20::Services::AdParameterService::AdParameterOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::AdParameterService::AdParameterOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -49,13 +49,13 @@ sub set_ad_parameters {
   my ($api_client, $customer_id, $ad_group_id, $criterion_id) = @_;
 
   my $ad_group_criterion_resource_name =
-    Google::Ads::GoogleAds::V20::Utils::ResourceNames::ad_group_criterion(
+    Google::Ads::GoogleAds::V21::Utils::ResourceNames::ad_group_criterion(
     $customer_id, $ad_group_id, $criterion_id);
 
   # Create ad parameters.
   # There can be a maximum of two ad parameters per ad group criterion.
   # (One with parameter_index = 1 and one with parameter_index = 2.)
-  my $ad_parameter_1 = Google::Ads::GoogleAds::V20::Resources::AdParameter->new(
+  my $ad_parameter_1 = Google::Ads::GoogleAds::V21::Resources::AdParameter->new(
     {
       adGroupCriterion => $ad_group_criterion_resource_name,
       # The unique index of this ad parameter. Must be either 1 or 2.
@@ -68,7 +68,7 @@ sub set_ad_parameters {
       insertionText => "100"
     });
 
-  my $ad_parameter_2 = Google::Ads::GoogleAds::V20::Resources::AdParameter->new(
+  my $ad_parameter_2 = Google::Ads::GoogleAds::V21::Resources::AdParameter->new(
     {
       adGroupCriterion => $ad_group_criterion_resource_name,
       parameterIndex   => 2,
@@ -77,11 +77,11 @@ sub set_ad_parameters {
 
   # Create ad parameter operations.
   my $ad_parameter_operation1 =
-    Google::Ads::GoogleAds::V20::Services::AdParameterService::AdParameterOperation
+    Google::Ads::GoogleAds::V21::Services::AdParameterService::AdParameterOperation
     ->new({create => $ad_parameter_1});
 
   my $ad_parameter_operation2 =
-    Google::Ads::GoogleAds::V20::Services::AdParameterService::AdParameterOperation
+    Google::Ads::GoogleAds::V21::Services::AdParameterService::AdParameterOperation
     ->new({create => $ad_parameter_2});
 
   # Set the ad parameters.

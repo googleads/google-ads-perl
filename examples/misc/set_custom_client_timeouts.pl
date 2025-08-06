@@ -28,9 +28,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 use
-  Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -81,7 +81,7 @@ sub make_server_streaming_call {
 
   # Create a search Google Ads stream request that will retrieve all campaign IDs.
   my $search_stream_request =
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => SEARCH_QUERY
@@ -149,7 +149,7 @@ sub make_unary_call {
 
   # Create a search Google Ads request that will retrieve all campaign IDs.
   my $search_request =
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => SEARCH_QUERY,

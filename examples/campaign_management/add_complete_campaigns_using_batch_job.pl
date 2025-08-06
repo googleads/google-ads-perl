@@ -25,36 +25,38 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::BatchJob;
-use Google::Ads::GoogleAds::V20::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V20::Resources::Campaign;
-use Google::Ads::GoogleAds::V20::Resources::CampaignCriterion;
-use Google::Ads::GoogleAds::V20::Resources::AdGroup;
-use Google::Ads::GoogleAds::V20::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V20::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V20::Resources::Ad;
-use Google::Ads::GoogleAds::V20::Common::ManualCpc;
-use Google::Ads::GoogleAds::V20::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V20::Common::ExpandedTextAdInfo;
-use Google::Ads::GoogleAds::V20::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
-use Google::Ads::GoogleAds::V20::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V20::Enums::CampaignStatusEnum;
-use Google::Ads::GoogleAds::V20::Enums::KeywordMatchTypeEnum qw(BROAD);
-use Google::Ads::GoogleAds::V20::Enums::AdGroupTypeEnum qw(SEARCH_STANDARD);
-use Google::Ads::GoogleAds::V20::Enums::AdGroupCriterionStatusEnum;
-use Google::Ads::GoogleAds::V20::Enums::AdGroupAdStatusEnum;
-use Google::Ads::GoogleAds::V20::Services::BatchJobService::BatchJobOperation;
-use Google::Ads::GoogleAds::V20::Services::GoogleAdsService::MutateOperation;
+use Google::Ads::GoogleAds::V21::Resources::BatchJob;
+use Google::Ads::GoogleAds::V21::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V21::Resources::Campaign;
+use Google::Ads::GoogleAds::V21::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V21::Resources::AdGroup;
+use Google::Ads::GoogleAds::V21::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V21::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V21::Resources::Ad;
+use Google::Ads::GoogleAds::V21::Common::ManualCpc;
+use Google::Ads::GoogleAds::V21::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V21::Common::ExpandedTextAdInfo;
+use Google::Ads::GoogleAds::V21::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
+use Google::Ads::GoogleAds::V21::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V21::Enums::CampaignStatusEnum;
+use Google::Ads::GoogleAds::V21::Enums::KeywordMatchTypeEnum qw(BROAD);
+use Google::Ads::GoogleAds::V21::Enums::AdGroupTypeEnum qw(SEARCH_STANDARD);
+use Google::Ads::GoogleAds::V21::Enums::AdGroupCriterionStatusEnum;
+use Google::Ads::GoogleAds::V21::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V21::Enums::EuPoliticalAdvertisingStatusEnum
+  qw(DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING);
+use Google::Ads::GoogleAds::V21::Services::BatchJobService::BatchJobOperation;
+use Google::Ads::GoogleAds::V21::Services::GoogleAdsService::MutateOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V20::Services::CampaignService::CampaignOperation;
+  Google::Ads::GoogleAds::V21::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V21::Services::CampaignService::CampaignOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation;
+  Google::Ads::GoogleAds::V21::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V20::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V21::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -108,8 +110,8 @@ sub create_batch_job {
 
   # Create a batch job operation.
   my $batch_job_operation =
-    Google::Ads::GoogleAds::V20::Services::BatchJobService::BatchJobOperation->
-    new({create => Google::Ads::GoogleAds::V20::Resources::BatchJob->new({})});
+    Google::Ads::GoogleAds::V21::Services::BatchJobService::BatchJobOperation->
+    new({create => Google::Ads::GoogleAds::V21::Resources::BatchJob->new({})});
 
   my $batch_job_resource_name = $batch_job_service->mutate({
       customerId => $customer_id,
@@ -216,7 +218,7 @@ sub build_all_operations {
   # Create a new campaign budget operation and add it to the array of mutate operations.
   my $campaign_budget_operation = build_campaign_budget_operation($customer_id);
   push @$mutate_operations,
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::MutateOperation->
     new({
       campaignBudgetOperation => $campaign_budget_operation
     });
@@ -225,7 +227,7 @@ sub build_all_operations {
   my $campaign_operations = build_campaign_operations($customer_id,
     $campaign_budget_operation->{create}{resourceName});
   push @$mutate_operations, map {
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::MutateOperation->
       new({
         campaignOperation => $_
       })
@@ -236,7 +238,7 @@ sub build_all_operations {
   my $campaign_criterion_operations =
     build_campaign_criterion_operations($campaign_operations);
   push @$mutate_operations, map {
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::MutateOperation->
       new({
         campaignCriterionOperation => $_
       })
@@ -246,7 +248,7 @@ sub build_all_operations {
   my $ad_group_operations =
     build_ad_group_operations($customer_id, $campaign_operations);
   push @$mutate_operations, map {
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::MutateOperation->
       new({
         adGroupOperation => $_
       })
@@ -257,7 +259,7 @@ sub build_all_operations {
   my $ad_group_criterion_operations =
     build_ad_group_criterion_operations($ad_group_operations);
   push @$mutate_operations, map {
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::MutateOperation->
       new({
         adGroupCriterionOperation => $_
       })
@@ -267,7 +269,7 @@ sub build_all_operations {
   my $ad_group_ad_operations =
     build_ad_group_ad_operations($ad_group_operations);
   push @$mutate_operations, map {
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::MutateOperation->
       new({
         adGroupAdOperation => $_
       })
@@ -282,12 +284,12 @@ sub build_campaign_budget_operation {
 
   # Create a campaign budget operation.
   return
-    Google::Ads::GoogleAds::V20::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V21::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({
-      create => Google::Ads::GoogleAds::V20::Resources::CampaignBudget->new({
+      create => Google::Ads::GoogleAds::V21::Resources::CampaignBudget->new({
           # Create a resource name using the temporary ID.
           resourceName =>
-            Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign_budget(
+            Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign_budget(
             $customer_id, next_temporary_id()
             ),
           name           => "Interplanetary Cruise Budget #" . uniqid(),
@@ -304,10 +306,10 @@ sub build_campaign_operations {
   for (my $i = 0 ; $i < NUMBER_OF_CAMPAIGNS_TO_ADD ; $i++) {
     # Create a campaign.
     my $campaign_id = next_temporary_id();
-    my $campaign    = Google::Ads::GoogleAds::V20::Resources::Campaign->new({
+    my $campaign    = Google::Ads::GoogleAds::V21::Resources::Campaign->new({
         # Create a resource name using the temporary ID.
         resourceName =>
-          Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign(
+          Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign(
           $customer_id, $campaign_id
           ),
         name => sprintf("Batch job campaign #%s.%d", uniqid(), $campaign_id),
@@ -316,15 +318,20 @@ sub build_campaign_operations {
         # the ads from immediately serving. Set to ENABLED once you've added
         # targeting and the ads are ready to serve.
         status =>
-          Google::Ads::GoogleAds::V20::Enums::CampaignStatusEnum::PAUSED,
+          Google::Ads::GoogleAds::V21::Enums::CampaignStatusEnum::PAUSED,
         # Set the bidding strategy and budget.
-        manualCpc      => Google::Ads::GoogleAds::V20::Common::ManualCpc->new(),
+        manualCpc      => Google::Ads::GoogleAds::V21::Common::ManualCpc->new(),
         campaignBudget => $campaign_budget_resource_name,
+        # Declare whether or not this campaign serves political ads targeting the EU.
+        # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+        # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+        containsEuPoliticalAdvertising =>
+          DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
       });
 
     # Create a campaign operation and add it to the operations list.
     push @$campaign_operations,
-      Google::Ads::GoogleAds::V20::Services::CampaignService::CampaignOperation
+      Google::Ads::GoogleAds::V21::Services::CampaignService::CampaignOperation
       ->new({
         create => $campaign
       });
@@ -342,8 +349,8 @@ sub build_campaign_criterion_operations {
   foreach my $campaign_operation (@$campaign_operations) {
     # Create a campaign criterion.
     my $campaign_criterion =
-      Google::Ads::GoogleAds::V20::Resources::CampaignCriterion->new({
-        keyword => Google::Ads::GoogleAds::V20::Common::KeywordInfo->new({
+      Google::Ads::GoogleAds::V21::Resources::CampaignCriterion->new({
+        keyword => Google::Ads::GoogleAds::V21::Common::KeywordInfo->new({
             text      => "venus",
             matchType => BROAD
           }
@@ -354,7 +361,7 @@ sub build_campaign_criterion_operations {
 
     # Create a campaign criterion operation and add it to the operations list.
     push @$campaign_criterion_operations,
-      Google::Ads::GoogleAds::V20::Services::CampaignCriterionService::CampaignCriterionOperation
+      Google::Ads::GoogleAds::V21::Services::CampaignCriterionService::CampaignCriterionOperation
       ->new({
         create => $campaign_criterion
       });
@@ -372,10 +379,10 @@ sub build_ad_group_operations {
     for (my $i = 0 ; $i < NUMBER_OF_AD_GROUPS_TO_ADD ; $i++) {
       # Create an ad group.
       my $ad_group_id = next_temporary_id();
-      my $ad_group    = Google::Ads::GoogleAds::V20::Resources::AdGroup->new({
+      my $ad_group    = Google::Ads::GoogleAds::V21::Resources::AdGroup->new({
           # Create a resource name using the temporary ID.
           resourceName =>
-            Google::Ads::GoogleAds::V20::Utils::ResourceNames::ad_group(
+            Google::Ads::GoogleAds::V21::Utils::ResourceNames::ad_group(
             $customer_id, $ad_group_id
             ),
           name => sprintf("Batch job ad group #%s.%d", uniqid(), $ad_group_id),
@@ -386,7 +393,7 @@ sub build_ad_group_operations {
 
       # Create an ad group operation and add it to the operations list.
       push @$ad_group_operations,
-        Google::Ads::GoogleAds::V20::Services::AdGroupService::AdGroupOperation
+        Google::Ads::GoogleAds::V21::Services::AdGroupService::AdGroupOperation
         ->new({
           create => $ad_group
         });
@@ -414,20 +421,20 @@ sub build_ad_group_criterion_operations {
 
       # Create an ad group criterion using the created keyword text.
       my $ad_group_criterion =
-        Google::Ads::GoogleAds::V20::Resources::AdGroupCriterion->new({
-          keyword => Google::Ads::GoogleAds::V20::Common::KeywordInfo->new({
+        Google::Ads::GoogleAds::V21::Resources::AdGroupCriterion->new({
+          keyword => Google::Ads::GoogleAds::V21::Common::KeywordInfo->new({
               text      => $keyword_text,
               matchType => BROAD
             }
           ),
           adGroup => $ad_group_operation->{create}{resourceName},
           status  =>
-            Google::Ads::GoogleAds::V20::Enums::AdGroupCriterionStatusEnum::ENABLED
+            Google::Ads::GoogleAds::V21::Enums::AdGroupCriterionStatusEnum::ENABLED
         });
 
       # Create an ad group criterion operation and add it to the operations list.
       push @$ad_group_criterion_operations,
-        Google::Ads::GoogleAds::V20::Services::AdGroupCriterionService::AdGroupCriterionOperation
+        Google::Ads::GoogleAds::V21::Services::AdGroupCriterionService::AdGroupCriterionOperation
         ->new({
           create => $ad_group_criterion
         });
@@ -444,12 +451,12 @@ sub build_ad_group_ad_operations {
   my $ad_group_ad_operations = [];
   foreach my $ad_group_operation (@$ad_group_operations) {
     # Create an ad group ad.
-    my $ad_group_ad = Google::Ads::GoogleAds::V20::Resources::AdGroupAd->new({
+    my $ad_group_ad = Google::Ads::GoogleAds::V21::Resources::AdGroupAd->new({
         # Create the expanded text ad info.
-        ad => Google::Ads::GoogleAds::V20::Resources::Ad->new({
+        ad => Google::Ads::GoogleAds::V21::Resources::Ad->new({
             # Set the expanded text ad info on an ad.
             expandedTextAd =>
-              Google::Ads::GoogleAds::V20::Common::ExpandedTextAdInfo->new({
+              Google::Ads::GoogleAds::V21::Common::ExpandedTextAdInfo->new({
                 headlinePart1 => "Cruise to Mars #" . uniqid(),
                 headlinePart2 => "Best Space Cruise Line",
                 description   => "Buy your tickets now!"
@@ -460,12 +467,12 @@ sub build_ad_group_ad_operations {
         ),
         adGroup => $ad_group_operation->{create}{resourceName},
         status  =>
-          Google::Ads::GoogleAds::V20::Enums::AdGroupAdStatusEnum::PAUSED
+          Google::Ads::GoogleAds::V21::Enums::AdGroupAdStatusEnum::PAUSED
       });
 
     # Create an ad group ad operation and add it to the operations list.
     push @$ad_group_ad_operations,
-      Google::Ads::GoogleAds::V20::Services::AdGroupAdService::AdGroupAdOperation
+      Google::Ads::GoogleAds::V21::Services::AdGroupAdService::AdGroupAdOperation
       ->new({
         create => $ad_group_ad
       });
