@@ -24,14 +24,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::Asset;
-use Google::Ads::GoogleAds::V20::Resources::CampaignAsset;
-use Google::Ads::GoogleAds::V20::Common::SitelinkAsset;
-use Google::Ads::GoogleAds::V20::Enums::AssetFieldTypeEnum qw(SITELINK);
-use Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V21::Resources::Asset;
+use Google::Ads::GoogleAds::V21::Resources::CampaignAsset;
+use Google::Ads::GoogleAds::V21::Common::SitelinkAsset;
+use Google::Ads::GoogleAds::V21::Enums::AssetFieldTypeEnum qw(SITELINK);
+use Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::CampaignAssetService::CampaignAssetOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::CampaignAssetService::CampaignAssetOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -68,20 +68,20 @@ sub create_sitelink_assets {
 
   # Create some sitelink assets.
   my $store_locator_asset =
-    Google::Ads::GoogleAds::V20::Common::SitelinkAsset->new({
+    Google::Ads::GoogleAds::V21::Common::SitelinkAsset->new({
       description1 => "Get in touch",
       description2 => "Find your local store",
       linkText     => "Store locator"
     });
 
-  my $store_asset = Google::Ads::GoogleAds::V20::Common::SitelinkAsset->new({
+  my $store_asset = Google::Ads::GoogleAds::V21::Common::SitelinkAsset->new({
     description1 => "Buy some stuff",
     description2 => "It's really good",
     linkText     => "Store"
   });
 
   my $store_additional_asset =
-    Google::Ads::GoogleAds::V20::Common::SitelinkAsset->new({
+    Google::Ads::GoogleAds::V21::Common::SitelinkAsset->new({
       description1 => "Even more stuff",
       description2 => "There's never enough",
       linkText     => "Store for more"
@@ -89,19 +89,19 @@ sub create_sitelink_assets {
 
   # Wrap the sitelinks in an Asset and set the URLs.
   my $assets = [];
-  push @$assets, Google::Ads::GoogleAds::V20::Resources::Asset->new({
+  push @$assets, Google::Ads::GoogleAds::V21::Resources::Asset->new({
       sitelinkAsset => $store_locator_asset,
       finalUrls     => ["http://example.com/contact/store-finder"],
       # Optionally set a different URL for mobile.
       finalMobileUrls => ["http://example.com/mobile/contact/store-finder"]});
 
-  push @$assets, Google::Ads::GoogleAds::V20::Resources::Asset->new({
+  push @$assets, Google::Ads::GoogleAds::V21::Resources::Asset->new({
       sitelinkAsset => $store_asset,
       finalUrls     => ["http://example.com/store"],
       # Optionally set a different URL for mobile.
       finalMobileUrls => ["http://example.com/mobile/store"]});
 
-  push @$assets, Google::Ads::GoogleAds::V20::Resources::Asset->new({
+  push @$assets, Google::Ads::GoogleAds::V21::Resources::Asset->new({
       sitelinkAsset => $store_additional_asset,
       finalUrls     => ["http://example.com/store/more"],
       # Optionally set a different URL for mobile.
@@ -111,7 +111,7 @@ sub create_sitelink_assets {
   my $operations = [];
   foreach my $asset (@$assets) {
     push @$operations,
-      Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation->new((
+      Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation->new((
         {
           create => $asset
         }));
@@ -144,13 +144,13 @@ sub link_sitelinks_to_campaign {
   foreach my $sitelink_asset_resource_name (@$sitelink_asset_resource_names) {
     push @$operations,
       # Create a CampaignAssetOperation to create the CampaignAsset.
-      Google::Ads::GoogleAds::V20::Services::CampaignAssetService::CampaignAssetOperation
+      Google::Ads::GoogleAds::V21::Services::CampaignAssetService::CampaignAssetOperation
       ->new({
         # Create the CampaignAsset link.
-        create => Google::Ads::GoogleAds::V20::Resources::CampaignAsset->new({
+        create => Google::Ads::GoogleAds::V21::Resources::CampaignAsset->new({
             asset    => $sitelink_asset_resource_name,
             campaign =>
-              Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign(
+              Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign(
               $customer_id, $campaign_id
               ),
             fieldType => SITELINK

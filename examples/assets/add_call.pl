@@ -24,19 +24,19 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::Asset;
-use Google::Ads::GoogleAds::V20::Resources::CustomerAsset;
-use Google::Ads::GoogleAds::V20::Common::CallAsset;
-use Google::Ads::GoogleAds::V20::Common::AdScheduleInfo;
-use Google::Ads::GoogleAds::V20::Enums::DayOfWeekEnum    qw(MONDAY);
-use Google::Ads::GoogleAds::V20::Enums::MinuteOfHourEnum qw(ZERO);
-use Google::Ads::GoogleAds::V20::Enums::CallConversionReportingStateEnum
+use Google::Ads::GoogleAds::V21::Resources::Asset;
+use Google::Ads::GoogleAds::V21::Resources::CustomerAsset;
+use Google::Ads::GoogleAds::V21::Common::CallAsset;
+use Google::Ads::GoogleAds::V21::Common::AdScheduleInfo;
+use Google::Ads::GoogleAds::V21::Enums::DayOfWeekEnum    qw(MONDAY);
+use Google::Ads::GoogleAds::V21::Enums::MinuteOfHourEnum qw(ZERO);
+use Google::Ads::GoogleAds::V21::Enums::CallConversionReportingStateEnum
   qw(USE_RESOURCE_LEVEL_CALL_CONVERSION_ACTION);
-use Google::Ads::GoogleAds::V20::Enums::AssetFieldTypeEnum qw(CALL);
-use Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V21::Enums::AssetFieldTypeEnum qw(CALL);
+use Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::CustomerAssetService::CustomerAssetOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::CustomerAssetService::CustomerAssetOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -83,13 +83,13 @@ sub add_call_asset {
     = @_;
 
   # Create the call asset.
-  my $call_asset = Google::Ads::GoogleAds::V20::Common::CallAsset->new({
+  my $call_asset = Google::Ads::GoogleAds::V21::Common::CallAsset->new({
       # Set the country code and phone number of the business to call.
       countryCode => $phone_country,
       phoneNumber => $phone_number,
       # Optional: Specify all day and time intervals for which the asset may serve.
       adScheduleTargets => [
-        Google::Ads::GoogleAds::V20::Common::AdScheduleInfo->new({
+        Google::Ads::GoogleAds::V21::Common::AdScheduleInfo->new({
             # Set the day of this schedule as Monday.
             dayOfWeek => MONDAY,
             # Set the start hour to 9am.
@@ -104,7 +104,7 @@ sub add_call_asset {
   # Set the conversion action ID to the one provided if any.
   if (defined $conversion_action_id) {
     $call_asset->{callConversionAction} =
-      Google::Ads::GoogleAds::V20::Utils::ResourceNames::conversion_action(
+      Google::Ads::GoogleAds::V21::Utils::ResourceNames::conversion_action(
       $customer_id, $conversion_action_id);
     $call_asset->{callConversionReportingState} =
       USE_RESOURCE_LEVEL_CALL_CONVERSION_ACTION;
@@ -112,8 +112,8 @@ sub add_call_asset {
 
   # Create an asset operation wrapping the call asset in an asset.
   my $asset_operation =
-    Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation->new({
-      create => Google::Ads::GoogleAds::V20::Resources::Asset->new({
+    Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation->new({
+      create => Google::Ads::GoogleAds::V21::Resources::Asset->new({
           callAsset => $call_asset
         })});
 
@@ -132,9 +132,9 @@ sub link_asset_to_account {
 
   # Create a customer asset operation wrapping the call asset in a customer asset.
   my $customer_asset_operation =
-    Google::Ads::GoogleAds::V20::Services::CustomerAssetService::CustomerAssetOperation
+    Google::Ads::GoogleAds::V21::Services::CustomerAssetService::CustomerAssetOperation
     ->new({
-      create => Google::Ads::GoogleAds::V20::Resources::CustomerAsset->new({
+      create => Google::Ads::GoogleAds::V21::Resources::CustomerAsset->new({
           asset     => $asset_resource_name,
           fieldType => CALL
         })});

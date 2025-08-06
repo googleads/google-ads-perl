@@ -26,7 +26,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -58,7 +58,7 @@ sub get_ad_group_bid_modifiers {
   # Create a search Google Ads request that will retrieve all ad group bid modifiers
   # using pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query

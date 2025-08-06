@@ -26,14 +26,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V20::Common::GenderInfo;
-use Google::Ads::GoogleAds::V20::Common::AgeRangeInfo;
-use Google::Ads::GoogleAds::V20::Enums::GenderTypeEnum   qw(MALE);
-use Google::Ads::GoogleAds::V20::Enums::AgeRangeTypeEnum qw(AGE_RANGE_18_24);
+use Google::Ads::GoogleAds::V21::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V21::Common::GenderInfo;
+use Google::Ads::GoogleAds::V21::Common::AgeRangeInfo;
+use Google::Ads::GoogleAds::V21::Enums::GenderTypeEnum   qw(MALE);
+use Google::Ads::GoogleAds::V21::Enums::AgeRangeTypeEnum qw(AGE_RANGE_18_24);
 use
-  Google::Ads::GoogleAds::V20::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,37 +54,37 @@ sub add_demographic_targeting_criteria {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
   my $ad_group_resource_name =
-    Google::Ads::GoogleAds::V20::Utils::ResourceNames::ad_group($customer_id,
+    Google::Ads::GoogleAds::V21::Utils::ResourceNames::ad_group($customer_id,
     $ad_group_id);
 
   # Create a positive ad group criterion for gender.
   my $gender_ad_group_criterion =
-    Google::Ads::GoogleAds::V20::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V21::Resources::AdGroupCriterion->new({
       adGroup => $ad_group_resource_name,
       # Target male.
-      gender => Google::Ads::GoogleAds::V20::Common::GenderInfo->new({
+      gender => Google::Ads::GoogleAds::V21::Common::GenderInfo->new({
           type => MALE
         })});
 
   # Create a negative ad group criterion for age range.
   my $age_range_negative_ad_group_criterion =
-    Google::Ads::GoogleAds::V20::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V21::Resources::AdGroupCriterion->new({
       adGroup => $ad_group_resource_name,
       # Make this ad group criterion negative.
       negative => "true",
       # Target the age range of 18 to 24.
-      ageRange => Google::Ads::GoogleAds::V20::Common::AgeRangeInfo->new({
+      ageRange => Google::Ads::GoogleAds::V21::Common::AgeRangeInfo->new({
           type => AGE_RANGE_18_24
         })});
 
   # Create ad group criterion operations for both ad group criteria.
   my $operations = [
-    Google::Ads::GoogleAds::V20::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V21::Services::AdGroupCriterionService::AdGroupCriterionOperation
       ->new({
         create => $gender_ad_group_criterion
       }
       ),
-    Google::Ads::GoogleAds::V20::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V21::Services::AdGroupCriterionService::AdGroupCriterionOperation
       ->new({
         create => $age_range_negative_ad_group_criterion
       })];

@@ -32,7 +32,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
 use
-  Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -177,7 +177,7 @@ sub create_customer_client_to_hierarchy() {
       Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
         service => $google_ads_service,
         request =>
-          Google::Ads::GoogleAds::V20::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+          Google::Ads::GoogleAds::V21::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
           ->new({
             customerId => $customer_id_to_search,
             query      => $search_query,

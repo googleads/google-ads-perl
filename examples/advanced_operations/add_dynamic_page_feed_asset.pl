@@ -24,26 +24,26 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::Asset;
-use Google::Ads::GoogleAds::V20::Resources::AssetSet;
-use Google::Ads::GoogleAds::V20::Resources::AssetSetAsset;
-use Google::Ads::GoogleAds::V20::Resources::CampaignAssetSet;
-use Google::Ads::GoogleAds::V20::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V20::Common::PageFeedAsset;
-use Google::Ads::GoogleAds::V20::Common::WebpageConditionInfo;
-use Google::Ads::GoogleAds::V20::Common::WebpageInfo;
-use Google::Ads::GoogleAds::V20::Enums::AssetSetTypeEnum qw(PAGE_FEED);
-use Google::Ads::GoogleAds::V20::Enums::WebpageConditionOperandEnum
+use Google::Ads::GoogleAds::V21::Resources::Asset;
+use Google::Ads::GoogleAds::V21::Resources::AssetSet;
+use Google::Ads::GoogleAds::V21::Resources::AssetSetAsset;
+use Google::Ads::GoogleAds::V21::Resources::CampaignAssetSet;
+use Google::Ads::GoogleAds::V21::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V21::Common::PageFeedAsset;
+use Google::Ads::GoogleAds::V21::Common::WebpageConditionInfo;
+use Google::Ads::GoogleAds::V21::Common::WebpageInfo;
+use Google::Ads::GoogleAds::V21::Enums::AssetSetTypeEnum qw(PAGE_FEED);
+use Google::Ads::GoogleAds::V21::Enums::WebpageConditionOperandEnum
   qw(CUSTOM_LABEL);
-use Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation;
-use Google::Ads::GoogleAds::V20::Services::AssetSetService::AssetSetOperation;
+use Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V21::Services::AssetSetService::AssetSetOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::AssetSetAssetService::AssetSetAssetOperation;
+  Google::Ads::GoogleAds::V21::Services::AssetSetAssetService::AssetSetAssetOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::CampaignAssetSetService::CampaignAssetSetOperation;
+  Google::Ads::GoogleAds::V21::Services::CampaignAssetSetService::CampaignAssetSetOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -110,18 +110,18 @@ sub create_assets {
   my $asset_operations = [];
   foreach my $url (@$urls) {
     my $page_feed_asset =
-      Google::Ads::GoogleAds::V20::Common::PageFeedAsset->new({
+      Google::Ads::GoogleAds::V21::Common::PageFeedAsset->new({
         # Set the URL of the page to include.
         pageUrl => $url,
         # Recommended: add labels to the asset. These labels can be used later in
         # ad group targeting to restrict the set of pages that can serve.
         labels => [$dsa_page_url_label]});
-    my $asset = Google::Ads::GoogleAds::V20::Resources::Asset->new({
+    my $asset = Google::Ads::GoogleAds::V21::Resources::Asset->new({
       pageFeedAsset => $page_feed_asset
     });
 
     push @$asset_operations,
-      Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation->new({
+      Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation->new({
         create => $asset
       });
   }
@@ -149,14 +149,14 @@ sub create_asset_set {
   # [START add_asset_set]
   # Create an AssetSet which will be used to link the dynamic page feed assets to
   # a campaign.
-  my $asset_set = Google::Ads::GoogleAds::V20::Resources::AssetSet->new({
+  my $asset_set = Google::Ads::GoogleAds::V21::Resources::AssetSet->new({
     name => "My dynamic page feed #" . uniqid(),
     type => PAGE_FEED
   });
 
   # Create an operation to add the AssetSet.
   my $operation =
-    Google::Ads::GoogleAds::V20::Services::AssetSetService::AssetSetOperation->
+    Google::Ads::GoogleAds::V21::Services::AssetSetService::AssetSetOperation->
     new({
       create => $asset_set
     });
@@ -183,14 +183,14 @@ sub add_assets_to_asset_set {
   my $operations = [];
   foreach my $asset_resource_name (@$asset_resource_names) {
     my $asset_set_asset =
-      Google::Ads::GoogleAds::V20::Resources::AssetSetAsset->new({
+      Google::Ads::GoogleAds::V21::Resources::AssetSetAsset->new({
         asset    => $asset_resource_name,
         assetSet => $asset_set_resource_name
       });
 
     # Create an operation to add the link.
     my $operation =
-      Google::Ads::GoogleAds::V20::Services::AssetSetAssetService::AssetSetAssetOperation
+      Google::Ads::GoogleAds::V21::Services::AssetSetAssetService::AssetSetAssetOperation
       ->new({
         create => $asset_set_asset
       });
@@ -217,8 +217,8 @@ sub link_asset_set_to_campaign {
   # [START add_campaign_asset_set]
   # Create a CampaignAssetSet representing the link between an AssetSet and a Campaign.
   my $campaign_asset_set =
-    Google::Ads::GoogleAds::V20::Resources::CampaignAssetSet->new({
-      campaign => Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign(
+    Google::Ads::GoogleAds::V21::Resources::CampaignAssetSet->new({
+      campaign => Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       assetSet => $asset_set_resource_name
@@ -226,7 +226,7 @@ sub link_asset_set_to_campaign {
 
   # Create an operation to add the CampaignAssetSet.
   my $operation =
-    Google::Ads::GoogleAds::V20::Services::CampaignAssetSetService::CampaignAssetSetOperation
+    Google::Ads::GoogleAds::V21::Services::CampaignAssetSetService::CampaignAssetSetOperation
     ->new({
       create => $campaign_asset_set
     });
@@ -249,25 +249,25 @@ sub add_dsa_target {
 
   # [START add_dsa_target]
   my $ad_group_resource_name =
-    Google::Ads::GoogleAds::V20::Utils::ResourceNames::ad_group($customer_id,
+    Google::Ads::GoogleAds::V21::Utils::ResourceNames::ad_group($customer_id,
     $ad_group_id);
 
   # Create the webpage condition info that targets an advertiser's webpages based
   # on the custom label specified by the $dsa_page_url_label (e.g. "discounts").
   my $webpage_condition_info =
-    Google::Ads::GoogleAds::V20::Common::WebpageConditionInfo->new({
+    Google::Ads::GoogleAds::V21::Common::WebpageConditionInfo->new({
       operand  => CUSTOM_LABEL,
       argument => $dsa_page_url_label
     });
 
   # Create the webpage info, or criterion for targeting webpages of an advertiser's website.
-  my $webpage_info = Google::Ads::GoogleAds::V20::Common::WebpageInfo->new({
+  my $webpage_info = Google::Ads::GoogleAds::V21::Common::WebpageInfo->new({
       criterionName => "Test Criterion",
       conditions    => [$webpage_condition_info]});
 
   # Create the ad group criterion.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V20::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V21::Resources::AdGroupCriterion->new({
       adGroup      => $ad_group_resource_name,
       webpage      => $webpage_info,
       cpcBidMicros => 1_500_000
@@ -275,7 +275,7 @@ sub add_dsa_target {
 
   # Create the operation.
   my $operation =
-    Google::Ads::GoogleAds::V20::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V21::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion
     });

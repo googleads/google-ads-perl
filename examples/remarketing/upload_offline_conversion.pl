@@ -27,12 +27,12 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Common::Consent;
+use Google::Ads::GoogleAds::V21::Common::Consent;
 use
-  Google::Ads::GoogleAds::V20::Services::ConversionUploadService::ClickConversion;
+  Google::Ads::GoogleAds::V21::Services::ConversionUploadService::ClickConversion;
 use
-  Google::Ads::GoogleAds::V20::Services::ConversionUploadService::CustomVariable;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::ConversionUploadService::CustomVariable;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -85,10 +85,10 @@ sub upload_offline_conversion {
 
   # Create a click conversion by specifying currency as USD.
   my $click_conversion =
-    Google::Ads::GoogleAds::V20::Services::ConversionUploadService::ClickConversion
+    Google::Ads::GoogleAds::V21::Services::ConversionUploadService::ClickConversion
     ->new({
       conversionAction =>
-        Google::Ads::GoogleAds::V20::Utils::ResourceNames::conversion_action(
+        Google::Ads::GoogleAds::V21::Utils::ResourceNames::conversion_action(
         $customer_id, $conversion_action_id
         ),
       conversionDateTime => $conversion_date_time,
@@ -107,10 +107,10 @@ sub upload_offline_conversion {
 
   if ($conversion_custom_variable_id && $conversion_custom_variable_value) {
     $click_conversion->{customVariables} = [
-      Google::Ads::GoogleAds::V20::Services::ConversionUploadService::CustomVariable
+      Google::Ads::GoogleAds::V21::Services::ConversionUploadService::CustomVariable
         ->new({
           conversionCustomVariable =>
-            Google::Ads::GoogleAds::V20::Utils::ResourceNames::conversion_custom_variable(
+            Google::Ads::GoogleAds::V21::Utils::ResourceNames::conversion_custom_variable(
             $customer_id, $conversion_custom_variable_id
             ),
           value => $conversion_custom_variable_value
@@ -127,7 +127,7 @@ sub upload_offline_conversion {
     # Specify whether user consent was obtained for the data you are uploading.
     # See https://www.google.com/about/company/user-consent-policy for details.
     $click_conversion->{consent} =
-      Google::Ads::GoogleAds::V20::Common::Consent->new({
+      Google::Ads::GoogleAds::V21::Common::Consent->new({
         adUserData => $ad_user_data_consent
       });
   }

@@ -1,3 +1,11 @@
+28.0.0 - 2025-08-06
+-------------------
+- Added support for Google Ads API v21.
+- Removed support for Google Ads API v18.
+- Added code example: add_demand_gen_campaign.
+- Updated campaign-related examples to set the containsEuPoliticalAdvertising
+  field.
+
 27.0.1 - 2025-07-07
 -------------------
 - Fixed bug in Google::Ads::GoogleAds::V20::Resources::CampaignBudget.

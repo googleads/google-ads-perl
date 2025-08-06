@@ -25,13 +25,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Enums::KeywordPlanNetworkEnum
+use Google::Ads::GoogleAds::V21::Enums::KeywordPlanNetworkEnum
   qw(GOOGLE_SEARCH GOOGLE_SEARCH_AND_PARTNERS);
-use Google::Ads::GoogleAds::V20::Services::KeywordPlanIdeaService::UrlSeed;
-use Google::Ads::GoogleAds::V20::Services::KeywordPlanIdeaService::KeywordSeed;
+use Google::Ads::GoogleAds::V21::Services::KeywordPlanIdeaService::UrlSeed;
+use Google::Ads::GoogleAds::V21::Services::KeywordPlanIdeaService::KeywordSeed;
 use
-  Google::Ads::GoogleAds::V20::Services::KeywordPlanIdeaService::KeywordAndUrlSeed;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::KeywordPlanIdeaService::KeywordAndUrlSeed;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -86,21 +86,21 @@ sub generate_keyword_ideas {
   if (!scalar @$keyword_texts) {
     # Only page URL was specified, so use a UrlSeed.
     $request_option_args->{urlSeed} =
-      Google::Ads::GoogleAds::V20::Services::KeywordPlanIdeaService::UrlSeed->
+      Google::Ads::GoogleAds::V21::Services::KeywordPlanIdeaService::UrlSeed->
       new({
         url => $page_url
       });
   } elsif (not $page_url) {
     # Only keywords were specified, so use a KeywordSeed.
     $request_option_args->{keywordSeed} =
-      Google::Ads::GoogleAds::V20::Services::KeywordPlanIdeaService::KeywordSeed
+      Google::Ads::GoogleAds::V21::Services::KeywordPlanIdeaService::KeywordSeed
       ->new({
         keywords => $keyword_texts
       });
   } else {
     # Both page URL and keywords were specified, so use a KeywordAndUrlSeed.
     $request_option_args->{keywordAndUrlSeed} =
-      Google::Ads::GoogleAds::V20::Services::KeywordPlanIdeaService::KeywordAndUrlSeed
+      Google::Ads::GoogleAds::V21::Services::KeywordPlanIdeaService::KeywordAndUrlSeed
       ->new({
         url      => $page_url,
         keywords => $keyword_texts
@@ -111,7 +111,7 @@ sub generate_keyword_ideas {
   # location IDs.
   my $geo_target_constants = [
     map (
-      Google::Ads::GoogleAds::V20::Utils::ResourceNames::geo_target_constant(
+      Google::Ads::GoogleAds::V21::Utils::ResourceNames::geo_target_constant(
         $_),
       @$location_ids)];
 
@@ -121,7 +121,7 @@ sub generate_keyword_ideas {
       customerId => $customer_id,
       # Set the language resource using the provided language ID.
       language =>
-        Google::Ads::GoogleAds::V20::Utils::ResourceNames::language_constant(
+        Google::Ads::GoogleAds::V21::Utils::ResourceNames::language_constant(
         $language_id),
       # Add the resource name of each location ID to the request.
       geoTargetConstants => $geo_target_constants,

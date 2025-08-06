@@ -6,7 +6,7 @@
       "status": "INVALID_ARGUMENT",
       "details": [
         {
-          "@type": "type.googleapis.com/google.ads.googleads.v20.errors.GoogleAdsFailure",
+          "@type": "type.googleapis.com/google.ads.googleads.v21.errors.GoogleAdsFailure",
           "errors": [
             {
               "errorCode": {

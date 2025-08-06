@@ -25,9 +25,9 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::CustomerUserAccessInvitation;
+use Google::Ads::GoogleAds::V21::Resources::CustomerUserAccessInvitation;
 use
-  Google::Ads::GoogleAds::V20::Services::CustomerUserAccessInvitationService::CustomerUserAccessInvitationOperation;
+  Google::Ads::GoogleAds::V21::Services::CustomerUserAccessInvitationService::CustomerUserAccessInvitationOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -43,7 +43,7 @@ use Cwd qw(abs_path);
 # Running the example with -h will print the command line usage.
 my $customer_id   = "INSERT_CUSTOMER_ID_HERE";
 my $email_address = "INSERT_EMAIL_ADDRESS_HERE";
-# See Google::Ads::GoogleAds::V20::Enums::AccessRoleEnum for optional values.
+# See Google::Ads::GoogleAds::V21::Enums::AccessRoleEnum for optional values.
 my $access_role = "INSERT_ACCESS_ROLE_HERE";
 
 # [START invite_user_with_access_role]
@@ -52,14 +52,14 @@ sub invite_user_with_access_role {
 
   # Create the user access invitation.
   my $user_access_invitation =
-    Google::Ads::GoogleAds::V20::Resources::CustomerUserAccessInvitation->new({
+    Google::Ads::GoogleAds::V21::Resources::CustomerUserAccessInvitation->new({
       emailAddress => $email_address,
       accessRole   => $access_role
     });
 
   # Create the user access invitation operation.
   my $invitation_operation =
-    Google::Ads::GoogleAds::V20::Services::CustomerUserAccessInvitationService::CustomerUserAccessInvitationOperation
+    Google::Ads::GoogleAds::V21::Services::CustomerUserAccessInvitationService::CustomerUserAccessInvitationOperation
     ->new({create => $user_access_invitation});
 
   # Send the user access invitation.

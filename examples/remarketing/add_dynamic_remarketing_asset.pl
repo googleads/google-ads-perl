@@ -24,19 +24,19 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::Asset;
-use Google::Ads::GoogleAds::V20::Resources::AssetSet;
-use Google::Ads::GoogleAds::V20::Resources::AssetSetAsset;
-use Google::Ads::GoogleAds::V20::Resources::CampaignAssetSet;
-use Google::Ads::GoogleAds::V20::Common::DynamicEducationAsset;
-use Google::Ads::GoogleAds::V20::Enums::AssetSetTypeEnum qw(DYNAMIC_EDUCATION);
-use Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation;
-use Google::Ads::GoogleAds::V20::Services::AssetSetService::AssetSetOperation;
+use Google::Ads::GoogleAds::V21::Resources::Asset;
+use Google::Ads::GoogleAds::V21::Resources::AssetSet;
+use Google::Ads::GoogleAds::V21::Resources::AssetSetAsset;
+use Google::Ads::GoogleAds::V21::Resources::CampaignAssetSet;
+use Google::Ads::GoogleAds::V21::Common::DynamicEducationAsset;
+use Google::Ads::GoogleAds::V21::Enums::AssetSetTypeEnum qw(DYNAMIC_EDUCATION);
+use Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V21::Services::AssetSetService::AssetSetOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::AssetSetAssetService::AssetSetAssetOperation;
+  Google::Ads::GoogleAds::V21::Services::AssetSetAssetService::AssetSetAssetOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::CampaignAssetSetService::CampaignAssetSetOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::CampaignAssetSetService::CampaignAssetSetOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -87,7 +87,7 @@ sub create_asset {
   # See https://support.google.com/google-ads/answer/6053288?#zippy=%2Ceducation
   # for a detailed explanation of the field format.
   my $education_asset =
-    Google::Ads::GoogleAds::V20::Common::DynamicEducationAsset->new({
+    Google::Ads::GoogleAds::V21::Common::DynamicEducationAsset->new({
       # Define meta-information about the school and program.
       schoolName         => "The University of Unknown",
       address            => "Building 1, New York, 12345, USA",
@@ -105,13 +105,13 @@ sub create_asset {
       iosAppLink    => "exampleApp://content/page",
       iosAppStoreId => 123
     });
-  my $asset = Google::Ads::GoogleAds::V20::Resources::Asset->new({
+  my $asset = Google::Ads::GoogleAds::V21::Resources::Asset->new({
       dynamicEducationAsset => $education_asset,
       finalUrls             => ["https://www.example.com"]});
 
   # Create an operation to add the asset.
   my $operation =
-    Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 
@@ -135,14 +135,14 @@ sub create_asset_set {
   # [START add_asset_set]
   # Create an AssetSet which will be used to link the dynamic remarketing assets
   # to a campaign.
-  my $asset_set = Google::Ads::GoogleAds::V20::Resources::AssetSet->new({
+  my $asset_set = Google::Ads::GoogleAds::V21::Resources::AssetSet->new({
     name => "My dynamic remarketing assets #" . uniqid(),
     type => DYNAMIC_EDUCATION
   });
 
   # Create an operation to add the AssetSet.
   my $operation =
-    Google::Ads::GoogleAds::V20::Services::AssetSetService::AssetSetOperation->
+    Google::Ads::GoogleAds::V21::Services::AssetSetService::AssetSetOperation->
     new({
       create => $asset_set
     });
@@ -166,14 +166,14 @@ sub add_assets_to_asset_set {
 
   # [START add_asset_set_asset]
   my $asset_set_asset =
-    Google::Ads::GoogleAds::V20::Resources::AssetSetAsset->new({
+    Google::Ads::GoogleAds::V21::Resources::AssetSetAsset->new({
       asset    => $asset_resource_name,
       assetSet => $asset_set_resource_name
     });
 
   # Create an operation to add the link.
   my $operation =
-    Google::Ads::GoogleAds::V20::Services::AssetSetAssetService::AssetSetAssetOperation
+    Google::Ads::GoogleAds::V21::Services::AssetSetAssetService::AssetSetAssetOperation
     ->new({
       create => $asset_set_asset
     });
@@ -201,8 +201,8 @@ sub link_asset_set_to_campaign {
   # [START add_campaign_asset_set]
   # Create a CampaignAssetSet representing the link between an AssetSet and a Campaign.
   my $campaign_asset_set =
-    Google::Ads::GoogleAds::V20::Resources::CampaignAssetSet->new({
-      campaign => Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign(
+    Google::Ads::GoogleAds::V21::Resources::CampaignAssetSet->new({
+      campaign => Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       assetSet => $asset_set_resource_name
@@ -210,7 +210,7 @@ sub link_asset_set_to_campaign {
 
   # Create an operation to add the CampaignAssetSet.
   my $operation =
-    Google::Ads::GoogleAds::V20::Services::CampaignAssetSetService::CampaignAssetSetOperation
+    Google::Ads::GoogleAds::V21::Services::CampaignAssetSetService::CampaignAssetSetOperation
     ->new({
       create => $campaign_asset_set
     });

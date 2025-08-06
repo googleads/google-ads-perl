@@ -25,13 +25,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::AccountBudgetProposal;
-use Google::Ads::GoogleAds::V20::Enums::AccountBudgetProposalTypeEnum
+use Google::Ads::GoogleAds::V21::Resources::AccountBudgetProposal;
+use Google::Ads::GoogleAds::V21::Enums::AccountBudgetProposalTypeEnum
   qw(CREATE);
-use Google::Ads::GoogleAds::V20::Enums::TimeTypeEnum qw(NOW FOREVER);
+use Google::Ads::GoogleAds::V21::Enums::TimeTypeEnum qw(NOW FOREVER);
 use
-  Google::Ads::GoogleAds::V20::Services::AccountBudgetProposalService::AccountBudgetProposalOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::AccountBudgetProposalService::AccountBudgetProposalOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,9 +54,9 @@ sub add_account_budget_proposal {
 
   # Create an account budget proposal.
   my $account_budget_proposal =
-    Google::Ads::GoogleAds::V20::Resources::AccountBudgetProposal->new({
+    Google::Ads::GoogleAds::V21::Resources::AccountBudgetProposal->new({
       billingSetup =>
-        Google::Ads::GoogleAds::V20::Utils::ResourceNames::billing_setup(
+        Google::Ads::GoogleAds::V21::Utils::ResourceNames::billing_setup(
         $customer_id, $billing_setup_id
         ),
       proposalType => CREATE,
@@ -87,7 +87,7 @@ sub add_account_budget_proposal {
 
   # Create an account budget proposal operation.
   my $account_budget_proposal_operation =
-    Google::Ads::GoogleAds::V20::Services::AccountBudgetProposalService::AccountBudgetProposalOperation
+    Google::Ads::GoogleAds::V21::Services::AccountBudgetProposalService::AccountBudgetProposalOperation
     ->new({
       create => $account_budget_proposal
     });

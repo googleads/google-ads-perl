@@ -25,7 +25,7 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V20::Services::GeoTargetConstantService::LocationNames;
+  Google::Ads::GoogleAds::V21::Services::GeoTargetConstantService::LocationNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -48,7 +48,7 @@ sub get_geo_target_constants_by_names {
       locale        => $locale,
       countryCode   => $country_code,
       locationNames =>
-        Google::Ads::GoogleAds::V20::Services::GeoTargetConstantService::LocationNames
+        Google::Ads::GoogleAds::V21::Services::GeoTargetConstantService::LocationNames
         ->new({
           names => $location_names
         })});

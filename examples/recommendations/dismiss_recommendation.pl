@@ -25,8 +25,8 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V20::Services::RecommendationService::DismissRecommendationOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::RecommendationService::DismissRecommendationOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -51,12 +51,12 @@ sub dismiss_recommendation {
   my ($api_client, $customer_id, $recommendation_id) = @_;
 
   my $recommendation_resource_name =
-    Google::Ads::GoogleAds::V20::Utils::ResourceNames::recommendation(
+    Google::Ads::GoogleAds::V21::Utils::ResourceNames::recommendation(
     $customer_id, $recommendation_id);
 
   # Create an dismiss recommendation operation.
   my $dismiss_recommendation_operation =
-    Google::Ads::GoogleAds::V20::Services::RecommendationService::DismissRecommendationOperation
+    Google::Ads::GoogleAds::V21::Services::RecommendationService::DismissRecommendationOperation
     ->new({
       resourceName => $recommendation_resource_name
     });

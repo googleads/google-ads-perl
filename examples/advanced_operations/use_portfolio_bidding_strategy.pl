@@ -25,20 +25,22 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V20::Resources::BiddingStrategy;
-use Google::Ads::GoogleAds::V20::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V20::Resources::Campaign;
-use Google::Ads::GoogleAds::V20::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V20::Common::TargetSpend;
-use Google::Ads::GoogleAds::V20::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
-use Google::Ads::GoogleAds::V20::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V20::Enums::CampaignStatusEnum         qw(PAUSED);
+use Google::Ads::GoogleAds::V21::Resources::BiddingStrategy;
+use Google::Ads::GoogleAds::V21::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V21::Resources::Campaign;
+use Google::Ads::GoogleAds::V21::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V21::Common::TargetSpend;
+use Google::Ads::GoogleAds::V21::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
+use Google::Ads::GoogleAds::V21::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V21::Enums::CampaignStatusEnum         qw(PAUSED);
+use Google::Ads::GoogleAds::V21::Enums::EuPoliticalAdvertisingStatusEnum
+  qw(DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING);
 use
-  Google::Ads::GoogleAds::V20::Services::BiddingStrategyService::BiddingStrategyOperation;
+  Google::Ads::GoogleAds::V21::Services::BiddingStrategyService::BiddingStrategyOperation;
 use
-  Google::Ads::GoogleAds::V20::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V20::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V21::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -66,7 +68,7 @@ sub use_portfolio_bidding_strategy {
 
   my $campaign_budget_resource_name =
     $campaign_budget_id
-    ? Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign_budget(
+    ? Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign_budget(
     $customer_id, $campaign_budget_id)
     : create_shared_campaign_buget($api_client, $customer_id);
 
@@ -86,9 +88,9 @@ sub create_bidding_strategy {
 
   # Create a portfolio bidding strategy.
   my $portfolio_bidding_strategy =
-    Google::Ads::GoogleAds::V20::Resources::BiddingStrategy->new({
+    Google::Ads::GoogleAds::V21::Resources::BiddingStrategy->new({
       name        => "Maximize Clicks #" . uniqid(),
-      targetSpend => Google::Ads::GoogleAds::V20::Common::TargetSpend->new({
+      targetSpend => Google::Ads::GoogleAds::V21::Common::TargetSpend->new({
           cpcBidCeilingMicros => 2000000
         }
       ),
@@ -96,7 +98,7 @@ sub create_bidding_strategy {
 
   # Create a bidding strategy operation.
   my $bidding_strategy_operation =
-    Google::Ads::GoogleAds::V20::Services::BiddingStrategyService::BiddingStrategyOperation
+    Google::Ads::GoogleAds::V21::Services::BiddingStrategyService::BiddingStrategyOperation
     ->new({
       create => $portfolio_bidding_strategy
     });
@@ -124,7 +126,7 @@ sub create_shared_campaign_buget {
 
   # Create a shared budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V20::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V21::Resources::CampaignBudget->new({
       name           => "Shared Interplanetary Budget #" . uniqid(),
       deliveryMethod => STANDARD,
       # Set the amount of budget.
@@ -135,7 +137,7 @@ sub create_shared_campaign_buget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V20::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V21::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({create => $campaign_budget});
 
   # Add the campaign budget.
@@ -163,7 +165,7 @@ sub create_campaign_with_bidding_strategy {
 
   # [START use_portfolio_bidding_strategy_2]
   # Create a search campaign.
-  my $campaign = Google::Ads::GoogleAds::V20::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V21::Resources::Campaign->new({
       name                   => "Interplanetary Cruise #" . uniqid(),
       advertisingChannelType => SEARCH,
       # Recommendation: Set the campaign to PAUSED when creating it to stop
@@ -172,7 +174,7 @@ sub create_campaign_with_bidding_strategy {
       status => PAUSED,
       # Configures the campaign network options.
       networkSettings =>
-        Google::Ads::GoogleAds::V20::Resources::NetworkSettings->new({
+        Google::Ads::GoogleAds::V21::Resources::NetworkSettings->new({
           targetGoogleSearch   => "true",
           targetSearchNetwork  => "true",
           targetContentNetwork => "true"
@@ -180,13 +182,18 @@ sub create_campaign_with_bidding_strategy {
         ),
       # Set the bidding strategy and budget.
       biddingStrategy => $bidding_strategy_resource_name,
-      campaignBudget  => $campaign_budget_resource_name
+      campaignBudget  => $campaign_budget_resource_name,
+      # Declare whether or not this campaign serves political ads targeting the EU.
+      # Valid values are CONTAINS_EU_POLITICAL_ADVERTISING and
+      # DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING.
+      containsEuPoliticalAdvertising =>
+        DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING
     });
   # [END use_portfolio_bidding_strategy_2]
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V20::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V21::Services::CampaignService::CampaignOperation->
     new({create => $campaign});
 
   # Add the campaign.

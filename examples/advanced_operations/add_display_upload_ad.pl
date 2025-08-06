@@ -29,19 +29,19 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V20::Resources::Ad;
-use Google::Ads::GoogleAds::V20::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V20::Resources::Asset;
-use Google::Ads::GoogleAds::V20::Common::AdMediaBundleAsset;
-use Google::Ads::GoogleAds::V20::Common::DisplayUploadAdInfo;
-use Google::Ads::GoogleAds::V20::Common::MediaBundleAsset;
-use Google::Ads::GoogleAds::V20::Enums::AdGroupAdStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V20::Enums::DisplayUploadProductTypeEnum
+use Google::Ads::GoogleAds::V21::Resources::Ad;
+use Google::Ads::GoogleAds::V21::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V21::Resources::Asset;
+use Google::Ads::GoogleAds::V21::Common::AdMediaBundleAsset;
+use Google::Ads::GoogleAds::V21::Common::DisplayUploadAdInfo;
+use Google::Ads::GoogleAds::V21::Common::MediaBundleAsset;
+use Google::Ads::GoogleAds::V21::Enums::AdGroupAdStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V21::Enums::DisplayUploadProductTypeEnum
   qw(HTML5_UPLOAD_AD);
-use Google::Ads::GoogleAds::V20::Enums::AssetTypeEnum qw(MEDIA_BUNDLE);
-use Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation;
-use Google::Ads::GoogleAds::V20::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V21::Enums::AssetTypeEnum qw(MEDIA_BUNDLE);
+use Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V21::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -91,17 +91,17 @@ sub create_media_bundle_asset {
   my $bundle_content = get_base64_data_from_url(BUNDLE_URL);
 
   # Create an asset.
-  my $asset = Google::Ads::GoogleAds::V20::Resources::Asset->new({
+  my $asset = Google::Ads::GoogleAds::V21::Resources::Asset->new({
       name             => "Ad Media Bundle",
       type             => MEDIA_BUNDLE,
       mediaBundleAsset =>
-        Google::Ads::GoogleAds::V20::Common::MediaBundleAsset->new({
+        Google::Ads::GoogleAds::V21::Common::MediaBundleAsset->new({
           data => $bundle_content
         })});
 
   # Create an asset operation.
   my $asset_operation =
-    Google::Ads::GoogleAds::V20::Services::AssetService::AssetOperation->new({
+    Google::Ads::GoogleAds::V21::Services::AssetService::AssetOperation->new({
       create => $asset
     });
 
@@ -124,15 +124,15 @@ sub create_display_upload_ad_group_ad {
 
   # Create a display upload ad info.
   my $display_upload_ad_info =
-    Google::Ads::GoogleAds::V20::Common::DisplayUploadAdInfo->new({
+    Google::Ads::GoogleAds::V21::Common::DisplayUploadAdInfo->new({
       displayUploadProductType => HTML5_UPLOAD_AD,
       mediaBundle              =>
-        Google::Ads::GoogleAds::V20::Common::AdMediaBundleAsset->new({
+        Google::Ads::GoogleAds::V21::Common::AdMediaBundleAsset->new({
           asset => $ad_asset_resource_name,
         })});
 
   # Create a display upload ad.
-  my $display_upload_ad = Google::Ads::GoogleAds::V20::Resources::Ad->new({
+  my $display_upload_ad = Google::Ads::GoogleAds::V21::Resources::Ad->new({
     name      => "Ad for HTML5",
     finalUrls => ["http://example.com/html5"],
     # Exactly one ad data field must be included to specify the ad type. See
@@ -142,16 +142,16 @@ sub create_display_upload_ad_group_ad {
   });
 
   # Create an ad group ad.
-  my $ad_group_ad = Google::Ads::GoogleAds::V20::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V21::Resources::AdGroupAd->new({
       ad      => $display_upload_ad,
       status  => PAUSED,
-      adGroup => Google::Ads::GoogleAds::V20::Utils::ResourceNames::ad_group(
+      adGroup => Google::Ads::GoogleAds::V21::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       )});
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V20::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V21::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad.

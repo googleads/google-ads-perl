@@ -24,14 +24,14 @@ use File::HomeDir;
 use File::Spec::Functions;
 
 # Main version number that the rest of the modules pick up off of.
-our $VERSION = qv("27.0.1");
+our $VERSION = qv("28.0.0");
 
 use constant DEFAULT_PROPERTIES_FILE =>
   catfile(File::HomeDir->my_home, "googleads.properties");
 
 # Default Google Ads API version used if the API client is created without a
 # specified version.
-use constant DEFAULT_API_VERSION => "V20";
+use constant DEFAULT_API_VERSION => "V21";
 
 # The Google OAuth2 service base URL.
 use constant OAUTH2_BASE_URL => "https://accounts.google.com/o/oauth2";
@@ -62,7 +62,7 @@ use constant DEFAULT_HTTP_TIMEOUT => 3600;
 use constant DEFAULT_HTTP_RETRY_TIMING => "5,10,15";
 
 # The LongRunning.OperationSerivce version.
-use constant OPERATION_SERVICE_VERSION => "V20";
+use constant OPERATION_SERVICE_VERSION => "V21";
 
 # The LongRunning.OperationSerivce name.
 use constant OPERATION_SERVICE_NAME => "OperationService";

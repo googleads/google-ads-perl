@@ -25,10 +25,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V20::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V21::Resources::CampaignCriterion;
 use
-  Google::Ads::GoogleAds::V20::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V20::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V21::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V21::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,9 +56,9 @@ sub update_campaign_criterion_bid_modifier {
   # Create a campaign criterion with the specified resource name and updated bid
   # modifier value.
   my $campaign_criterion =
-    Google::Ads::GoogleAds::V20::Resources::CampaignCriterion->new({
+    Google::Ads::GoogleAds::V21::Resources::CampaignCriterion->new({
       resourceName =>
-        Google::Ads::GoogleAds::V20::Utils::ResourceNames::campaign_criterion(
+        Google::Ads::GoogleAds::V21::Utils::ResourceNames::campaign_criterion(
         $customer_id, $campaign_id, $criterion_id
         ),
       bidModifier => $bid_modifier_value
@@ -66,7 +66,7 @@ sub update_campaign_criterion_bid_modifier {
 
   # Create the campaign criterion operation.
   my $campaign_criterion_operation =
-    Google::Ads::GoogleAds::V20::Services::CampaignCriterionService::CampaignCriterionOperation
+    Google::Ads::GoogleAds::V21::Services::CampaignCriterionService::CampaignCriterionOperation
     ->new({
       update     => $campaign_criterion,
       updateMask => all_set_fields_of($campaign_criterion)});
