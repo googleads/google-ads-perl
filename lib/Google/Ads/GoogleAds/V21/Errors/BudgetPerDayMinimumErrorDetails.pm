@@ -27,8 +27,8 @@ sub new {
     currencyCode                   => $args->{currencyCode},
     failedBudgetAmountMicros       => $args->{failedBudgetAmountMicros},
     failedBudgetTotalAmountMicros  => $args->{failedBudgetTotalAmountMicros},
-    minimumBudgetTotalAmountMicros => $args->{minimumBudgetTotalAmountMicros},
-    minimumBugdetAmountMicros      => $args->{minimumBugdetAmountMicros}};
+    minimumBudgetAmountMicros      => $args->{minimumBudgetAmountMicros},
+    minimumBudgetTotalAmountMicros => $args->{minimumBudgetTotalAmountMicros}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);
