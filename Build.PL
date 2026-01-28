@@ -62,7 +62,6 @@ $build_sc->new(
       "Google::Ads::GoogleAds::V23::Resources",
       "Google::Ads::GoogleAds::V23::Services",
     ],
-    ],
   },
   requires           => {
     "Class::Load"                  => 0,
