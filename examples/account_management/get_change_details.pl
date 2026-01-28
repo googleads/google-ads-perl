@@ -27,12 +27,12 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V22::Enums::ResourceChangeOperationEnum
+use Google::Ads::GoogleAds::V23::Enums::ResourceChangeOperationEnum
   qw(CREATE UPDATE);
-use Google::Ads::GoogleAds::V22::Enums::ChangeEventResourceTypeEnum
+use Google::Ads::GoogleAds::V23::Enums::ChangeEventResourceTypeEnum
   qw(AD AD_GROUP AD_GROUP_AD AD_GROUP_ASSET AD_GROUP_CRITERION AD_GROUP_BID_MODIFIER ASSET ASSET_SET ASSET_SET_ASSET CAMPAIGN CAMPAIGN_ASSET CAMPAIGN_ASSET_SET CAMPAIGN_BUDGET CAMPAIGN_CRITERION CUSTOMER_ASSET);
 use
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use JSON::XS;
@@ -72,7 +72,7 @@ sub get_change_details {
   # Create a search Google Ads request that will retrieve all change events using
   # pages of the specified page size.
   my $search_request =
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query

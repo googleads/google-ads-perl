@@ -24,10 +24,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::CampaignLabel;
+use Google::Ads::GoogleAds::V23::Resources::CampaignLabel;
 use
-  Google::Ads::GoogleAds::V22::Services::CampaignLabelService::CampaignLabelOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::CampaignLabelService::CampaignLabelOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -52,7 +52,7 @@ sub add_campaign_labels {
   my ($api_client, $customer_id, $campaign_ids, $label_id) = @_;
 
   my $label_resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::label($customer_id,
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::label($customer_id,
     $label_id);
 
   my $campaign_label_operations = [];
@@ -61,8 +61,8 @@ sub add_campaign_labels {
   foreach my $campaign_id (@$campaign_ids) {
     # Create a campaign label.
     my $campaign_label =
-      Google::Ads::GoogleAds::V22::Resources::CampaignLabel->new({
-        campaign => Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign(
+      Google::Ads::GoogleAds::V23::Resources::CampaignLabel->new({
+        campaign => Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign(
           $customer_id, $campaign_id
         ),
         label => $label_resource_name
@@ -70,7 +70,7 @@ sub add_campaign_labels {
 
     # Create a campaign label operation.
     my $campaign_label_operation =
-      Google::Ads::GoogleAds::V22::Services::CampaignLabelService::CampaignLabelOperation
+      Google::Ads::GoogleAds::V23::Services::CampaignLabelService::CampaignLabelOperation
       ->new({
         create => $campaign_label
       });

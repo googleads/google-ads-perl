@@ -26,15 +26,15 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V22::Resources::CustomerClientLink;
-use Google::Ads::GoogleAds::V22::Resources::CustomerManagerLink;
-use Google::Ads::GoogleAds::V22::Enums::ManagerLinkStatusEnum
+use Google::Ads::GoogleAds::V23::Resources::CustomerClientLink;
+use Google::Ads::GoogleAds::V23::Resources::CustomerManagerLink;
+use Google::Ads::GoogleAds::V23::Enums::ManagerLinkStatusEnum
   qw(PENDING ACTIVE);
 use
-  Google::Ads::GoogleAds::V22::Services::CustomerClientLinkService::CustomerClientLinkOperation;
+  Google::Ads::GoogleAds::V23::Services::CustomerClientLinkService::CustomerClientLinkOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CustomerManagerLinkService::CustomerManagerLinkOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::CustomerManagerLinkService::CustomerManagerLinkOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -66,16 +66,16 @@ sub link_manager_to_client {
 
   # Create a customer client link.
   my $api_client_link =
-    Google::Ads::GoogleAds::V22::Resources::CustomerClientLink->new({
+    Google::Ads::GoogleAds::V23::Resources::CustomerClientLink->new({
       clientCustomer =>
-        Google::Ads::GoogleAds::V22::Utils::ResourceNames::customer(
+        Google::Ads::GoogleAds::V23::Utils::ResourceNames::customer(
         $api_client_customer_id),
       status => PENDING
     });
 
   # Create a customer client link operation.
   my $api_client_link_operation =
-    Google::Ads::GoogleAds::V22::Services::CustomerClientLinkService::CustomerClientLinkOperation
+    Google::Ads::GoogleAds::V23::Services::CustomerClientLinkService::CustomerClientLinkOperation
     ->new({
       create => $api_client_link
     });
@@ -110,7 +110,7 @@ sub link_manager_to_client {
     $search_response->{results}[0]{customerClientLink}{managerLinkId};
 
   my $manager_link_resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::customer_manager_link(
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::customer_manager_link(
     $api_client_customer_id, $manager_customer_id, $manager_link_id);
 
   # Step 3: Accept the manager customer's link invitation while authenticating
@@ -119,14 +119,14 @@ sub link_manager_to_client {
 
   # Create a customer manager link.
   my $manager_link =
-    Google::Ads::GoogleAds::V22::Resources::CustomerManagerLink->new({
+    Google::Ads::GoogleAds::V23::Resources::CustomerManagerLink->new({
       resourceName => $manager_link_resource_name,
       status       => ACTIVE
     });
 
   # Create a customer manager link operation.
   my $manager_link_operation =
-    Google::Ads::GoogleAds::V22::Services::CustomerManagerLinkService::CustomerManagerLinkOperation
+    Google::Ads::GoogleAds::V23::Services::CustomerManagerLinkService::CustomerManagerLinkOperation
     ->new({
       update     => $manager_link,
       updateMask => all_set_fields_of($manager_link)});

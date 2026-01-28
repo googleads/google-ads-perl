@@ -36,17 +36,17 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V22::Common::ListingGroupInfo;
-use Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo;
-use Google::Ads::GoogleAds::V22::Common::HotelClassInfo;
-use Google::Ads::GoogleAds::V22::Common::HotelCountryRegionInfo;
-use Google::Ads::GoogleAds::V22::Enums::ListingGroupTypeEnum
+use Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V23::Common::ListingGroupInfo;
+use Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo;
+use Google::Ads::GoogleAds::V23::Common::HotelClassInfo;
+use Google::Ads::GoogleAds::V23::Common::HotelCountryRegionInfo;
+use Google::Ads::GoogleAds::V23::Enums::ListingGroupTypeEnum
   qw(SUBDIVISION UNIT);
-use Google::Ads::GoogleAds::V22::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V23::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
 use
-  Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -132,8 +132,8 @@ sub add_level_1_nodes {
 
   # Create hotel class info and dimension info for 5-star hotels.
   my $five_starred_dimension_info =
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
-      hotelClass => Google::Ads::GoogleAds::V22::Common::HotelClassInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
+      hotelClass => Google::Ads::GoogleAds::V23::Common::HotelClassInfo->new({
           value => 5
         })});
 
@@ -157,8 +157,8 @@ sub add_level_1_nodes {
   # Create hotel class info and dimension info for other hotel classes by *not*
   # specifying any attributes on those object.
   my $others_hotels_dimension_info =
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
-      hotelClass => Google::Ads::GoogleAds::V22::Common::HotelClassInfo->new()}
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
+      hotelClass => Google::Ads::GoogleAds::V23::Common::HotelClassInfo->new()}
     );
 
   # Create listing group info for other hotel classes as a SUBDIVISION node, which
@@ -190,12 +190,12 @@ sub add_level_2_nodes {
   # for criteria ID of other countries.
   my $japan_geo_target_constant_id = 2392;
   my $japan_dimension_info =
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
       # Create hotel country region info and dimension info for hotels in Japan.
       hotelCountryRegion =>
-        Google::Ads::GoogleAds::V22::Common::HotelCountryRegionInfo->new({
+        Google::Ads::GoogleAds::V23::Common::HotelCountryRegionInfo->new({
           countryRegionCriterion =>
-            Google::Ads::GoogleAds::V22::Utils::ResourceNames::geo_target_constant(
+            Google::Ads::GoogleAds::V23::Utils::ResourceNames::geo_target_constant(
             $japan_geo_target_constant_id)})});
 
   # Create listing group info for hotels in Japan as a UNIT node.
@@ -212,9 +212,9 @@ sub add_level_2_nodes {
 
   # Create hotel class info and dimension info for hotels in other regions.
   my $other_hotel_regions_dimension_info =
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
       hotelCountryRegion =>
-        Google::Ads::GoogleAds::V22::Common::HotelCountryRegionInfo->new()});
+        Google::Ads::GoogleAds::V23::Common::HotelCountryRegionInfo->new()});
 
   # Create listing group info for hotels in other regions as a UNIT node.
   # The "others" node is always required for every level of the tree.
@@ -237,7 +237,7 @@ sub create_listing_group_info {
   my ($listing_group_type, $parent_criterion_resource_name, $case_value) = @_;
 
   my $listing_group_info =
-    Google::Ads::GoogleAds::V22::Common::ListingGroupInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingGroupInfo->new({
       type => $listing_group_type
     });
 
@@ -259,11 +259,11 @@ sub create_ad_group_criterion {
     = @_;
 
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion->new({
       status       => ENABLED,
       listingGroup => $listing_group_info,
       resourceName =>
-        Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group_criterion(
+        Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group_criterion(
         $customer_id, $ad_group_id, next_id())});
 
   # Bids are valid only for UNIT nodes.
@@ -278,7 +278,7 @@ sub create_ad_group_criterion {
 sub generate_create_operation {
   my $ad_group_criterion = shift;
   return
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion
     });

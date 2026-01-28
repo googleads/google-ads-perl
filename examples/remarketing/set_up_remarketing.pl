@@ -39,32 +39,32 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V22::Resources::CampaignCriterion;
-use Google::Ads::GoogleAds::V22::Resources::UserList;
-use Google::Ads::GoogleAds::V22::Common::FlexibleRuleOperandInfo;
-use Google::Ads::GoogleAds::V22::Common::FlexibleRuleUserListInfo;
-use Google::Ads::GoogleAds::V22::Common::RuleBasedUserListInfo;
-use Google::Ads::GoogleAds::V22::Common::UserListInfo;
-use Google::Ads::GoogleAds::V22::Common::UserListRuleInfo;
-use Google::Ads::GoogleAds::V22::Common::UserListRuleItemInfo;
-use Google::Ads::GoogleAds::V22::Common::UserListRuleItemGroupInfo;
-use Google::Ads::GoogleAds::V22::Common::UserListStringRuleItemInfo;
-use Google::Ads::GoogleAds::V22::Enums::UserListFlexibleRuleOperatorEnum
+use Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V23::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V23::Resources::UserList;
+use Google::Ads::GoogleAds::V23::Common::FlexibleRuleOperandInfo;
+use Google::Ads::GoogleAds::V23::Common::FlexibleRuleUserListInfo;
+use Google::Ads::GoogleAds::V23::Common::RuleBasedUserListInfo;
+use Google::Ads::GoogleAds::V23::Common::UserListInfo;
+use Google::Ads::GoogleAds::V23::Common::UserListRuleInfo;
+use Google::Ads::GoogleAds::V23::Common::UserListRuleItemInfo;
+use Google::Ads::GoogleAds::V23::Common::UserListRuleItemGroupInfo;
+use Google::Ads::GoogleAds::V23::Common::UserListStringRuleItemInfo;
+use Google::Ads::GoogleAds::V23::Enums::UserListFlexibleRuleOperatorEnum
   qw(AND);
-use Google::Ads::GoogleAds::V22::Enums::UserListMembershipStatusEnum qw(OPEN);
-use Google::Ads::GoogleAds::V22::Enums::UserListPrepopulationStatusEnum
+use Google::Ads::GoogleAds::V23::Enums::UserListMembershipStatusEnum qw(OPEN);
+use Google::Ads::GoogleAds::V23::Enums::UserListPrepopulationStatusEnum
   qw(REQUESTED);
-use Google::Ads::GoogleAds::V22::Enums::UserListStringRuleItemOperatorEnum
+use Google::Ads::GoogleAds::V23::Enums::UserListStringRuleItemOperatorEnum
   qw(CONTAINS);
 use
-  Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+  Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CampaignCriterionService::CampaignCriterionOperation;
+  Google::Ads::GoogleAds::V23::Services::CampaignCriterionService::CampaignCriterionOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
-use Google::Ads::GoogleAds::V22::Services::UserListService::UserListOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+use Google::Ads::GoogleAds::V23::Services::UserListService::UserListOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -108,26 +108,26 @@ sub create_user_list {
   my ($api_client, $customer_id) = @_;
 
   # Create a rule targeting any user that visited a url containing 'example.com'.
-  my $rule = Google::Ads::GoogleAds::V22::Common::UserListRuleItemInfo->new({
+  my $rule = Google::Ads::GoogleAds::V23::Common::UserListRuleItemInfo->new({
       # Use a built-in parameter to create a domain URL rule.
       name           => "url__",
       stringRuleItem =>
-        Google::Ads::GoogleAds::V22::Common::UserListStringRuleItemInfo->new({
+        Google::Ads::GoogleAds::V23::Common::UserListStringRuleItemInfo->new({
           operator => CONTAINS,
           value    => "example.com"
         })});
 
   # Specify that the user list targets visitors of a page based on the provided rule.
   my $user_list_rule_item_group_info =
-    Google::Ads::GoogleAds::V22::Common::UserListRuleItemGroupInfo->new(
+    Google::Ads::GoogleAds::V23::Common::UserListRuleItemGroupInfo->new(
     {ruleItems => [$rule]});
   my $flexible_rule_user_list_info =
-    Google::Ads::GoogleAds::V22::Common::FlexibleRuleUserListInfo->new({
+    Google::Ads::GoogleAds::V23::Common::FlexibleRuleUserListInfo->new({
       inclusiveRuleOperator => AND,
       # Inclusive operands are joined together with the specified inclusiveRuleOperator.
       inclusiveOperands => [
-        Google::Ads::GoogleAds::V22::Common::FlexibleRuleOperandInfo->new({
-            rule => Google::Ads::GoogleAds::V22::Common::UserListRuleInfo->new({
+        Google::Ads::GoogleAds::V23::Common::FlexibleRuleOperandInfo->new({
+            rule => Google::Ads::GoogleAds::V23::Common::UserListRuleInfo->new({
                 ruleItemGroups => [$user_list_rule_item_group_info]}
             ),
             # Optionally add a lookback window for this rule, in days.
@@ -138,7 +138,7 @@ sub create_user_list {
 
   # Define a representation of a user list that is generated by a rule.
   my $rule_based_user_list_info =
-    Google::Ads::GoogleAds::V22::Common::RuleBasedUserListInfo->new({
+    Google::Ads::GoogleAds::V23::Common::RuleBasedUserListInfo->new({
       # Optional: To include past users in the user list, set the
       # prepopulationStatus to REQUESTED.
       prepopulationStatus  => REQUESTED,
@@ -146,7 +146,7 @@ sub create_user_list {
     });
 
   # Create the user list.
-  my $user_list = Google::Ads::GoogleAds::V22::Resources::UserList->new({
+  my $user_list = Google::Ads::GoogleAds::V23::Resources::UserList->new({
     name               => "All visitors to example.com #" . uniqid(),
     description        => "Any visitor to any page of example.com",
     membershipLifespan => 365,
@@ -156,7 +156,7 @@ sub create_user_list {
 
   # Create the operation.
   my $user_list_operation =
-    Google::Ads::GoogleAds::V22::Services::UserListService::UserListOperation->
+    Google::Ads::GoogleAds::V23::Services::UserListService::UserListOperation->
     new({
       create => $user_list
     });
@@ -182,17 +182,17 @@ sub target_ads_in_ad_group_to_user_list {
 
   # Create the ad group criterion targeting members of the user list.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion->new({
-      adGroup => Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group(
+    Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion->new({
+      adGroup => Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
-      userList => Google::Ads::GoogleAds::V22::Common::UserListInfo->new({
+      userList => Google::Ads::GoogleAds::V23::Common::UserListInfo->new({
           userList => $user_list_resource_name
         })});
 
   # Create the operation.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion
     });
@@ -222,14 +222,14 @@ sub modify_ad_group_bids {
   # Create the ad group criterion with a bid modifier. You may alternatively set
   # the bid for the ad group criterion directly.
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion->new({
       resourceName => $ad_group_criterion_resource_name,
       bidModifier  => $bid_modifier_value
     });
 
   # Create the update operation.
   my $ad_group_criterion_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       update     => $ad_group_criterion,
       updateMask => all_set_fields_of($ad_group_criterion)});
@@ -259,7 +259,7 @@ sub remove_existing_list_criteria_from_ad_group {
   foreach my $ad_group_criterion (@$ad_group_criteria) {
     push(
       @$operations,
-      Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+      Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
         ->new({
           remove => $ad_group_criterion
         }));
@@ -291,7 +291,7 @@ sub get_user_list_ad_group_criteria {
   # Create a search stream request that will retrieve all of the user list ad
   # group criteria under a campaign.
   my $search_stream_request =
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => sprintf(
@@ -332,17 +332,17 @@ sub target_ads_in_campaign_to_user_list {
 
   # Create the campaign criterion.
   my $campaign_criterion =
-    Google::Ads::GoogleAds::V22::Resources::CampaignCriterion->new({
-      campaign => Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign(
+    Google::Ads::GoogleAds::V23::Resources::CampaignCriterion->new({
+      campaign => Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
-      userList => Google::Ads::GoogleAds::V22::Common::UserListInfo->new({
+      userList => Google::Ads::GoogleAds::V23::Common::UserListInfo->new({
           userList => $user_list_resource_name
         })});
 
   # Create the operation.
   my $campaign_criterion_operation =
-    Google::Ads::GoogleAds::V22::Services::CampaignCriterionService::CampaignCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::CampaignCriterionService::CampaignCriterionOperation
     ->new({
       create => $campaign_criterion
     });
@@ -371,14 +371,14 @@ sub modify_campaign_bids {
 
   # Create the campaign criterion to update.
   my $campaign_criterion =
-    Google::Ads::GoogleAds::V22::Resources::CampaignCriterion->new({
+    Google::Ads::GoogleAds::V23::Resources::CampaignCriterion->new({
       resourceName => $campaign_criterion_resource_name,
       bidModifier  => $bid_modifier_value
     });
 
   # Create the update operation.
   my $campaign_criterion_operation =
-    Google::Ads::GoogleAds::V22::Services::CampaignCriterionService::CampaignCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::CampaignCriterionService::CampaignCriterionOperation
     ->new({
       update     => $campaign_criterion,
       updateMask => all_set_fields_of($campaign_criterion)});

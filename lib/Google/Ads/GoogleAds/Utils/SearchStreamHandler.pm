@@ -92,7 +92,7 @@ Google::Ads::GoogleAds::Utils::SearchStreamHandler
 =head1 SYNOPSIS
 
   my $search_stream_request =
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query => "SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id"
@@ -114,8 +114,8 @@ Google::Ads::GoogleAds::Utils::SearchStreamHandler
 =head1 DESCRIPTION
 
 The handler class to process the response of stream search. The handler should be
-constructed with a L<Google::Ads::GoogleAds::V22::Services::GoogleAdsService> and a
-L<Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsStreamRequest>.
+constructed with a L<Google::Ads::GoogleAds::V23::Services::GoogleAdsService> and a
+L<Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsStreamRequest>.
 
   my $search_stream_handler = Google::Ads::GoogleAds::Utils::SearchStreamHandler->new({
     service => $google_ads_service,
@@ -135,7 +135,7 @@ Processes the response content of stream search.
 =item *
 
 I<for_each_callback>: The callback subroutine which is invoked to process each
-parsed L<Google::Ads::GoogleAds::V22::Services::GoogleAdsService::GoogleAdsRow>.
+parsed L<Google::Ads::GoogleAds::V23::Services::GoogleAdsService::GoogleAdsRow>.
 
 =back
 

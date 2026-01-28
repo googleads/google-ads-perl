@@ -25,7 +25,7 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -41,7 +41,7 @@ sub generate_historical_metrics {
       keywords   => ["mars cruise", "cheap cruise", "jupiter cruise"],
       # Geo target constant 2840 is for USA.
       geoTargetConstants => [
-        Google::Ads::GoogleAds::V22::Utils::ResourceNames::geo_target_constant(
+        Google::Ads::GoogleAds::V23::Utils::ResourceNames::geo_target_constant(
           2840)
       ],
       keywordPlanNetwork => 'GOOGLE_SEARCH',
@@ -49,7 +49,7 @@ sub generate_historical_metrics {
       # https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
       # for the list of language criteria IDs.
       language =>
-        Google::Ads::GoogleAds::V22::Utils::ResourceNames::language_constant(
+        Google::Ads::GoogleAds::V23::Utils::ResourceNames::language_constant(
         1000)});
 
   foreach my $result (@{$keyword_historical_metrics_response->{results}}) {

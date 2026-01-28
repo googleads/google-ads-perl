@@ -152,7 +152,7 @@ True, if the result is a partial failure. False, otherwise.
 
 =head2 get_google_ads_errors
 
-Returns a list of L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsError> instances
+Returns a list of L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsError> instances
 for a given operation index.
 
 =head3 Parameters
@@ -166,19 +166,19 @@ I<operation_index>: the index of the operation, starting from 0.
 =item *
 
 I<partial_failure_error>: the B<partialFailureError> hash in the mutate response,
-with the detail list containing L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsFailure>
+with the detail list containing L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsFailure>
 instances.
 
 =back
 
 =head3 Returns
 
-An array containing the L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsError>
+An array containing the L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsError>
 instances for the given operation index.
 
 =head2 get_google_ads_failure
 
-Extracts the L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsFailure> instance
+Extracts the L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsFailure> instance
 from a partial failure detail.
 
 =head3 Parameters
@@ -193,12 +193,12 @@ I<detail>: an element in the B<details> hash in the mutate response.
 
 =head3 Returns
 
-A L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsFailure> object or undef if not found.
+A L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsFailure> object or undef if not found.
 
 =head2 __get_google_ads_errors
 
-The private method to extract a list of L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsError>
-instances from a L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsFailure> instance
+The private method to extract a list of L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsError>
+instances from a L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsFailure> instance
 for a given operation index.
 
 =head3 Parameters
@@ -211,14 +211,14 @@ I<operation_index>: the index of the operation, starting from 0.
 
 =item *
 
-I<google_ads_failure>: the L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsFailure> instance.
+I<google_ads_failure>: the L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsFailure> instance.
 
 =back
 
 =head3 Returns
 
-An array containing the L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsError>
-instances from the L<Google::Ads::GoogleAds::V22::Errors::GoogleAdsFailure>
+An array containing the L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsError>
+instances from the L<Google::Ads::GoogleAds::V23::Errors::GoogleAdsFailure>
 instance for the given operation index.
 
 =head1 LICENSE AND COPYRIGHT

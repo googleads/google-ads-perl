@@ -25,11 +25,11 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
-use Google::Ads::GoogleAds::V22::Enums::PolicyApprovalStatusEnum
+use Google::Ads::GoogleAds::V23::Enums::PolicyApprovalStatusEnum
   qw(DISAPPROVED);
 use
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest;
-use Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchSettings;
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest;
+use Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchSettings;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -59,12 +59,12 @@ sub get_all_disapproved_ads {
 
   # Create a search Google Ads request.
   my $search_request =
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId     => $customer_id,
       query          => $search_query,
       searchSettings =>
-        Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchSettings
+        Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchSettings
         ->new({
           returnTotalResultsCount => true
         })});

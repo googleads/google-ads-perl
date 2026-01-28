@@ -1,0 +1,33 @@
+# Copyright 2020, Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+package Google::Ads::GoogleAds::V23::Enums::BusinessMessageCallToActionTypeEnum;
+
+use strict;
+use warnings;
+
+use Const::Exporter enums => [
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN     => "UNKNOWN",
+  APPLY_NOW   => "APPLY_NOW",
+  BOOK_NOW    => "BOOK_NOW",
+  CONTACT_US  => "CONTACT_US",
+  GET_INFO    => "GET_INFO",
+  GET_OFFER   => "GET_OFFER",
+  GET_QUOTE   => "GET_QUOTE",
+  GET_STARTED => "GET_STARTED",
+  LEARN_MORE  => "LEARN_MORE"
+];
+
+1;

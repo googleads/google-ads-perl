@@ -25,10 +25,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V22::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V23::Resources::CampaignCriterion;
 use
-  Google::Ads::GoogleAds::V22::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -53,7 +53,7 @@ sub update_campaign_criterion_ip_block {
   my ($api_client, $customer_id, $campaign_id, $ip_block) = @_;
 
   my $resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign_criterion(
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign_criterion(
     $customer_id, $campaign_id, $CRITERION_ID,);
 
   my $operations;
@@ -61,7 +61,7 @@ sub update_campaign_criterion_ip_block {
     # Create a campaign criterion with the specified resource name (ip_block) and
     # IP address which needs to be excluded.
     my $campaign_criterion =
-      Google::Ads::GoogleAds::V22::Resources::CampaignCriterion->new({
+      Google::Ads::GoogleAds::V23::Resources::CampaignCriterion->new({
         resourceName => $resource_name,
         negative     => 'True',
         ipBlock      => {
@@ -71,7 +71,7 @@ sub update_campaign_criterion_ip_block {
 
     # Create the campaign criterion operation.
     my $campaign_criterion_operation =
-      Google::Ads::GoogleAds::V22::Services::CampaignCriterionService::CampaignCriterionOperation
+      Google::Ads::GoogleAds::V23::Services::CampaignCriterionService::CampaignCriterionOperation
       ->new({
         create => $campaign_criterion,
         # To remove the IP block campaign criterion, use:

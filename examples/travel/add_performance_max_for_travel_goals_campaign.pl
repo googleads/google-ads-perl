@@ -41,42 +41,42 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V22::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V22::Resources::Campaign;
-use Google::Ads::GoogleAds::V22::Resources::Asset;
-use Google::Ads::GoogleAds::V22::Resources::AssetGroup;
-use Google::Ads::GoogleAds::V22::Resources::AssetGroupAsset;
-use Google::Ads::GoogleAds::V22::Resources::AssetSet;
-use Google::Ads::GoogleAds::V22::Resources::AssetSetAsset;
-use Google::Ads::GoogleAds::V22::Common::CallToActionAsset;
-use Google::Ads::GoogleAds::V22::Common::MaximizeConversionValue;
-use Google::Ads::GoogleAds::V22::Common::TextAsset;
-use Google::Ads::GoogleAds::V22::Common::HotelPropertyAsset;
-use Google::Ads::GoogleAds::V22::Common::ImageAsset;
-use Google::Ads::GoogleAds::V22::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
-use Google::Ads::GoogleAds::V22::Enums::CampaignStatusEnum;
-use Google::Ads::GoogleAds::V22::Enums::AdvertisingChannelTypeEnum
+use Google::Ads::GoogleAds::V23::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V23::Resources::Campaign;
+use Google::Ads::GoogleAds::V23::Resources::Asset;
+use Google::Ads::GoogleAds::V23::Resources::AssetGroup;
+use Google::Ads::GoogleAds::V23::Resources::AssetGroupAsset;
+use Google::Ads::GoogleAds::V23::Resources::AssetSet;
+use Google::Ads::GoogleAds::V23::Resources::AssetSetAsset;
+use Google::Ads::GoogleAds::V23::Common::CallToActionAsset;
+use Google::Ads::GoogleAds::V23::Common::MaximizeConversionValue;
+use Google::Ads::GoogleAds::V23::Common::TextAsset;
+use Google::Ads::GoogleAds::V23::Common::HotelPropertyAsset;
+use Google::Ads::GoogleAds::V23::Common::ImageAsset;
+use Google::Ads::GoogleAds::V23::Enums::BudgetDeliveryMethodEnum qw(STANDARD);
+use Google::Ads::GoogleAds::V23::Enums::CampaignStatusEnum;
+use Google::Ads::GoogleAds::V23::Enums::AdvertisingChannelTypeEnum
   qw(PERFORMANCE_MAX);
-use Google::Ads::GoogleAds::V22::Enums::AssetGroupStatusEnum;
-use Google::Ads::GoogleAds::V22::Enums::AssetFieldTypeEnum
+use Google::Ads::GoogleAds::V23::Enums::AssetGroupStatusEnum;
+use Google::Ads::GoogleAds::V23::Enums::AssetFieldTypeEnum
   qw(HEADLINE DESCRIPTION LONG_HEADLINE BUSINESS_NAME LOGO MARKETING_IMAGE SQUARE_MARKETING_IMAGE HOTEL_PROPERTY CALL_TO_ACTION_SELECTION);
-use Google::Ads::GoogleAds::V22::Enums::HotelAssetSuggestionStatusEnum
+use Google::Ads::GoogleAds::V23::Enums::HotelAssetSuggestionStatusEnum
   qw(SUCCESS);
-use Google::Ads::GoogleAds::V22::Enums::EuPoliticalAdvertisingStatusEnum
+use Google::Ads::GoogleAds::V23::Enums::EuPoliticalAdvertisingStatusEnum
   qw(DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING);
-use Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation;
+use Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V22::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation;
+  Google::Ads::GoogleAds::V23::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V23::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::AssetGroupService::AssetGroupOperation;
+  Google::Ads::GoogleAds::V23::Services::AssetGroupService::AssetGroupOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::AssetGroupAssetService::AssetGroupAssetOperation;
-use Google::Ads::GoogleAds::V22::Services::AssetSetService::AssetSetOperation;
+  Google::Ads::GoogleAds::V23::Services::AssetGroupAssetService::AssetGroupAssetOperation;
+use Google::Ads::GoogleAds::V23::Services::AssetSetService::AssetSetOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::AssetSetAssetService::AssetSetAssetOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::AssetSetAssetService::AssetSetAssetOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -236,14 +236,14 @@ sub create_multiple_text_assets {
         next;
       }
       push @$operations,
-        Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation
+        Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation
         ->new({
           assetOperation =>
-            Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation
+            Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation
             ->new({
-              create => Google::Ads::GoogleAds::V22::Resources::Asset->new({
+              create => Google::Ads::GoogleAds::V23::Resources::Asset->new({
                   textAsset =>
-                    Google::Ads::GoogleAds::V22::Common::TextAsset->new({
+                    Google::Ads::GoogleAds::V23::Common::TextAsset->new({
                       text => $text_asset->{text}})})})});
     }
   }
@@ -256,14 +256,14 @@ sub create_multiple_text_assets {
     my $text = $default_text_assets_info->{$asset_field_type}[$i++];
     # Creates a mutate operation for a text asset, using the default text.
     push @$operations,
-      Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation
       ->new({
         assetOperation =>
-          Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation->
+          Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation->
           new({
-            create => Google::Ads::GoogleAds::V22::Resources::Asset->new({
+            create => Google::Ads::GoogleAds::V23::Resources::Asset->new({
                 textAsset =>
-                  Google::Ads::GoogleAds::V22::Common::TextAsset->new({
+                  Google::Ads::GoogleAds::V23::Common::TextAsset->new({
                     text => $text
                   })})})});
   }
@@ -291,10 +291,10 @@ sub create_hotel_asset_set {
   my ($api_client, $customer_id) = @_;
 
   my $asset_set_operation =
-    Google::Ads::GoogleAds::V22::Services::AssetSetService::AssetSetOperation->
+    Google::Ads::GoogleAds::V23::Services::AssetSetService::AssetSetOperation->
     new({
       # Creates a hotel property asset set.
-      create => Google::Ads::GoogleAds::V22::Resources::AssetSet->new({
+      create => Google::Ads::GoogleAds::V23::Resources::AssetSet->new({
           name => 'My Hotel propery asset set #' . uniqid(),
           type => HOTEL_PROPERTY
         })});
@@ -322,31 +322,31 @@ sub create_hotel_asset {
   # We use the GoogleAdService to create an asset and asset set asset in a single request.
   my $operations = [];
   my $asset_resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset($customer_id,
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset($customer_id,
     ASSET_TEMPORARY_ID);
 
   # Create a mutate operation for a hotel property asset.
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetOperation =>
-        Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation->
+        Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation->
         new({
-          create => Google::Ads::GoogleAds::V22::Resources::Asset->new({
+          create => Google::Ads::GoogleAds::V23::Resources::Asset->new({
               resourceName       => $asset_resource_name,
               hotelPropertyAsset =>
-                Google::Ads::GoogleAds::V22::Common::HotelPropertyAsset->new({
+                Google::Ads::GoogleAds::V23::Common::HotelPropertyAsset->new({
                   placeId => $place_id
                 })})})});
 
   # Create a mutate operation for an asset set asset.
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetSetAssetOperation =>
-        Google::Ads::GoogleAds::V22::Services::AssetSetAssetService::AssetSetAssetOperation
+        Google::Ads::GoogleAds::V23::Services::AssetSetAssetService::AssetSetAssetOperation
         ->new({
-          create => Google::Ads::GoogleAds::V22::Resources::AssetSetAsset->new({
+          create => Google::Ads::GoogleAds::V23::Resources::AssetSetAsset->new({
               asset    => $asset_resource_name,
               assetSet => $asset_set_resource_name
             })})});
@@ -375,17 +375,17 @@ sub create_campaign_budget_operation {
   my ($customer_id) = @_;
 
   return
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       campaignBudgetOperation =>
-        Google::Ads::GoogleAds::V22::Services::CampaignBudgetService::CampaignBudgetOperation
+        Google::Ads::GoogleAds::V23::Services::CampaignBudgetService::CampaignBudgetOperation
         ->new({
-          create => Google::Ads::GoogleAds::V22::Resources::CampaignBudget->new(
+          create => Google::Ads::GoogleAds::V23::Resources::CampaignBudget->new(
             {
               # Set a temporary ID in the budget's resource name so it can be
               # referenced by the campaign in later steps.
               resourceName =>
-                Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign_budget(
+                Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign_budget(
                 $customer_id, BUDGET_TEMPORARY_ID
                 ),
               name => "Performance Max for travel goals campaign budget #" .
@@ -409,27 +409,27 @@ sub create_campaign_operation {
 
   # Create a mutate operation that creates a campaign operation.
   return
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       campaignOperation =>
-        Google::Ads::GoogleAds::V22::Services::CampaignService::CampaignOperation
+        Google::Ads::GoogleAds::V23::Services::CampaignService::CampaignOperation
         ->new({
-          create => Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+          create => Google::Ads::GoogleAds::V23::Resources::Campaign->new({
               # Assign the resource name with a temporary ID.
               resourceName =>
-                Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign(
+                Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign(
                 $customer_id, CAMPAIGN_TEMPORARY_ID
                 ),
               name => "Performance Max for travel goals campaign #'" . uniqid(),
               # Set the budget using the given budget resource name.
               campaignBudget =>
-                Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign_budget(
+                Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign_budget(
                 $customer_id, BUDGET_TEMPORARY_ID
                 ),
               # Set the campaign status as PAUSED. The campaign is the only entity in
               # the mutate request that should have its status set.
               status =>
-                Google::Ads::GoogleAds::V22::Enums::CampaignStatusEnum::PAUSED,
+                Google::Ads::GoogleAds::V23::Enums::CampaignStatusEnum::PAUSED,
               # All Performance Max campaigns have an advertisingChannelType of
               # PERFORMANCE_MAX. The advertisingChannelSubType should not be set.
               advertisingChannelType => PERFORMANCE_MAX,
@@ -455,7 +455,7 @@ sub create_campaign_operation {
               # http://support.google.com/google-ads/answer/7684216.
               # A targetRoas of 3.5 corresponds to a 350% return on ad spend.
               maximizeConversionValue =>
-                Google::Ads::GoogleAds::V22::Common::MaximizeConversionValue->
+                Google::Ads::GoogleAds::V23::Common::MaximizeConversionValue->
                 new({
                   targetRoas => 3.5
                 })})})});
@@ -489,24 +489,24 @@ sub create_asset_group_operations {
     ? [$hotel_asset_suggestion->{finalUrl}]
     : ['http://www.example.com'];
   my $asset_group_resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset_group($customer_id,
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset_group($customer_id,
     ASSET_GROUP_TEMPORARY_ID);
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupOperation =>
-        Google::Ads::GoogleAds::V22::Services::AssetGroupService::AssetGroupOperation
+        Google::Ads::GoogleAds::V23::Services::AssetGroupService::AssetGroupOperation
         ->new({
-          create => Google::Ads::GoogleAds::V22::Resources::AssetGroup->new({
+          create => Google::Ads::GoogleAds::V23::Resources::AssetGroup->new({
               resourceName => $asset_group_resource_name,
               name         => $asset_group_name,
               campaign     =>
-                Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign(
+                Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign(
                 $customer_id, CAMPAIGN_TEMPORARY_ID
                 ),
               finalUrls => $asset_group_final_urls,
               status    =>
-                Google::Ads::GoogleAds::V22::Enums::AssetGroupStatusEnum::PAUSED
+                Google::Ads::GoogleAds::V23::Enums::AssetGroupStatusEnum::PAUSED
             })})});
 
   # An asset group is linked to an asset by creating a new asset group asset and providing:
@@ -523,16 +523,16 @@ sub create_asset_group_operations {
   # Link the headline assets to the asset group.
   foreach my $resource_name (@$headline_asset_resource_names) {
     push @$operations,
-      Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation
       ->new({
         assetGroupAssetOperation =>
-          Google::Ads::GoogleAds::V22::Services::AssetGroupAssetService::AssetGroupAssetOperation
+          Google::Ads::GoogleAds::V23::Services::AssetGroupAssetService::AssetGroupAssetOperation
           ->new({
             create =>
-              Google::Ads::GoogleAds::V22::Resources::AssetGroupAsset->new({
+              Google::Ads::GoogleAds::V23::Resources::AssetGroupAsset->new({
                 asset      => $resource_name,
                 assetGroup =>
-                  Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset_group(
+                  Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset_group(
                   $customer_id, ASSET_GROUP_TEMPORARY_ID
                   ),
                 fieldType => HEADLINE
@@ -542,16 +542,16 @@ sub create_asset_group_operations {
   # Link the description assets.
   foreach my $resource_name (@$description_asset_resource_names) {
     push @$operations,
-      Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation
       ->new({
         assetGroupAssetOperation =>
-          Google::Ads::GoogleAds::V22::Services::AssetGroupAssetService::AssetGroupAssetOperation
+          Google::Ads::GoogleAds::V23::Services::AssetGroupAssetService::AssetGroupAssetOperation
           ->new({
             create =>
-              Google::Ads::GoogleAds::V22::Resources::AssetGroupAsset->new({
+              Google::Ads::GoogleAds::V23::Resources::AssetGroupAsset->new({
                 asset      => $resource_name,
                 assetGroup =>
-                  Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset_group(
+                  Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset_group(
                   $customer_id, ASSET_GROUP_TEMPORARY_ID
                   ),
                 fieldType => DESCRIPTION
@@ -562,13 +562,13 @@ sub create_asset_group_operations {
   # Link the previously created hotel property asset to the asset group. In the real-world
   # scenario, you'd need to do this step several times for each hotel property asset.
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupAssetOperation =>
-        Google::Ads::GoogleAds::V22::Services::AssetGroupAssetService::AssetGroupAssetOperation
+        Google::Ads::GoogleAds::V23::Services::AssetGroupAssetService::AssetGroupAssetOperation
         ->new({
           create =>
-            Google::Ads::GoogleAds::V22::Resources::AssetGroupAsset->new({
+            Google::Ads::GoogleAds::V23::Resources::AssetGroupAsset->new({
               asset      => $hotel_property_asset_resource_name,
               assetGroup => $asset_group_resource_name,
               fieldType  => HOTEL_PROPERTY
@@ -590,31 +590,31 @@ sub create_asset_group_operations {
     # Create a new mutate operation for a suggested call-to-action asset and link it
     # to the asset group.
     push @$operations,
-      Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation
       ->new({
         assetOperation =>
-          Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation->
+          Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation->
           new({
-            create => Google::Ads::GoogleAds::V22::Resources::Asset->new({
+            create => Google::Ads::GoogleAds::V23::Resources::Asset->new({
                 resourceName =>
-                  Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset(
+                  Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset(
                   $customer_id, $next_temp_id
                   ),
                 name => 'Suggested call-to-action asset #' . uniqid(),
                 callToActionAsset =>
-                  Google::Ads::GoogleAds::V22::Common::CallToActionAsset->new({
+                  Google::Ads::GoogleAds::V23::Common::CallToActionAsset->new({
                     callToAction => $hotel_asset_suggestion->{callToAction}})})}
           )});
     push @$operations,
-      Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation
+      Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation
       ->new({
         assetGroupAssetOperation =>
-          Google::Ads::GoogleAds::V22::Services::AssetGroupAssetService::AssetGroupAssetOperation
+          Google::Ads::GoogleAds::V23::Services::AssetGroupAssetService::AssetGroupAssetOperation
           ->new({
             create =>
-              Google::Ads::GoogleAds::V22::Resources::AssetGroupAsset->new({
+              Google::Ads::GoogleAds::V23::Resources::AssetGroupAsset->new({
                 asset =>
-                  Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset(
+                  Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset(
                   $customer_id, $next_temp_id
                   ),
                 assetGroup => $asset_group_resource_name,
@@ -759,34 +759,34 @@ sub create_text_asset_and_asset_group_asset_operations {
   my $operations = [];
   # Create a new mutate operation that creates a text asset.
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetOperation =>
-        Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation->
+        Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation->
         new({
-          create => Google::Ads::GoogleAds::V22::Resources::Asset->new({
+          create => Google::Ads::GoogleAds::V23::Resources::Asset->new({
               resourceName =>
-                Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset(
+                Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset(
                 $customer_id, $next_temp_id
                 ),
-              textAsset => Google::Ads::GoogleAds::V22::Common::TextAsset->new({
+              textAsset => Google::Ads::GoogleAds::V23::Common::TextAsset->new({
                   text => $text
                 })})})});
 
   # Create an asset group asset to link the asset to the asset group.
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupAssetOperation =>
-        Google::Ads::GoogleAds::V22::Services::AssetGroupAssetService::AssetGroupAssetOperation
+        Google::Ads::GoogleAds::V23::Services::AssetGroupAssetService::AssetGroupAssetOperation
         ->new({
           create =>
-            Google::Ads::GoogleAds::V22::Resources::AssetGroupAsset->new({
-              asset => Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset(
+            Google::Ads::GoogleAds::V23::Resources::AssetGroupAsset->new({
+              asset => Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset(
                 $customer_id, $next_temp_id
               ),
               assetGroup =>
-                Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset_group(
+                Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset_group(
                 $customer_id, ASSET_GROUP_TEMPORARY_ID
                 ),
               fieldType => $field_type
@@ -805,14 +805,14 @@ sub create_image_asset_and_asset_group_asset_operations {
   # Create a new mutate operation that creates an image asset.
   # Create a new mutate operation that creates a text asset.
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetOperation =>
-        Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation->
+        Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation->
         new({
-          create => Google::Ads::GoogleAds::V22::Resources::Asset->new({
+          create => Google::Ads::GoogleAds::V23::Resources::Asset->new({
               resourceName =>
-                Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset(
+                Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset(
                 $customer_id, $next_temp_id
                 ),
               # Provide a unique friendly name to identify your asset.
@@ -820,23 +820,23 @@ sub create_image_asset_and_asset_group_asset_operations {
               # name, the new name will be dropped silently.
               name       => $asset_name,
               imageAsset =>
-                Google::Ads::GoogleAds::V22::Common::ImageAsset->new({
+                Google::Ads::GoogleAds::V23::Common::ImageAsset->new({
                   data => get_base64_data_from_url($url)})})})});
 
   # Create an asset group asset to link the asset to the asset group.
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetGroupAssetOperation =>
-        Google::Ads::GoogleAds::V22::Services::AssetGroupAssetService::AssetGroupAssetOperation
+        Google::Ads::GoogleAds::V23::Services::AssetGroupAssetService::AssetGroupAssetOperation
         ->new({
           create =>
-            Google::Ads::GoogleAds::V22::Resources::AssetGroupAsset->new({
-              asset => Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset(
+            Google::Ads::GoogleAds::V23::Resources::AssetGroupAsset->new({
+              asset => Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset(
                 $customer_id, $next_temp_id
               ),
               assetGroup =>
-                Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset_group(
+                Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset_group(
                 $customer_id, ASSET_GROUP_TEMPORARY_ID
                 ),
               fieldType => $field_type

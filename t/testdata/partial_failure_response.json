@@ -13,7 +13,7 @@
     "message": "Multiple errors in 'details'. First error: '{campaign_id}' part of the resource name is invalid., at operations[1].create.campaign",
     "details": [
       {
-        "@type": "type.googleapis.com/google.ads.googleads.v22.errors.GoogleAdsFailure",
+        "@type": "type.googleapis.com/google.ads.googleads.v23.errors.GoogleAdsFailure",
         "errors": [
           {
             "errorCode": {

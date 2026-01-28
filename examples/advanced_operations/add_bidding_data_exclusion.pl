@@ -28,11 +28,11 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::BiddingDataExclusion;
-use Google::Ads::GoogleAds::V22::Enums::SeasonalityEventScopeEnum  qw(CHANNEL);
-use Google::Ads::GoogleAds::V22::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V23::Resources::BiddingDataExclusion;
+use Google::Ads::GoogleAds::V23::Enums::SeasonalityEventScopeEnum  qw(CHANNEL);
+use Google::Ads::GoogleAds::V23::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
 use
-  Google::Ads::GoogleAds::V22::Services::BiddingDataExclusionService::BiddingDataExclusionOperation;
+  Google::Ads::GoogleAds::V23::Services::BiddingDataExclusionService::BiddingDataExclusionOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -57,7 +57,7 @@ sub add_bidding_data_exclusion {
 
   # [START add_bidding_data_exclusion]
   my $data_exclusion =
-    Google::Ads::GoogleAds::V22::Resources::BiddingDataExclusion->new({
+    Google::Ads::GoogleAds::V23::Resources::BiddingDataExclusion->new({
       # A unique name is required for every data exclusion.
       name => "Data exclusion #" . uniqid(),
       # The CHANNEL scope applies the data exclusion to all campaigns of specific
@@ -74,7 +74,7 @@ sub add_bidding_data_exclusion {
     });
 
   my $operation =
-    Google::Ads::GoogleAds::V22::Services::BiddingDataExclusionService::BiddingDataExclusionOperation
+    Google::Ads::GoogleAds::V23::Services::BiddingDataExclusionService::BiddingDataExclusionOperation
     ->new({
       create => $data_exclusion
     });

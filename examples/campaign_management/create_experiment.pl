@@ -26,19 +26,19 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V22::Enums::ExperimentStatusEnum qw(SETUP);
-use Google::Ads::GoogleAds::V22::Enums::ExperimentTypeEnum   qw(SEARCH_CUSTOM);
-use Google::Ads::GoogleAds::V22::Enums::ResponseContentTypeEnum
+use Google::Ads::GoogleAds::V23::Enums::ExperimentStatusEnum qw(SETUP);
+use Google::Ads::GoogleAds::V23::Enums::ExperimentTypeEnum   qw(SEARCH_CUSTOM);
+use Google::Ads::GoogleAds::V23::Enums::ResponseContentTypeEnum
   qw(MUTABLE_RESOURCE);
-use Google::Ads::GoogleAds::V22::Resources::Campaign;
-use Google::Ads::GoogleAds::V22::Resources::Experiment;
-use Google::Ads::GoogleAds::V22::Resources::ExperimentArm;
-use Google::Ads::GoogleAds::V22::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V23::Resources::Campaign;
+use Google::Ads::GoogleAds::V23::Resources::Experiment;
+use Google::Ads::GoogleAds::V23::Resources::ExperimentArm;
+use Google::Ads::GoogleAds::V23::Services::CampaignService::CampaignOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::ExperimentService::ExperimentOperation;
+  Google::Ads::GoogleAds::V23::Services::ExperimentService::ExperimentOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::ExperimentArmService::ExperimentArmOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::ExperimentArmService::ExperimentArmOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -70,7 +70,7 @@ sub create_experiment {
 sub create_experiment_resource {
   my ($api_client, $customer_id) = @_;
 
-  my $experiment = Google::Ads::GoogleAds::V22::Resources::Experiment->new({
+  my $experiment = Google::Ads::GoogleAds::V23::Resources::Experiment->new({
     # Name must be unique.
     name   => "Example Experiment #" . uniqid(),
     type   => SEARCH_CUSTOM,
@@ -79,7 +79,7 @@ sub create_experiment_resource {
   });
 
   my $operation =
-    Google::Ads::GoogleAds::V22::Services::ExperimentService::ExperimentOperation
+    Google::Ads::GoogleAds::V23::Services::ExperimentService::ExperimentOperation
     ->new({
       create => $experiment
     });
@@ -100,13 +100,13 @@ sub create_experiment_arms {
 
   my $operations = [];
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::ExperimentArmService::ExperimentArmOperation
+    Google::Ads::GoogleAds::V23::Services::ExperimentArmService::ExperimentArmOperation
     ->new({
-      create => Google::Ads::GoogleAds::V22::Resources::ExperimentArm->new({
+      create => Google::Ads::GoogleAds::V23::Resources::ExperimentArm->new({
           # The "control" arm references an already-existing campaign.
           control   => "true",
           campaigns => [
-            Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign(
+            Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign(
               $customer_id, $base_campaign_id
             )
           ],
@@ -116,9 +116,9 @@ sub create_experiment_arms {
         })});
 
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::ExperimentArmService::ExperimentArmOperation
+    Google::Ads::GoogleAds::V23::Services::ExperimentArmService::ExperimentArmOperation
     ->new({
-      create => Google::Ads::GoogleAds::V22::Resources::ExperimentArm->new({
+      create => Google::Ads::GoogleAds::V23::Resources::ExperimentArm->new({
           # The non-"control" arm, also called a "treatment" arm, will automatically
           # generate draft campaigns that you can modify before starting the
           # experiment.
@@ -162,12 +162,12 @@ sub modify_draft_campaign {
   # just as you would for any other campaign. When searching with the
   # GoogleAdsService, be sure to include a PARAMETERS clause with
   # `include_drafts = true` when searching for these draft entities.
-  my $updated_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+  my $updated_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
       resourceName => $draft_campaign,
       name => "Modified Campaign Name " . strftime("%Y%m%d", localtime(time))});
 
   my $operation =
-    Google::Ads::GoogleAds::V22::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V23::Services::CampaignService::CampaignOperation->
     new({
       update     => $updated_campaign,
       updateMask => all_set_fields_of($updated_campaign)});

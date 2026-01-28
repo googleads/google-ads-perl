@@ -1,3 +1,11 @@
+30.0.0 - 2026-01-28
+-------------------
+- Added support for Google Ads API v23.
+- Removed support for Google Ads API v19.
+- Renamed campaign start_date and end_date fields to start_date_time and
+  end_date_time.
+- Removed add_call_add example.
+
 29.0.0 - 2025-10-15
 -------------------
 - Added support for Google Ads API v22.

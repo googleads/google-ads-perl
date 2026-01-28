@@ -50,7 +50,7 @@ my $google_ads_failure = get_google_ads_failure(
   $partial_failure_response->{partialFailureError}{details}[0]);
 ok(
   $google_ads_failure->isa(
-    "Google::Ads::GoogleAds::V22::Errors::GoogleAdsFailure"),
+    "Google::Ads::GoogleAds::V23::Errors::GoogleAdsFailure"),
   "Test get_google_ads_failure(): class type."
 );
 is($google_ads_failure->{errors}[0]{errorCode}{requestError},
@@ -67,7 +67,7 @@ is(scalar @$google_ads_errors_1,
   1, "Test get_google_ads_errors(): operation 1 - number of elements.");
 ok(
   $google_ads_errors_1->[0]
-    ->isa("Google::Ads::GoogleAds::V22::Errors::GoogleAdsError"),
+    ->isa("Google::Ads::GoogleAds::V23::Errors::GoogleAdsError"),
   "Test get_google_ads_errors(): operation 1 - element type."
 );
 is($google_ads_errors_1->[0]{errorCode}{requestError},
@@ -90,7 +90,7 @@ is(scalar @$google_ads_errors_2,
   1, "Test get_google_ads_errors(): operation 2 - number or elements.");
 ok(
   $google_ads_errors_2->[0]
-    ->isa("Google::Ads::GoogleAds::V22::Errors::GoogleAdsError"),
+    ->isa("Google::Ads::GoogleAds::V23::Errors::GoogleAdsError"),
   "Test get_google_ads_errors(): operation 2 - element type."
 );
 is($google_ads_errors_2->[0]{errorCode}{adGroupError},
