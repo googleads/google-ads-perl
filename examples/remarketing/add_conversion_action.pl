@@ -24,14 +24,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::ConversionAction;
-use Google::Ads::GoogleAds::V22::Resources::ValueSettings;
-use Google::Ads::GoogleAds::V22::Enums::ConversionActionCategoryEnum
+use Google::Ads::GoogleAds::V23::Resources::ConversionAction;
+use Google::Ads::GoogleAds::V23::Resources::ValueSettings;
+use Google::Ads::GoogleAds::V23::Enums::ConversionActionCategoryEnum
   qw(DEFAULT);
-use Google::Ads::GoogleAds::V22::Enums::ConversionActionTypeEnum   qw(WEBPAGE);
-use Google::Ads::GoogleAds::V22::Enums::ConversionActionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V23::Enums::ConversionActionTypeEnum   qw(WEBPAGE);
+use Google::Ads::GoogleAds::V23::Enums::ConversionActionStatusEnum qw(ENABLED);
 use
-  Google::Ads::GoogleAds::V22::Services::ConversionActionService::ConversionActionOperation;
+  Google::Ads::GoogleAds::V23::Services::ConversionActionService::ConversionActionOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -59,21 +59,21 @@ sub add_conversion_action {
 
   # Create a conversion action.
   my $conversion_action =
-    Google::Ads::GoogleAds::V22::Resources::ConversionAction->new({
+    Google::Ads::GoogleAds::V23::Resources::ConversionAction->new({
       name                          => $conversion_action_name,
       category                      => DEFAULT,
       type                          => WEBPAGE,
       status                        => ENABLED,
       viewThroughLookbackWindowDays => 15,
       valueSettings                 =>
-        Google::Ads::GoogleAds::V22::Resources::ValueSettings->new({
+        Google::Ads::GoogleAds::V23::Resources::ValueSettings->new({
           defaultValue          => 23.41,
           alwaysUseDefaultValue => "true"
         })});
 
   # Create a conversion action operation.
   my $conversion_action_operation =
-    Google::Ads::GoogleAds::V22::Services::ConversionActionService::ConversionActionOperation
+    Google::Ads::GoogleAds::V23::Services::ConversionActionService::ConversionActionOperation
     ->new({create => $conversion_action});
 
   # Add the conversion action.

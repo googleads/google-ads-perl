@@ -24,11 +24,11 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::AdGroup;
-use Google::Ads::GoogleAds::V22::Enums::AdGroupStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V22::Enums::AdGroupTypeEnum   qw(SEARCH_STANDARD);
-use Google::Ads::GoogleAds::V22::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V23::Resources::AdGroup;
+use Google::Ads::GoogleAds::V23::Enums::AdGroupStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V23::Enums::AdGroupTypeEnum   qw(SEARCH_STANDARD);
+use Google::Ads::GoogleAds::V23::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -50,10 +50,10 @@ sub add_ad_groups {
   my ($api_client, $customer_id, $campaign_id) = @_;
 
   # Create an ad group, setting an optional CPC value.
-  my $ad_group = Google::Ads::GoogleAds::V22::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V23::Resources::AdGroup->new({
       name     => "Earth to Mars Cruises #" . uniqid(),
       status   => ENABLED,
-      campaign => Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign(
+      campaign => Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign(
         $customer_id, $campaign_id
       ),
       type         => SEARCH_STANDARD,
@@ -62,7 +62,7 @@ sub add_ad_groups {
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V23::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
   # Add the ad group.

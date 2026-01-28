@@ -28,11 +28,11 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::BiddingSeasonalityAdjustment;
-use Google::Ads::GoogleAds::V22::Enums::SeasonalityEventScopeEnum  qw(CHANNEL);
-use Google::Ads::GoogleAds::V22::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V23::Resources::BiddingSeasonalityAdjustment;
+use Google::Ads::GoogleAds::V23::Enums::SeasonalityEventScopeEnum  qw(CHANNEL);
+use Google::Ads::GoogleAds::V23::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
 use
-  Google::Ads::GoogleAds::V22::Services::BiddingSeasonalityAdjustmentService::BiddingSeasonalityAdjustmentOperation;
+  Google::Ads::GoogleAds::V23::Services::BiddingSeasonalityAdjustmentService::BiddingSeasonalityAdjustmentOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -61,7 +61,7 @@ sub add_bidding_seasonality_adjustment {
 
   # [START add_bidding_seasonality_adjustment]
   my $seasonality_adjustment =
-    Google::Ads::GoogleAds::V22::Resources::BiddingSeasonalityAdjustment->new({
+    Google::Ads::GoogleAds::V23::Resources::BiddingSeasonalityAdjustment->new({
       # A unique name is required for every seasonality adjustment.
       name => "Seasonality adjustment #" . uniqid(),
       # The CHANNEL scope applies the conversion_rate_modifier to all campaigns
@@ -82,7 +82,7 @@ sub add_bidding_seasonality_adjustment {
     });
 
   my $operation =
-    Google::Ads::GoogleAds::V22::Services::BiddingSeasonalityAdjustmentService::BiddingSeasonalityAdjustmentOperation
+    Google::Ads::GoogleAds::V23::Services::BiddingSeasonalityAdjustmentService::BiddingSeasonalityAdjustmentOperation
     ->new({
       create => $seasonality_adjustment
     });

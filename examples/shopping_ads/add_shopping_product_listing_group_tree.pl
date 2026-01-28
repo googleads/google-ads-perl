@@ -34,20 +34,20 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V22::Common::ListingGroupInfo;
-use Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo;
-use Google::Ads::GoogleAds::V22::Common::ProductConditionInfo;
-use Google::Ads::GoogleAds::V22::Common::ProductBrandInfo;
-use Google::Ads::GoogleAds::V22::Enums::ListingGroupTypeEnum
+use Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V23::Common::ListingGroupInfo;
+use Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo;
+use Google::Ads::GoogleAds::V23::Common::ProductConditionInfo;
+use Google::Ads::GoogleAds::V23::Common::ProductBrandInfo;
+use Google::Ads::GoogleAds::V23::Enums::ListingGroupTypeEnum
   qw(SUBDIVISION UNIT);
-use Google::Ads::GoogleAds::V22::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V22::Enums::ProductConditionEnum       qw(NEW USED);
+use Google::Ads::GoogleAds::V23::Enums::AdGroupCriterionStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V23::Enums::ProductConditionEnum       qw(NEW USED);
 use
-  Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+  Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -90,7 +90,7 @@ sub add_shopping_product_listing_group_tree {
   my $ad_group_criterion_root_resource_name =
     $ad_group_criterion_root->{resourceName};
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion_root
     });
@@ -104,16 +104,16 @@ sub add_shopping_product_listing_group_tree {
     $customer_id,
     $ad_group_id,
     $ad_group_criterion_root_resource_name,
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
         productCondition =>
-          Google::Ads::GoogleAds::V22::Common::ProductConditionInfo->new({
+          Google::Ads::GoogleAds::V23::Common::ProductConditionInfo->new({
             condition => NEW
           })}
     ),
     200000
   );
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion_condition_new
     });
@@ -125,16 +125,16 @@ sub add_shopping_product_listing_group_tree {
     $customer_id,
     $ad_group_id,
     $ad_group_criterion_root_resource_name,
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
         productCondition =>
-          Google::Ads::GoogleAds::V22::Common::ProductConditionInfo->new({
+          Google::Ads::GoogleAds::V23::Common::ProductConditionInfo->new({
             condition => USED
           })}
     ),
     100000
   );
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion_condition_used
     });
@@ -145,13 +145,13 @@ sub add_shopping_product_listing_group_tree {
     $customer_id,
     $ad_group_id,
     $ad_group_criterion_root_resource_name,
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
         # All sibling nodes must have the same dimension type, even if they
         # don't contain a bid.
         productCondition =>
-          Google::Ads::GoogleAds::V22::Common::ProductConditionInfo->new()}));
+          Google::Ads::GoogleAds::V23::Common::ProductConditionInfo->new()}));
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion_condition_other
     });
@@ -172,15 +172,15 @@ sub add_shopping_product_listing_group_tree {
     $customer_id,
     $ad_group_id,
     $ad_group_criterion_condition_other_resource_name,
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
         productBrand =>
-          Google::Ads::GoogleAds::V22::Common::ProductBrandInfo->new(
+          Google::Ads::GoogleAds::V23::Common::ProductBrandInfo->new(
           {value => "CoolBrand"})}
     ),
     900000
   );
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion_brand_cool_brand
     });
@@ -192,15 +192,15 @@ sub add_shopping_product_listing_group_tree {
     $customer_id,
     $ad_group_id,
     $ad_group_criterion_condition_other_resource_name,
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
         productBrand =>
-          Google::Ads::GoogleAds::V22::Common::ProductBrandInfo->new(
+          Google::Ads::GoogleAds::V23::Common::ProductBrandInfo->new(
           {value => "CheapBrand"})}
     ),
     10000
   );
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion_brand_cheap_brand
     });
@@ -211,14 +211,14 @@ sub add_shopping_product_listing_group_tree {
     $customer_id,
     $ad_group_id,
     $ad_group_criterion_condition_other_resource_name,
-    Google::Ads::GoogleAds::V22::Common::ListingDimensionInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingDimensionInfo->new({
         productBrand =>
-          Google::Ads::GoogleAds::V22::Common::ProductBrandInfo->new()}
+          Google::Ads::GoogleAds::V23::Common::ProductBrandInfo->new()}
     ),
     50000
   );
   push @$operations,
-    Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
     ->new({
       create => $ad_group_criterion_brand_other_brand
     });
@@ -257,7 +257,7 @@ sub remove_listing_group_tree {
   # where the parent ad group criterion is NULL (and hence the root node in
   # the tree) for a given ad group id.
   my $search_request =
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query
@@ -281,7 +281,7 @@ sub remove_listing_group_tree {
 
     # Create an ad group criterion operation.
     my $ad_group_criterion_operation =
-      Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+      Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
       ->new({
         remove => $ad_group_criterion->{resourceName}});
 
@@ -310,7 +310,7 @@ sub create_listing_group_subdivision {
     = @_;
 
   my $listing_group_info =
-    Google::Ads::GoogleAds::V22::Common::ListingGroupInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ListingGroupInfo->new({
       # Set the type as a SUBDIVISION, which will allow the node to be the
       # parent of another sub-tree.
       'type' => SUBDIVISION
@@ -329,11 +329,11 @@ sub create_listing_group_subdivision {
   }
 
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion->new({
+    Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion->new({
       # The resource name the criterion will be created with. This will define
       # the ID for the ad group criterion.
       resourceName =>
-        Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group_criterion(
+        Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group_criterion(
         $customer_id, $ad_group_id, next_id()
         ),
       status       => ENABLED,
@@ -358,13 +358,13 @@ sub create_listing_group_unit_biddable {
   # the listing group for non-root nodes.
   # This example demonstrates method (1).
   my $ad_group_criterion =
-    Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion->new({
-      adGroup => Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group(
+    Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion->new({
+      adGroup => Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       status       => ENABLED,
       listingGroup =>
-        Google::Ads::GoogleAds::V22::Common::ListingGroupInfo->new({
+        Google::Ads::GoogleAds::V23::Common::ListingGroupInfo->new({
           # Set the type as a UNIT, which will allow the group to be biddable.
           type => UNIT,
           # Set the ad group criterion resource name for the parent listing group.

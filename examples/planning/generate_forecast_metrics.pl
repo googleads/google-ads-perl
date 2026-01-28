@@ -25,19 +25,19 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Common::DateRange;
-use Google::Ads::GoogleAds::V22::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V23::Common::DateRange;
+use Google::Ads::GoogleAds::V23::Common::KeywordInfo;
 use
-  Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::BiddableKeyword;
+  Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::BiddableKeyword;
 use
-  Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::CampaignToForecast;
+  Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::CampaignToForecast;
 use
-  Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::CriterionBidModifier;
+  Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::CriterionBidModifier;
 use
-  Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::ForecastAdGroup;
+  Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::ForecastAdGroup;
 use
-  Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::ManualCpcBiddingStrategy;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::ManualCpcBiddingStrategy;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -56,7 +56,7 @@ sub generate_forecast_metrics {
       campaign   => $campaign_to_forecast,
       # Set the forecast range. Repeat forecasts with different horizons
       # to get a holistic picture.
-      forecastPeriod => Google::Ads::GoogleAds::V22::Common::DateRange->new({
+      forecastPeriod => Google::Ads::GoogleAds::V23::Common::DateRange->new({
           # Set the forecast start date to tomorrow.
           startDate => strftime("%Y-%m-%d", localtime(time + 60 * 60 * 24)),
           # Set the forecast end date to 30 days from today.
@@ -88,62 +88,62 @@ sub create_campaign_to_forecast {
 
   # Create a campaign to forecast.
   my $campaign_to_forecast =
-    Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::CampaignToForecast
+    Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::CampaignToForecast
     ->new({keywordPlanNetwork => 'GOOGLE_SEARCH'});
 
   # Set the bidding strategy.
   $campaign_to_forecast->{biddingStrategy}->{manualCpcBiddingStrategy} =
-    Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::ManualCpcBiddingStrategy
+    Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::ManualCpcBiddingStrategy
     ->new({maxCpcBidMicros => 1000000});
 
   # See https://developers.google.com/google-ads/api/reference/data/geotargets
   # for the list of geo target IDs.
   $campaign_to_forecast->{geoModifiers} = [
-    Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::CriterionBidModifier
+    Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::CriterionBidModifier
       ->new({
         # Geo target constant 2840 is for USA.
         geoTargetConstant =>
-          Google::Ads::GoogleAds::V22::Utils::ResourceNames::geo_target_constant(
+          Google::Ads::GoogleAds::V23::Utils::ResourceNames::geo_target_constant(
           2840)})];
 
   # See https://developers.google.com/google-ads/api/reference/data/codes-formats#languages
   # for the list of language criteria IDs.
   $campaign_to_forecast->{languageConstants} = [
     # Language criteria 1000 is for English.
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::language_constant(1000)];
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::language_constant(1000)];
 
   # Create forecast ad groups based on themes such as creative relevance,
   # product category, or cost per click.
   $campaign_to_forecast->{adGroups} = [
-    Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::ForecastAdGroup
+    Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::ForecastAdGroup
       ->new({
         biddableKeywords => [
-          Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::BiddableKeyword
+          Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::BiddableKeyword
             ->new({
               maxCpcBidMicros => 2500000,
-              keyword => Google::Ads::GoogleAds::V22::Common::KeywordInfo->new({
+              keyword => Google::Ads::GoogleAds::V23::Common::KeywordInfo->new({
                   text      => "mars cruise",
                   matchType => 'BROAD'
                 })}
             ),
-          Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::BiddableKeyword
+          Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::BiddableKeyword
             ->new({
               maxCpcBidMicros => 1500000,
-              keyword => Google::Ads::GoogleAds::V22::Common::KeywordInfo->new({
+              keyword => Google::Ads::GoogleAds::V23::Common::KeywordInfo->new({
                   text      => "cheap cruise",
                   matchType => 'PHRASE'
                 })}
             ),
-          Google::Ads::GoogleAds::V22::Services::KeywordPlanIdeaService::BiddableKeyword
+          Google::Ads::GoogleAds::V23::Services::KeywordPlanIdeaService::BiddableKeyword
             ->new({
               maxCpcBidMicros => 1990000,
-              keyword => Google::Ads::GoogleAds::V22::Common::KeywordInfo->new({
+              keyword => Google::Ads::GoogleAds::V23::Common::KeywordInfo->new({
                   text      => "jupiter cruise",
                   matchType => 'EXACT'
                 })})
         ],
         negativeKeywords => [
-          Google::Ads::GoogleAds::V22::Common::KeywordInfo->new({
+          Google::Ads::GoogleAds::V23::Common::KeywordInfo->new({
               text      => "moon walk",
               matchType => 'BROAD'
             })]})];

@@ -68,11 +68,11 @@ sub call {
   ##############################################################################
   if ($http_method eq GET) {
     # HTTP GET request scenarios:
-    #  GET: v22/customers:listAccessibleCustomers
-    #  GET: v22/{+resourceName}
-    #  GET: v22/{+resourceName}:listResults
-    #  GET: v22/customers/{+customerId}/paymentsAccounts
-    #  GET: v22/customers/{+customerId}/merchantCenterLinks
+    #  GET: v23/customers:listAccessibleCustomers
+    #  GET: v23/{+resourceName}
+    #  GET: v23/{+resourceName}:listResults
+    #  GET: v23/customers/{+customerId}/paymentsAccounts
+    #  GET: v23/customers/{+customerId}/merchantCenterLinks
     $request_path = expand_path_template($request_path, $request_body);
 
     # GET: When the $request_body is a hash reference, use the path parameters
@@ -87,13 +87,13 @@ sub call {
     }
   } elsif ($http_method eq POST) {
     # HTTP POST request scenarios:
-    #  POST: v22/geoTargetConstants:suggest
-    #  POST: v22/googleAdsFields:search
-    #  POST: v22/customers/{+customerId}/googleAds:search
-    #  POST: v22/customers/{+customerId}/campaigns:mutate
-    #  POST: v22/{+keywordPlan}:generateForecastMetrics
-    #  POST: v22/{+campaignDraft}:promote
-    #  POST: v22/{+resourceName}:addOperations
+    #  POST: v23/geoTargetConstants:suggest
+    #  POST: v23/googleAdsFields:search
+    #  POST: v23/customers/{+customerId}/googleAds:search
+    #  POST: v23/customers/{+customerId}/campaigns:mutate
+    #  POST: v23/{+keywordPlan}:generateForecastMetrics
+    #  POST: v23/{+campaignDraft}:promote
+    #  POST: v23/{+resourceName}:addOperations
 
     # POST: Retain the 'customerId' variable in the $request_body hash
     # reference after the $request_path is expanded.
@@ -104,7 +104,7 @@ sub call {
     $request_body->{customerId} = $customer_id if defined $customer_id;
   } else {
     # Other HTTP request scenarios:
-    #  DELETE: v22/{+name} for OperationService
+    #  DELETE: v23/{+name} for OperationService
     $request_path = expand_path_template($request_path, $request_body);
   }
 

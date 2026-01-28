@@ -28,15 +28,15 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Common::Consent;
-use Google::Ads::GoogleAds::V22::Common::UserIdentifier;
-use Google::Ads::GoogleAds::V22::Enums::UserIdentifierSourceEnum
+use Google::Ads::GoogleAds::V23::Common::Consent;
+use Google::Ads::GoogleAds::V23::Common::UserIdentifier;
+use Google::Ads::GoogleAds::V23::Enums::UserIdentifierSourceEnum
   qw(FIRST_PARTY);
 use
-  Google::Ads::GoogleAds::V22::Services::ConversionUploadService::ClickConversion;
+  Google::Ads::GoogleAds::V23::Services::ConversionUploadService::ClickConversion;
 use
-  Google::Ads::GoogleAds::V22::Services::ConversionUploadService::SessionAttributeKeyValuePair;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::ConversionUploadService::SessionAttributeKeyValuePair;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -55,7 +55,7 @@ sub upload_enhanced_conversions_for_leads {
   # [START add_user_identifiers]
   # Create an empty click conversion.
   my $click_conversion =
-    Google::Ads::GoogleAds::V22::Services::ConversionUploadService::ClickConversion
+    Google::Ads::GoogleAds::V23::Services::ConversionUploadService::ClickConversion
     ->new({});
 
   # Extract user email and phone from the raw data, normalize and hash it,
@@ -73,7 +73,7 @@ sub upload_enhanced_conversions_for_leads {
   # will clear all the other members of the oneof. For example, the following code is
   # INCORRECT and will result in a UserIdentifier with ONLY a hashed_phone_number:
   #
-  # my $incorrect_user_identifier = Google::Ads::GoogleAds::V22::Common::UserIdentifier->new({
+  # my $incorrect_user_identifier = Google::Ads::GoogleAds::V23::Common::UserIdentifier->new({
   #   hashedEmail => '...',
   #   hashedPhoneNumber => '...',
   # });
@@ -101,7 +101,7 @@ sub upload_enhanced_conversions_for_leads {
   my $hashed_email = normalize_and_hash_email_address($raw_record->{email});
   push(
     @$user_identifiers,
-    Google::Ads::GoogleAds::V22::Common::UserIdentifier->new({
+    Google::Ads::GoogleAds::V23::Common::UserIdentifier->new({
         hashedEmail => $hashed_email,
         # Optional: Specify the user identifier source.
         userIdentifierSource => FIRST_PARTY
@@ -111,7 +111,7 @@ sub upload_enhanced_conversions_for_leads {
   my $hashed_phone = normalize_and_hash($raw_record->{phone});
   push(
     @$user_identifiers,
-    Google::Ads::GoogleAds::V22::Common::UserIdentifier->new({
+    Google::Ads::GoogleAds::V23::Common::UserIdentifier->new({
         hashedPhone => $hashed_phone,
         # Optional: Specify the user identifier source.
         userIdentifierSource => FIRST_PARTY
@@ -124,7 +124,7 @@ sub upload_enhanced_conversions_for_leads {
   # [START add_conversion_details]
   # Add details of the conversion.
   $click_conversion->{conversionAction} =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::conversion_action(
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::conversion_action(
     $customer_id, $raw_record->{conversionActionId});
   $click_conversion->{conversionDateTime} = $raw_record->{conversionDateTime};
   $click_conversion->{conversionValue}    = $raw_record->{conversionValue};
@@ -143,7 +143,7 @@ sub upload_enhanced_conversions_for_leads {
   # Set the consent information, if provided.
   if (defined $raw_record->{adUserDataConsent}) {
     $click_conversion->{consent} =
-      Google::Ads::GoogleAds::V22::Common::Consent->new({
+      Google::Ads::GoogleAds::V23::Common::Consent->new({
         adUserData => $raw_record->{adUserDataConsent}});
   }
 
@@ -155,7 +155,7 @@ sub upload_enhanced_conversions_for_leads {
   } elsif (defined $session_attributes_hash) {
     while (my ($key, $value) = each %$session_attributes_hash) {
       my $pair =
-        Google::Ads::GoogleAds::V22::Services::ConversionUploadService::SessionAttributeKeyValuePair
+        Google::Ads::GoogleAds::V23::Services::ConversionUploadService::SessionAttributeKeyValuePair
         ->new({sessionAttributeKey => $key, sessionAttributeValue => $value});
       push @{$click_conversion->{sessionAttributesKeyValuePairs}{keyValuePairs}
       }, $pair;

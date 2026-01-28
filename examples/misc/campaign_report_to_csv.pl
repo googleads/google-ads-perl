@@ -27,7 +27,7 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -60,7 +60,7 @@ sub campaign_report_to_csv {
 
   # Create a search Google Ads request that that retrieves campaigns.
   my $search_request =
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $query

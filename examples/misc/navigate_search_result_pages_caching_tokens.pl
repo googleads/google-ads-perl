@@ -36,7 +36,7 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;

@@ -26,12 +26,12 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V22::Resources::Ad;
-use Google::Ads::GoogleAds::V22::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V22::Common::ResponsiveSearchAdInfo;
-use Google::Ads::GoogleAds::V22::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
-use Google::Ads::GoogleAds::V22::Services::AdService::AdOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V23::Resources::Ad;
+use Google::Ads::GoogleAds::V23::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V23::Common::ResponsiveSearchAdInfo;
+use Google::Ads::GoogleAds::V23::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
+use Google::Ads::GoogleAds::V23::Services::AdService::AdOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -54,35 +54,35 @@ sub update_responsive_search_ad {
   my ($api_client, $customer_id, $ad_id) = @_;
 
   # Create an ad with the proper resource name and any other changes.
-  my $ad = Google::Ads::GoogleAds::V22::Resources::Ad->new({
-      resourceName => Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad(
+  my $ad = Google::Ads::GoogleAds::V23::Resources::Ad->new({
+      resourceName => Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad(
         $customer_id, $ad_id
       ),
       responsiveSearchAd =>
-        Google::Ads::GoogleAds::V22::Common::ResponsiveSearchAdInfo->new({
+        Google::Ads::GoogleAds::V23::Common::ResponsiveSearchAdInfo->new({
           # Update some properties of the responsive search ad.
           headlines => [
-            Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+            Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                 text        => "Cruise to Pluto #" . uniqid(),
                 pinnedField => HEADLINE_1
               }
             ),
-            Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+            Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                 text => "Tickets on sale now"
               }
             ),
-            Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+            Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                 text => "Buy your ticket now"
               }
             ),
 
           ],
           descriptions => [
-            Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+            Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                 text => "Best space cruise ever."
               }
             ),
-            Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+            Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                 text =>
                   "The most wonderful space experience you will ever have."
               }
@@ -95,7 +95,7 @@ sub update_responsive_search_ad {
   # Create an ad operation for update, using the FieldMasks utility to derive
   # the update mask.
   my $ad_operation =
-    Google::Ads::GoogleAds::V22::Services::AdService::AdOperation->new({
+    Google::Ads::GoogleAds::V23::Services::AdService::AdOperation->new({
       update     => $ad,
       updateMask => all_set_fields_of($ad)});
 

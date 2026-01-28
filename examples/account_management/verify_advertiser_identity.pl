@@ -26,10 +26,10 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Enums::IdentityVerificationProgramEnum
+use Google::Ads::GoogleAds::V23::Enums::IdentityVerificationProgramEnum
   qw (ADVERTISER_IDENTITY_VERIFICATION);
 use
-  Google::Ads::GoogleAds::V22::Services::IdentityVerificationService::StartIdentityVerificationRequest;
+  Google::Ads::GoogleAds::V23::Services::IdentityVerificationService::StartIdentityVerificationRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -104,7 +104,7 @@ sub start_identity_verification {
   my ($api_client, $customer_id) = @_;
 
   my $request =
-    Google::Ads::GoogleAds::V22::Services::IdentityVerificationService::StartIdentityVerificationRequest
+    Google::Ads::GoogleAds::V23::Services::IdentityVerificationService::StartIdentityVerificationRequest
     ->new({
       customerId          => $customer_id,
       verificationProgram => ADVERTISER_IDENTITY_VERIFICATION

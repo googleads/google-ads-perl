@@ -23,9 +23,9 @@ use lib qw(lib t/utils);
 use TestUtils qw(read_file_content get_mock_client_with_auth);
 use Google::Ads::GoogleAds::Logging::GoogleAdsLogger;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
-use Google::Ads::GoogleAds::V22::Services::GoogleAdsService;
+use Google::Ads::GoogleAds::V23::Services::GoogleAdsService;
 use
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
 
 use HTTP::Request::Common;
 use JSON::XS;
@@ -48,7 +48,7 @@ $google_ads_service_mock->mock(
 
 # Creates the SearchGoogleAdsStreamRequest.
 my $search_stream_request =
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
   ->new({
     customerId => 1234567890,
     query      =>
@@ -96,14 +96,14 @@ $lwp_agent_mock->mock(
 
 # Creates the GoogleAdsService.
 my $google_ads_service =
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService->new({
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService->new({
     api_client  => $api_client_mock,
     __lwp_agent => $lwp_agent_mock
   });
 
 # Creates the SearchGoogleAdsStreamRequest with invalid query.
 $search_stream_request =
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
   ->new({
     customerId => 1234567890,
     query      =>
@@ -152,8 +152,8 @@ my $google_ads_failure = $google_ads_exception->get_google_ads_failure();
 
 ok(
   $google_ads_failure->isa(
-    "Google::Ads::GoogleAds::V22::Errors::GoogleAdsFailure"),
-"GoogleAdsFailure : Is a Google::Ads::GoogleAds::V22::Errors::GoogleAdsFailure."
+    "Google::Ads::GoogleAds::V23::Errors::GoogleAdsFailure"),
+"GoogleAdsFailure : Is a Google::Ads::GoogleAds::V23::Errors::GoogleAdsFailure."
 );
 
 ok(

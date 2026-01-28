@@ -92,7 +92,7 @@ Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator
 =head1 SYNOPSIS
 
   my $search_request =
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query => "SELECT campaign.id, campaign.name FROM campaign ORDER BY campaign.id",
@@ -114,8 +114,8 @@ Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator
 =head1 DESCRIPTION
 
 The iterator class to access all rows that match the search query. The iterator
-should be constructed with a L<Google::Ads::GoogleAds::V22::Services::GoogleAdsService>
-and a L<Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest>.
+should be constructed with a L<Google::Ads::GoogleAds::V23::Services::GoogleAdsService>
+and a L<Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest>.
 
   my $iterator = Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator->new({
     service => $google_ads_service,

@@ -21,10 +21,10 @@ use warnings;
 
 use lib qw(lib t/utils);
 use TestUtils qw(read_file_content);
-use Google::Ads::GoogleAds::V22::Resources::Campaign;
-use Google::Ads::GoogleAds::V22::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V22::Resources::Ad;
-use Google::Ads::GoogleAds::V22::Common::TextAdInfo;
+use Google::Ads::GoogleAds::V23::Resources::Campaign;
+use Google::Ads::GoogleAds::V23::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V23::Resources::Ad;
+use Google::Ads::GoogleAds::V23::Common::TextAdInfo;
 
 use JSON::XS;
 use Test::More qw(no_plan);
@@ -33,11 +33,11 @@ use Test::More qw(no_plan);
 use_ok("Google::Ads::GoogleAds::Utils::FieldMasks");
 
 # Tests the field_mask() method : Campaign - previous values change.
-my $original_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+my $original_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => "test name",
   id   => 1234
 });
-my $modified_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+my $modified_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => "test string",
   id   => 5678
 });
@@ -46,8 +46,8 @@ ok(eq_set($field_mask->{paths}, ["name", "id"]),
   "Test field_mask() : Campaign - previous values change [name, id].");
 
 # Tests the field_mask() method : Campaign - from null values.
-$original_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new();
-$modified_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$original_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new();
+$modified_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => "test string",
   id   => 5678
 });
@@ -56,10 +56,10 @@ ok(eq_set($field_mask->{paths}, ["name", "id"]),
   "Test field_mask() : Campaign - from null values [name, id].");
 
 # Tests the field_mask() method : Campaign - set to null value.
-$original_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$original_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => "test name",
 });
-$modified_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$modified_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => undef
 });
 $field_mask = field_mask($original_campaign, $modified_campaign);
@@ -67,10 +67,10 @@ ok(eq_set($field_mask->{paths}, ["name"]),
   "Test field_mask() : Campaign - set to null value [name].");
 
 # Tests the field_mask() method : Campaign - no change.
-$original_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$original_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => "test name",
 });
-$modified_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$modified_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => "test name"
 });
 $field_mask = field_mask($original_campaign, $modified_campaign);
@@ -78,32 +78,32 @@ ok(eq_set($field_mask->{paths}, []),
   "Test field_mask() : Campaign - no change [].");
 
 # Tests the field_mask() method : Ad - repeated field addition.
-my $original_ad = Google::Ads::GoogleAds::V22::Resources::Ad->new({
+my $original_ad = Google::Ads::GoogleAds::V23::Resources::Ad->new({
   finalUrls => ["url 1"],
 });
-my $modified_ad = Google::Ads::GoogleAds::V22::Resources::Ad->new({
+my $modified_ad = Google::Ads::GoogleAds::V23::Resources::Ad->new({
     finalUrls => ["url 1", "url 2"]});
 $field_mask = field_mask($original_ad, $modified_ad);
 ok(eq_set($field_mask->{paths}, ["final_urls"]),
   "Test field_mask() : Ad - repeated field addition [final_urls].");
 
 # Tests the field_mask() method : Ad - repeated field removal.
-$original_ad = Google::Ads::GoogleAds::V22::Resources::Ad->new({
+$original_ad = Google::Ads::GoogleAds::V23::Resources::Ad->new({
   finalUrls => ["url 1", "url 2"],
 });
-$modified_ad = Google::Ads::GoogleAds::V22::Resources::Ad->new({
+$modified_ad = Google::Ads::GoogleAds::V23::Resources::Ad->new({
     finalUrls => ["url 1"]});
 $field_mask = field_mask($original_ad, $modified_ad);
 ok(eq_set($field_mask->{paths}, ["final_urls"]),
   "Test field_mask() : Ad - repeated field removal [final_urls].");
 
 # Tests the field_mask() method : Ad - nested field change.
-$original_ad = Google::Ads::GoogleAds::V22::Resources::Ad->new({
-    textAd => Google::Ads::GoogleAds::V22::Common::TextAdInfo->new({
+$original_ad = Google::Ads::GoogleAds::V23::Resources::Ad->new({
+    textAd => Google::Ads::GoogleAds::V23::Common::TextAdInfo->new({
         headline => "headline"
       })});
-$modified_ad = Google::Ads::GoogleAds::V22::Resources::Ad->new({
-    textAd => Google::Ads::GoogleAds::V22::Common::TextAdInfo->new({
+$modified_ad = Google::Ads::GoogleAds::V23::Resources::Ad->new({
+    textAd => Google::Ads::GoogleAds::V23::Common::TextAdInfo->new({
         headline => "new headline"
       })});
 $field_mask = field_mask($original_ad, $modified_ad);
@@ -111,10 +111,10 @@ ok(eq_set($field_mask->{paths}, ["text_ad.headline"]),
   "Test field_mask() : Ad - nested field change [text_ad.headline].");
 
 # Tests the all_set_fields_of() method : Campaign.
-$modified_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$modified_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
     name            => "Name",
     networkSettings =>
-      Google::Ads::GoogleAds::V22::Resources::NetworkSettings->new({
+      Google::Ads::GoogleAds::V23::Resources::NetworkSettings->new({
         targetSearchNetwork => "true",
       })});
 $field_mask = all_set_fields_of($modified_campaign);
@@ -126,13 +126,13 @@ ok(
 );
 
 # Tests the field_mask() method : Campaign - nested field for update.
-$original_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$original_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => "test name",
 });
-$modified_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$modified_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
     name            => "new name",
     networkSettings =>
-      Google::Ads::GoogleAds::V22::Resources::NetworkSettings->new({
+      Google::Ads::GoogleAds::V23::Resources::NetworkSettings->new({
         targetSearchNetwork => "true",
       })});
 $field_mask = field_mask($original_campaign, $modified_campaign);
@@ -145,10 +145,10 @@ ok(
 );
 
 # Tests the field_mask() method: Campaign - non-existing field to undef.
-$original_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$original_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => "test name",
 });
-$modified_campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+$modified_campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
   name => "Name",
   id   => undef
 });
@@ -157,10 +157,10 @@ ok(eq_set($field_mask->{paths}, ["name", "id"]),
   "Test field_mask() : Campaign - non-existing field to undef [name, id].");
 
 # Tests the get_field_value() method : Ad.
-$modified_ad = Google::Ads::GoogleAds::V22::Resources::Ad->new({
+$modified_ad = Google::Ads::GoogleAds::V23::Resources::Ad->new({
     name      => "test string",
     finalUrls => ["url 1", "url 2"],
-    textAd    => Google::Ads::GoogleAds::V22::Common::TextAdInfo->new({
+    textAd    => Google::Ads::GoogleAds::V23::Common::TextAdInfo->new({
         headline => "new headline"
       })});
 is(get_field_value($modified_ad, "name"),

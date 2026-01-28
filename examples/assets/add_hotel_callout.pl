@@ -24,13 +24,13 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::Asset;
-use Google::Ads::GoogleAds::V22::Resources::CustomerAsset;
-use Google::Ads::GoogleAds::V22::Common::HotelCalloutAsset;
-use Google::Ads::GoogleAds::V22::Enums::AssetFieldTypeEnum qw(HOTEL_CALLOUT);
-use Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V23::Resources::Asset;
+use Google::Ads::GoogleAds::V23::Resources::CustomerAsset;
+use Google::Ads::GoogleAds::V23::Common::HotelCalloutAsset;
+use Google::Ads::GoogleAds::V23::Enums::AssetFieldTypeEnum qw(HOTEL_CALLOUT);
+use Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CustomerAssetService::CustomerAssetOperation;
+  Google::Ads::GoogleAds::V23::Services::CustomerAssetService::CustomerAssetOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -70,12 +70,12 @@ sub add_hotel_callout_assets {
   my $hotel_callout_assets = [];
   # Create the callouts with text and specified language.
   push @$hotel_callout_assets,
-    Google::Ads::GoogleAds::V22::Common::HotelCalloutAsset->new({
+    Google::Ads::GoogleAds::V23::Common::HotelCalloutAsset->new({
       text         => "Activities",
       languageCode => $language_code
     });
   push @$hotel_callout_assets,
-    Google::Ads::GoogleAds::V22::Common::HotelCalloutAsset->new({
+    Google::Ads::GoogleAds::V23::Common::HotelCalloutAsset->new({
       text         => "Facilities",
       languageCode => $language_code
     });
@@ -84,8 +84,8 @@ sub add_hotel_callout_assets {
   # Wrap the HotelCalloutAsset in an Asset and create an AssetOperation to add the Asset.
   foreach my $hotel_callout_asset (@$hotel_callout_assets) {
     push @$operations,
-      Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation->new({
-        create => Google::Ads::GoogleAds::V22::Resources::Asset->new({
+      Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation->new({
+        create => Google::Ads::GoogleAds::V23::Resources::Asset->new({
             hotelCalloutAsset => $hotel_callout_asset
           })});
   }
@@ -118,9 +118,9 @@ sub link_assets_to_account {
     my $hotel_callout_asset_resource_name (@$hotel_callout_asset_resource_names)
   {
     push @$operations,
-      Google::Ads::GoogleAds::V22::Services::CustomerAssetService::CustomerAssetOperation
+      Google::Ads::GoogleAds::V23::Services::CustomerAssetService::CustomerAssetOperation
       ->new({
-        create => Google::Ads::GoogleAds::V22::Resources::CustomerAsset->new({
+        create => Google::Ads::GoogleAds::V23::Resources::CustomerAsset->new({
             asset     => $hotel_callout_asset_resource_name,
             fieldType => HOTEL_CALLOUT
           })});

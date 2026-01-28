@@ -25,14 +25,14 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V22::Resources::Ad;
-use Google::Ads::GoogleAds::V22::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V22::Common::ResponsiveSearchAdInfo;
-use Google::Ads::GoogleAds::V22::Enums::AdGroupAdStatusEnum      qw(PAUSED);
-use Google::Ads::GoogleAds::V22::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
-use Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V23::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V23::Resources::Ad;
+use Google::Ads::GoogleAds::V23::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V23::Common::ResponsiveSearchAdInfo;
+use Google::Ads::GoogleAds::V23::Enums::AdGroupAdStatusEnum      qw(PAUSED);
+use Google::Ads::GoogleAds::V23::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
+use Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -42,36 +42,36 @@ sub validate_ad {
   my ($api_client, $customer_id, $ad_group_id) = @_;
 
   # Create an ad group ad object.
-  my $ad_group_ad = Google::Ads::GoogleAds::V22::Resources::AdGroupAd->new({
-      adGroup => Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group(
+  my $ad_group_ad = Google::Ads::GoogleAds::V23::Resources::AdGroupAd->new({
+      adGroup => Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       ),
       # Optional: Set the status.
       status => PAUSED,
-      ad     => Google::Ads::GoogleAds::V22::Resources::Ad->new({
+      ad     => Google::Ads::GoogleAds::V23::Resources::Ad->new({
           responsiveSearchAd =>
-            Google::Ads::GoogleAds::V22::Common::ResponsiveSearchAdInfo->new({
+            Google::Ads::GoogleAds::V23::Common::ResponsiveSearchAdInfo->new({
               headlines => [
-                Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+                Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                     text        => "Visit the Red Planet in style.",
                     pinnedField => HEADLINE_1
                   }
                 ),
-                Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+                Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                     text => "Low-gravity fun for everyone!!"
                   }
                 ),
-                Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+                Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                     text => "Book your Cruise to Mars now"
                   }
                 ),
               ],
               descriptions => [
-                Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+                Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                     text => "Luxury Cruise to Mars"
                   }
                 ),
-                Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+                Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                     text => "Book your ticket now"
                   }
                 ),
@@ -81,7 +81,7 @@ sub validate_ad {
 
   # Create an ad group ad operation.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation
     ->new({create => $ad_group_ad});
 
   # Add the ad group ad, while setting validateOnly to "true".

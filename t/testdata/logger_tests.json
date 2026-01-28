@@ -2,7 +2,7 @@
   "success_logging": {
     "request": {
       "method": "POST",
-      "url": "https://googleads.googleapis.com/v22/customers/1234567890/campaignBudgets:mutate",
+      "url": "https://googleads.googleapis.com/v23/customers/1234567890/campaignBudgets:mutate",
       "headers": [
         "Content-Type",
         "application/json; charset=utf-8",
@@ -51,7 +51,7 @@
   "error_logging": {
     "request": {
       "method": "POST",
-      "url": "https://googleads.googleapis.com/v22/customers/1234567890/googleAds:search",
+      "url": "https://googleads.googleapis.com/v23/customers/1234567890/googleAds:search",
       "headers": [
         "Content-Type",
         "application/json; charset=utf-8",
@@ -90,7 +90,7 @@
           "status": "INVALID_ARGUMENT",
           "details": [
             {
-              "@type": "type.googleapis.com/google.ads.googleads.v22.errors.GoogleAdsFailure",
+              "@type": "type.googleapis.com/google.ads.googleads.v23.errors.GoogleAdsFailure",
               "errors": [
                 {
                   "errorCode": {
@@ -108,7 +108,7 @@
   "redacted_logging": {
     "request": {
       "method": "POST",
-      "url": "https://googleads.googleapis.com/v22/customers/1234567890/googleAds:search",
+      "url": "https://googleads.googleapis.com/v23/customers/1234567890/googleAds:search",
       "headers": [
         "Content-Type",
         "application/json; charset=utf-8",

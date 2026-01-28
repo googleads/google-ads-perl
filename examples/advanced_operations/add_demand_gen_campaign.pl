@@ -28,39 +28,39 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::MediaUtils;
-use Google::Ads::GoogleAds::V22::Resources::Ad;
-use Google::Ads::GoogleAds::V22::Resources::AdGroup;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V22::Resources::Asset;
-use Google::Ads::GoogleAds::V22::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V22::Resources::Campaign;
-use Google::Ads::GoogleAds::V22::Resources::DemandGenAdGroupSettings;
-use Google::Ads::GoogleAds::V22::Resources::DemandGenChannelControls;
-use Google::Ads::GoogleAds::V22::Resources::DemandGenSelectedChannels;
-use Google::Ads::GoogleAds::V22::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V22::Common::AdImageAsset;
-use Google::Ads::GoogleAds::V22::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V22::Common::AdVideoAsset;
-use Google::Ads::GoogleAds::V22::Common::DemandGenVideoResponsiveAdInfo;
-use Google::Ads::GoogleAds::V22::Common::ImageAsset;
-use Google::Ads::GoogleAds::V22::Common::YoutubeVideoAsset;
-use Google::Ads::GoogleAds::V22::Common::TargetCpa;
-use Google::Ads::GoogleAds::V22::Enums::AdGroupStatusEnum qw(ENABLED);
-use Google::Ads::GoogleAds::V22::Enums::AdvertisingChannelTypeEnum
+use Google::Ads::GoogleAds::V23::Resources::Ad;
+use Google::Ads::GoogleAds::V23::Resources::AdGroup;
+use Google::Ads::GoogleAds::V23::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V23::Resources::Asset;
+use Google::Ads::GoogleAds::V23::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V23::Resources::Campaign;
+use Google::Ads::GoogleAds::V23::Resources::DemandGenAdGroupSettings;
+use Google::Ads::GoogleAds::V23::Resources::DemandGenChannelControls;
+use Google::Ads::GoogleAds::V23::Resources::DemandGenSelectedChannels;
+use Google::Ads::GoogleAds::V23::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V23::Common::AdImageAsset;
+use Google::Ads::GoogleAds::V23::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V23::Common::AdVideoAsset;
+use Google::Ads::GoogleAds::V23::Common::DemandGenVideoResponsiveAdInfo;
+use Google::Ads::GoogleAds::V23::Common::ImageAsset;
+use Google::Ads::GoogleAds::V23::Common::YoutubeVideoAsset;
+use Google::Ads::GoogleAds::V23::Common::TargetCpa;
+use Google::Ads::GoogleAds::V23::Enums::AdGroupStatusEnum qw(ENABLED);
+use Google::Ads::GoogleAds::V23::Enums::AdvertisingChannelTypeEnum
   qw(DEMAND_GEN);
-use Google::Ads::GoogleAds::V22::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
-use Google::Ads::GoogleAds::V22::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V22::Enums::CampaignStatusEnum         qw(PAUSED);
-use Google::Ads::GoogleAds::V22::Enums::EuPoliticalAdvertisingStatusEnum
+use Google::Ads::GoogleAds::V23::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
+use Google::Ads::GoogleAds::V23::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V23::Enums::CampaignStatusEnum         qw(PAUSED);
+use Google::Ads::GoogleAds::V23::Enums::EuPoliticalAdvertisingStatusEnum
   qw(DOES_NOT_CONTAIN_EU_POLITICAL_ADVERTISING);
-use Google::Ads::GoogleAds::V22::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation;
+use Google::Ads::GoogleAds::V23::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CampaignBudgetService::CampaignBudgetOperation;
-use Google::Ads::GoogleAds::V22::Services::CampaignService::CampaignOperation;
-use Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::CampaignBudgetService::CampaignBudgetOperation;
+use Google::Ads::GoogleAds::V23::Services::CampaignService::CampaignOperation;
+use Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -82,19 +82,19 @@ sub add_demand_gen_campaign {
   my ($api_client, $customer_id, $video_id) = @_;
 
   my $budget_resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign_budget(
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign_budget(
     $customer_id, BUDGET_TEMPORARY_ID);
   my $campaign_resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::campaign($customer_id,
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::campaign($customer_id,
     CAMPAIGN_TEMPORARY_ID);
   my $ad_group_resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group($customer_id,
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group($customer_id,
     AD_GROUP_TEMPORARY_ID);
   my $video_asset_resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset($customer_id,
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset($customer_id,
     VIDEO_ASSET_TEMPORARY_ID);
   my $logo_resource_name =
-    Google::Ads::GoogleAds::V22::Utils::ResourceNames::asset($customer_id,
+    Google::Ads::GoogleAds::V23::Utils::ResourceNames::asset($customer_id,
     LOGO_ASSET_TEMPORARY_ID);
 
   # [START add_demand_gen_campaign_1]
@@ -147,9 +147,9 @@ sub create_campaign_budget_operation {
   my ($budget_resource_name) = @_;
 
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V22::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V23::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({
-      create => Google::Ads::GoogleAds::V22::Resources::CampaignBudget->new({
+      create => Google::Ads::GoogleAds::V23::Resources::CampaignBudget->new({
           name           => "Demand Gen campaign budget #" . uniqid(),
           deliveryMethod => STANDARD,
           # The budget period already defaults to DAILY.
@@ -163,7 +163,7 @@ sub create_campaign_budget_operation {
 
   # Create a campaign budget operation.
   return
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({campaignBudgetOperation => $campaign_budget_operation});
 
 }
@@ -176,16 +176,16 @@ sub create_demand_gen_campaign_operation {
   my ($campaign_resource_name, $budget_resource_name) = @_;
 
   my $campaign_operation =
-    Google::Ads::GoogleAds::V22::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V23::Services::CampaignService::CampaignOperation->
     new({
-      create => Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+      create => Google::Ads::GoogleAds::V23::Resources::Campaign->new({
           name => "Demand Gen #" . uniqid(),
           # Advertising channel type must be DEMAND_GEN.
           advertisingChannelType => DEMAND_GEN,
           # Set the campaign to PAUSED.
           status => PAUSED,
           # Use the Target CPA bidding strategy.
-          targetCpa => Google::Ads::GoogleAds::V22::Common::TargetCpa->new({
+          targetCpa => Google::Ads::GoogleAds::V23::Common::TargetCpa->new({
               targetCpaMicros => 1000000,
             }
           ),
@@ -202,7 +202,7 @@ sub create_demand_gen_campaign_operation {
 
   # Create a campaign operation.
   return
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({campaignOperation => $campaign_operation});
 }
 # [END add_demand_gen_campaign_2]
@@ -213,9 +213,9 @@ sub create_ad_group_operation {
   my ($ad_group_resource_name, $campaign_resource_name) = @_;
 
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V23::Services::AdGroupService::AdGroupOperation->
     new({
-      create => Google::Ads::GoogleAds::V22::Resources::AdGroup->new({
+      create => Google::Ads::GoogleAds::V23::Resources::AdGroup->new({
           name     => "Earth to Mars Cruises #" . uniqid(),
           status   => ENABLED,
           campaign => $campaign_resource_name,
@@ -224,13 +224,13 @@ sub create_ad_group_operation {
           # For more information on Demand Gen channel controls, see:
           # https://developers.google.com/google-ads/api/docs/demand-gen/channel-controls
           demandGenAdGroupSettings =>
-            Google::Ads::GoogleAds::V22::Resources::DemandGenAdGroupSettings->
+            Google::Ads::GoogleAds::V23::Resources::DemandGenAdGroupSettings->
             new({
               channelControls =>
-                Google::Ads::GoogleAds::V22::Resources::DemandGenChannelControls
+                Google::Ads::GoogleAds::V23::Resources::DemandGenChannelControls
                 ->new({
                   selectedChannels =>
-                    Google::Ads::GoogleAds::V22::Resources::DemandGenSelectedChannels
+                    Google::Ads::GoogleAds::V23::Resources::DemandGenSelectedChannels
                     ->new({
                       gmail           => "false",
                       discover        => "false",
@@ -249,7 +249,7 @@ sub create_ad_group_operation {
         })});
 
   return
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       adGroupOperation => $ad_group_operation
     });
@@ -279,49 +279,49 @@ sub create_demand_gen_ad_operation {
     = @_;
 
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation
     ->new({
-      create => Google::Ads::GoogleAds::V22::Resources::AdGroupAd->new({
+      create => Google::Ads::GoogleAds::V23::Resources::AdGroupAd->new({
           # Set the ad group.
           adGroup => $ad_group_resource_name,
-          ad      => Google::Ads::GoogleAds::V22::Resources::Ad->new({
+          ad      => Google::Ads::GoogleAds::V23::Resources::Ad->new({
               name                       => "Demand gen multi asset ad",
               finalUrls                  => ["http://example.com/demand_gen"],
               demandGenVideoResponsiveAd =>
-                Google::Ads::GoogleAds::V22::Common::DemandGenVideoResponsiveAdInfo
+                Google::Ads::GoogleAds::V23::Common::DemandGenVideoResponsiveAdInfo
                 ->new({
                   businessName =>
-                    Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+                    Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                       text => "Interplanetary Cruises"
                     }
                     ),
                   videos => [
-                    Google::Ads::GoogleAds::V22::Common::AdVideoAsset->new({
+                    Google::Ads::GoogleAds::V23::Common::AdVideoAsset->new({
                         asset => $video_asset_resource_name
                       })
                   ],
                   logoImages => [
-                    Google::Ads::GoogleAds::V22::Common::AdImageAsset->new({
+                    Google::Ads::GoogleAds::V23::Common::AdImageAsset->new({
                         asset => $logo_resource_name
                       })
                   ],
                   headlines => [
-                    Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+                    Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                         text => "Interplanetary Cruises"
                       })
                   ],
                   longHeadlines => [
-                    Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+                    Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                         text => "Travel the World"
                       })
                   ],
                   descriptions => [
-                    Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+                    Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
                         text => "Book now for an extra discount"
                       })]})})})});
 
   return
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       adGroupAdOperation => $ad_group_ad_operation
     });
@@ -335,10 +335,10 @@ sub create_image_asset_operation {
   my $image_content = get_base64_data_from_url($url);
 
   my $asset_operation =
-    Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation->new({
-      create => Google::Ads::GoogleAds::V22::Resources::Asset->new({
+    Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation->new({
+      create => Google::Ads::GoogleAds::V23::Resources::Asset->new({
           resourceName => $asset_resource_name,
-          imageAsset   => Google::Ads::GoogleAds::V22::Common::ImageAsset->new({
+          imageAsset   => Google::Ads::GoogleAds::V23::Common::ImageAsset->new({
               data => $image_content
             }
           ),
@@ -351,7 +351,7 @@ sub create_image_asset_operation {
     });
 
   return
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetOperation => $asset_operation
     });
@@ -362,17 +362,17 @@ sub create_video_asset_operation {
   my ($asset_resource_name, $video_id, $asset_name) = @_;
 
   my $asset_operation =
-    Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation->new({
-      create => Google::Ads::GoogleAds::V22::Resources::Asset->new({
+    Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation->new({
+      create => Google::Ads::GoogleAds::V23::Resources::Asset->new({
           resourceName      => $asset_resource_name,
           name              => $asset_name,
           youtubeVideoAsset =>
-            Google::Ads::GoogleAds::V22::Common::YoutubeVideoAsset->new({
+            Google::Ads::GoogleAds::V23::Common::YoutubeVideoAsset->new({
               youtubeVideoId => $video_id
             })})});
 
   return
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::MutateOperation->
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::MutateOperation->
     new({
       assetOperation => $asset_operation
     });

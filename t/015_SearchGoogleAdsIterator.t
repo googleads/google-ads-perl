@@ -23,7 +23,7 @@ use lib qw(lib t/utils);
 use TestUtils qw(read_file_content);
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
 use
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest;
 
 use JSON::XS;
 use Test::More(tests => 11);
@@ -45,7 +45,7 @@ $google_ads_service_mock->mock(
 
 # Creates the SearchGoogleAdsRequest.
 my $search_request =
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsRequest
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsRequest
   ->new({
     customerId => 1234567890,
     query      =>

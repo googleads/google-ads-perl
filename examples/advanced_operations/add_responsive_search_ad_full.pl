@@ -27,53 +27,53 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::Campaign;
-use Google::Ads::GoogleAds::V22::Resources::CampaignBudget;
-use Google::Ads::GoogleAds::V22::Resources::CampaignCriterion;
-use Google::Ads::GoogleAds::V22::Resources::CustomizerAttribute;
-use Google::Ads::GoogleAds::V22::Resources::CustomerCustomizer;
-use Google::Ads::GoogleAds::V22::Resources::Ad;
-use Google::Ads::GoogleAds::V22::Resources::AdGroup;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion;
-use Google::Ads::GoogleAds::V22::Resources::NetworkSettings;
-use Google::Ads::GoogleAds::V22::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V22::Common::CustomizerValue;
-use Google::Ads::GoogleAds::V22::Common::ImageDimension;
-use Google::Ads::GoogleAds::V22::Common::KeywordInfo;
-use Google::Ads::GoogleAds::V22::Common::LocationInfo;
-use Google::Ads::GoogleAds::V22::Common::ResponsiveSearchAdInfo;
-use Google::Ads::GoogleAds::V22::Common::TargetSpend;
-use Google::Ads::GoogleAds::V22::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
-use Google::Ads::GoogleAds::V22::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
-use Google::Ads::GoogleAds::V22::Enums::CustomizerAttributeTypeEnum qw(PRICE);
-use Google::Ads::GoogleAds::V22::Enums::AdGroupAdStatusEnum;
-use Google::Ads::GoogleAds::V22::Enums::AdGroupCriterionStatusEnum;
-use Google::Ads::GoogleAds::V22::Enums::AdGroupStatusEnum;
-use Google::Ads::GoogleAds::V22::Enums::AdGroupTypeEnum    qw(SEARCH_STANDARD);
-use Google::Ads::GoogleAds::V22::Enums::AssetTypeEnum      qw(IMAGE);
-use Google::Ads::GoogleAds::V22::Enums::CampaignStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V22::Enums::KeywordMatchTypeEnum
+use Google::Ads::GoogleAds::V23::Resources::Campaign;
+use Google::Ads::GoogleAds::V23::Resources::CampaignBudget;
+use Google::Ads::GoogleAds::V23::Resources::CampaignCriterion;
+use Google::Ads::GoogleAds::V23::Resources::CustomizerAttribute;
+use Google::Ads::GoogleAds::V23::Resources::CustomerCustomizer;
+use Google::Ads::GoogleAds::V23::Resources::Ad;
+use Google::Ads::GoogleAds::V23::Resources::AdGroup;
+use Google::Ads::GoogleAds::V23::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion;
+use Google::Ads::GoogleAds::V23::Resources::NetworkSettings;
+use Google::Ads::GoogleAds::V23::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V23::Common::CustomizerValue;
+use Google::Ads::GoogleAds::V23::Common::ImageDimension;
+use Google::Ads::GoogleAds::V23::Common::KeywordInfo;
+use Google::Ads::GoogleAds::V23::Common::LocationInfo;
+use Google::Ads::GoogleAds::V23::Common::ResponsiveSearchAdInfo;
+use Google::Ads::GoogleAds::V23::Common::TargetSpend;
+use Google::Ads::GoogleAds::V23::Enums::AdvertisingChannelTypeEnum qw(SEARCH);
+use Google::Ads::GoogleAds::V23::Enums::BudgetDeliveryMethodEnum   qw(STANDARD);
+use Google::Ads::GoogleAds::V23::Enums::CustomizerAttributeTypeEnum qw(PRICE);
+use Google::Ads::GoogleAds::V23::Enums::AdGroupAdStatusEnum;
+use Google::Ads::GoogleAds::V23::Enums::AdGroupCriterionStatusEnum;
+use Google::Ads::GoogleAds::V23::Enums::AdGroupStatusEnum;
+use Google::Ads::GoogleAds::V23::Enums::AdGroupTypeEnum    qw(SEARCH_STANDARD);
+use Google::Ads::GoogleAds::V23::Enums::AssetTypeEnum      qw(IMAGE);
+use Google::Ads::GoogleAds::V23::Enums::CampaignStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V23::Enums::KeywordMatchTypeEnum
   qw(BROAD EXACT PHRASE);
-use Google::Ads::GoogleAds::V22::Enums::MimeTypeEnum             qw(IMAGE_PNG);
-use Google::Ads::GoogleAds::V22::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
-use Google::Ads::GoogleAds::V22::Services::AdGroupService::AdGroupOperation;
-use Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V23::Enums::MimeTypeEnum             qw(IMAGE_PNG);
+use Google::Ads::GoogleAds::V23::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
+use Google::Ads::GoogleAds::V23::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation;
-use Google::Ads::GoogleAds::V22::Services::AssetService::AssetOperation;
+  Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation;
+use Google::Ads::GoogleAds::V23::Services::AssetService::AssetOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CampaignBudgetService::CampaignBudgetOperation;
+  Google::Ads::GoogleAds::V23::Services::CampaignBudgetService::CampaignBudgetOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CampaignCriterionService::CampaignCriterionOperation;
-use Google::Ads::GoogleAds::V22::Services::CampaignService::CampaignOperation;
+  Google::Ads::GoogleAds::V23::Services::CampaignCriterionService::CampaignCriterionOperation;
+use Google::Ads::GoogleAds::V23::Services::CampaignService::CampaignOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CustomizerAttributeService::CustomizerAttributeOperation;
+  Google::Ads::GoogleAds::V23::Services::CustomizerAttributeService::CustomizerAttributeOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CustomerCustomizerService::CustomerCustomizerOperation;
+  Google::Ads::GoogleAds::V23::Services::CustomerCustomizerService::CustomerCustomizerOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::GeoTargetConstantService::LocationNames;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::GeoTargetConstantService::LocationNames;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -146,7 +146,7 @@ sub create_customizer_attribute {
   my ($api_client, $customer_id, $customizer_attribute_name) = @_;
 
   my $customizer_attribute =
-    Google::Ads::GoogleAds::V22::Resources::CustomizerAttribute->new({
+    Google::Ads::GoogleAds::V23::Resources::CustomizerAttribute->new({
       name => $customizer_attribute_name,
       # Specify the type to be 'PRICE' so that we can dynamically customize the part
       # of the ad's description that is a price of a product/service we advertise.
@@ -155,7 +155,7 @@ sub create_customizer_attribute {
 
   # Create a customizer attribute operation for creating a customizer attribute.
   my $operation =
-    Google::Ads::GoogleAds::V22::Services::CustomizerAttributeService::CustomizerAttributeOperation
+    Google::Ads::GoogleAds::V23::Services::CustomizerAttributeService::CustomizerAttributeOperation
     ->new({
       create => $customizer_attribute
     });
@@ -177,18 +177,18 @@ sub link_customizer_attribute_to_customer {
 
   # Create a customer customizer with the value to be used in the responsive search ad.
   my $customer_customizer =
-    Google::Ads::GoogleAds::V22::Resources::CustomerCustomizer->new({
+    Google::Ads::GoogleAds::V23::Resources::CustomerCustomizer->new({
       customizerAttribute => $customizer_attribute_resource_name,
       # Specify '100USD' as a text value. The ad customizer will dynamically replace
       # the placeholder with this value when the ad serves.
-      value => Google::Ads::GoogleAds::V22::Common::CustomizerValue->new({
+      value => Google::Ads::GoogleAds::V23::Common::CustomizerValue->new({
           type        => PRICE,
           stringValue => "100USD"
         })});
 
   # Create a customer customizer operation.
   my $operation =
-    Google::Ads::GoogleAds::V22::Services::CustomerCustomizerService::CustomerCustomizerOperation
+    Google::Ads::GoogleAds::V23::Services::CustomerCustomizerService::CustomerCustomizerOperation
     ->new({
       create => $customer_customizer
     });
@@ -205,7 +205,7 @@ sub link_customizer_attribute_to_customer {
 sub create_ad_text_asset {
   my ($api_client, $text, $pinned_field) = @_;
 
-  my $ad_text_asset = Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+  my $ad_text_asset = Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
     text => $text
   });
 
@@ -232,7 +232,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget.
   my $campaign_budget =
-    Google::Ads::GoogleAds::V22::Resources::CampaignBudget->new({
+    Google::Ads::GoogleAds::V23::Resources::CampaignBudget->new({
       name           => "Campaign budget " . uniqid(),
       amountMicros   => 50000000,
       deliveryMethod => STANDARD
@@ -240,7 +240,7 @@ sub create_campaign_budget {
 
   # Create a campaign budget operation.
   my $campaign_budget_operation =
-    Google::Ads::GoogleAds::V22::Services::CampaignBudgetService::CampaignBudgetOperation
+    Google::Ads::GoogleAds::V23::Services::CampaignBudgetService::CampaignBudgetOperation
     ->new({
       create => $campaign_budget
     });
@@ -261,7 +261,7 @@ sub create_campaign {
   my ($api_client, $customer_id, $campaign_budget) = @_;
 
   # Create a campaign.
-  my $campaign = Google::Ads::GoogleAds::V22::Resources::Campaign->new({
+  my $campaign = Google::Ads::GoogleAds::V23::Resources::Campaign->new({
       name           => "Testing RSA via API " . uniqid(),
       campaignBudget => $campaign_budget,
       # Recommendation: Set the campaign to PAUSED when creating it to prevent
@@ -274,10 +274,10 @@ sub create_campaign {
       # The target_spend_micros is deprecated so don't put any value.
       # See other bidding strategies you can select in the link below.
       # https://developers.google.com/google-ads/api/reference/rpc/latest/Campaign#campaign_bidding_strategy
-      targetSpend => Google::Ads::GoogleAds::V22::Common::TargetSpend->new(),
+      targetSpend => Google::Ads::GoogleAds::V23::Common::TargetSpend->new(),
       # Set the campaign network options
       networkSettings =>
-        Google::Ads::GoogleAds::V22::Resources::NetworkSettings->new({
+        Google::Ads::GoogleAds::V23::Resources::NetworkSettings->new({
           targetGoogleSearch  => "true",
           targetSearchNetwork => "true",
           # Enable Display Expansion on Search campaigns. See
@@ -286,15 +286,15 @@ sub create_campaign {
           targetPartnerSearchNetwork => "false"
         }
         ),
-      # Optional: Set the start date. The campaign starts tomorrow.
-      # startDate => strftime("%Y%m%d", localtime(time + 60 * 60 * 24)),
-      # Optional: Set the end date. The campaign runs for 30 days.
-      # endDate => strftime("%Y%m%d", localtime(time + 60 * 60 * 24 * 30)),
+      # Optional: Set the start datetime. The campaign starts tomorrow.
+      # startDateTime => strftime("%Y%m%d 00:00:00", localtime(time + 60 * 60 * 24)),
+      # Optional: Set the end datetime. The campaign runs for 30 days.
+      # endDateTime => strftime("%Y%m%d 23:59:59", localtime(time + 60 * 60 * 24 * 30)),
     });
 
   # Create a campaign operation.
   my $campaign_operation =
-    Google::Ads::GoogleAds::V22::Services::CampaignService::CampaignOperation->
+    Google::Ads::GoogleAds::V23::Services::CampaignService::CampaignOperation->
     new({
       create => $campaign
     });
@@ -316,9 +316,9 @@ sub create_ad_group {
   my ($api_client, $customer_id, $campaign_resource_name) = @_;
 
   # Create an ad group, setting an optional CPC value.
-  my $ad_group = Google::Ads::GoogleAds::V22::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V23::Resources::AdGroup->new({
     name   => "Testing RSA via API " . uniqid(),
-    status => Google::Ads::GoogleAds::V22::Enums::AdGroupStatusEnum::ENABLED,
+    status => Google::Ads::GoogleAds::V23::Enums::AdGroupStatusEnum::ENABLED,
     campaign => $campaign_resource_name,
     type     => SEARCH_STANDARD,
     # If you want to set up a max CPC bid, uncomment the line below.
@@ -327,7 +327,7 @@ sub create_ad_group {
 
   # Create an ad group operation.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V23::Services::AdGroupService::AdGroupOperation->
     new({create => $ad_group});
 
   # Add the ad group.
@@ -352,15 +352,15 @@ sub create_ad_group_ad {
   my $pinned_headline =
     create_ad_text_asset($api_client, "Headline 1 testing", HEADLINE_1);
 
-  my $ad_group_ad = Google::Ads::GoogleAds::V22::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V23::Resources::AdGroupAd->new({
       adGroup => $ad_group_resource_name,
       status  =>
-        Google::Ads::GoogleAds::V22::Enums::AdGroupAdStatusEnum::ENABLED,
-      ad => Google::Ads::GoogleAds::V22::Resources::Ad->new({
+        Google::Ads::GoogleAds::V23::Enums::AdGroupAdStatusEnum::ENABLED,
+      ad => Google::Ads::GoogleAds::V23::Resources::Ad->new({
           # Set responsive search ad info.
           # https://developers.google.com/google-ads/api/reference/rpc/latest/ResponsiveSearchAdInfo
           responsiveSearchAd =>
-            Google::Ads::GoogleAds::V22::Common::ResponsiveSearchAdInfo->new({
+            Google::Ads::GoogleAds::V23::Common::ResponsiveSearchAdInfo->new({
               headlines => [
                 $pinned_headline,
                 create_ad_text_asset($api_client, "Headline 2 testing"),
@@ -384,7 +384,7 @@ sub create_ad_group_ad {
 
   # Create an ad group ad operation.
   my $operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation
     ->new({
       create => $ad_group_ad
     });
@@ -416,16 +416,16 @@ sub add_keywords {
   };
 
   foreach my $keyword (keys %$keywords) {
-    my $keyword_info = Google::Ads::GoogleAds::V22::Common::KeywordInfo->new({
+    my $keyword_info = Google::Ads::GoogleAds::V23::Common::KeywordInfo->new({
       text      => $keywords->{$keyword},
       matchType => $keyword,
     });
 
     my $ad_group_criterion =
-      Google::Ads::GoogleAds::V22::Resources::AdGroupCriterion->new({
+      Google::Ads::GoogleAds::V23::Resources::AdGroupCriterion->new({
         adGroup => $ad_group_resource_name,
         status  =>
-          Google::Ads::GoogleAds::V22::Enums::AdGroupCriterionStatusEnum::ENABLED,
+          Google::Ads::GoogleAds::V23::Enums::AdGroupCriterionStatusEnum::ENABLED,
         keyword => $keyword_info,
         # Uncomment the below line if you want to change this keyword to a negative target.
         # negative => "true",
@@ -435,7 +435,7 @@ sub add_keywords {
       });
 
     my $ad_group_criterion_operation =
-      Google::Ads::GoogleAds::V22::Services::AdGroupCriterionService::AdGroupCriterionOperation
+      Google::Ads::GoogleAds::V23::Services::AdGroupCriterionService::AdGroupCriterionOperation
       ->new({create => $ad_group_criterion});
 
     push @$operations, $ad_group_criterion_operation;
@@ -460,7 +460,7 @@ sub add_geo_targeting {
       locale        => LOCALE,
       countryCode   => COUNTRY_CODE,
       locationNames =>
-        Google::Ads::GoogleAds::V22::Services::GeoTargetConstantService::LocationNames
+        Google::Ads::GoogleAds::V23::Services::GeoTargetConstantService::LocationNames
         ->new({
           names => [GEO_LOCATION_1, GEO_LOCATION_2, GEO_LOCATION_3]})});
 
@@ -477,8 +477,8 @@ sub add_geo_targeting {
 
     # Create the campaign criterion for location targeting.
     my $campaign_criterion =
-      Google::Ads::GoogleAds::V22::Resources::CampaignCriterion->new({
-        location => Google::Ads::GoogleAds::V22::Common::LocationInfo->new({
+      Google::Ads::GoogleAds::V23::Resources::CampaignCriterion->new({
+        location => Google::Ads::GoogleAds::V23::Common::LocationInfo->new({
             geoTargetConstant =>
               $geo_target_constant_suggestion->{geoTargetConstant}{resourceName}
           }
@@ -487,7 +487,7 @@ sub add_geo_targeting {
       });
 
     push @$operations,
-      Google::Ads::GoogleAds::V22::Services::CampaignCriterionService::CampaignCriterionOperation
+      Google::Ads::GoogleAds::V23::Services::CampaignCriterionService::CampaignCriterionOperation
       ->new({
         create => $campaign_criterion
       });

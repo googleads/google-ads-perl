@@ -27,15 +27,15 @@ use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
 use Google::Ads::GoogleAds::Utils::SearchStreamHandler;
-use Google::Ads::GoogleAds::V22::Resources::FeedItemAttributeValue;
-use Google::Ads::GoogleAds::V22::Resources::AdGroup;
-use Google::Ads::GoogleAds::V22::Common::TargetingSetting;
-use Google::Ads::GoogleAds::V22::Common::TargetRestriction;
-use Google::Ads::GoogleAds::V22::Enums::TargetingDimensionEnum qw(AUDIENCE);
-use Google::Ads::GoogleAds::V22::Services::AdGroupService::AdGroupOperation;
+use Google::Ads::GoogleAds::V23::Resources::FeedItemAttributeValue;
+use Google::Ads::GoogleAds::V23::Resources::AdGroup;
+use Google::Ads::GoogleAds::V23::Common::TargetingSetting;
+use Google::Ads::GoogleAds::V23::Common::TargetRestriction;
+use Google::Ads::GoogleAds::V23::Enums::TargetingDimensionEnum qw(AUDIENCE);
+use Google::Ads::GoogleAds::V23::Services::AdGroupService::AdGroupOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsStreamRequest;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -62,7 +62,7 @@ sub update_audience_target_restriction {
 
   # Create an empty TargetingSetting instance.
   my $targeting_setting =
-    Google::Ads::GoogleAds::V22::Common::TargetingSetting->new();
+    Google::Ads::GoogleAds::V23::Common::TargetingSetting->new();
 
   # Create a search query that retrieves the targeting settings from a given
   # ad group.
@@ -75,7 +75,7 @@ sub update_audience_target_restriction {
 
   # Create a search Google Ads stream request.
   my $search_stream_request =
-    Google::Ads::GoogleAds::V22::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
+    Google::Ads::GoogleAds::V23::Services::GoogleAdsService::SearchGoogleAdsStreamRequest
     ->new({
       customerId => $customer_id,
       query      => $query,
@@ -135,7 +135,7 @@ sub update_audience_target_restriction {
           # the targeting setting, visit
           # https://support.google.com/google-ads/answer/7365594.
           my $new_restriction =
-            Google::Ads::GoogleAds::V22::Common::TargetRestriction->new({
+            Google::Ads::GoogleAds::V23::Common::TargetRestriction->new({
               targetingDimension => AUDIENCE,
               bidOnly            => "true"
             });
@@ -163,9 +163,9 @@ sub update_targeting_setting {
   my ($api_client, $customer_id, $ad_group_id, $targeting_setting) = @_;
 
   # Construct an ad group object with the updated targeting setting.
-  my $ad_group = Google::Ads::GoogleAds::V22::Resources::AdGroup->new({
+  my $ad_group = Google::Ads::GoogleAds::V23::Resources::AdGroup->new({
       resourceName =>
-        Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group(
+        Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
         ),
       targetingSetting => $targeting_setting
@@ -175,7 +175,7 @@ sub update_targeting_setting {
   # utility to derive the update mask. This mask tells the Google Ads API which
   # attributes of the ad group you want to change.
   my $ad_group_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupService::AdGroupOperation->
+    Google::Ads::GoogleAds::V23::Services::AdGroupService::AdGroupOperation->
     new({
       update     => $ad_group,
       updateMask => all_set_fields_of($ad_group)});

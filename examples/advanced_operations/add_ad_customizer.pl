@@ -25,23 +25,23 @@ use FindBin qw($Bin);
 use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-use Google::Ads::GoogleAds::V22::Resources::AttributeFieldMapping;
-use Google::Ads::GoogleAds::V22::Resources::Ad;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupCustomizer;
-use Google::Ads::GoogleAds::V22::Resources::CustomizerAttribute;
-use Google::Ads::GoogleAds::V22::Common::AdTextAsset;
-use Google::Ads::GoogleAds::V22::Common::CustomizerValue;
-use Google::Ads::GoogleAds::V22::Common::ResponsiveSearchAdInfo;
-use Google::Ads::GoogleAds::V22::Enums::CustomizerAttributeTypeEnum
+use Google::Ads::GoogleAds::V23::Resources::AttributeFieldMapping;
+use Google::Ads::GoogleAds::V23::Resources::Ad;
+use Google::Ads::GoogleAds::V23::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V23::Resources::AdGroupCustomizer;
+use Google::Ads::GoogleAds::V23::Resources::CustomizerAttribute;
+use Google::Ads::GoogleAds::V23::Common::AdTextAsset;
+use Google::Ads::GoogleAds::V23::Common::CustomizerValue;
+use Google::Ads::GoogleAds::V23::Common::ResponsiveSearchAdInfo;
+use Google::Ads::GoogleAds::V23::Enums::CustomizerAttributeTypeEnum
   qw(TEXT PRICE);
-use Google::Ads::GoogleAds::V22::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
-use Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V23::Enums::ServedAssetFieldTypeEnum qw(HEADLINE_1);
+use Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::AdGroupCustomizerService::AdGroupCustomizerOperation;
+  Google::Ads::GoogleAds::V23::Services::AdGroupCustomizerService::AdGroupCustomizerOperation;
 use
-  Google::Ads::GoogleAds::V22::Services::CustomizerAttributeService::CustomizerAttributeOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+  Google::Ads::GoogleAds::V23::Services::CustomizerAttributeService::CustomizerAttributeOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -83,14 +83,14 @@ sub create_text_customizer_attribute {
   # Creates a text customizer attribute. The customizer attribute name is
   # arbitrary and will be used as a placeholder in the ad text fields.
   my $text_attribute =
-    Google::Ads::GoogleAds::V22::Resources::CustomizerAttribute->new({
+    Google::Ads::GoogleAds::V23::Resources::CustomizerAttribute->new({
       name => $customizer_name,
       type => TEXT
     });
 
   # Create a customizer attribute operation for creating a customizer attribute.
   my $text_attribute_operation =
-    Google::Ads::GoogleAds::V22::Services::CustomizerAttributeService::CustomizerAttributeOperation
+    Google::Ads::GoogleAds::V23::Services::CustomizerAttributeService::CustomizerAttributeOperation
     ->new({
       create => $text_attribute
     });
@@ -117,14 +117,14 @@ sub create_price_customizer_attribute {
   # Creates a price customizer attribute. The customizer attribute name is
   # arbitrary and will be used as a placeholder in the ad text fields.
   my $price_attribute =
-    Google::Ads::GoogleAds::V22::Resources::CustomizerAttribute->new({
+    Google::Ads::GoogleAds::V23::Resources::CustomizerAttribute->new({
       name => $customizer_name,
       type => PRICE
     });
 
   # Create a customizer attribute operation for creating a customizer attribute.
   my $price_attribute_operation =
-    Google::Ads::GoogleAds::V22::Services::CustomizerAttributeService::CustomizerAttributeOperation
+    Google::Ads::GoogleAds::V23::Services::CustomizerAttributeService::CustomizerAttributeOperation
     ->new({
       create => $price_attribute
     });
@@ -159,19 +159,19 @@ sub link_customizer_attributes {
   # Binds the text attribute customizer to a specific ad group to
   # make sure it will only be used to customizer ads inside that ad group.
   my $marsCustomizer =
-    Google::Ads::GoogleAds::V22::Resources::AdGroupCustomizer->new({
+    Google::Ads::GoogleAds::V23::Resources::AdGroupCustomizer->new({
       customizerAttribute => $text_customizer_attribute_resource_name,
-      value => Google::Ads::GoogleAds::V22::Common::CustomizerValue->new({
+      value => Google::Ads::GoogleAds::V23::Common::CustomizerValue->new({
           type        => TEXT,
           stringValue => "Mars"
         }
       ),
-      adGroup => Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group(
+      adGroup => Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       )});
 
   push @$ad_group_customizer_operations,
-    Google::Ads::GoogleAds::V22::Services::AdGroupCustomizerService::AdGroupCustomizerOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCustomizerService::AdGroupCustomizerOperation
     ->new({
       create => $marsCustomizer
     });
@@ -179,19 +179,19 @@ sub link_customizer_attributes {
   # Binds the price attribute customizer to a specific ad group to
   # make sure it will only be used to customizer ads inside that ad group.
   my $priceCustomizer =
-    Google::Ads::GoogleAds::V22::Resources::AdGroupCustomizer->new({
+    Google::Ads::GoogleAds::V23::Resources::AdGroupCustomizer->new({
       customizerAttribute => $price_customizer_attribute_resource_name,
-      value => Google::Ads::GoogleAds::V22::Common::CustomizerValue->new({
+      value => Google::Ads::GoogleAds::V23::Common::CustomizerValue->new({
           type        => PRICE,
           stringValue => "100.0€"
         }
       ),
-      adGroup => Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group(
+      adGroup => Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       )});
 
   push @$ad_group_customizer_operations,
-    Google::Ads::GoogleAds::V22::Services::AdGroupCustomizerService::AdGroupCustomizerOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupCustomizerService::AdGroupCustomizerOperation
     ->new({
       create => $priceCustomizer
     });
@@ -222,46 +222,46 @@ sub create_ad_with_customizations {
   # placeholders and default values to be used in case there are no attribute
   # customizer values.
   my $responsive_search_ad_info =
-    Google::Ads::GoogleAds::V22::Common::ResponsiveSearchAdInfo->new({
+    Google::Ads::GoogleAds::V23::Common::ResponsiveSearchAdInfo->new({
       headlines => [
-        Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+        Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
             text =>
               "Luxury cruise to {CUSTOMIZER.$string_customizer_name:Venus}",
             pinnedField => HEADLINE_1
           }
         ),
-        Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+        Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
             text => "Only {CUSTOMIZER.$price_customizer_name:10.0€}",
           }
         ),
-        Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+        Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
             text =>
 "Cruise to {CUSTOMIZER.$string_customizer_name:Venus} for {CUSTOMIZER.$price_customizer_name:10.0€}",
           })
       ],
       descriptions => [
-        Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+        Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
             text =>
               "Tickets are only {CUSTOMIZER.$price_customizer_name:10.0€}!",
           }
         ),
-        Google::Ads::GoogleAds::V22::Common::AdTextAsset->new({
+        Google::Ads::GoogleAds::V23::Common::AdTextAsset->new({
             text =>
 "Buy your tickets to {CUSTOMIZER.$string_customizer_name:Venus} now!"
           })]});
 
-  my $ad = Google::Ads::GoogleAds::V22::Resources::Ad->new({
+  my $ad = Google::Ads::GoogleAds::V23::Resources::Ad->new({
       responsiveSearchAd => $responsive_search_ad_info,
       finalUrls          => ["https://www.example.com"]});
 
-  my $ad_group_ad = Google::Ads::GoogleAds::V22::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V23::Resources::AdGroupAd->new({
       ad      => $ad,
-      adGroup => Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group(
+      adGroup => Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group(
         $customer_id, $ad_group_id
       )});
 
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation
     ->new({
       create => $ad_group_ad
     });

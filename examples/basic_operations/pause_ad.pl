@@ -25,10 +25,10 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::FieldMasks;
-use Google::Ads::GoogleAds::V22::Resources::AdGroupAd;
-use Google::Ads::GoogleAds::V22::Enums::AdGroupAdStatusEnum qw(PAUSED);
-use Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation;
-use Google::Ads::GoogleAds::V22::Utils::ResourceNames;
+use Google::Ads::GoogleAds::V23::Resources::AdGroupAd;
+use Google::Ads::GoogleAds::V23::Enums::AdGroupAdStatusEnum qw(PAUSED);
+use Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation;
+use Google::Ads::GoogleAds::V23::Utils::ResourceNames;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -50,9 +50,9 @@ sub pause_ad {
   my ($api_client, $customer_id, $ad_group_id, $ad_id) = @_;
 
   # Create an ad group ad with its status set to PAUSED.
-  my $ad_group_ad = Google::Ads::GoogleAds::V22::Resources::AdGroupAd->new({
+  my $ad_group_ad = Google::Ads::GoogleAds::V23::Resources::AdGroupAd->new({
       resourceName =>
-        Google::Ads::GoogleAds::V22::Utils::ResourceNames::ad_group_ad(
+        Google::Ads::GoogleAds::V23::Utils::ResourceNames::ad_group_ad(
         $customer_id, $ad_group_id, $ad_id
         ),
       status => PAUSED
@@ -61,7 +61,7 @@ sub pause_ad {
   # Create an ad group ad operation for update, using the FieldMasks utility
   # to derive the update mask.
   my $ad_group_ad_operation =
-    Google::Ads::GoogleAds::V22::Services::AdGroupAdService::AdGroupAdOperation
+    Google::Ads::GoogleAds::V23::Services::AdGroupAdService::AdGroupAdOperation
     ->new({
       update     => $ad_group_ad,
       updateMask => all_set_fields_of($ad_group_ad)});
