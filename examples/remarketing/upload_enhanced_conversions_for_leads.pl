@@ -149,7 +149,9 @@ sub upload_enhanced_conversions_for_leads {
 
   # [START add_session_attributes]
   # Set one of the session_attributes_encoded or session_attributes_key_value_pairs
-  # fields if either are provided.
+  # fields if either are provided. The session attribute fields are only available to
+  # allowlisted users. To include these fields in conversion imports, upgrade to the
+  # Data Manager API.
   if (defined $session_attributes_encoded) {
     $click_conversion->{sessionAttributesEncoded} = $session_attributes_encoded;
   } elsif (defined $session_attributes_hash) {
