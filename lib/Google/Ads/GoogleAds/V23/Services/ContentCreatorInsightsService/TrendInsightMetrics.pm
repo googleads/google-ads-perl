@@ -25,7 +25,8 @@ sub new {
   my $self = {
     audienceShare      => $args->{audienceShare},
     trendChangePercent => $args->{trendChangePercent},
-    viewsCount         => $args->{viewsCount}};
+    viewsCount         => $args->{viewsCount},
+    viewsIndexedValue  => $args->{viewsIndexedValue}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

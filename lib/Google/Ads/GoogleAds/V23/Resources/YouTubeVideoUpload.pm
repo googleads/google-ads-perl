@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V23::Resources::ProductLink;
+package Google::Ads::GoogleAds::V23::Resources::YouTubeVideoUpload;
 
 use strict;
 use warnings;
@@ -23,14 +23,14 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    advertisingPartner           => $args->{advertisingPartner},
-    advertisingPartnerProperties => $args->{advertisingPartnerProperties},
-    dataPartner                  => $args->{dataPartner},
-    googleAds                    => $args->{googleAds},
-    merchantCenter               => $args->{merchantCenter},
-    productLinkId                => $args->{productLinkId},
-    resourceName                 => $args->{resourceName},
-    type                         => $args->{type}};
+    channelId        => $args->{channelId},
+    resourceName     => $args->{resourceName},
+    state            => $args->{state},
+    videoDescription => $args->{videoDescription},
+    videoId          => $args->{videoId},
+    videoPrivacy     => $args->{videoPrivacy},
+    videoTitle       => $args->{videoTitle},
+    videoUploadId    => $args->{videoUploadId}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

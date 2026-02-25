@@ -27,6 +27,7 @@ sub new {
     relatedVideos   => $args->{relatedVideos},
     trend           => $args->{trend},
     trendAttribute  => $args->{trendAttribute},
+    trendDataPoints => $args->{trendDataPoints},
     trendMetrics    => $args->{trendMetrics}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload

@@ -23,6 +23,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    bookingDetails                      => $args->{bookingDetails},
+    reservationAdCategorySelfDisclosure =>
+      $args->{reservationAdCategorySelfDisclosure},
     videoAdFormatControl    => $args->{videoAdFormatControl},
     videoAdInventoryControl => $args->{videoAdInventoryControl},
     videoAdSequence         => $args->{videoAdSequence}};

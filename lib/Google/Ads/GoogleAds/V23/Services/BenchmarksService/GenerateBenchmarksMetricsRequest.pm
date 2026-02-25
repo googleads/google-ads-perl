@@ -25,6 +25,7 @@ sub new {
   my $self = {
     applicationInfo         => $args->{applicationInfo},
     benchmarksSource        => $args->{benchmarksSource},
+    breakdownDefinition     => $args->{breakdownDefinition},
     currencyCode            => $args->{currencyCode},
     customerBenchmarksGroup => $args->{customerBenchmarksGroup},
     customerId              => $args->{customerId},
