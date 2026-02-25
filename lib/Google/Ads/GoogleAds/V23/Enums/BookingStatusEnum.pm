@@ -12,26 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V23::Services::BenchmarksService::GenerateBenchmarksMetricsResponse;
+package Google::Ads::GoogleAds::V23::Enums::BookingStatusEnum;
 
 use strict;
 use warnings;
-use base qw(Google::Ads::GoogleAds::BaseEntity);
 
-use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-
-sub new {
-  my ($class, $args) = @_;
-  my $self = {
-    averageBenchmarksMetrics => $args->{averageBenchmarksMetrics},
-    breakdownMetrics         => $args->{breakdownMetrics},
-    customerMetrics          => $args->{customerMetrics}};
-
-  # Delete the unassigned fields in this object for a more concise JSON payload
-  remove_unassigned_fields($self, $args);
-
-  bless $self, $class;
-  return $self;
-}
+use Const::Exporter enums => [
+  UNSPECIFIED       => "UNSPECIFIED",
+  UNKNOWN           => "UNKNOWN",
+  BOOKED            => "BOOKED",
+  HELD              => "HELD",
+  CAMPAIGN_ENDED    => "CAMPAIGN_ENDED",
+  HOLD_EXPIRED      => "HOLD_EXPIRED",
+  BOOKING_CANCELLED => "BOOKING_CANCELLED"
+];
 
 1;

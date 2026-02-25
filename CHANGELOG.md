@@ -1,3 +1,10 @@
+31.0.0 - 2026-02-25
+-------------------
+- Added support for Google Ads API v23_1.
+- Added support for Google Ads API v20_2, v21_1, and v22_1, which contain
+  EU political advertising-related changes.
+- Added code examples: fetch_incentives, apply_incentive.
+
 30.0.0 - 2026-01-28
 -------------------
 - Added support for Google Ads API v23.

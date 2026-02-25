@@ -26,7 +26,8 @@ use Const::Exporter enums => [
   IN_STREAM_BUMPER        => "IN_STREAM_BUMPER",
   IN_STREAM_NON_SKIPPABLE => "IN_STREAM_NON_SKIPPABLE",
   IN_STREAM_SKIPPABLE     => "IN_STREAM_SKIPPABLE",
-  SHORTS                  => "SHORTS"
+  SHORTS                  => "SHORTS",
+  GOOGLE_DISPLAY_NETWORK  => "GOOGLE_DISPLAY_NETWORK"
 ];
 
 1;

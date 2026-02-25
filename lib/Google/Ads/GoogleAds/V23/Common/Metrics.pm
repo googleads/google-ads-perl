@@ -291,6 +291,11 @@ sub new {
     topImpressionPercentage => $args->{topImpressionPercentage},
     trueviewAverageCpv      => $args->{trueviewAverageCpv},
     uniqueUsers             => $args->{uniqueUsers},
+    uniqueUsersFivePlus     => $args->{uniqueUsersFivePlus},
+    uniqueUsersFourPlus     => $args->{uniqueUsersFourPlus},
+    uniqueUsersTenPlus      => $args->{uniqueUsersTenPlus},
+    uniqueUsersThreePlus    => $args->{uniqueUsersThreePlus},
+    uniqueUsersTwoPlus      => $args->{uniqueUsersTwoPlus},
     unitsSold               => $args->{unitsSold},
     validAcceleratedMobilePagesClicksPercentage =>
       $args->{validAcceleratedMobilePagesClicksPercentage},

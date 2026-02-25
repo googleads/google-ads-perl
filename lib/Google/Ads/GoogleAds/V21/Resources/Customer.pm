@@ -23,16 +23,17 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    autoTaggingEnabled                  => $args->{autoTaggingEnabled},
-    callReportingSetting                => $args->{callReportingSetting},
-    conversionTrackingSetting           => $args->{conversionTrackingSetting},
-    currencyCode                        => $args->{currencyCode},
-    customerAgreementSetting            => $args->{customerAgreementSetting},
-    descriptiveName                     => $args->{descriptiveName},
-    finalUrlSuffix                      => $args->{finalUrlSuffix},
-    hasPartnersBadge                    => $args->{hasPartnersBadge},
-    id                                  => $args->{id},
-    imageAssetAutoMigrationDone         => $args->{imageAssetAutoMigrationDone},
+    autoTaggingEnabled             => $args->{autoTaggingEnabled},
+    callReportingSetting           => $args->{callReportingSetting},
+    containsEuPoliticalAdvertising => $args->{containsEuPoliticalAdvertising},
+    conversionTrackingSetting      => $args->{conversionTrackingSetting},
+    currencyCode                   => $args->{currencyCode},
+    customerAgreementSetting       => $args->{customerAgreementSetting},
+    descriptiveName                => $args->{descriptiveName},
+    finalUrlSuffix                 => $args->{finalUrlSuffix},
+    hasPartnersBadge               => $args->{hasPartnersBadge},
+    id                             => $args->{id},
+    imageAssetAutoMigrationDone    => $args->{imageAssetAutoMigrationDone},
     imageAssetAutoMigrationDoneDateTime =>
       $args->{imageAssetAutoMigrationDoneDateTime},
     localServicesSettings          => $args->{localServicesSettings},

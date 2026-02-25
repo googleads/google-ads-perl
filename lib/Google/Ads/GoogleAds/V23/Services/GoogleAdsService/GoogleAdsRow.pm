@@ -211,7 +211,8 @@ sub new {
     userListCustomerType           => $args->{userListCustomerType},
     userLocationView               => $args->{userLocationView},
     video                          => $args->{video},
-    webpageView                    => $args->{webpageView}};
+    webpageView                    => $args->{webpageView},
+    youTubeVideoUpload             => $args->{youTubeVideoUpload}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);
