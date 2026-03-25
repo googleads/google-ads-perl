@@ -26,6 +26,7 @@ sub new {
     accessInvitationError           => $args->{accessInvitationError},
     accountBudgetProposalError      => $args->{accountBudgetProposalError},
     accountLinkError                => $args->{accountLinkError},
+    actionError                     => $args->{actionError},
     adCustomizerError               => $args->{adCustomizerError},
     adError                         => $args->{adError},
     adGroupAdError                  => $args->{adGroupAdError},
@@ -76,6 +77,7 @@ sub new {
     changeStatusError               => $args->{changeStatusError},
     clickViewError                  => $args->{clickViewError},
     collectionSizeError             => $args->{collectionSizeError},
+    contentCreatorInsightsError     => $args->{contentCreatorInsightsError},
     contextError                    => $args->{contextError},
     conversionActionError           => $args->{conversionActionError},
     conversionAdjustmentUploadError => $args->{conversionAdjustmentUploadError},
@@ -192,6 +194,7 @@ sub new {
     userListCustomerTypeError       => $args->{userListCustomerTypeError},
     userListError                   => $args->{userListError},
     videoCampaignError              => $args->{videoCampaignError},
+    videoReservationError           => $args->{videoReservationError},
     youtubeVideoRegistrationError   => $args->{youtubeVideoRegistrationError}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload

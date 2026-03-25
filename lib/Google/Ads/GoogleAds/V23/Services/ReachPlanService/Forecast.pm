@@ -23,6 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    clicks                       => $args->{clicks},
     conversions                  => $args->{conversions},
     effectiveFrequencyBreakdowns => $args->{effectiveFrequencyBreakdowns},
     onTargetCoviewImpressions    => $args->{onTargetCoviewImpressions},

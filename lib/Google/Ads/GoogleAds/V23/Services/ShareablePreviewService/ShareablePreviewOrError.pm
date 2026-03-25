@@ -23,6 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    adGroupAd              => $args->{adGroupAd},
     assetGroupIdentifier   => $args->{assetGroupIdentifier},
     partialFailureError    => $args->{partialFailureError},
     shareablePreviewResult => $args->{shareablePreviewResult}};

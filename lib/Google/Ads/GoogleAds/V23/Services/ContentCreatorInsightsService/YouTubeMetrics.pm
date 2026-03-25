@@ -33,6 +33,7 @@ sub new {
     isActiveShortsCreator     => $args->{isActiveShortsCreator},
     isBrandConnectCreator     => $args->{isBrandConnectCreator},
     likesCount                => $args->{likesCount},
+    partnershipOpportunities  => $args->{partnershipOpportunities},
     sharesCount               => $args->{sharesCount},
     shortsVideoCount          => $args->{shortsVideoCount},
     shortsViewsCount          => $args->{shortsViewsCount},

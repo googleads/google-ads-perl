@@ -29,11 +29,13 @@ sub new {
     adGroupAdAssetAutomationSettings =>
       $args->{adGroupAdAssetAutomationSettings},
     adStrength           => $args->{adStrength},
+    endDateTime          => $args->{endDateTime},
     labels               => $args->{labels},
     policySummary        => $args->{policySummary},
     primaryStatus        => $args->{primaryStatus},
     primaryStatusReasons => $args->{primaryStatusReasons},
     resourceName         => $args->{resourceName},
+    startDateTime        => $args->{startDateTime},
     status               => $args->{status}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload

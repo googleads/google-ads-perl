@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V23::Errors::ErrorDetails;
+package Google::Ads::GoogleAds::V23::Resources::AdGroupCreativeAssetCombinationData;
 
 use strict;
 use warnings;
@@ -22,14 +22,8 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 
 sub new {
   my ($class, $args) = @_;
-  my $self = {
-    budgetPerDayMinimumErrorDetails => $args->{budgetPerDayMinimumErrorDetails},
-    policyFindingDetails            => $args->{policyFindingDetails},
-    policyViolationDetails          => $args->{policyViolationDetails},
-    quotaErrorDetails               => $args->{quotaErrorDetails},
-    reservationErrorDetails         => $args->{reservationErrorDetails},
-    resourceCountDetails            => $args->{resourceCountDetails},
-    unpublishedErrorCode            => $args->{unpublishedErrorCode}};
+  my $self =
+    {assetCombinationServedAssets => $args->{assetCombinationServedAssets}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -18,16 +18,18 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED             => "UNSPECIFIED",
-  UNKNOWN                 => "UNKNOWN",
-  DISCOVER_FEED           => "DISCOVER_FEED",
-  GMAIL                   => "GMAIL",
-  IN_FEED                 => "IN_FEED",
-  IN_STREAM_BUMPER        => "IN_STREAM_BUMPER",
-  IN_STREAM_NON_SKIPPABLE => "IN_STREAM_NON_SKIPPABLE",
-  IN_STREAM_SKIPPABLE     => "IN_STREAM_SKIPPABLE",
-  SHORTS                  => "SHORTS",
-  GOOGLE_DISPLAY_NETWORK  => "GOOGLE_DISPLAY_NETWORK"
+  UNSPECIFIED                            => "UNSPECIFIED",
+  UNKNOWN                                => "UNKNOWN",
+  DISCOVER_FEED                          => "DISCOVER_FEED",
+  GMAIL                                  => "GMAIL",
+  IN_FEED                                => "IN_FEED",
+  IN_STREAM_BUMPER                       => "IN_STREAM_BUMPER",
+  IN_STREAM_NON_SKIPPABLE                => "IN_STREAM_NON_SKIPPABLE",
+  IN_STREAM_SKIPPABLE                    => "IN_STREAM_SKIPPABLE",
+  SHORTS                                 => "SHORTS",
+  GOOGLE_DISPLAY_NETWORK                 => "GOOGLE_DISPLAY_NETWORK",
+  IN_STREAM_NON_SKIPPABLE_THIRTY_SECONDS =>
+    "IN_STREAM_NON_SKIPPABLE_THIRTY_SECONDS"
 ];
 
 1;
