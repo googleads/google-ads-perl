@@ -135,6 +135,8 @@ sub new {
       $args->{biddableAppPostInstallConversions},
     biddableCohortAppPostInstallConversions =>
       $args->{biddableCohortAppPostInstallConversions},
+    biddableIndirectInstallFirstInAppConversionMicros =>
+      $args->{biddableIndirectInstallFirstInAppConversionMicros},
     bounceRate                       => $args->{bounceRate},
     clicks                           => $args->{clicks},
     clicksUniqueQueryClusters        => $args->{clicksUniqueQueryClusters},

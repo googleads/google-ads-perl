@@ -24,6 +24,7 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     averageFrequency          => $args->{averageFrequency},
+    clicks                    => $args->{clicks},
     conversions               => $args->{conversions},
     onTargetCoviewImpressions => $args->{onTargetCoviewImpressions},
     onTargetCoviewReach       => $args->{onTargetCoviewReach},

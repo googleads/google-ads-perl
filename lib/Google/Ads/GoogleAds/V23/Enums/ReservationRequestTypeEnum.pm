@@ -12,26 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V23::Services::ContentCreatorInsightsService::SearchAttributes;
+package Google::Ads::GoogleAds::V23::Enums::ReservationRequestTypeEnum;
 
 use strict;
 use warnings;
-use base qw(Google::Ads::GoogleAds::BaseEntity);
 
-use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
-
-sub new {
-  my ($class, $args) = @_;
-  my $self = {
-    audienceAttributes   => $args->{audienceAttributes},
-    audienceCombinations => $args->{audienceCombinations},
-    creatorAttributes    => $args->{creatorAttributes}};
-
-  # Delete the unassigned fields in this object for a more concise JSON payload
-  remove_unassigned_fields($self, $args);
-
-  bless $self, $class;
-  return $self;
-}
+use Const::Exporter enums => [
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN     => "UNKNOWN",
+  BOOK        => "BOOK",
+  HOLD        => "HOLD"
+];
 
 1;

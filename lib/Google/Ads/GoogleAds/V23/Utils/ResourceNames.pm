@@ -383,6 +383,17 @@ sub android_privacy_shared_key_google_network_type {
     ]);
 }
 
+# Returns the app_top_combination_view resource name for the specified components.
+sub app_top_combination_view {
+  my ($customer_id, $ad_group_id, $ad_id, $asset_combination_category) = @_;
+
+  my $path_template =
+'customers/{customer_id}/appTopCombinationViews/{ad_group_id}~{ad_id}~{asset_combination_category}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $ad_group_id, $ad_id, $asset_combination_category]);
+}
+
 # Returns the applied_incentive resource name for the specified components.
 sub applied_incentive {
   my ($customer_id, $coupon_code) = @_;
@@ -1996,6 +2007,15 @@ sub video {
   my ($customer_id, $video_id) = @_;
 
   my $path_template = 'customers/{customer_id}/videos/{video_id}';
+
+  return expand_path_template($path_template, [$customer_id, $video_id]);
+}
+
+# Returns the video_enhancement resource name for the specified components.
+sub video_enhancement {
+  my ($customer_id, $video_id) = @_;
+
+  my $path_template = 'customers/{customer_id}/videoEnhancements/{video_id}';
 
   return expand_path_template($path_template, [$customer_id, $video_id]);
 }

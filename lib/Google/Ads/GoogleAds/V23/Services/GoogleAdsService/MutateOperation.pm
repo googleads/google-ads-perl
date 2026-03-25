@@ -49,6 +49,7 @@ sub new {
     biddingSeasonalityAdjustmentOperation =>
       $args->{biddingSeasonalityAdjustmentOperation},
     biddingStrategyOperation        => $args->{biddingStrategyOperation},
+    bookCampaignsOperation          => $args->{bookCampaignsOperation},
     campaignAssetOperation          => $args->{campaignAssetOperation},
     campaignAssetSetOperation       => $args->{campaignAssetSetOperation},
     campaignBidModifierOperation    => $args->{campaignBidModifierOperation},
@@ -87,6 +88,7 @@ sub new {
     keywordPlanCampaignOperation => $args->{keywordPlanCampaignOperation},
     keywordPlanOperation         => $args->{keywordPlanOperation},
     labelOperation               => $args->{labelOperation},
+    quoteCampaignsOperation      => $args->{quoteCampaignsOperation},
     recommendationSubscriptionOperation =>
       $args->{recommendationSubscriptionOperation},
     remarketingActionOperation    => $args->{remarketingActionOperation},

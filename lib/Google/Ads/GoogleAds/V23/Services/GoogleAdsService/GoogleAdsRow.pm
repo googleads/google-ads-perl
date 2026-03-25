@@ -55,6 +55,7 @@ sub new {
       $args->{androidPrivacySharedKeyGoogleCampaign},
     androidPrivacySharedKeyGoogleNetworkType =>
       $args->{androidPrivacySharedKeyGoogleNetworkType},
+    appTopCombinationView        => $args->{appTopCombinationView},
     appliedIncentive             => $args->{appliedIncentive},
     asset                        => $args->{asset},
     assetFieldTypeView           => $args->{assetFieldTypeView},
@@ -211,6 +212,7 @@ sub new {
     userListCustomerType           => $args->{userListCustomerType},
     userLocationView               => $args->{userLocationView},
     video                          => $args->{video},
+    videoEnhancement               => $args->{videoEnhancement},
     webpageView                    => $args->{webpageView},
     youTubeVideoUpload             => $args->{youTubeVideoUpload}};
 
