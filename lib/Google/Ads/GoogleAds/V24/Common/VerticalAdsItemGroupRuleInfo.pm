@@ -1,4 +1,4 @@
-# Copyright 2020, Google LLC
+# Copyright 2026, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,11 +23,14 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    cityCriterionId    => $args->{cityCriterionId},
-    countryCriterionId => $args->{countryCriterionId},
-    hotelClass         => $args->{hotelClass},
-    itemCode           => $args->{itemCode},
-    regionCriterionId  => $args->{regionCriterionId}};
+    cityCriterionId             => $args->{cityCriterionId},
+    countryCriterionId          => $args->{countryCriterionId},
+    eventParticipantDisplayName => $args->{eventParticipantDisplayName},
+    hotelClass                  => $args->{hotelClass},
+    itemCode                    => $args->{itemCode},
+    regionCriterionId           => $args->{regionCriterionId},
+    userRating                  => $args->{userRating},
+    venue                       => $args->{venue}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

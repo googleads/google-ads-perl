@@ -1,4 +1,4 @@
-# Copyright 2020, Google LLC
+# Copyright 2026, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,11 @@ use Const::Exporter enums => [
   SEARCH_AUTOMATED_BIDDING_STRATEGY   => "SEARCH_AUTOMATED_BIDDING_STRATEGY",
   SHOPPING_AUTOMATED_BIDDING_STRATEGY => "SHOPPING_AUTOMATED_BIDDING_STRATEGY",
   SMART_MATCHING                      => "SMART_MATCHING",
-  HOTEL_CUSTOM                        => "HOTEL_CUSTOM"
+  HOTEL_CUSTOM                        => "HOTEL_CUSTOM",
+  OPTIMIZE_ASSETS                     => "OPTIMIZE_ASSETS",
+  ADOPT_AI_MAX                        => "ADOPT_AI_MAX",
+  ADOPT_BROAD_MATCH_KEYWORDS          => "ADOPT_BROAD_MATCH_KEYWORDS",
+  PMAX_REPLACEMENT_SHOPPING           => "PMAX_REPLACEMENT_SHOPPING"
 ];
 
 1;

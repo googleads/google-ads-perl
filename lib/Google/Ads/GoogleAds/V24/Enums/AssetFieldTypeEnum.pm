@@ -1,4 +1,4 @@
-# Copyright 2020, Google LLC
+# Copyright 2026, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -53,7 +53,8 @@ use Const::Exporter enums => [
   RELATED_YOUTUBE_VIDEOS        => "RELATED_YOUTUBE_VIDEOS",
   LANDING_PAGE_PREVIEW          => "LANDING_PAGE_PREVIEW",
   LONG_DESCRIPTION              => "LONG_DESCRIPTION",
-  CALL_TO_ACTION                => "CALL_TO_ACTION"
+  CALL_TO_ACTION                => "CALL_TO_ACTION",
+  CLASSIC_DISPLAY_IMAGE         => "CLASSIC_DISPLAY_IMAGE"
 ];
 
 1;
