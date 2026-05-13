@@ -1,4 +1,4 @@
-# Copyright 2020, Google LLC
+# Copyright 2026, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -87,6 +87,7 @@ sub new {
     keyword                          => $args->{keyword},
     landingPageSource                => $args->{landingPageSource},
     matchType                        => $args->{matchType},
+    mobileDevicePlatform             => $args->{mobileDevicePlatform},
     month                            => $args->{month},
     monthOfYear                      => $args->{monthOfYear},
     newVersusReturningCustomers      => $args->{newVersusReturningCustomers},
@@ -165,17 +166,19 @@ sub new {
     travelDestinationRegion  => $args->{travelDestinationRegion},
     verticalAdsEventParticipantDisplayNames =>
       $args->{verticalAdsEventParticipantDisplayNames},
-    verticalAdsHotelClass     => $args->{verticalAdsHotelClass},
-    verticalAdsListing        => $args->{verticalAdsListing},
-    verticalAdsListingBrand   => $args->{verticalAdsListingBrand},
-    verticalAdsListingCity    => $args->{verticalAdsListingCity},
-    verticalAdsListingCountry => $args->{verticalAdsListingCountry},
-    verticalAdsListingRegion  => $args->{verticalAdsListingRegion},
-    verticalAdsPartnerAccount => $args->{verticalAdsPartnerAccount},
-    verticalAdsVertical       => $args->{verticalAdsVertical},
-    webpage                   => $args->{webpage},
-    week                      => $args->{week},
-    year                      => $args->{year}};
+    verticalAdsHotelClass        => $args->{verticalAdsHotelClass},
+    verticalAdsListing           => $args->{verticalAdsListing},
+    verticalAdsListingBrand      => $args->{verticalAdsListingBrand},
+    verticalAdsListingCity       => $args->{verticalAdsListingCity},
+    verticalAdsListingCountry    => $args->{verticalAdsListingCountry},
+    verticalAdsListingRegion     => $args->{verticalAdsListingRegion},
+    verticalAdsListingUserRating => $args->{verticalAdsListingUserRating},
+    verticalAdsListingVenue      => $args->{verticalAdsListingVenue},
+    verticalAdsPartnerAccount    => $args->{verticalAdsPartnerAccount},
+    verticalAdsVertical          => $args->{verticalAdsVertical},
+    webpage                      => $args->{webpage},
+    week                         => $args->{week},
+    year                         => $args->{year}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

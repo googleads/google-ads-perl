@@ -1,4 +1,4 @@
-# Copyright 2020, Google LLC
+# Copyright 2026, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,19 +23,21 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    description          => $args->{description},
-    endDate              => $args->{endDate},
-    experimentId         => $args->{experimentId},
-    goals                => $args->{goals},
-    longRunningOperation => $args->{longRunningOperation},
-    name                 => $args->{name},
-    promoteStatus        => $args->{promoteStatus},
-    resourceName         => $args->{resourceName},
-    startDate            => $args->{startDate},
-    status               => $args->{status},
-    suffix               => $args->{suffix},
-    syncEnabled          => $args->{syncEnabled},
-    type                 => $args->{type}};
+    description              => $args->{description},
+    endDate                  => $args->{endDate},
+    experimentId             => $args->{experimentId},
+    goals                    => $args->{goals},
+    longRunningOperation     => $args->{longRunningOperation},
+    name                     => $args->{name},
+    optimizeAssetsExperiment => $args->{optimizeAssetsExperiment},
+    promoteStatus            => $args->{promoteStatus},
+    resourceName             => $args->{resourceName},
+    startDate                => $args->{startDate},
+    status                   => $args->{status},
+    suffix                   => $args->{suffix},
+    syncEnabled              => $args->{syncEnabled},
+    type                     => $args->{type},
+    videoExperiment          => $args->{videoExperiment}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

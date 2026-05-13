@@ -1,4 +1,4 @@
-# Copyright 2020, Google LLC
+# Copyright 2026, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -156,6 +156,9 @@ sub new {
       $args->{biddableIndirectInstallFirstInAppConversionMicros},
     bounceRate                       => $args->{bounceRate},
     clicks                           => $args->{clicks},
+    clicksMarginOfError              => $args->{clicksMarginOfError},
+    clicksPValue                     => $args->{clicksPValue},
+    clicksPointEstimate              => $args->{clicksPointEstimate},
     clicksUniqueQueryClusters        => $args->{clicksUniqueQueryClusters},
     combinedClicks                   => $args->{combinedClicks},
     combinedClicksPerQuery           => $args->{combinedClicksPerQuery},
@@ -164,10 +167,31 @@ sub new {
       $args->{contentBudgetLostImpressionShare},
     contentImpressionShare         => $args->{contentImpressionShare},
     contentRankLostImpressionShare => $args->{contentRankLostImpressionShare},
+    controlClicks                  => $args->{controlClicks},
+    controlConversionValue         => $args->{controlConversionValue},
+    controlConversionValuePerCost  => $args->{controlConversionValuePerCost},
+    controlConversions             => $args->{controlConversions},
+    controlCostMicros              => $args->{controlCostMicros},
+    controlCostPerConversion       => $args->{controlCostPerConversion},
+    controlImpressions             => $args->{controlImpressions},
     conversionLastConversionDate   => $args->{conversionLastConversionDate},
     conversionLastReceivedRequestDateTime =>
       $args->{conversionLastReceivedRequestDateTime},
-    conversions                     => $args->{conversions},
+    conversionValueChangePointEstimate =>
+      $args->{conversionValueChangePointEstimate},
+    conversionValueMarginOfError => $args->{conversionValueMarginOfError},
+    conversionValuePValue        => $args->{conversionValuePValue},
+    conversionValuePerCostChangePointEstimate =>
+      $args->{conversionValuePerCostChangePointEstimate},
+    conversionValuePerCostMarginOfError =>
+      $args->{conversionValuePerCostMarginOfError},
+    conversionValuePerCostPValue => $args->{conversionValuePerCostPValue},
+    conversions                  => $args->{conversions},
+    conversionsAbsoluteChangeMarginOfError =>
+      $args->{conversionsAbsoluteChangeMarginOfError},
+    conversionsAbsoluteChangePValue => $args->{conversionsAbsoluteChangePValue},
+    conversionsAbsoluteChangePointEstimate =>
+      $args->{conversionsAbsoluteChangePointEstimate},
     conversionsByConversionDate     => $args->{conversionsByConversionDate},
     conversionsFromInteractionsRate => $args->{conversionsFromInteractionsRate},
     conversionsFromInteractionsValuePerInteraction =>
@@ -179,10 +203,17 @@ sub new {
     conversionsValuePerCost => $args->{conversionsValuePerCost},
     costConvertedCurrencyPerPlatformComparableConversion =>
       $args->{costConvertedCurrencyPerPlatformComparableConversion},
-    costMicros                              => $args->{costMicros},
-    costOfGoodsSoldMicros                   => $args->{costOfGoodsSoldMicros},
-    costPerAllConversions                   => $args->{costPerAllConversions},
-    costPerConversion                       => $args->{costPerConversion},
+    costMicros                    => $args->{costMicros},
+    costMicrosChangePointEstimate => $args->{costMicrosChangePointEstimate},
+    costMicrosMarginOfError       => $args->{costMicrosMarginOfError},
+    costMicrosPValue              => $args->{costMicrosPValue},
+    costOfGoodsSoldMicros         => $args->{costOfGoodsSoldMicros},
+    costPerAllConversions         => $args->{costPerAllConversions},
+    costPerConversion             => $args->{costPerConversion},
+    costPerConversionChangePointEstimate =>
+      $args->{costPerConversionChangePointEstimate},
+    costPerConversionMarginOfError => $args->{costPerConversionMarginOfError},
+    costPerConversionPValue        => $args->{costPerConversionPValue},
     costPerCurrentModelAttributedConversion =>
       $args->{costPerCurrentModelAttributedConversion},
     costPerPlatformComparableConversion =>
@@ -235,6 +266,9 @@ sub new {
     hotelPriceDifferencePercentage => $args->{hotelPriceDifferencePercentage},
     impressions                    => $args->{impressions},
     impressionsFromStoreReach      => $args->{impressionsFromStoreReach},
+    impressionsMarginOfError       => $args->{impressionsMarginOfError},
+    impressionsPValue              => $args->{impressionsPValue},
+    impressionsPointEstimate       => $args->{impressionsPointEstimate},
     impressionsUniqueQueryClusters => $args->{impressionsUniqueQueryClusters},
     interactionEventTypes          => $args->{interactionEventTypes},
     interactionRate                => $args->{interactionRate},

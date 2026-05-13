@@ -1,6 +1,10 @@
+32.1.0 - 2026-04-22
+-------------------
+- Added support for Google Ads API v24_1.
+
 32.0.0 - 2026-04-22
 -------------------
-- Add support for v24 of the Google Ads API.
+- Added support for v24 of the Google Ads API.
 - Removed support for Google Ads API v23.
 - Updated code examples: generate_forecast_metrics, add_performance_max_campaign.
 
