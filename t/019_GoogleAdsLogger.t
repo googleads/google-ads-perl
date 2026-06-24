@@ -28,7 +28,7 @@ use File::Spec;
 use HTTP::Request::Common;
 use JSON::XS;
 use Log::Log4perl qw(get_logger :levels);
-use Test::More(tests => 31);
+use Test::More(tests => 35);
 
 # Tests use Google::Ads::GoogleAds::Logging::GoogleAdsLogger.
 use_ok("Google::Ads::GoogleAds::Logging::GoogleAdsLogger");
@@ -166,9 +166,23 @@ ok(
     /customer_user_access.inviter_user_email_address = 'REDACTED'/,
   "Test redacted logging: detail - GAQL REDACTED."
 );
+ok(
+  $request->{query} =~
+    /multi_party_auth_review.request_user_email = 'REDACTED'/,
+  "Test redacted logging: detail - GAQL request_user_email REDACTED."
+);
+ok(
+  $request->{query} =~
+    /multi_party_auth_review.customer_user_access_invitation_review.new_customer_user_access_invitation.email_address = 'REDACTED'/,
+  "Test redacted logging: detail - GAQL new_customer_user_access_invitation.email_address REDACTED."
+);
 my $response = __extract_detail_log_json($detail_log, "Response");
 is($response->{results}[0]{customerUserAccess}{emailAddress},
   "REDACTED", "Test redacted logging: detail - emailAddress REDACTED.");
+is($response->{results}[0]{multiPartyAuthReview}{requestUserEmail},
+  "REDACTED", "Test redacted logging: detail - requestUserEmail REDACTED.");
+is($response->{results}[0]{multiPartyAuthReview}{customerUserAccessInvitationReview}{newCustomerUserAccessInvitation}{emailAddress},
+  "REDACTED", "Test redacted logging: detail - newCustomerUserAccessInvitation.emailAddress REDACTED.");
 is($response->{results}[1]{customerUserAccess}{inviterUserEmailAddress},
   "REDACTED",
   "Test redacted logging: detail - inviterUserEmailAddress REDACTED.");

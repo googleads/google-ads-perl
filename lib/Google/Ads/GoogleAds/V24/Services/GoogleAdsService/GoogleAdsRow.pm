@@ -176,6 +176,7 @@ sub new {
     metrics                     => $args->{metrics},
     mobileAppCategoryConstant   => $args->{mobileAppCategoryConstant},
     mobileDeviceConstant        => $args->{mobileDeviceConstant},
+    multiPartyAuthReview        => $args->{multiPartyAuthReview},
     offlineConversionUploadClientSummary =>
       $args->{offlineConversionUploadClientSummary},
     offlineConversionUploadConversionActionSummary =>

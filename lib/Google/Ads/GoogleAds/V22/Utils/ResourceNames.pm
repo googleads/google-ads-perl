@@ -1,4 +1,4 @@
-# Copyright 2020, Google LLC
+# Copyright 2026, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -759,7 +759,7 @@ sub campaign_lifecycle_goal {
   my ($customer_id, $campaign_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/campaignLifecycleGoal/{campaign_id}';
+    'customers/{customer_id}/campaignLifecycleGoals/{campaign_id}';
 
   return expand_path_template($path_template, [$customer_id, $campaign_id]);
 }
@@ -1146,7 +1146,7 @@ sub data_link {
   my ($customer_id, $product_link_id, $data_link_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/datalinks/{product_link_id}~{data_link_id}}';
+    'customers/{customer_id}/datalinks/{product_link_id}~{data_link_id}';
 
   return expand_path_template($path_template,
     [$customer_id, $product_link_id, $data_link_id]);
@@ -1623,6 +1623,17 @@ sub mobile_device_constant {
   return expand_path_template($path_template, [$criterion_id]);
 }
 
+# Returns the multi_party_auth_review resource name for the specified components.
+sub multi_party_auth_review {
+  my ($customer_id, $multi_party_auth_review_id) = @_;
+
+  my $path_template =
+'customers/{customer_id}/multiPartyAuthReviews/{multi_party_auth_review_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $multi_party_auth_review_id]);
+}
+
 # Returns the offline_conversion_upload_client_summary resource name for the specified components.
 sub offline_conversion_upload_client_summary {
   my ($customer_id, $client) = @_;
@@ -1924,7 +1935,7 @@ sub travel_activity_group_view {
 sub travel_activity_performance_view {
   my ($customer_id) = @_;
 
-  my $path_template = 'customers/{customer_id}/travelActivityPerformanceView';
+  my $path_template = 'customers/{customer_id}/travelActivityPerformanceViews';
 
   return expand_path_template($path_template, [$customer_id]);
 }

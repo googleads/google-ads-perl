@@ -26,6 +26,7 @@ sub new {
     discover        => $args->{discover},
     display         => $args->{display},
     gmail           => $args->{gmail},
+    maps            => $args->{maps},
     youtubeInFeed   => $args->{youtubeInFeed},
     youtubeInStream => $args->{youtubeInStream},
     youtubeShorts   => $args->{youtubeShorts}};

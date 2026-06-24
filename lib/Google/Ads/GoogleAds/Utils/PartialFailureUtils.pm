@@ -26,7 +26,7 @@ use Google::Ads::GoogleAds::Constants; our $VERSION = ${Google::Ads::GoogleAds::
 
 use Exporter 'import';
 our @EXPORT =
-  qw(is_partial_failure_result get_google_ads_errors get_google_ads_failure);
+  qw(is_partial_failure_result get_google_ads_errors get_google_ads_failure get_google_ads_failure_from_status);
 
 # Checks if a result in a mutate response is a partial failure.
 sub is_partial_failure_result {
@@ -98,6 +98,36 @@ sub __get_google_ads_errors {
   }
 
   return $google_ads_errors;
+}
+
+# Combines all the errors from a failed API call status into a single GoogleAdsFailure instance.
+sub get_google_ads_failure_from_status {
+  my ($status) = @_;
+  return undef if not $status;
+
+  my $combined_errors = [];
+  my $version;
+  foreach my $detail (@{$status->{details}}) {
+    my $failure = get_google_ads_failure($detail);
+    if ($failure) {
+      push @$combined_errors, @{$failure->{errors}};
+      if (not $version and (ref $failure) =~ /::V(\d+)::/) {
+        $version = $1;
+      }
+    }
+  }
+
+  if (scalar @$combined_errors > 0 and $version) {
+    my $class =
+      sprintf(Google::Ads::GoogleAds::Constants::GOOGLE_ADS_FAILURE_CLASS_NAME,
+      $version);
+    eval("require $class");
+    if ($@) {
+      return undef;
+    }
+    return $class->new({errors => $combined_errors});
+  }
+  return undef;
 }
 
 1;
