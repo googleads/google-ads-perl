@@ -60,6 +60,7 @@ sub new {
     sitelinkAsset                => $args->{sitelinkAsset},
     source                       => $args->{source},
     structuredSnippetAsset       => $args->{structuredSnippetAsset},
+    syntheticContentInfo         => $args->{syntheticContentInfo},
     textAsset                    => $args->{textAsset},
     trackingUrlTemplate          => $args->{trackingUrlTemplate},
     type                         => $args->{type},

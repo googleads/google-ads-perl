@@ -23,7 +23,7 @@ use lib qw(lib t/utils);
 use TestUtils qw(read_file_content);
 
 use JSON::XS;
-use Test::More (tests => 20);
+use Test::More (tests => 25);
 
 # Tests use Google::Ads::GoogleAds::Utils::PartialFailureUtils.
 use_ok("Google::Ads::GoogleAds::Utils::PartialFailureUtils");
@@ -108,4 +108,19 @@ is(
 );
 is($google_ads_errors_2->[0]{location}{fieldPathElements}[0]{index},
   2, "Test get_google_ads_errors(): operation 2 - field path -> index.");
+
+# Tests the get_google_ads_failure_from_status() method.
+my $combined_failure = get_google_ads_failure_from_status($partial_failure_error);
+ok(defined $combined_failure, "Test get_google_ads_failure_from_status(): defined.");
+ok(
+  $combined_failure->isa(
+    "Google::Ads::GoogleAds::V24::Errors::GoogleAdsFailure"),
+  "Test get_google_ads_failure_from_status(): class type."
+);
+is(scalar @{$combined_failure->{errors}},
+  2, "Test get_google_ads_failure_from_status(): number of errors.");
+is($combined_failure->{errors}[0]{errorCode}{requestError},
+  "BAD_RESOURCE_ID", "Test get_google_ads_failure_from_status(): error code 1.");
+is($combined_failure->{errors}[1]{errorCode}{adGroupError},
+  "DUPLICATE_ADGROUP_NAME", "Test get_google_ads_failure_from_status(): error code 2.");
 

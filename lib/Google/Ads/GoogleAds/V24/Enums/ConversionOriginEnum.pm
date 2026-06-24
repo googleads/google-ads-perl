@@ -18,14 +18,15 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
-  WEBSITE        => "WEBSITE",
-  GOOGLE_HOSTED  => "GOOGLE_HOSTED",
-  APP            => "APP",
-  CALL_FROM_ADS  => "CALL_FROM_ADS",
-  STORE          => "STORE",
-  YOUTUBE_HOSTED => "YOUTUBE_HOSTED"
+  UNSPECIFIED        => "UNSPECIFIED",
+  UNKNOWN            => "UNKNOWN",
+  WEBSITE            => "WEBSITE",
+  GOOGLE_HOSTED      => "GOOGLE_HOSTED",
+  APP                => "APP",
+  CALL_FROM_ADS      => "CALL_FROM_ADS",
+  STORE              => "STORE",
+  YOUTUBE_HOSTED     => "YOUTUBE_HOSTED",
+  LOCAL_SERVICES_ADS => "LOCAL_SERVICES_ADS"
 ];
 
 1;

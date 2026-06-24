@@ -38,7 +38,7 @@ use constant SCRUBBED_HEADERS => qw(developer-token Authorization);
 #   PlacesLocationFeedData.emailAddress
 #   CreateCustomerClientRequest.emailAddress
 use constant SCRUBBED_CONTENT_FIELDS =>
-  qw(emailAddress inviterUserEmailAddress userEmail);
+  qw(emailAddress inviterUserEmailAddress userEmail requestUserEmail);
 # Below fields will be scrubbed in the GAQL statement of SearchGoogleAdsRequest
 # and SearchGoogleAdsStreamRequest.
 use constant SCRUBBED_GAQL_FIELDS => qw(customer_user_access\.email_address
@@ -47,15 +47,17 @@ use constant SCRUBBED_GAQL_FIELDS => qw(customer_user_access\.email_address
   change_event\.user_email feed\.places_location_feed_data\.email_address
   local_services_lead\.contact_details
   local_services_lead_conversation\.message_details\.text
+  multi_party_auth_review\.request_user_email
+  multi_party_auth_review\.customer_user_access_invitation_review\.new_customer_user_access_invitation\.email_address
 );
 
-my %host_of : ATTR(:name<host> :default<>);
-my %method_of : ATTR(:name<method> :default<>);
-my %request_headers_of : ATTR(:name<request_headers> :default<>);
-my %request_content_of : ATTR(:name<request_content> :default<>);
+my %host_of             : ATTR(:name<host> :default<>);
+my %method_of           : ATTR(:name<method> :default<>);
+my %request_headers_of  : ATTR(:name<request_headers> :default<>);
+my %request_content_of  : ATTR(:name<request_content> :default<>);
 my %response_headers_of : ATTR(:name<response_headers> :default<>);
 my %response_content_of : ATTR(:name<response_content> :default<>);
-my %fault_of : ATTR(:name<fault> :default<>);
+my %fault_of            : ATTR(:name<fault> :default<>);
 
 sub as_str : STRINGIFY {
   my $self             = shift;
@@ -84,8 +86,14 @@ sub as_str : STRINGIFY {
   my $json_coder     = JSON::XS->new->utf8->pretty;
   my $detail_message = sprintf(
     "Request\n" .
-      "-------\n" . "MethodName: %s\n" . "Host: %s\n" . "Headers: %s\n" .
-      "Request: %s\n" . "\nResponse\n" . "-------\n" . "Headers: %s\n",
+      "-------\n" .
+      "MethodName: %s\n" .
+      "Host: %s\n" .
+      "Headers: %s\n" .
+      "Request: %s\n" .
+      "\nResponse\n" .
+      "-------\n" .
+      "Headers: %s\n",
     $method,          $host, $json_coder->encode({%$request_headers}),
     $request_content, $json_coder->encode({%$response_headers}));
 

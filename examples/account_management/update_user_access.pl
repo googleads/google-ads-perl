@@ -136,9 +136,18 @@ sub modify_user_access {
     operation  => $user_access_operation
   });
 
-  printf
-    "Successfully modified customer user access with resource name '%s'.\n",
-    $user_access_response->{result}{resourceName};
+  if (not $user_access_response->{result}{multiPartyAuthReview}) {
+    printf
+      "Successfully modified customer user access with resource name '%s'.\n",
+      $user_access_response->{result}{resourceName};
+  } else {
+    printf "A multi-party auth review was triggered. The MPA review " .
+      "resource name is '%s'. Ask a second administrator to approve this " .
+      "request to make the requested user access changes. See " .
+      "fetch_and_approve_pending_multi_party_auth_reviews.pl for an example " .
+      "on how to approve an MPA auth review using the API.\n",
+      $user_access_response->{result}{multiPartyAuthReview};
+  }
 }
 
 # Don't run the example if the file is being included.

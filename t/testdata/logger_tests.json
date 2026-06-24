@@ -123,7 +123,7 @@
       ],
       "content": {
         "customerId": "1234567890",
-        "query": "SELECT customer_user_access.user_id, customer_user_access.access_role, customer_user_access.email_address, customer_user_access.inviter_user_email_address FROM customer_user_access WHERE customer_user_access.inviter_user_email_address = 'inviter_user@google.com' "
+        "query": "SELECT customer_user_access.user_id, customer_user_access.access_role, customer_user_access.email_address, customer_user_access.inviter_user_email_address, multi_party_auth_review.request_user_email, multi_party_auth_review.customer_user_access_invitation_review.new_customer_user_access_invitation.email_address FROM customer_user_access WHERE customer_user_access.inviter_user_email_address = 'inviter_user@google.com' AND multi_party_auth_review.request_user_email = 'request_user@google.com' AND multi_party_auth_review.customer_user_access_invitation_review.new_customer_user_access_invitation.email_address = 'new_invitee@google.com' "
       }
     },
     "response": {
@@ -148,6 +148,15 @@
               "emailAddress": "user1@google.com",
               "accessRole": "ADMIN",
               "inviterUserEmailAddress": "inviter_user@google.com"
+            },
+            "multiPartyAuthReview": {
+              "resourceName": "customers/1234567890/multiPartyAuthReviews/123",
+              "requestUserEmail": "request_user@google.com",
+              "customerUserAccessInvitationReview": {
+                "newCustomerUserAccessInvitation": {
+                  "emailAddress": "new_invitee@google.com"
+                }
+              }
             }
           },
           {

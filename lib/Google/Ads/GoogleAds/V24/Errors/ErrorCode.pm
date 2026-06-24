@@ -151,6 +151,7 @@ sub new {
     mediaFileError                  => $args->{mediaFileError},
     mediaUploadError                => $args->{mediaUploadError},
     merchantCenterError             => $args->{merchantCenterError},
+    multiPartyAuthReviewError       => $args->{multiPartyAuthReviewError},
     multiplierError                 => $args->{multiplierError},
     mutateError                     => $args->{mutateError},
     newResourceCreationError        => $args->{newResourceCreationError},

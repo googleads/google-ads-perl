@@ -69,11 +69,20 @@ sub invite_user_with_access_role {
       operation  => $invitation_operation
     });
 
-  printf "Customer user access invitation was sent for customerId = %d " .
-    "to email address = '%s' and access role = '%s'. " .
-    "The invitation resource name is '%s'.\n",
-    $customer_id, $email_address, $access_role,
-    $invitation_response->{result}{resourceName};
+  if (not $invitation_response->{result}{multiPartyAuthReview}) {
+    printf "Customer user access invitation was sent for customerId = %d " .
+      "to email address = '%s' and access role = '%s'. " .
+      "The invitation resource name is '%s'.\n",
+      $customer_id, $email_address, $access_role,
+      $invitation_response->{result}{resourceName};
+  } else {
+    printf "A multi-party auth review was triggered. The MPA review " .
+      "resource name is '%s'. Ask a second administrator to approve this " .
+      "request to send user access invitation. See " .
+      "fetch_and_approve_pending_multi_party_auth_reviews.pl for an example " .
+      "on how to approve an MPA auth review using the API.\n",
+      $invitation_response->{result}{multiPartyAuthReview};
+  }
 
   return 1;
 }

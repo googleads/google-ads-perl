@@ -1,4 +1,4 @@
-# Copyright 2020, Google LLC
+# Copyright 2026, Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,9 +21,22 @@ use base qw(Google::Ads::GoogleAds::BaseService);
 sub apply_incentive {
   my $self         = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+
+  # --- WORKAROUND START ---
+  # Extract values for the URL template.
+  my $customer_id = $request_body->{customerId};
+  my $selected_incentive_id = $request_body->{selectedIncentiveId};
+
+  # Manually build the request path replacing the placeholders.
   my $request_path =
-'v23/customers/{+customerId}/incentives/{+selectedIncentiveId}:applyIncentive';
+    "v23/customers/$customer_id/incentives/$selected_incentive_id:applyIncentive";
+
+  # Remove the fields from the request body to prevent duplicate setting in the JSON.
+  delete $request_body->{customerId};
+  delete $request_body->{selectedIncentiveId};
+  # --- WORKAROUND END ---
+
+  my $http_method  = 'POST';
   my $response_type =
 'Google::Ads::GoogleAds::V23::Services::IncentiveService::ApplyIncentiveResponse';
 

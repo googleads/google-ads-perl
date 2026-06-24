@@ -28,7 +28,9 @@ sub new {
     customerInsightsGroup   => $args->{customerInsightsGroup},
     insightsApplicationInfo => $args->{insightsApplicationInfo},
     searchAudience          => $args->{searchAudience},
-    searchTopics            => $args->{searchTopics}};
+    searchTopics            => $args->{searchTopics},
+    subCountryLocations     => $args->{subCountryLocations},
+    supplementalData        => $args->{supplementalData}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

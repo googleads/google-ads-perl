@@ -115,7 +115,7 @@ sub ad_group_ad_asset_view {
   my ($customer_id, $ad_group_id, $ad_id, $asset_id, $field_type) = @_;
 
   my $path_template =
-'customers/{customer_id}/adGroupAdAssets/{ad_group_id}~{ad_id}~{asset_id}~{field_type}';
+'customers/{customer_id}/adGroupAdAssetViews/{ad_group_id}~{ad_id}~{asset_id}~{field_type}';
 
   return expand_path_template($path_template,
     [$customer_id, $ad_group_id, $ad_id, $asset_id, $field_type]);
@@ -300,45 +300,31 @@ sub age_range_view {
 
 # Returns the ai_max_search_term_ad_combination_view resource name for the specified components.
 sub ai_max_search_term_ad_combination_view {
-  my ($customer_id, $ad_group_id, $URL_base64_search_term,
-    $URL_base64_landing_page, $URL_base64_headline)
-    = @_;
+  my ($customer_id, $ad_group_id, $search_term, $landing_page, $headline) = @_;
 
   my $path_template =
-'customers/{customer_id}/aiMaxSearchTermAdCombinationViews/{ad_group_id}~{URL_base64_search_term}~{URL_base64_landing_page}~{URL_base64_headline}';
+'customers/{customer_id}/aiMaxSearchTermAdCombinationViews/{ad_group_id}~{search_term}~{landing_page}~{headline}';
 
-  return expand_path_template(
-    $path_template,
-    [
-      $customer_id,            $ad_group_id,
-      $URL_base64_search_term, $URL_base64_landing_page,
-      $URL_base64_headline
-    ]);
+  return expand_path_template($path_template,
+    [$customer_id, $ad_group_id, $search_term, $landing_page, $headline]);
 }
 
 # Returns the android_privacy_shared_key_google_ad_group resource name for the specified components.
 sub android_privacy_shared_key_google_ad_group {
-  my (
-    $customer_id,
-    $campaign_id,
-    $ad_group_id,
+  my ($customer_id, $campaign_id, $ad_group_id,
     $android_privacy_interaction_type,
-    $android_privacy_network_type,
-    $android_privacy_interaction_dateyyyy_mm_dd
-  ) = @_;
+    $android_privacy_network_type, $android_privacy_interaction_date)
+    = @_;
 
   my $path_template =
-'customers/{customer_id}/androidPrivacySharedKeyGoogleAdGroups/{campaign_id}~{ad_group_id}~{android_privacy_interaction_type}~{android_privacy_network_type}~{android_privacy_interaction_dateyyyy_mm_dd}';
+'customers/{customer_id}/androidPrivacySharedKeyGoogleAdGroups/{campaign_id}~{ad_group_id}~{android_privacy_interaction_type}~{android_privacy_network_type}~{android_privacy_interaction_date}';
 
   return expand_path_template(
     $path_template,
     [
-      $customer_id,
-      $campaign_id,
-      $ad_group_id,
-      $android_privacy_interaction_type,
-      $android_privacy_network_type,
-      $android_privacy_interaction_dateyyyy_mm_dd
+      $customer_id,                  $campaign_id,
+      $ad_group_id,                  $android_privacy_interaction_type,
+      $android_privacy_network_type, $android_privacy_interaction_date
     ]);
 }
 
@@ -347,39 +333,35 @@ sub android_privacy_shared_key_google_campaign {
   my (
     $customer_id, $campaign_id,
     $android_privacy_interaction_type,
-    $android_privacy_interaction_dateyyyy_mm_dd
+    $android_privacy_interaction_date
   ) = @_;
 
   my $path_template =
-'customers/{customer_id}/androidPrivacySharedKeyGoogleCampaigns/{campaign_id}~{android_privacy_interaction_type}~{android_privacy_interaction_dateyyyy_mm_dd}';
+'customers/{customer_id}/androidPrivacySharedKeyGoogleCampaigns/{campaign_id}~{android_privacy_interaction_type}~{android_privacy_interaction_date}';
 
   return expand_path_template(
     $path_template,
     [
-      $customer_id,
-      $campaign_id,
-      $android_privacy_interaction_type,
-      $android_privacy_interaction_dateyyyy_mm_dd
+      $customer_id,                      $campaign_id,
+      $android_privacy_interaction_type, $android_privacy_interaction_date
     ]);
 }
 
 # Returns the android_privacy_shared_key_google_network_type resource name for the specified components.
 sub android_privacy_shared_key_google_network_type {
   my ($customer_id, $campaign_id, $android_privacy_interaction_type,
-    $android_privacy_network_type, $android_privacy_interaction_dateyyyy_mm_dd)
+    $android_privacy_network_type, $android_privacy_interaction_date)
     = @_;
 
   my $path_template =
-'customers/{customer_id}/androidPrivacySharedKeyGoogleNetworkTypes/{campaign_id}~{android_privacy_interaction_type}~{android_privacy_network_type}~{android_privacy_interaction_dateyyyy_mm_dd}';
+'customers/{customer_id}/androidPrivacySharedKeyGoogleNetworkTypes/{campaign_id}~{android_privacy_interaction_type}~{android_privacy_network_type}~{android_privacy_interaction_date}';
 
   return expand_path_template(
     $path_template,
     [
-      $customer_id,
-      $campaign_id,
-      $android_privacy_interaction_type,
-      $android_privacy_network_type,
-      $android_privacy_interaction_dateyyyy_mm_dd
+      $customer_id,                      $campaign_id,
+      $android_privacy_interaction_type, $android_privacy_network_type,
+      $android_privacy_interaction_date
     ]);
 }
 
@@ -466,13 +448,13 @@ sub asset_group_product_group_view {
 
 # Returns the asset_group_signal resource name for the specified components.
 sub asset_group_signal {
-  my ($customer_id, $asset_group_id, $signal_id) = @_;
+  my ($customer_id, $asset_group_id, $criterion_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/assetGroupSignals/{asset_group_id}~{signal_id}';
+    'customers/{customer_id}/assetGroupSignals/{asset_group_id}~{criterion_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $asset_group_id, $signal_id]);
+    [$customer_id, $asset_group_id, $criterion_id]);
 }
 
 # Returns the asset_group_top_combination_view resource name for the specified components.
@@ -480,7 +462,7 @@ sub asset_group_top_combination_view {
   my ($customer_id, $asset_group_id, $asset_combination_category) = @_;
 
   my $path_template =
-'&quot;customers/{customer_id}/assetGroupTopCombinationViews/{asset_group_id}~{asset_combination_category}&quot;';
+'customers/{customer_id}/assetGroupTopCombinationViews/{asset_group_id}~{asset_combination_category}';
 
   return expand_path_template($path_template,
     [$customer_id, $asset_group_id, $asset_combination_category]);
@@ -536,24 +518,24 @@ sub batch_job {
 
 # Returns the bidding_data_exclusion resource name for the specified components.
 sub bidding_data_exclusion {
-  my ($customer_id, $data_exclusion_id) = @_;
+  my ($customer_id, $seasonality_event_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/biddingDataExclusions/{data_exclusion_id}';
+    'customers/{customer_id}/biddingDataExclusions/{seasonality_event_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $data_exclusion_id]);
+    [$customer_id, $seasonality_event_id]);
 }
 
 # Returns the bidding_seasonality_adjustment resource name for the specified components.
 sub bidding_seasonality_adjustment {
-  my ($customer_id, $seasonality_adjustment_id) = @_;
+  my ($customer_id, $seasonality_event_id) = @_;
 
   my $path_template =
-'customers/{customer_id}/biddingSeasonalityAdjustments/{seasonality_adjustment_id}';
+'customers/{customer_id}/biddingSeasonalityAdjustments/{seasonality_event_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $seasonality_adjustment_id]);
+    [$customer_id, $seasonality_event_id]);
 }
 
 # Returns the bidding_strategy resource name for the specified components.
@@ -682,13 +664,13 @@ sub campaign_budget {
 
 # Returns the campaign_conversion_goal resource name for the specified components.
 sub campaign_conversion_goal {
-  my ($customer_id, $campaign_id, $category, $origin) = @_;
+  my ($customer_id, $campaign_id, $category, $source) = @_;
 
   my $path_template =
-'customers/{customer_id}/campaignConversionGoals/{campaign_id}~{category}~{origin}';
+'customers/{customer_id}/campaignConversionGoals/{campaign_id}~{category}~{source}';
 
   return expand_path_template($path_template,
-    [$customer_id, $campaign_id, $category, $origin]);
+    [$customer_id, $campaign_id, $category, $source]);
 }
 
 # Returns the campaign_criterion resource name for the specified components.
@@ -743,13 +725,13 @@ sub campaign_draft {
 
 # Returns the campaign_goal_config resource name for the specified components.
 sub campaign_goal_config {
-  my ($customer_id, $campaign_id, $goal_id) = @_;
+  my ($customer_id, $campaign_id, $unified_goal_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/campaignGoalConfigs/{campaign_id}~{goal_id}';
+'customers/{customer_id}/campaignGoalConfigs/{campaign_id}~{unified_goal_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $campaign_id, $goal_id]);
+    [$customer_id, $campaign_id, $unified_goal_id]);
 }
 
 # Returns the campaign_group resource name for the specified components.
@@ -779,31 +761,31 @@ sub campaign_lifecycle_goal {
   my ($customer_id, $campaign_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/campaignLifecycleGoal/{campaign_id}';
+    'customers/{customer_id}/campaignLifecycleGoals/{campaign_id}';
 
   return expand_path_template($path_template, [$customer_id, $campaign_id]);
 }
 
 # Returns the campaign_search_term_insight resource name for the specified components.
 sub campaign_search_term_insight {
-  my ($customer_id, $campaign_id, $category_id) = @_;
+  my ($customer_id, $campaign_id, $cluster_id) = @_;
 
   my $path_template =
-'customers/{customer_id}/campaignSearchTermInsights/{campaign_id}~{category_id}';
+'customers/{customer_id}/campaignSearchTermInsights/{campaign_id}~{cluster_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $campaign_id, $category_id]);
+    [$customer_id, $campaign_id, $cluster_id]);
 }
 
 # Returns the campaign_search_term_view resource name for the specified components.
 sub campaign_search_term_view {
-  my ($customer_id, $campaign_id, $URL_base64_search_term) = @_;
+  my ($customer_id, $campaign_id, $query) = @_;
 
   my $path_template =
-'customers/{customer_id}/campaignSearchTermViews/{campaign_id}~{URL_base64_search_term}';
+    'customers/{customer_id}/campaignSearchTermViews/{campaign_id}~{query}';
 
   return expand_path_template($path_template,
-    [$customer_id, $campaign_id, $URL_base64_search_term]);
+    [$customer_id, $campaign_id, $query]);
 }
 
 # Returns the campaign_shared_set resource name for the specified components.
@@ -880,7 +862,7 @@ sub channel_aggregate_asset_view {
     = @_;
 
   my $path_template =
-'customers/{customer_id}/channelAggregateAssetViews/{advertising_channel_type}~{asset_id}~{asset_source}~{field_type}&quot;';
+'customers/{customer_id}/channelAggregateAssetViews/{advertising_channel_type}~{asset_id}~{asset_source}~{field_type}';
 
   return expand_path_template(
     $path_template,
@@ -892,13 +874,11 @@ sub channel_aggregate_asset_view {
 
 # Returns the click_view resource name for the specified components.
 sub click_view {
-  my ($customer_id, $date_yyyy_MM_dd, $gclid) = @_;
+  my ($customer_id, $date, $gclid) = @_;
 
-  my $path_template =
-    'customers/{customer_id}/clickViews/{date_yyyy_MM_dd}~{gclid}';
+  my $path_template = 'customers/{customer_id}/clickViews/{date}~{gclid}';
 
-  return expand_path_template($path_template,
-    [$customer_id, $date_yyyy_MM_dd, $gclid]);
+  return expand_path_template($path_template, [$customer_id, $date, $gclid]);
 }
 
 # Returns the combined_audience resource name for the specified components.
@@ -906,7 +886,7 @@ sub combined_audience {
   my ($customer_id, $combined_audience_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/combinedAudience/{combined_audience_id}';
+    'customers/{customer_id}/combinedAudiences/{combined_audience_id}';
 
   return expand_path_template($path_template,
     [$customer_id, $combined_audience_id]);
@@ -1071,13 +1051,13 @@ sub customer_client_link {
 
 # Returns the customer_conversion_goal resource name for the specified components.
 sub customer_conversion_goal {
-  my ($customer_id, $category, $origin) = @_;
+  my ($customer_id, $category, $source) = @_;
 
   my $path_template =
-    'customers/{customer_id}/customerConversionGoals/{category}~{origin}';
+    'customers/{customer_id}/customerConversionGoals/{category}~{source}';
 
   return expand_path_template($path_template,
-    [$customer_id, $category, $origin]);
+    [$customer_id, $category, $source]);
 }
 
 # Returns the customer_customizer resource name for the specified components.
@@ -1104,7 +1084,7 @@ sub customer_label {
 sub customer_lifecycle_goal {
   my ($customer_id) = @_;
 
-  my $path_template = 'customers/{customer_id}/customerLifecycleGoal';
+  my $path_template = 'customers/{customer_id}/customerLifecycleGoals';
 
   return expand_path_template($path_template, [$customer_id]);
 }
@@ -1132,12 +1112,22 @@ sub customer_negative_criterion {
 
 # Returns the customer_search_term_insight resource name for the specified components.
 sub customer_search_term_insight {
-  my ($customer_id, $category_id) = @_;
+  my ($customer_id, $cluster_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/customerSearchTermInsights/{category_id}';
+    'customers/{customer_id}/customerSearchTermInsights/{cluster_id}';
 
-  return expand_path_template($path_template, [$customer_id, $category_id]);
+  return expand_path_template($path_template, [$customer_id, $cluster_id]);
+}
+
+# Returns the customer_sk_ad_network_conversion_value_schema resource name for the specified components.
+sub customer_sk_ad_network_conversion_value_schema {
+  my ($customer_id, $account_link_id) = @_;
+
+  my $path_template =
+'customers/{customer_id}/customerSkAdNetworkConversionValueSchemas/{account_link_id}';
+
+  return expand_path_template($path_template, [$customer_id, $account_link_id]);
 }
 
 # Returns the customer_user_access resource name for the specified components.
@@ -1175,7 +1165,7 @@ sub data_link {
   my ($customer_id, $product_link_id, $data_link_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/datalinks/{product_link_id}~{data_link_id}}';
+    'customers/{customer_id}/dataLinks/{product_link_id}~{data_link_id}';
 
   return expand_path_template($path_template,
     [$customer_id, $product_link_id, $data_link_id]);
@@ -1227,23 +1217,24 @@ sub display_keyword_view {
 
 # Returns the distance_view resource name for the specified components.
 sub distance_view {
-  my ($customer_id, $distance_bucket) = @_;
+  my ($customer_id, $placeholder_chain_id, $distance_bucket) = @_;
 
   my $path_template =
-    'customers/{customer_id}/distanceViews/1~{distance_bucket}';
+'customers/{customer_id}/distanceViews/{placeholder_chain_id}~{distance_bucket}';
 
-  return expand_path_template($path_template, [$customer_id, $distance_bucket]);
+  return expand_path_template($path_template,
+    [$customer_id, $placeholder_chain_id, $distance_bucket]);
 }
 
 # Returns the domain_category resource name for the specified components.
 sub domain_category {
-  my ($customer_id, $campaign_id, $category_base64, $language_code) = @_;
+  my ($customer_id, $campaign_id, $base64_category, $language_code) = @_;
 
   my $path_template =
-'customers/{customer_id}/domainCategories/{campaign_id}~{category_base64}~{language_code}';
+'customers/{customer_id}/domainCategories/{campaign_id}~{base64_category}~{language_code}';
 
   return expand_path_template($path_template,
-    [$customer_id, $campaign_id, $category_base64, $language_code]);
+    [$customer_id, $campaign_id, $base64_category, $language_code]);
 }
 
 # Returns the dynamic_search_ads_search_term_view resource name for the specified components.
@@ -1277,11 +1268,11 @@ sub expanded_landing_page_view {
 
 # Returns the experiment resource name for the specified components.
 sub experiment {
-  my ($customer_id, $experiment_id) = @_;
+  my ($customer_id, $trial_id) = @_;
 
-  my $path_template = 'customers/{customer_id}/experiments/{experiment_id}';
+  my $path_template = 'customers/{customer_id}/experiments/{trial_id}';
 
-  return expand_path_template($path_template, [$customer_id, $experiment_id]);
+  return expand_path_template($path_template, [$customer_id, $trial_id]);
 }
 
 # Returns the experiment_arm resource name for the specified components.
@@ -1293,6 +1284,17 @@ sub experiment_arm {
 
   return expand_path_template($path_template,
     [$customer_id, $trial_id, $trial_arm_id]);
+}
+
+# Returns the final_url_expansion_asset_view resource name for the specified components.
+sub final_url_expansion_asset_view {
+  my ($customer_id, $campaign_id, $asset_id, $field_type, $url_fp) = @_;
+
+  my $path_template =
+'customers/{customer_id}/finalUrlExpansionAssetViews/{campaign_id}~{asset_id}~{field_type}~{url_fp}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $campaign_id, $asset_id, $field_type, $url_fp]);
 }
 
 # Returns the gender_view resource name for the specified components.
@@ -1308,11 +1310,11 @@ sub gender_view {
 
 # Returns the geo_target_constant resource name for the specified components.
 sub geo_target_constant {
-  my ($geo_target_constant_id) = @_;
+  my ($criterion_id) = @_;
 
-  my $path_template = 'geoTargetConstants/{geo_target_constant_id}';
+  my $path_template = 'geoTargetConstants/{criterion_id}';
 
-  return expand_path_template($path_template, [$geo_target_constant_id]);
+  return expand_path_template($path_template, [$criterion_id]);
 }
 
 # Returns the geographic_view resource name for the specified components.
@@ -1328,20 +1330,20 @@ sub geographic_view {
 
 # Returns the goal resource name for the specified components.
 sub goal {
-  my ($customer_id, $goal_id) = @_;
+  my ($customer_id, $unified_goal_id) = @_;
 
-  my $path_template = 'customers/{customer_id}/goals/{goal_id}';
+  my $path_template = 'customers/{customer_id}/goals/{unified_goal_id}';
 
-  return expand_path_template($path_template, [$customer_id, $goal_id]);
+  return expand_path_template($path_template, [$customer_id, $unified_goal_id]);
 }
 
 # Returns the google_ads_field resource name for the specified components.
 sub google_ads_field {
-  my ($name) = @_;
+  my ($google_ads_field) = @_;
 
-  my $path_template = 'googleAdsFields/{name}';
+  my $path_template = 'googleAdsFields/{google_ads_field}';
 
-  return expand_path_template($path_template, [$name]);
+  return expand_path_template($path_template, [$google_ads_field]);
 }
 
 # Returns the group_content_suitability_placement_view resource name for the specified components.
@@ -1418,64 +1420,66 @@ sub invoice {
 
 # Returns the keyword_plan resource name for the specified components.
 sub keyword_plan {
-  my ($customer_id, $kp_plan_id) = @_;
+  my ($customer_id, $keyword_plan_id) = @_;
 
-  my $path_template = 'customers/{customer_id}/keywordPlans/{kp_plan_id}';
+  my $path_template = 'customers/{customer_id}/keywordPlans/{keyword_plan_id}';
 
-  return expand_path_template($path_template, [$customer_id, $kp_plan_id]);
+  return expand_path_template($path_template, [$customer_id, $keyword_plan_id]);
 }
 
 # Returns the keyword_plan_ad_group resource name for the specified components.
 sub keyword_plan_ad_group {
-  my ($customer_id, $kp_ad_group_id) = @_;
+  my ($customer_id, $keyword_plan_ad_group_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/keywordPlanAdGroups/{kp_ad_group_id}';
+    'customers/{customer_id}/keywordPlanAdGroups/{keyword_plan_ad_group_id}';
 
-  return expand_path_template($path_template, [$customer_id, $kp_ad_group_id]);
+  return expand_path_template($path_template,
+    [$customer_id, $keyword_plan_ad_group_id]);
 }
 
 # Returns the keyword_plan_ad_group_keyword resource name for the specified components.
 sub keyword_plan_ad_group_keyword {
-  my ($customer_id, $kp_ad_group_keyword_id) = @_;
+  my ($customer_id, $keyword_plan_ad_group_keyword_id) = @_;
 
   my $path_template =
-'customers/{customer_id}/keywordPlanAdGroupKeywords/{kp_ad_group_keyword_id}';
+'customers/{customer_id}/keywordPlanAdGroupKeywords/{keyword_plan_ad_group_keyword_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $kp_ad_group_keyword_id]);
+    [$customer_id, $keyword_plan_ad_group_keyword_id]);
 }
 
 # Returns the keyword_plan_campaign resource name for the specified components.
 sub keyword_plan_campaign {
-  my ($customer_id, $kp_campaign_id) = @_;
+  my ($customer_id, $keyword_plan_campaign_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/keywordPlanCampaigns/{kp_campaign_id}';
+    'customers/{customer_id}/keywordPlanCampaigns/{keyword_plan_campaign_id}';
 
-  return expand_path_template($path_template, [$customer_id, $kp_campaign_id]);
+  return expand_path_template($path_template,
+    [$customer_id, $keyword_plan_campaign_id]);
 }
 
 # Returns the keyword_plan_campaign_keyword resource name for the specified components.
 sub keyword_plan_campaign_keyword {
-  my ($customer_id, $kp_campaign_keyword_id) = @_;
+  my ($customer_id, $keyword_plan_campaign_keyword_id) = @_;
 
   my $path_template =
-'customers/{customer_id}/keywordPlanCampaignKeywords/{kp_campaign_keyword_id}';
+'customers/{customer_id}/keywordPlanCampaignKeywords/{keyword_plan_campaign_keyword_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $kp_campaign_keyword_id]);
+    [$customer_id, $keyword_plan_campaign_keyword_id]);
 }
 
 # Returns the keyword_theme_constant resource name for the specified components.
 sub keyword_theme_constant {
-  my ($keyword_theme_id, $sub_keyword_theme_id) = @_;
+  my ($express_category_id, $express_sub_category_id) = @_;
 
   my $path_template =
-    'keywordThemeConstants/{keyword_theme_id}~{sub_keyword_theme_id}';
+    'keywordThemeConstants/{express_category_id}~{express_sub_category_id}';
 
   return expand_path_template($path_template,
-    [$keyword_theme_id, $sub_keyword_theme_id]);
+    [$express_category_id, $express_sub_category_id]);
 }
 
 # Returns the keyword_view resource name for the specified components.
@@ -1520,13 +1524,13 @@ sub language_constant {
 
 # Returns the lead_form_submission_data resource name for the specified components.
 sub lead_form_submission_data {
-  my ($customer_id, $lead_form_submission_data_id) = @_;
+  my ($customer_id, $lead_form_user_submission_id) = @_;
 
   my $path_template =
-'customers/{customer_id}/leadFormSubmissionData/{lead_form_submission_data_id}';
+'customers/{customer_id}/leadFormSubmissionData/{lead_form_user_submission_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $lead_form_submission_data_id]);
+    [$customer_id, $lead_form_user_submission_id]);
 }
 
 # Returns the life_event resource name for the specified components.
@@ -1553,7 +1557,7 @@ sub local_services_lead {
   my ($customer_id, $local_services_lead_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/localServicesLead/{local_services_lead_id}';
+    'customers/{customer_id}/localServicesLeads/{local_services_lead_id}';
 
   return expand_path_template($path_template,
     [$customer_id, $local_services_lead_id]);
@@ -1564,7 +1568,7 @@ sub local_services_lead_conversation {
   my ($customer_id, $local_services_lead_conversation_id) = @_;
 
   my $path_template =
-'customers/{customer_id}/localServicesLeadConversation/{local_services_lead_conversation_id}';
+'customers/{customer_id}/localServicesLeadConversations/{local_services_lead_conversation_id}';
 
   return expand_path_template($path_template,
     [$customer_id, $local_services_lead_conversation_id]);
@@ -1572,13 +1576,13 @@ sub local_services_lead_conversation {
 
 # Returns the local_services_verification_artifact resource name for the specified components.
 sub local_services_verification_artifact {
-  my ($customer_id, $verification_artifact_id) = @_;
+  my ($customer_id, $gls_verification_artifact_id) = @_;
 
   my $path_template =
-'customers/{customer_id}/localServicesVerificationArtifacts/{verification_artifact_id}';
+'customers/{customer_id}/localServicesVerificationArtifacts/{gls_verification_artifact_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $verification_artifact_id]);
+    [$customer_id, $gls_verification_artifact_id]);
 }
 
 # Returns the location_interest_view resource name for the specified components.
@@ -1663,6 +1667,17 @@ sub mobile_device_constant {
   return expand_path_template($path_template, [$criterion_id]);
 }
 
+# Returns the multi_party_auth_review resource name for the specified components.
+sub multi_party_auth_review {
+  my ($customer_id, $customer_invitation_id) = @_;
+
+  my $path_template =
+    'customers/{customer_id}/multiPartyAuthReviews/{customer_invitation_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $customer_invitation_id]);
+}
+
 # Returns the offline_conversion_upload_client_summary resource name for the specified components.
 sub offline_conversion_upload_client_summary {
   my ($customer_id, $client) = @_;
@@ -1675,24 +1690,24 @@ sub offline_conversion_upload_client_summary {
 
 # Returns the offline_conversion_upload_conversion_action_summary resource name for the specified components.
 sub offline_conversion_upload_conversion_action_summary {
-  my ($customer_id, $conversion_action_id, $client) = @_;
+  my ($customer_id, $conversion_type_id, $client) = @_;
 
   my $path_template =
-'customers/{customer_id}/offlineConversionUploadConversionActionSummaries/{conversion_action_id}~{client}';
+'customers/{customer_id}/offlineConversionUploadConversionActionSummaries/{conversion_type_id}~{client}';
 
   return expand_path_template($path_template,
-    [$customer_id, $conversion_action_id, $client]);
+    [$customer_id, $conversion_type_id, $client]);
 }
 
 # Returns the offline_user_data_job resource name for the specified components.
 sub offline_user_data_job {
-  my ($customer_id, $offline_user_data_job_id) = @_;
+  my ($customer_id, $offline_user_data_update_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/offlineUserDataJobs/{offline_user_data_job_id}';
+    'customers/{customer_id}/offlineUserDataJobs/{offline_user_data_update_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $offline_user_data_job_id]);
+    [$customer_id, $offline_user_data_update_id]);
 }
 
 # Returns the operating_system_version_constant resource name for the specified components.
@@ -1706,13 +1721,13 @@ sub operating_system_version_constant {
 
 # Returns the paid_organic_search_term_view resource name for the specified components.
 sub paid_organic_search_term_view {
-  my ($customer_id, $campaign_id, $ad_group_id, $URL_base64_search_term) = @_;
+  my ($customer_id, $campaign_id, $ad_group_id, $base64_search_term) = @_;
 
   my $path_template =
-'customers/{customer_id}/paidOrganicSearchTermViews/{campaign_id}~{ad_group_id}~{URL_base64_search_term}';
+'customers/{customer_id}/paidOrganicSearchTermViews/{campaign_id}~{ad_group_id}~{base64_search_term}';
 
   return expand_path_template($path_template,
-    [$customer_id, $campaign_id, $ad_group_id, $URL_base64_search_term]);
+    [$customer_id, $campaign_id, $ad_group_id, $base64_search_term]);
 }
 
 # Returns the parental_status_view resource name for the specified components.
@@ -1768,33 +1783,42 @@ sub product_category_constant {
 
 # Returns the product_group_view resource name for the specified components.
 sub product_group_view {
-  my ($customer_id, $ad_group_id, $criterion_id) = @_;
+  my ($customer_id, $adgroup_id, $criterion_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/productGroupViews/{ad_group_id}~{criterion_id}';
+    'customers/{customer_id}/productGroupViews/{adgroup_id}~{criterion_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $ad_group_id, $criterion_id]);
+    [$customer_id, $adgroup_id, $criterion_id]);
 }
 
 # Returns the product_link resource name for the specified components.
 sub product_link {
   my ($customer_id, $product_link_id) = @_;
 
-  my $path_template = 'customers/{customer_id}/productLinks/{product_link_id}_';
+  my $path_template = 'customers/{customer_id}/productLinks/{product_link_id}';
 
   return expand_path_template($path_template, [$customer_id, $product_link_id]);
 }
 
 # Returns the product_link_invitation resource name for the specified components.
 sub product_link_invitation {
-  my ($customer_id, $product_link_invitation_id) = @_;
+  my ($customer_id, $customer_invitation_id) = @_;
 
   my $path_template =
-'customers/{customer_id}/productLinkInvitations/{product_link_invitation_id}';
+    'customers/{customer_id}/productLinkInvitations/{customer_invitation_id}';
 
   return expand_path_template($path_template,
-    [$customer_id, $product_link_invitation_id]);
+    [$customer_id, $customer_invitation_id]);
+}
+
+# Returns the qualifying_question resource name for the specified components.
+sub qualifying_question {
+  my ($qualifying_question_id) = @_;
+
+  my $path_template = 'qualifyingQuestions/{qualifying_question_id}';
+
+  return expand_path_template($path_template, [$qualifying_question_id]);
 }
 
 # Returns the recommendation resource name for the specified components.
@@ -1832,13 +1856,13 @@ sub remarketing_action {
 
 # Returns the search_term_view resource name for the specified components.
 sub search_term_view {
-  my ($customer_id, $campaign_id, $ad_group_id, $URL_base64_search_term) = @_;
+  my ($customer_id, $campaign_id, $ad_group_id, $query) = @_;
 
   my $path_template =
-'customers/{customer_id}/searchTermViews/{campaign_id}~{ad_group_id}~{URL_base64_search_term}';
+'customers/{customer_id}/searchTermViews/{campaign_id}~{ad_group_id}~{query}';
 
   return expand_path_template($path_template,
-    [$customer_id, $campaign_id, $ad_group_id, $URL_base64_search_term]);
+    [$customer_id, $campaign_id, $ad_group_id, $query]);
 }
 
 # Returns the shared_criterion resource name for the specified components.
@@ -1889,13 +1913,13 @@ sub shopping_product {
 
 # Returns the smart_campaign_search_term_view resource name for the specified components.
 sub smart_campaign_search_term_view {
-  my ($customer_id, $campaign_id, $URL_base64_search_term) = @_;
+  my ($customer_id, $campaign_id, $query) = @_;
 
   my $path_template =
-'customers/{customer_id}/smartCampaignSearchTermViews/{campaign_id}~{URL_base64_search_term}';
+'customers/{customer_id}/smartCampaignSearchTermViews/{campaign_id}~{query}';
 
   return expand_path_template($path_template,
-    [$customer_id, $campaign_id, $URL_base64_search_term]);
+    [$customer_id, $campaign_id, $query]);
 }
 
 # Returns the smart_campaign_setting resource name for the specified components.
@@ -1921,12 +1945,13 @@ sub targeting_expansion_view {
 
 # Returns the third_party_app_analytics_link resource name for the specified components.
 sub third_party_app_analytics_link {
-  my ($customer_id, $account_link_id) = @_;
+  my ($customer_id, $customer_link_id) = @_;
 
   my $path_template =
-    'customers/{customer_id}/thirdPartyAppAnalyticsLinks/{account_link_id}';
+    'customers/{customer_id}/thirdPartyAppAnalyticsLinks/{customer_link_id}';
 
-  return expand_path_template($path_template, [$customer_id, $account_link_id]);
+  return expand_path_template($path_template,
+    [$customer_id, $customer_link_id]);
 }
 
 # Returns the topic_constant resource name for the specified components.
@@ -1964,7 +1989,7 @@ sub travel_activity_group_view {
 sub travel_activity_performance_view {
   my ($customer_id) = @_;
 
-  my $path_template = 'customers/{customer_id}/travelActivityPerformanceView';
+  my $path_template = 'customers/{customer_id}/travelActivityPerformanceViews';
 
   return expand_path_template($path_template, [$customer_id]);
 }
@@ -1991,24 +2016,24 @@ sub user_list {
 
 # Returns the user_list_customer_type resource name for the specified components.
 sub user_list_customer_type {
-  my ($customer_id, $user_list_id, $customer_type_category) = @_;
+  my ($customer_id, $user_list_id, $semantic_label) = @_;
 
   my $path_template =
-'customers/{customer_id}/userListCustomerTypes/{user_list_id}~{customer_type_category}';
+'customers/{customer_id}/userListCustomerTypes/{user_list_id}~{semantic_label}';
 
   return expand_path_template($path_template,
-    [$customer_id, $user_list_id, $customer_type_category]);
+    [$customer_id, $user_list_id, $semantic_label]);
 }
 
 # Returns the user_location_view resource name for the specified components.
 sub user_location_view {
-  my ($customer_id, $country_criterion_id, $targeting_location) = @_;
+  my ($customer_id, $country_criterion_id, $is_targeting_location) = @_;
 
   my $path_template =
-'customers/{customer_id}/userLocationViews/{country_criterion_id}~{targeting_location}';
+'customers/{customer_id}/userLocationViews/{country_criterion_id}~{is_targeting_location}';
 
   return expand_path_template($path_template,
-    [$customer_id, $country_criterion_id, $targeting_location]);
+    [$customer_id, $country_criterion_id, $is_targeting_location]);
 }
 
 # Returns the video resource name for the specified components.
@@ -2022,11 +2047,13 @@ sub video {
 
 # Returns the video_enhancement resource name for the specified components.
 sub video_enhancement {
-  my ($customer_id, $video_id) = @_;
+  my ($customer_id, $video_enhancement) = @_;
 
-  my $path_template = 'customers/{customer_id}/videoEnhancements/{video_id}';
+  my $path_template =
+    'customers/{customer_id}/videoEnhancements/{video_enhancement}';
 
-  return expand_path_template($path_template, [$customer_id, $video_id]);
+  return expand_path_template($path_template,
+    [$customer_id, $video_enhancement]);
 }
 
 # Returns the webpage_view resource name for the specified components.
@@ -2038,6 +2065,16 @@ sub webpage_view {
 
   return expand_path_template($path_template,
     [$customer_id, $ad_group_id, $criterion_id]);
+}
+
+# Returns the you_tube_video_upload resource name for the specified components.
+sub you_tube_video_upload {
+  my ($customer_id, $video_upload_id) = @_;
+
+  my $path_template =
+    'customers/{customer_id}/youTubeVideoUploads/{video_upload_id}';
+
+  return expand_path_template($path_template, [$customer_id, $video_upload_id]);
 }
 
 1;

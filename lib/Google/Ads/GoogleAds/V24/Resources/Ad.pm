@@ -54,6 +54,7 @@ sub new {
     shoppingProductAd           => $args->{shoppingProductAd},
     shoppingSmartAd             => $args->{shoppingSmartAd},
     smartCampaignAd             => $args->{smartCampaignAd},
+    syntheticContentInfo        => $args->{syntheticContentInfo},
     systemManagedResourceSource => $args->{systemManagedResourceSource},
     textAd                      => $args->{textAd},
     trackingUrlTemplate         => $args->{trackingUrlTemplate},

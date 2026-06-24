@@ -23,13 +23,14 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    accessCreationDateTime  => $args->{accessCreationDateTime},
-    accessRole              => $args->{accessRole},
-    emailAddress            => $args->{emailAddress},
-    inviterUserEmailAddress => $args->{inviterUserEmailAddress},
-    passkeyEnabled          => $args->{passkeyEnabled},
-    resourceName            => $args->{resourceName},
-    userId                  => $args->{userId}};
+    accessCreationDateTime      => $args->{accessCreationDateTime},
+    accessRole                  => $args->{accessRole},
+    emailAddress                => $args->{emailAddress},
+    inviterUserEmailAddress     => $args->{inviterUserEmailAddress},
+    passkeyEnabled              => $args->{passkeyEnabled},
+    pendingMultiPartyAuthReview => $args->{pendingMultiPartyAuthReview},
+    resourceName                => $args->{resourceName},
+    userId                      => $args->{userId}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

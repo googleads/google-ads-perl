@@ -30,7 +30,9 @@ sub new {
     searchAttributes        => $args->{searchAttributes},
     searchBrand             => $args->{searchBrand},
     searchChannels          => $args->{searchChannels},
-    subCountryLocations     => $args->{subCountryLocations}};
+    searchTopics            => $args->{searchTopics},
+    subCountryLocations     => $args->{subCountryLocations},
+    supplementalData        => $args->{supplementalData}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);
