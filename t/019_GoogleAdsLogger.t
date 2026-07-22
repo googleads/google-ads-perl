@@ -28,7 +28,7 @@ use File::Spec;
 use HTTP::Request::Common;
 use JSON::XS;
 use Log::Log4perl qw(get_logger :levels);
-use Test::More(tests => 35);
+use Test::More(tests => 43);
 
 # Tests use Google::Ads::GoogleAds::Logging::GoogleAdsLogger.
 use_ok("Google::Ads::GoogleAds::Logging::GoogleAdsLogger");
@@ -176,6 +176,26 @@ ok(
     /multi_party_auth_review.customer_user_access_invitation_review.new_customer_user_access_invitation.email_address = 'REDACTED'/,
   "Test redacted logging: detail - GAQL new_customer_user_access_invitation.email_address REDACTED."
 );
+ok(
+  $request->{query} =~
+    /local_services_lead.contact_details.phone_number = 'REDACTED'/,
+  "Test redacted logging: detail - GAQL phone_number REDACTED."
+);
+ok(
+  $request->{query} =~
+    /local_services_lead.contact_details.email = 'REDACTED'/,
+  "Test redacted logging: detail - GAQL email REDACTED."
+);
+ok(
+  $request->{query} =~
+    /local_services_lead.contact_details.consumer_name = 'REDACTED'/,
+  "Test redacted logging: detail - GAQL consumer_name REDACTED."
+);
+ok(
+  $request->{query} =~
+    /local_services_lead_conversation.message_details.text = 'REDACTED'/,
+  "Test redacted logging: detail - GAQL text REDACTED."
+);
 my $response = __extract_detail_log_json($detail_log, "Response");
 is($response->{results}[0]{customerUserAccess}{emailAddress},
   "REDACTED", "Test redacted logging: detail - emailAddress REDACTED.");
@@ -183,6 +203,14 @@ is($response->{results}[0]{multiPartyAuthReview}{requestUserEmail},
   "REDACTED", "Test redacted logging: detail - requestUserEmail REDACTED.");
 is($response->{results}[0]{multiPartyAuthReview}{customerUserAccessInvitationReview}{newCustomerUserAccessInvitation}{emailAddress},
   "REDACTED", "Test redacted logging: detail - newCustomerUserAccessInvitation.emailAddress REDACTED.");
+is($response->{results}[0]{localServicesLead}{contactDetails}{phoneNumber},
+  "REDACTED", "Test redacted logging: detail - phoneNumber REDACTED.");
+is($response->{results}[0]{localServicesLead}{contactDetails}{email},
+  "REDACTED", "Test redacted logging: detail - email REDACTED.");
+is($response->{results}[0]{localServicesLead}{contactDetails}{consumerName},
+  "REDACTED", "Test redacted logging: detail - consumerName REDACTED.");
+is($response->{results}[0]{localServicesLeadConversation}{messageDetails}{text},
+  "REDACTED", "Test redacted logging: detail - text REDACTED.");
 is($response->{results}[1]{customerUserAccess}{inviterUserEmailAddress},
   "REDACTED",
   "Test redacted logging: detail - inviterUserEmailAddress REDACTED.");

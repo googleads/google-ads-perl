@@ -28,18 +28,18 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use Google::Ads::GoogleAds::Utils::PartialFailureUtils
   qw(get_google_ads_failure_from_status);
 use Google::Ads::GoogleAds::Utils::SearchGoogleAdsIterator;
-use Google::Ads::GoogleAds::V24::Enums::MultiPartyAuthReviewStatusEnum
+use Google::Ads::GoogleAds::V25::Enums::MultiPartyAuthReviewStatusEnum
   qw(APPROVED);
-use Google::Ads::GoogleAds::V24::Enums::MultiPartyAuthReviewTargetResourceEnum
+use Google::Ads::GoogleAds::V25::Enums::MultiPartyAuthReviewTargetResourceEnum
   qw(CUSTOMER_USER_ACCESS CUSTOMER_USER_ACCESS_INVITATION);
-use Google::Ads::GoogleAds::V24::Enums::MultiPartyAuthOperationTypeEnum
+use Google::Ads::GoogleAds::V25::Enums::MultiPartyAuthOperationTypeEnum
   qw(UPDATE REMOVE);
 use
-  Google::Ads::GoogleAds::V24::Services::GoogleAdsService::SearchGoogleAdsRequest;
+  Google::Ads::GoogleAds::V25::Services::GoogleAdsService::SearchGoogleAdsRequest;
 use
-  Google::Ads::GoogleAds::V24::Services::MultiPartyAuthReviewService::ResolveMultiPartyAuthReviewRequest;
+  Google::Ads::GoogleAds::V25::Services::MultiPartyAuthReviewService::ResolveMultiPartyAuthReviewRequest;
 use
-  Google::Ads::GoogleAds::V24::Services::MultiPartyAuthReviewService::ResolveMultiPartyAuthReviewOperation;
+  Google::Ads::GoogleAds::V25::Services::MultiPartyAuthReviewService::ResolveMultiPartyAuthReviewOperation;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -77,7 +77,7 @@ sub approve_mpa_review {
 
   # Create the resolve operation.
   my $operation =
-    Google::Ads::GoogleAds::V24::Services::MultiPartyAuthReviewService::ResolveMultiPartyAuthReviewOperation
+    Google::Ads::GoogleAds::V25::Services::MultiPartyAuthReviewService::ResolveMultiPartyAuthReviewOperation
     ->new({
       multiPartyAuthReview => $pending_review,
       newStatus            => APPROVED
@@ -139,7 +139,7 @@ sub fetch_pending_mpa_reviews {
 
   # Create a search Google Ads request.
   my $search_request =
-    Google::Ads::GoogleAds::V24::Services::GoogleAdsService::SearchGoogleAdsRequest
+    Google::Ads::GoogleAds::V25::Services::GoogleAdsService::SearchGoogleAdsRequest
     ->new({
       customerId => $customer_id,
       query      => $search_query

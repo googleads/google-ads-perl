@@ -2,7 +2,7 @@
   "success_logging": {
     "request": {
       "method": "POST",
-      "url": "https://googleads.googleapis.com/v24/customers/1234567890/campaignBudgets:mutate",
+      "url": "https://googleads.googleapis.com/v25/customers/1234567890/campaignBudgets:mutate",
       "headers": [
         "Content-Type",
         "application/json; charset=utf-8",
@@ -51,7 +51,7 @@
   "error_logging": {
     "request": {
       "method": "POST",
-      "url": "https://googleads.googleapis.com/v24/customers/1234567890/googleAds:search",
+      "url": "https://googleads.googleapis.com/v25/customers/1234567890/googleAds:search",
       "headers": [
         "Content-Type",
         "application/json; charset=utf-8",
@@ -90,7 +90,7 @@
           "status": "INVALID_ARGUMENT",
           "details": [
             {
-              "@type": "type.googleapis.com/google.ads.googleads.v24.errors.GoogleAdsFailure",
+              "@type": "type.googleapis.com/google.ads.googleads.v25.errors.GoogleAdsFailure",
               "errors": [
                 {
                   "errorCode": {
@@ -108,7 +108,7 @@
   "redacted_logging": {
     "request": {
       "method": "POST",
-      "url": "https://googleads.googleapis.com/v24/customers/1234567890/googleAds:search",
+      "url": "https://googleads.googleapis.com/v25/customers/1234567890/googleAds:search",
       "headers": [
         "Content-Type",
         "application/json; charset=utf-8",
@@ -123,7 +123,7 @@
       ],
       "content": {
         "customerId": "1234567890",
-        "query": "SELECT customer_user_access.user_id, customer_user_access.access_role, customer_user_access.email_address, customer_user_access.inviter_user_email_address, multi_party_auth_review.request_user_email, multi_party_auth_review.customer_user_access_invitation_review.new_customer_user_access_invitation.email_address FROM customer_user_access WHERE customer_user_access.inviter_user_email_address = 'inviter_user@google.com' AND multi_party_auth_review.request_user_email = 'request_user@google.com' AND multi_party_auth_review.customer_user_access_invitation_review.new_customer_user_access_invitation.email_address = 'new_invitee@google.com' "
+        "query": "SELECT customer_user_access.user_id, customer_user_access.access_role, customer_user_access.email_address, customer_user_access.inviter_user_email_address, multi_party_auth_review.request_user_email, multi_party_auth_review.customer_user_access_invitation_review.new_customer_user_access_invitation.email_address FROM customer_user_access WHERE customer_user_access.inviter_user_email_address = 'inviter_user@google.com' AND multi_party_auth_review.request_user_email = 'request_user@google.com' AND multi_party_auth_review.customer_user_access_invitation_review.new_customer_user_access_invitation.email_address = 'new_invitee@google.com' AND local_services_lead.contact_details.phone_number = '+18005550199' AND local_services_lead.contact_details.email = 'lead@google.com' AND local_services_lead.contact_details.consumer_name = 'Lead Consumer' AND local_services_lead_conversation.message_details.text = 'Sensitive text' "
       }
     },
     "response": {
@@ -156,6 +156,18 @@
                 "newCustomerUserAccessInvitation": {
                   "emailAddress": "new_invitee@google.com"
                 }
+              }
+            },
+            "localServicesLead": {
+              "contactDetails": {
+                "phoneNumber": "+18005550199",
+                "email": "lead@google.com",
+                "consumerName": "Lead Consumer"
+              }
+            },
+            "localServicesLeadConversation": {
+              "messageDetails": {
+                "text": "Sensitive text"
               }
             }
           },
