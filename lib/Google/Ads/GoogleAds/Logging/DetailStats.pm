@@ -38,14 +38,16 @@ use constant SCRUBBED_HEADERS => qw(developer-token Authorization);
 #   PlacesLocationFeedData.emailAddress
 #   CreateCustomerClientRequest.emailAddress
 use constant SCRUBBED_CONTENT_FIELDS =>
-  qw(emailAddress inviterUserEmailAddress userEmail requestUserEmail);
+  qw(emailAddress inviterUserEmailAddress userEmail requestUserEmail phoneNumber consumerName text email);
 # Below fields will be scrubbed in the GAQL statement of SearchGoogleAdsRequest
 # and SearchGoogleAdsStreamRequest.
 use constant SCRUBBED_GAQL_FIELDS => qw(customer_user_access\.email_address
   customer_user_access\.inviter_user_email_address
   customer_user_access_invitation\.email_address
   change_event\.user_email feed\.places_location_feed_data\.email_address
-  local_services_lead\.contact_details
+  local_services_lead\.contact_details\.phone_number
+  local_services_lead\.contact_details\.email
+  local_services_lead\.contact_details\.consumer_name
   local_services_lead_conversation\.message_details\.text
   multi_party_auth_review\.request_user_email
   multi_party_auth_review\.customer_user_access_invitation_review\.new_customer_user_access_invitation\.email_address
@@ -120,7 +122,7 @@ sub _scrub_gaql {
   return $content if $content !~ /"query"/;
   foreach my $field (SCRUBBED_GAQL_FIELDS) {
     $content =~
-      s/(SELECT.+WHERE.+$field.+?['"])\S+?(['"])/$1${\REDACTED_STRING}$2/i;
+      s/(SELECT.+WHERE.+$field.+?['"]).+?(['"])/$1${\REDACTED_STRING}$2/i;
   }
 
   return $content;
