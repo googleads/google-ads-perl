@@ -106,6 +106,9 @@ $build_sc->new(
     "URI::Query"                   => 0,
     "perl"                         => "5.28.1",
   },
+  recommends         => {
+    "Google::Auth"                 => "0.10",
+  },
   build_requires => {
     "Class::Std::Fast"          => 0,
     "Config::Properties"        => 0,
@@ -124,7 +127,7 @@ $build_sc->new(
       "017_PartialFailureUtils.t",       "018_MediaUtils.t",
       "019_GoogleAdsLogger.t",           "020_ResourcesNames.t",
       "021_OperationService.t",          "022_SearchStreamHandler.t",
-      "023_OAuth2ServiceAccountsHandler.t"
+      "023_OAuth2ServiceAccountsHandler.t", "024_GoogleAuthHandler.t"
     ],
     medium           => ["001_require.t"],
     smoke            => [".t"],
