@@ -54,11 +54,14 @@ sub initialize : CUMULATIVE(BASE FIRST) {
   $access_token_of{$ident} = $properties->{accessToken}
     || $access_token_of{$ident};
 
-  # Set up proxy for __lwp_agent.
+  # Set up proxy for __lwp_agent. Load environment variables (e.g., NO_PROXY) first.
+  $__lwp_agent_of{$ident}->env_proxy;
+
+  # Override with explicit proxy if configured in the API client.
   my $proxy = $api_client->get_proxy();
-  $proxy
-    ? $__lwp_agent_of{$ident}->proxy(['http', 'https'], $proxy)
-    : $__lwp_agent_of{$ident}->env_proxy;
+  if ($proxy) {
+    $__lwp_agent_of{$ident}->proxy(['http', 'https'], $proxy);
+  }
 }
 
 sub prepare_request {
