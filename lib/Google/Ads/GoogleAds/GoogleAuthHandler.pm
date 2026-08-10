@@ -72,6 +72,9 @@ sub is_auth_enabled {
   };
 
   if (!$has_google_auth) {
+    my $api_client = $self->get_api_client();
+    my $err_msg = "useApplicationDefaultCredentials is set, but the required Google::Auth module is not installed.";
+    $api_client->get_die_on_faults() ? die($err_msg) : warn($err_msg);
     return 0;
   }
 
@@ -80,12 +83,11 @@ sub is_auth_enabled {
   require LWP::UserAgent;
   my $ua = LWP::UserAgent->new(timeout => 10);
   
-  # Load proxy settings from environment variables (e.g., HTTP_PROXY, NO_PROXY)
-  $ua->env_proxy;
-  
-  # Override with explicit proxy if configured in the API client
+  # Set up proxy for ua.
   my $proxy = $api_client_of{$ident}->get_proxy();
-  $ua->proxy(['http', 'https'], $proxy) if $proxy;
+  $proxy
+    ? $ua->proxy(['http', 'https'], $proxy)
+    : $ua->env_proxy;
 
   # Try to load credentials using Google::Auth
   eval { $creds_of{$ident} = Google::Auth->default($scopes, { ua => $ua }); };
