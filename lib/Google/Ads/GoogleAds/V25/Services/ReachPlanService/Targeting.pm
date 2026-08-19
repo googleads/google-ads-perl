@@ -28,6 +28,7 @@ sub new {
     devices              => $args->{devices},
     genders              => $args->{genders},
     network              => $args->{network},
+    parentalStatuses     => $args->{parentalStatuses},
     plannableLocationIds => $args->{plannableLocationIds}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload

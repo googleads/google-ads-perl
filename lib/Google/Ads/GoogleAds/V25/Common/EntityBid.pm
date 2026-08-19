@@ -12,16 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V25::Enums::ContentCreatorInsightsSupplementalDataEnum;
+package Google::Ads::GoogleAds::V25::Common::EntityBid;
 
 use strict;
 use warnings;
+use base qw(Google::Ads::GoogleAds::BaseEntity);
 
-use Const::Exporter enums => [
-  UNSPECIFIED          => "UNSPECIFIED",
-  UNKNOWN              => "UNKNOWN",
-  BRAND_SENTIMENT_DATA => "BRAND_SENTIMENT_DATA",
-  LOCAL_CREATOR_DATA   => "LOCAL_CREATOR_DATA"
-];
+use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
+
+sub new {
+  my ($class, $args) = @_;
+  my $self = {itemCode => $args->{itemCode}};
+
+  # Delete the unassigned fields in this object for a more concise JSON payload
+  remove_unassigned_fields($self, $args);
+
+  bless $self, $class;
+  return $self;
+}
 
 1;

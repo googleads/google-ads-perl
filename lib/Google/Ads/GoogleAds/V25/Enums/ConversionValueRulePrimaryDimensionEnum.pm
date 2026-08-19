@@ -27,7 +27,8 @@ use Const::Exporter enums => [
   DEVICE                => "DEVICE",
   AUDIENCE              => "AUDIENCE",
   MULTIPLE              => "MULTIPLE",
-  ITINERARY             => "ITINERARY"
+  ITINERARY             => "ITINERARY",
+  LOYALTY_MEMBERSHIP    => "LOYALTY_MEMBERSHIP"
 ];
 
 1;

@@ -48,6 +48,7 @@ sub new {
     effectiveCpvBidSource        => $args->{effectiveCpvBidSource},
     effectivePercentCpcBidMicros => $args->{effectivePercentCpcBidMicros},
     effectivePercentCpcBidSource => $args->{effectivePercentCpcBidSource},
+    entityBid                    => $args->{entityBid},
     extendedDemographic          => $args->{extendedDemographic},
     finalMobileUrls              => $args->{finalMobileUrls},
     finalUrlSuffix               => $args->{finalUrlSuffix},

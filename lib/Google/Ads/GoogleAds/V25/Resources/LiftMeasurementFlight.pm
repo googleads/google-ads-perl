@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V25::Services::BenchmarksService::CustomerMetrics;
+package Google::Ads::GoogleAds::V25::Resources::LiftMeasurementFlight;
 
 use strict;
 use warnings;
@@ -23,9 +23,16 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    aggregateMetrics   => $args->{aggregateMetrics},
-    averageRateMetrics => $args->{averageRateMetrics},
-    shareMetrics       => $args->{shareMetrics}};
+    endDate                 => $args->{endDate},
+    liftMeasurementConfigId => $args->{liftMeasurementConfigId},
+    liftMeasurementFlightId => $args->{liftMeasurementFlightId},
+    liftType                => $args->{liftType},
+    name                    => $args->{name},
+    resourceName            => $args->{resourceName},
+    startDate               => $args->{startDate},
+    status                  => $args->{status},
+    surveyLiftInfo          => $args->{surveyLiftInfo},
+    surveyLiftMeasurement   => $args->{surveyLiftMeasurement}};
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -21,21 +21,19 @@ package Google::Ads::GoogleAds::Client;
 use strict;
 use warnings;
 use version;
-our $VERSION = qv("33.1.0");
+our $VERSION = qv("34.0.0");
 
-use Google::Ads::GoogleAds::GoogleAuthHandler;
 use Google::Ads::GoogleAds::OAuth2ApplicationsHandler;
 use Google::Ads::GoogleAds::OAuth2ServiceAccountsHandler;
 use Google::Ads::GoogleAds::Logging::GoogleAdsLogger;
 
 use Class::Std::Fast;
 
-use constant GOOGLE_AUTH_HANDLER         => "GOOGLE_AUTH_HANDLER";
 use constant OAUTH2_APPLICATIONS_HANDLER => "OAUTH2_APPLICATIONS_HANDLER";
 use constant OAUTH2_SERVICE_ACCOUNTS_HANDLER =>
   "OAUTH2_SERVICE_ACCOUNTS_HANDLER";
 use constant AUTH_HANDLERS_ORDER =>
-  (GOOGLE_AUTH_HANDLER, OAUTH2_APPLICATIONS_HANDLER, OAUTH2_SERVICE_ACCOUNTS_HANDLER);
+  (OAUTH2_APPLICATIONS_HANDLER, OAUTH2_SERVICE_ACCOUNTS_HANDLER);
 
 # Class::Std-style attributes. Most values are read from googleads.properties file.
 # These need to go in the same line for older Perl interpreters to understand.
@@ -104,11 +102,7 @@ sub START {
   # Setup of auth handlers.
   my %auth_handlers = ();
 
-  my $auth_handler = Google::Ads::GoogleAds::GoogleAuthHandler->new();
-  $auth_handler->initialize($self, \%properties);
-  $auth_handlers{GOOGLE_AUTH_HANDLER} = $auth_handler;
-
-  $auth_handler = Google::Ads::GoogleAds::OAuth2ApplicationsHandler->new();
+  my $auth_handler = Google::Ads::GoogleAds::OAuth2ApplicationsHandler->new();
   $auth_handler->initialize($self, \%properties);
   $auth_handlers{OAUTH2_APPLICATIONS_HANDLER} = $auth_handler;
 

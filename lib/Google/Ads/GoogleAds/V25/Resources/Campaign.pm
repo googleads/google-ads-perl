@@ -23,6 +23,7 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    acaMigrationDateTime           => $args->{acaMigrationDateTime},
     accessibleBiddingStrategy      => $args->{accessibleBiddingStrategy},
     adServingOptimizationStatus    => $args->{adServingOptimizationStatus},
     advertisingChannelSubType      => $args->{advertisingChannelSubType},
@@ -37,6 +38,7 @@ sub new {
     biddingStrategyType            => $args->{biddingStrategyType},
     brandGuidelines                => $args->{brandGuidelines},
     brandGuidelinesEnabled         => $args->{brandGuidelinesEnabled},
+    broadMatchMigrationDateTime    => $args->{broadMatchMigrationDateTime},
     campaignBudget                 => $args->{campaignBudget},
     campaignGroup                  => $args->{campaignGroup},
     commission                     => $args->{commission},

@@ -42,13 +42,9 @@ $build_sc->new(
   create_makefile_pl => "traditional",
   dist_abstract      => "Google Ads API Client Library for Perl",
   dist_name          => "Google-Ads-GoogleAds-Client",
-  dist_version       => "33.1.0",
+  dist_version       => "34.0.0",
   no_index           => {
     namespace => [
-      "Google::Ads::GoogleAds::V21::Enums",
-      "Google::Ads::GoogleAds::V21::Common",
-      "Google::Ads::GoogleAds::V21::Resources",
-      "Google::Ads::GoogleAds::V21::Services",
       "Google::Ads::GoogleAds::V22::Enums",
       "Google::Ads::GoogleAds::V22::Common",
       "Google::Ads::GoogleAds::V22::Resources",
@@ -106,9 +102,6 @@ $build_sc->new(
     "URI::Query"                   => 0,
     "perl"                         => "5.28.1",
   },
-  recommends         => {
-    "Google::Auth"                 => "0.10",
-  },
   build_requires => {
     "Class::Std::Fast"          => 0,
     "Config::Properties"        => 0,
@@ -127,7 +120,7 @@ $build_sc->new(
       "017_PartialFailureUtils.t",       "018_MediaUtils.t",
       "019_GoogleAdsLogger.t",           "020_ResourcesNames.t",
       "021_OperationService.t",          "022_SearchStreamHandler.t",
-      "023_OAuth2ServiceAccountsHandler.t", "024_GoogleAuthHandler.t"
+      "023_OAuth2ServiceAccountsHandler.t"
     ],
     medium           => ["001_require.t"],
     smoke            => [".t"],

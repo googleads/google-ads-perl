@@ -22,6 +22,7 @@ use Const::Exporter enums => [
   UNKNOWN                   => "UNKNOWN",
   CONTENT_TRENDING_INSIGHTS => "CONTENT_TRENDING_INSIGHTS",
   CREATOR_ATTRIBUTE         => "CREATOR_ATTRIBUTE",
+  BRAND                     => "BRAND",
   CREATOR_TOPIC_INSIGHTS    => "CREATOR_TOPIC_INSIGHTS"
 ];
 

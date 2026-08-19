@@ -27,6 +27,7 @@ sub new {
     endDate                  => $args->{endDate},
     experimentId             => $args->{experimentId},
     goals                    => $args->{goals},
+    liftMeasurementConfig    => $args->{liftMeasurementConfig},
     longRunningOperation     => $args->{longRunningOperation},
     name                     => $args->{name},
     optimizeAssetsExperiment => $args->{optimizeAssetsExperiment},

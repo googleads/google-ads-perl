@@ -23,12 +23,14 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    adGroup                           => $args->{adGroup},
-    callAssetRecommendation           => $args->{callAssetRecommendation},
-    calloutAssetRecommendation        => $args->{calloutAssetRecommendation},
-    campaign                          => $args->{campaign},
-    campaignBudget                    => $args->{campaignBudget},
-    campaignBudgetRecommendation      => $args->{campaignBudgetRecommendation},
+    adGroup                      => $args->{adGroup},
+    callAssetRecommendation      => $args->{callAssetRecommendation},
+    calloutAssetRecommendation   => $args->{calloutAssetRecommendation},
+    campaign                     => $args->{campaign},
+    campaignBudget               => $args->{campaignBudget},
+    campaignBudgetRecommendation => $args->{campaignBudgetRecommendation},
+    campaignSpecificAppGoalRecommendation =>
+      $args->{campaignSpecificAppGoalRecommendation},
     campaigns                         => $args->{campaigns},
     customAudienceOptInRecommendation =>
       $args->{customAudienceOptInRecommendation},
