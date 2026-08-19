@@ -26,6 +26,7 @@ sub new {
     applicationInfo         => $args->{applicationInfo},
     benchmarksSource        => $args->{benchmarksSource},
     breakdownDefinition     => $args->{breakdownDefinition},
+    categoryFilter          => $args->{categoryFilter},
     currencyCode            => $args->{currencyCode},
     customerBenchmarksGroup => $args->{customerBenchmarksGroup},
     customerId              => $args->{customerId},

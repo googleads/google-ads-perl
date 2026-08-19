@@ -1,8 +1,7 @@
-33.1.0 - 2026-08-01
+34.0.0 - 2026-08-19
 -------------------
-- Added support for Application Default Credentials (ADC) via `Google::Auth` (>= 0.10) as an explicit opt-in feature.
-  This allows credential resolution from the environment (GCE, GKE, env variables)
-  as a non-blocking soft dependency when `useApplicationDefaultCredentials=1` is set in `googleads.properties`.
+- Added support for Google Ads API v25_1.
+- Removed support for Google Ads API v21.
 
 33.0.0 - 2026-07-22
 -------------------

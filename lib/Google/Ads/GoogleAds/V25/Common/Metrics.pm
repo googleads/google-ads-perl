@@ -23,6 +23,10 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
+    absoluteBrandLift               => $args->{absoluteBrandLift},
+    absoluteBrandLiftP90LowerBound  => $args->{absoluteBrandLiftP90LowerBound},
+    absoluteBrandLiftP90UpperBound  => $args->{absoluteBrandLiftP90UpperBound},
+    absoluteBrandLiftPValue         => $args->{absoluteBrandLiftPValue},
     absoluteTopImpressionPercentage => $args->{absoluteTopImpressionPercentage},
     activeViewAudibilityInvalidGivtMeasurableImpressionsRate =>
       $args->{activeViewAudibilityInvalidGivtMeasurableImpressionsRate},
@@ -154,7 +158,36 @@ sub new {
       $args->{biddableCohortAppPostInstallConversions},
     biddableIndirectInstallFirstInAppConversionMicros =>
       $args->{biddableIndirectInstallFirstInAppConversionMicros},
-    bounceRate                       => $args->{bounceRate},
+    bounceRate                            => $args->{bounceRate},
+    brandLiftBaselinePositiveResponseRate =>
+      $args->{brandLiftBaselinePositiveResponseRate},
+    brandLiftBaselinePositiveResponseRateP90LowerBound =>
+      $args->{brandLiftBaselinePositiveResponseRateP90LowerBound},
+    brandLiftBaselinePositiveResponseRateP90UpperBound =>
+      $args->{brandLiftBaselinePositiveResponseRateP90UpperBound},
+    brandLiftExposedPositiveResponderFractionalCookies =>
+      $args->{brandLiftExposedPositiveResponderFractionalCookies},
+    brandLiftExposedPositiveResponderFractionalCookiesP90LowerBound =>
+      $args->{brandLiftExposedPositiveResponderFractionalCookiesP90LowerBound},
+    brandLiftExposedPositiveResponderFractionalCookiesP90UpperBound =>
+      $args->{brandLiftExposedPositiveResponderFractionalCookiesP90UpperBound},
+    brandLiftExposedPositiveResponseRate =>
+      $args->{brandLiftExposedPositiveResponseRate},
+    brandLiftExposedPositiveResponseRateP90LowerBound =>
+      $args->{brandLiftExposedPositiveResponseRateP90LowerBound},
+    brandLiftExposedPositiveResponseRateP90UpperBound =>
+      $args->{brandLiftExposedPositiveResponseRateP90UpperBound},
+    brandLiftResponsesExposed    => $args->{brandLiftResponsesExposed},
+    brandLiftResponsesSuppressed => $args->{brandLiftResponsesSuppressed},
+    brandLiftSuppressedPositiveResponderFractionalCookies =>
+      $args->{brandLiftSuppressedPositiveResponderFractionalCookies},
+    brandLiftSuppressedPositiveResponderFractionalCookiesP90LowerBound =>
+      $args->
+      {brandLiftSuppressedPositiveResponderFractionalCookiesP90LowerBound},
+    brandLiftSuppressedPositiveResponderFractionalCookiesP90UpperBound =>
+      $args->
+      {brandLiftSuppressedPositiveResponderFractionalCookiesP90UpperBound},
+    brandLiftTotalResponses          => $args->{brandLiftTotalResponses},
     clicks                           => $args->{clicks},
     clicksMarginOfError              => $args->{clicksMarginOfError},
     clicksPValue                     => $args->{clicksPValue},
@@ -177,6 +210,14 @@ sub new {
     conversionLastConversionDate   => $args->{conversionLastConversionDate},
     conversionLastReceivedRequestDateTime =>
       $args->{conversionLastReceivedRequestDateTime},
+    conversionLiftBaselineConversionValue =>
+      $args->{conversionLiftBaselineConversionValue},
+    conversionLiftBaselineConversions =>
+      $args->{conversionLiftBaselineConversions},
+    conversionLiftExposedConversionValue =>
+      $args->{conversionLiftExposedConversionValue},
+    conversionLiftExposedConversions =>
+      $args->{conversionLiftExposedConversions},
     conversionValueChangePointEstimate =>
       $args->{conversionValueChangePointEstimate},
     conversionValueMarginOfError => $args->{conversionValueMarginOfError},
@@ -216,6 +257,18 @@ sub new {
     costPerConversionPValue        => $args->{costPerConversionPValue},
     costPerCurrentModelAttributedConversion =>
       $args->{costPerCurrentModelAttributedConversion},
+    costPerIncrementalConversion => $args->{costPerIncrementalConversion},
+    costPerIncrementalConversionP90LowerBound =>
+      $args->{costPerIncrementalConversionP90LowerBound},
+    costPerIncrementalConversionP90UpperBound =>
+      $args->{costPerIncrementalConversionP90UpperBound},
+    costPerIncrementalConversionWinnerScore =>
+      $args->{costPerIncrementalConversionWinnerScore},
+    costPerLiftedCookie              => $args->{costPerLiftedCookie},
+    costPerLiftedCookieP90LowerBound =>
+      $args->{costPerLiftedCookieP90LowerBound},
+    costPerLiftedCookieP90UpperBound =>
+      $args->{costPerLiftedCookieP90UpperBound},
     costPerPlatformComparableConversion =>
       $args->{costPerPlatformComparableConversion},
     coviewedImpressions                    => $args->{coviewedImpressions},
@@ -245,8 +298,13 @@ sub new {
       $args->{currentModelAttributedConversionsValuePerCost},
     eligibleImpressionsFromLocationAssetStoreReach =>
       $args->{eligibleImpressionsFromLocationAssetStoreReach},
-    engagementRate                 => $args->{engagementRate},
-    engagements                    => $args->{engagements},
+    engagementRate                       => $args->{engagementRate},
+    engagements                          => $args->{engagements},
+    fractionalLiftedCookies              => $args->{fractionalLiftedCookies},
+    fractionalLiftedCookiesP90LowerBound =>
+      $args->{fractionalLiftedCookiesP90LowerBound},
+    fractionalLiftedCookiesP90UpperBound =>
+      $args->{fractionalLiftedCookiesP90UpperBound},
     generalInvalidClickRate        => $args->{generalInvalidClickRate},
     generalInvalidClicks           => $args->{generalInvalidClicks},
     gmailForwards                  => $args->{gmailForwards},
@@ -254,6 +312,9 @@ sub new {
     gmailSecondaryClicks           => $args->{gmailSecondaryClicks},
     grossProfitMargin              => $args->{grossProfitMargin},
     grossProfitMicros              => $args->{grossProfitMicros},
+    headroomBrandLift              => $args->{headroomBrandLift},
+    headroomBrandLiftP90LowerBound => $args->{headroomBrandLiftP90LowerBound},
+    headroomBrandLiftP90UpperBound => $args->{headroomBrandLiftP90UpperBound},
     historicalCreativeQualityScore => $args->{historicalCreativeQualityScore},
     historicalLandingPageQualityScore =>
       $args->{historicalLandingPageQualityScore},
@@ -270,6 +331,31 @@ sub new {
     impressionsPValue              => $args->{impressionsPValue},
     impressionsPointEstimate       => $args->{impressionsPointEstimate},
     impressionsUniqueQueryClusters => $args->{impressionsUniqueQueryClusters},
+    incrementalConversionValue     => $args->{incrementalConversionValue},
+    incrementalConversionValueP90LowerBound =>
+      $args->{incrementalConversionValueP90LowerBound},
+    incrementalConversionValueP90UpperBound =>
+      $args->{incrementalConversionValueP90UpperBound},
+    incrementalConversionValuePValue =>
+      $args->{incrementalConversionValuePValue},
+    incrementalConversionValuePerCost =>
+      $args->{incrementalConversionValuePerCost},
+    incrementalConversionValuePerCostP90LowerBound =>
+      $args->{incrementalConversionValuePerCostP90LowerBound},
+    incrementalConversionValuePerCostP90UpperBound =>
+      $args->{incrementalConversionValuePerCostP90UpperBound},
+    incrementalConversionValuePerCostWinnerScore =>
+      $args->{incrementalConversionValuePerCostWinnerScore},
+    incrementalConversionValueWinnerScore =>
+      $args->{incrementalConversionValueWinnerScore},
+    incrementalConversions              => $args->{incrementalConversions},
+    incrementalConversionsP90LowerBound =>
+      $args->{incrementalConversionsP90LowerBound},
+    incrementalConversionsP90UpperBound =>
+      $args->{incrementalConversionsP90UpperBound},
+    incrementalConversionsPValue      => $args->{incrementalConversionsPValue},
+    incrementalConversionsWinnerScore =>
+      $args->{incrementalConversionsWinnerScore},
     interactionEventTypes          => $args->{interactionEventTypes},
     interactionRate                => $args->{interactionRate},
     interactions                   => $args->{interactions},
@@ -294,6 +380,7 @@ sub new {
     organicImpressions             => $args->{organicImpressions},
     organicImpressionsPerQuery     => $args->{organicImpressionsPerQuery},
     organicQueries                 => $args->{organicQueries},
+    originalConversionValue        => $args->{originalConversionValue},
     percentNewVisitors             => $args->{percentNewVisitors},
     phoneCalls                     => $args->{phoneCalls},
     phoneImpressions               => $args->{phoneImpressions},
@@ -311,10 +398,23 @@ sub new {
       $args->{platformComparableConversionsValueByConversionDate},
     platformComparableConversionsValuePerCost =>
       $args->{platformComparableConversionsValuePerCost},
-    primaryImpressions               => $args->{primaryImpressions},
-    publisherOrganicClicks           => $args->{publisherOrganicClicks},
-    publisherPurchasedClicks         => $args->{publisherPurchasedClicks},
-    publisherUnknownClicks           => $args->{publisherUnknownClicks},
+    primaryImpressions             => $args->{primaryImpressions},
+    publisherOrganicClicks         => $args->{publisherOrganicClicks},
+    publisherPurchasedClicks       => $args->{publisherPurchasedClicks},
+    publisherUnknownClicks         => $args->{publisherUnknownClicks},
+    relativeBrandLift              => $args->{relativeBrandLift},
+    relativeBrandLiftP90LowerBound => $args->{relativeBrandLiftP90LowerBound},
+    relativeBrandLiftP90UpperBound => $args->{relativeBrandLiftP90UpperBound},
+    relativeConversionLift         => $args->{relativeConversionLift},
+    relativeConversionLiftP90LowerBound =>
+      $args->{relativeConversionLiftP90LowerBound},
+    relativeConversionLiftP90UpperBound =>
+      $args->{relativeConversionLiftP90UpperBound},
+    relativeConversionValueLift => $args->{relativeConversionValueLift},
+    relativeConversionValueLiftP90LowerBound =>
+      $args->{relativeConversionValueLiftP90LowerBound},
+    relativeConversionValueLiftP90UpperBound =>
+      $args->{relativeConversionValueLiftP90UpperBound},
     relativeCtr                      => $args->{relativeCtr},
     resultsConversionsPurchase       => $args->{resultsConversionsPurchase},
     revenueMicros                    => $args->{revenueMicros},

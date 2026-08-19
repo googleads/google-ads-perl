@@ -27,6 +27,7 @@ sub new {
     devices                      => $args->{devices},
     genders                      => $args->{genders},
     networks                     => $args->{networks},
+    parentalStatuses             => $args->{parentalStatuses},
     surfaceTargeting             => $args->{surfaceTargeting},
     youtubeSelectLineupTargeting => $args->{youtubeSelectLineupTargeting}};
 

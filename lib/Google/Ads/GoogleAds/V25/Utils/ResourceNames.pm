@@ -1523,6 +1523,113 @@ sub life_event {
   return expand_path_template($path_template, [$customer_id, $life_event_id]);
 }
 
+# Returns the lift_measurement_age_range resource name for the specified components.
+sub lift_measurement_age_range {
+  my ($customer_id, $lift_measurement_configuration_id,
+    $campaign_id, $criterion_id)
+    = @_;
+
+  my $path_template =
+'customers/{customer_id}/liftMeasurementAgeRanges/{lift_measurement_configuration_id}~{campaign_id}~{criterion_id}';
+
+  return expand_path_template(
+    $path_template,
+    [
+      $customer_id, $lift_measurement_configuration_id,
+      $campaign_id, $criterion_id
+    ]);
+}
+
+# Returns the lift_measurement_campaign resource name for the specified components.
+sub lift_measurement_campaign {
+  my ($customer_id, $lift_measurement_configuration_id, $campaign_id) = @_;
+
+  my $path_template =
+'customers/{customer_id}/liftMeasurementCampaigns/{lift_measurement_configuration_id}~{campaign_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $lift_measurement_configuration_id, $campaign_id]);
+}
+
+# Returns the lift_measurement_config resource name for the specified components.
+sub lift_measurement_config {
+  my ($customer_id, $lift_measurement_configuration_id) = @_;
+
+  my $path_template =
+'customers/{customer_id}/liftMeasurementConfigs/{lift_measurement_configuration_id}';
+
+  return expand_path_template($path_template,
+    [$customer_id, $lift_measurement_configuration_id]);
+}
+
+# Returns the lift_measurement_device resource name for the specified components.
+sub lift_measurement_device {
+  my ($customer_id, $lift_measurement_configuration_id,
+    $campaign_id, $criterion_id)
+    = @_;
+
+  my $path_template =
+'customers/{customer_id}/liftMeasurementDevices/{lift_measurement_configuration_id}~{campaign_id}~{criterion_id}';
+
+  return expand_path_template(
+    $path_template,
+    [
+      $customer_id, $lift_measurement_configuration_id,
+      $campaign_id, $criterion_id
+    ]);
+}
+
+# Returns the lift_measurement_flight resource name for the specified components.
+sub lift_measurement_flight {
+  my ($customer_id, $lift_measurement_configuration_id,
+    $lift_measurement_flight_id)
+    = @_;
+
+  my $path_template =
+'customers/{customer_id}/liftMeasurementFlights/{lift_measurement_configuration_id}~{lift_measurement_flight_id}';
+
+  return expand_path_template(
+    $path_template,
+    [
+      $customer_id, $lift_measurement_configuration_id,
+      $lift_measurement_flight_id
+    ]);
+}
+
+# Returns the lift_measurement_gender resource name for the specified components.
+sub lift_measurement_gender {
+  my ($customer_id, $lift_measurement_configuration_id,
+    $campaign_id, $criterion_id)
+    = @_;
+
+  my $path_template =
+'customers/{customer_id}/liftMeasurementGenders/{lift_measurement_configuration_id}~{campaign_id}~{criterion_id}';
+
+  return expand_path_template(
+    $path_template,
+    [
+      $customer_id, $lift_measurement_configuration_id,
+      $campaign_id, $criterion_id
+    ]);
+}
+
+# Returns the lift_measurement_video resource name for the specified components.
+sub lift_measurement_video {
+  my ($customer_id, $lift_measurement_configuration_id,
+    $campaign_id, $external_video_id)
+    = @_;
+
+  my $path_template =
+'customers/{customer_id}/liftMeasurementVideos/{lift_measurement_configuration_id}~{campaign_id}~{external_video_id}';
+
+  return expand_path_template(
+    $path_template,
+    [
+      $customer_id, $lift_measurement_configuration_id,
+      $campaign_id, $external_video_id
+    ]);
+}
+
 # Returns the local_services_employee resource name for the specified components.
 sub local_services_employee {
   my ($customer_id, $gls_employee_id) = @_;

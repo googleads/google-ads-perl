@@ -12,16 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package Google::Ads::GoogleAds::V25::Enums::ContentCreatorInsightsSupplementalDataEnum;
+package Google::Ads::GoogleAds::V25::Enums::SentimentEnum;
 
 use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED          => "UNSPECIFIED",
-  UNKNOWN              => "UNKNOWN",
-  BRAND_SENTIMENT_DATA => "BRAND_SENTIMENT_DATA",
-  LOCAL_CREATOR_DATA   => "LOCAL_CREATOR_DATA"
+  UNSPECIFIED        => "UNSPECIFIED",
+  UNKNOWN            => "UNKNOWN",
+  SENTIMENT_NEUTRAL  => "SENTIMENT_NEUTRAL",
+  SENTIMENT_POSITIVE => "SENTIMENT_POSITIVE",
+  SENTIMENT_NEGATIVE => "SENTIMENT_NEGATIVE"
 ];
 
 1;

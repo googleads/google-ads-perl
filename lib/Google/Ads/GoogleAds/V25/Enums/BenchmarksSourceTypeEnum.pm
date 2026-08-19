@@ -20,7 +20,8 @@ use warnings;
 use Const::Exporter enums => [
   UNSPECIFIED       => "UNSPECIFIED",
   UNKNOWN           => "UNKNOWN",
-  INDUSTRY_VERTICAL => "INDUSTRY_VERTICAL"
+  INDUSTRY_VERTICAL => "INDUSTRY_VERTICAL",
+  CATEGORY          => "CATEGORY"
 ];
 
 1;
