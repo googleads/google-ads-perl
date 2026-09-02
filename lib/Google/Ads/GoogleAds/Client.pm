@@ -47,7 +47,6 @@ my %http_timeout_of : ATTR(:name<http_timeout> :default<>);
 my %http_retry_timing_of : ATTR(:name<http_retry_timing> :default<>);
 my %version_of : ATTR(:name<version> :default<>);
 my %die_on_faults_of : ATTR(:name<die_on_faults> :default<0>);
-my %use_cloud_org_for_api_access_of: ATTR(:name<use_cloud_org_for_api_access> :default<0>);
 
 my %properties_file_of : ATTR(:init_arg<properties_file> :default<>);
 my %services_of : ATTR(:name<services> :default<{}>);

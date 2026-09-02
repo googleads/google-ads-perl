@@ -242,10 +242,10 @@ sub _get_http_headers {
       "gccl/" . Google::Ads::GoogleAds::BaseService->VERSION,
       "rest/" . $LWP::UserAgent::Determined::VERSION)];
 
-  # Add the developer-token header if the client is not configured to
-  # use Google Cloud Organization for API access.
-  push @$headers, ("developer-token", $api_client->get_developer_token())
-    if !$api_client->get_use_cloud_org_for_api_access();
+  # Add the developer-token header if provided.
+  my $developer_token = $api_client->get_developer_token();
+  push @$headers, ("developer-token", $developer_token)
+    if $developer_token;
 
   my $login_customer_id = $api_client->get_login_customer_id();
   push @$headers, ("login-customer-id", $login_customer_id =~ s/-//gr)
