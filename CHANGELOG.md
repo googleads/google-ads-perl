@@ -1,3 +1,7 @@
+35.0.0 - 2026-09-09
+-------------------
+- Removed developer token validation while maintaining developer token functionality.
+
 34.0.0 - 2026-08-19
 -------------------
 - Added support for Google Ads API v25_1.
