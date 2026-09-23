@@ -23,22 +23,23 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    description              => $args->{description},
-    endDate                  => $args->{endDate},
-    experimentId             => $args->{experimentId},
-    goals                    => $args->{goals},
-    liftMeasurementConfig    => $args->{liftMeasurementConfig},
-    longRunningOperation     => $args->{longRunningOperation},
-    name                     => $args->{name},
+    description => $args->{description},
+    endDate => $args->{endDate},
+    experimentId => $args->{experimentId},
+    goals => $args->{goals},
+    liftMeasurementConfig => $args->{liftMeasurementConfig},
+    longRunningOperation => $args->{longRunningOperation},
+    name => $args->{name},
     optimizeAssetsExperiment => $args->{optimizeAssetsExperiment},
-    promoteStatus            => $args->{promoteStatus},
-    resourceName             => $args->{resourceName},
-    startDate                => $args->{startDate},
-    status                   => $args->{status},
-    suffix                   => $args->{suffix},
-    syncEnabled              => $args->{syncEnabled},
-    type                     => $args->{type},
-    videoExperiment          => $args->{videoExperiment}};
+    promoteStatus => $args->{promoteStatus},
+    resourceName => $args->{resourceName},
+    startDate => $args->{startDate},
+    status => $args->{status},
+    suffix => $args->{suffix},
+    syncEnabled => $args->{syncEnabled},
+    type => $args->{type},
+    videoExperiment => $args->{videoExperiment}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

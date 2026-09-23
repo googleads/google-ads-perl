@@ -23,21 +23,22 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    backgroundImageAsset       => $args->{backgroundImageAsset},
-    businessName               => $args->{businessName},
-    callToActionDescription    => $args->{callToActionDescription},
-    callToActionType           => $args->{callToActionType},
-    customDisclosure           => $args->{customDisclosure},
-    customQuestionFields       => $args->{customQuestionFields},
-    deliveryMethods            => $args->{deliveryMethods},
-    description                => $args->{description},
-    desiredIntent              => $args->{desiredIntent},
-    fields                     => $args->{fields},
-    headline                   => $args->{headline},
+    backgroundImageAsset => $args->{backgroundImageAsset},
+    businessName => $args->{businessName},
+    callToActionDescription => $args->{callToActionDescription},
+    callToActionType => $args->{callToActionType},
+    customDisclosure => $args->{customDisclosure},
+    customQuestionFields => $args->{customQuestionFields},
+    deliveryMethods => $args->{deliveryMethods},
+    description => $args->{description},
+    desiredIntent => $args->{desiredIntent},
+    fields => $args->{fields},
+    headline => $args->{headline},
     postSubmitCallToActionType => $args->{postSubmitCallToActionType},
-    postSubmitDescription      => $args->{postSubmitDescription},
-    postSubmitHeadline         => $args->{postSubmitHeadline},
-    privacyPolicyUrl           => $args->{privacyPolicyUrl}};
+    postSubmitDescription => $args->{postSubmitDescription},
+    postSubmitHeadline => $args->{postSubmitHeadline},
+    privacyPolicyUrl => $args->{privacyPolicyUrl}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

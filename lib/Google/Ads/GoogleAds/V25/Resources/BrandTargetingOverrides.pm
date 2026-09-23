@@ -22,8 +22,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 
 sub new {
   my ($class, $args) = @_;
-  my $self =
-    {ignoreExclusionsForShoppingAds => $args->{ignoreExclusionsForShoppingAds}};
+  my $self = {
+    ignoreExclusionsForShoppingAds => $args->{ignoreExclusionsForShoppingAds}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

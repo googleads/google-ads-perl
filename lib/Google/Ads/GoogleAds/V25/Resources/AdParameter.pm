@@ -24,9 +24,10 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     adGroupCriterion => $args->{adGroupCriterion},
-    insertionText    => $args->{insertionText},
-    parameterIndex   => $args->{parameterIndex},
-    resourceName     => $args->{resourceName}};
+    insertionText => $args->{insertionText},
+    parameterIndex => $args->{parameterIndex},
+    resourceName => $args->{resourceName}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

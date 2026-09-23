@@ -23,17 +23,18 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    campaignDuration          => $args->{campaignDuration},
+    campaignDuration => $args->{campaignDuration},
     cookieFrequencyCapSetting => $args->{cookieFrequencyCapSetting},
-    currencyCode              => $args->{currencyCode},
-    customerId                => $args->{customerId},
-    customerReachGroup        => $args->{customerReachGroup},
-    effectiveFrequencyLimit   => $args->{effectiveFrequencyLimit},
-    forecastMetricOptions     => $args->{forecastMetricOptions},
-    minEffectiveFrequency     => $args->{minEffectiveFrequency},
-    plannedProducts           => $args->{plannedProducts},
-    reachApplicationInfo      => $args->{reachApplicationInfo},
-    targeting                 => $args->{targeting}};
+    currencyCode => $args->{currencyCode},
+    customerId => $args->{customerId},
+    customerReachGroup => $args->{customerReachGroup},
+    effectiveFrequencyLimit => $args->{effectiveFrequencyLimit},
+    forecastMetricOptions => $args->{forecastMetricOptions},
+    minEffectiveFrequency => $args->{minEffectiveFrequency},
+    plannedProducts => $args->{plannedProducts},
+    reachApplicationInfo => $args->{reachApplicationInfo},
+    targeting => $args->{targeting}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

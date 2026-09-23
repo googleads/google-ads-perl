@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
-  KEYWORD        => "KEYWORD",
-  URL            => "URL",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  KEYWORD => "KEYWORD",
+  URL => "URL",
   PLACE_CATEGORY => "PLACE_CATEGORY",
-  APP            => "APP"
+  APP => "APP"
 ];
 
 1;

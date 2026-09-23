@@ -23,23 +23,24 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    address            => $args->{address},
-    androidAppLink     => $args->{androidAppLink},
-    category           => $args->{category},
+    address => $args->{address},
+    androidAppLink => $args->{androidAppLink},
+    category => $args->{category},
     contextualKeywords => $args->{contextualKeywords},
-    description        => $args->{description},
-    destinationName    => $args->{destinationName},
-    formattedPrice     => $args->{formattedPrice},
+    description => $args->{description},
+    destinationName => $args->{destinationName},
+    formattedPrice => $args->{formattedPrice},
     formattedSalePrice => $args->{formattedSalePrice},
-    imageUrl           => $args->{imageUrl},
-    iosAppLink         => $args->{iosAppLink},
-    iosAppStoreId      => $args->{iosAppStoreId},
-    price              => $args->{price},
-    propertyId         => $args->{propertyId},
-    propertyName       => $args->{propertyName},
-    salePrice          => $args->{salePrice},
+    imageUrl => $args->{imageUrl},
+    iosAppLink => $args->{iosAppLink},
+    iosAppStoreId => $args->{iosAppStoreId},
+    price => $args->{price},
+    propertyId => $args->{propertyId},
+    propertyName => $args->{propertyName},
+    salePrice => $args->{salePrice},
     similarPropertyIds => $args->{similarPropertyIds},
-    starRating         => $args->{starRating}};
+    starRating => $args->{starRating}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

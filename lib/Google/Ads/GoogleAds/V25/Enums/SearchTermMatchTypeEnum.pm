@@ -18,14 +18,14 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED     => "UNSPECIFIED",
-  UNKNOWN         => "UNKNOWN",
-  BROAD           => "BROAD",
-  EXACT           => "EXACT",
-  PHRASE          => "PHRASE",
-  NEAR_EXACT      => "NEAR_EXACT",
-  NEAR_PHRASE     => "NEAR_PHRASE",
-  AI_MAX          => "AI_MAX",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  BROAD => "BROAD",
+  EXACT => "EXACT",
+  PHRASE => "PHRASE",
+  NEAR_EXACT => "NEAR_EXACT",
+  NEAR_PHRASE => "NEAR_PHRASE",
+  AI_MAX => "AI_MAX",
   PERFORMANCE_MAX => "PERFORMANCE_MAX"
 ];
 

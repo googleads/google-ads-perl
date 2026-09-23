@@ -24,10 +24,11 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     adjustmentDateTime => $args->{adjustmentDateTime},
-    adjustmentType     => $args->{adjustmentType},
-    conversionAction   => $args->{conversionAction},
-    gclidDateTimePair  => $args->{gclidDateTimePair},
-    orderId            => $args->{orderId}};
+    adjustmentType => $args->{adjustmentType},
+    conversionAction => $args->{conversionAction},
+    gclidDateTimePair => $args->{gclidDateTimePair},
+    orderId => $args->{orderId}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

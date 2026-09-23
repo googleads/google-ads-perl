@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED           => "UNSPECIFIED",
-  UNKNOWN               => "UNKNOWN",
-  GOOGLE_ADS_API        => "GOOGLE_ADS_API",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  GOOGLE_ADS_API => "GOOGLE_ADS_API",
   GOOGLE_ADS_WEB_CLIENT => "GOOGLE_ADS_WEB_CLIENT",
-  ADS_DATA_CONNECTOR    => "ADS_DATA_CONNECTOR"
+  ADS_DATA_CONNECTOR => "ADS_DATA_CONNECTOR"
 ];
 
 1;

@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  PARENT       => "PARENT",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  PARENT => "PARENT",
   NOT_A_PARENT => "NOT_A_PARENT",
   UNDETERMINED => "UNDETERMINED"
 ];

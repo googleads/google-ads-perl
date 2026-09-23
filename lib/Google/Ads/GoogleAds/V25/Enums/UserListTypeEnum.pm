@@ -18,15 +18,15 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED          => "UNSPECIFIED",
-  UNKNOWN              => "UNKNOWN",
-  REMARKETING          => "REMARKETING",
-  LOGICAL              => "LOGICAL",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  REMARKETING => "REMARKETING",
+  LOGICAL => "LOGICAL",
   EXTERNAL_REMARKETING => "EXTERNAL_REMARKETING",
-  RULE_BASED           => "RULE_BASED",
-  SIMILAR              => "SIMILAR",
-  CRM_BASED            => "CRM_BASED",
-  LOOKALIKE            => "LOOKALIKE"
+  RULE_BASED => "RULE_BASED",
+  SIMILAR => "SIMILAR",
+  CRM_BASED => "CRM_BASED",
+  LOOKALIKE => "LOOKALIKE"
 ];
 
 1;

@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   SINGLE_CHANNEL => "SINGLE_CHANNEL",
-  MULTI_CHANNEL  => "MULTI_CHANNEL"
+  MULTI_CHANNEL => "MULTI_CHANNEL"
 ];
 
 1;

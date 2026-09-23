@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  NEXT_WEEK    => "NEXT_WEEK",
-  NEXT_MONTH   => "NEXT_MONTH",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  NEXT_WEEK => "NEXT_WEEK",
+  NEXT_MONTH => "NEXT_MONTH",
   NEXT_QUARTER => "NEXT_QUARTER"
 ];
 

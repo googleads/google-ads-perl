@@ -25,9 +25,10 @@ sub new {
   my $self = {
     averageCpaMicros => $args->{averageCpaMicros},
     averageCpcMicros => $args->{averageCpcMicros},
-    clicks           => $args->{clicks},
-    conversions      => $args->{conversions},
-    costMicros       => $args->{costMicros}};
+    clicks => $args->{clicks},
+    conversions => $args->{conversions},
+    costMicros => $args->{costMicros}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

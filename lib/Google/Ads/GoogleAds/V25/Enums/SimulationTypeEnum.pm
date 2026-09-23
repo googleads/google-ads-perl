@@ -18,16 +18,16 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED             => "UNSPECIFIED",
-  UNKNOWN                 => "UNKNOWN",
-  CPC_BID                 => "CPC_BID",
-  CPV_BID                 => "CPV_BID",
-  TARGET_CPA              => "TARGET_CPA",
-  BID_MODIFIER            => "BID_MODIFIER",
-  TARGET_ROAS             => "TARGET_ROAS",
-  PERCENT_CPC_BID         => "PERCENT_CPC_BID",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  CPC_BID => "CPC_BID",
+  CPV_BID => "CPV_BID",
+  TARGET_CPA => "TARGET_CPA",
+  BID_MODIFIER => "BID_MODIFIER",
+  TARGET_ROAS => "TARGET_ROAS",
+  PERCENT_CPC_BID => "PERCENT_CPC_BID",
   TARGET_IMPRESSION_SHARE => "TARGET_IMPRESSION_SHARE",
-  BUDGET                  => "BUDGET"
+  BUDGET => "BUDGET"
 ];
 
 1;

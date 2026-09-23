@@ -23,8 +23,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    resourceName    => $args->{resourceName},
-    sharedCriterion => $args->{sharedCriterion}};
+    resourceName => $args->{resourceName},
+    sharedCriterion => $args->{sharedCriterion}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

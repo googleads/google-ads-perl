@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  IN_STOCK     => "IN_STOCK",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  IN_STOCK => "IN_STOCK",
   OUT_OF_STOCK => "OUT_OF_STOCK",
-  PREORDER     => "PREORDER"
+  PREORDER => "PREORDER"
 ];
 
 1;

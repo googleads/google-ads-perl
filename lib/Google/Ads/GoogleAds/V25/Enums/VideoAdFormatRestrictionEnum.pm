@@ -18,8 +18,8 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED             => "UNSPECIFIED",
-  UNKNOWN                 => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   NON_SKIPPABLE_IN_STREAM => "NON_SKIPPABLE_IN_STREAM"
 ];
 

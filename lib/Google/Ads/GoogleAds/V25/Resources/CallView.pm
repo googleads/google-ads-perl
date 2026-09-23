@@ -23,15 +23,16 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    callDurationSeconds         => $args->{callDurationSeconds},
-    callStatus                  => $args->{callStatus},
+    callDurationSeconds => $args->{callDurationSeconds},
+    callStatus => $args->{callStatus},
     callTrackingDisplayLocation => $args->{callTrackingDisplayLocation},
-    callerAreaCode              => $args->{callerAreaCode},
-    callerCountryCode           => $args->{callerCountryCode},
-    endCallDateTime             => $args->{endCallDateTime},
-    resourceName                => $args->{resourceName},
-    startCallDateTime           => $args->{startCallDateTime},
-    type                        => $args->{type}};
+    callerAreaCode => $args->{callerAreaCode},
+    callerCountryCode => $args->{callerCountryCode},
+    endCallDateTime => $args->{endCallDateTime},
+    resourceName => $args->{resourceName},
+    startCallDateTime => $args->{startCallDateTime},
+    type => $args->{type}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

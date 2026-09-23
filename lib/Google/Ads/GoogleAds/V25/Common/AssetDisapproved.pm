@@ -22,8 +22,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 
 sub new {
   my ($class, $args) = @_;
-  my $self =
-    {offlineEvaluationErrorReasons => $args->{offlineEvaluationErrorReasons}};
+  my $self = {
+    offlineEvaluationErrorReasons => $args->{offlineEvaluationErrorReasons}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

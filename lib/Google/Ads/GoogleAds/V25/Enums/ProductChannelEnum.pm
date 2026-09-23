@@ -19,9 +19,9 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  ONLINE      => "ONLINE",
-  LOCAL       => "LOCAL"
+  UNKNOWN => "UNKNOWN",
+  ONLINE => "ONLINE",
+  LOCAL => "LOCAL"
 ];
 
 1;

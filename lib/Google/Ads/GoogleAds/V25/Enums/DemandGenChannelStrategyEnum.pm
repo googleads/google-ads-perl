@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED                     => "UNSPECIFIED",
-  UNKNOWN                         => "UNKNOWN",
-  ALL_CHANNELS                    => "ALL_CHANNELS",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  ALL_CHANNELS => "ALL_CHANNELS",
   ALL_OWNED_AND_OPERATED_CHANNELS => "ALL_OWNED_AND_OPERATED_CHANNELS"
 ];
 

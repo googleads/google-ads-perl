@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED       => "UNSPECIFIED",
-  UNKNOWN           => "UNKNOWN",
-  BOOKED            => "BOOKED",
-  HELD              => "HELD",
-  CAMPAIGN_ENDED    => "CAMPAIGN_ENDED",
-  HOLD_EXPIRED      => "HOLD_EXPIRED",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  BOOKED => "BOOKED",
+  HELD => "HELD",
+  CAMPAIGN_ENDED => "CAMPAIGN_ENDED",
+  HOLD_EXPIRED => "HOLD_EXPIRED",
   BOOKING_CANCELLED => "BOOKING_CANCELLED"
 ];
 

@@ -23,9 +23,10 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    assetFieldType    => $args->{assetFieldType},
-    assetSource       => $args->{assetSource},
-    policySummaryInfo => $args->{policySummaryInfo}};
+    assetFieldType => $args->{assetFieldType},
+    assetSource => $args->{assetSource},
+    policySummaryInfo => $args->{policySummaryInfo}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

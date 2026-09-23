@@ -18,13 +18,13 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED   => "UNSPECIFIED",
-  UNKNOWN       => "UNKNOWN",
-  IMAGE         => "IMAGE",
-  ICON          => "ICON",
-  MEDIA_BUNDLE  => "MEDIA_BUNDLE",
-  AUDIO         => "AUDIO",
-  VIDEO         => "VIDEO",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  IMAGE => "IMAGE",
+  ICON => "ICON",
+  MEDIA_BUNDLE => "MEDIA_BUNDLE",
+  AUDIO => "AUDIO",
+  VIDEO => "VIDEO",
   DYNAMIC_IMAGE => "DYNAMIC_IMAGE"
 ];
 

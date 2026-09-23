@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  MALE         => "MALE",
-  FEMALE       => "FEMALE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  MALE => "MALE",
+  FEMALE => "FEMALE",
   UNDETERMINED => "UNDETERMINED"
 ];
 

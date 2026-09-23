@@ -23,11 +23,10 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    enableBidAdjustmentsForLoyaltyMembers =>
-      $args->{enableBidAdjustmentsForLoyaltyMembers},
-    showTargetedLoyaltyMemberBenefitsInPla =>
-      $args->{showTargetedLoyaltyMemberBenefitsInPla},
-    valueSettingsOverride => $args->{valueSettingsOverride}};
+    enableBidAdjustmentsForLoyaltyMembers => $args->{enableBidAdjustmentsForLoyaltyMembers},
+    showTargetedLoyaltyMemberBenefitsInPla => $args->{showTargetedLoyaltyMemberBenefitsInPla},
+    valueSettingsOverride => $args->{valueSettingsOverride}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

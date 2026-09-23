@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  IN           => "IN",
-  IDENTITY     => "IDENTITY",
-  EQUALS       => "EQUALS",
-  AND          => "AND",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  IN => "IN",
+  IDENTITY => "IDENTITY",
+  EQUALS => "EQUALS",
+  AND => "AND",
   CONTAINS_ANY => "CONTAINS_ANY"
 ];
 

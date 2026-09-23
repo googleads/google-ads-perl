@@ -18,13 +18,13 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   GEO_LOCATION => "GEO_LOCATION",
-  DEVICE       => "DEVICE",
-  AUDIENCE     => "AUDIENCE",
+  DEVICE => "DEVICE",
+  AUDIENCE => "AUDIENCE",
   NO_CONDITION => "NO_CONDITION",
-  ITINERARY    => "ITINERARY"
+  ITINERARY => "ITINERARY"
 ];
 
 1;

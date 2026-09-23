@@ -18,14 +18,14 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   ADDRESS_LINE_1 => "ADDRESS_LINE_1",
   ADDRESS_LINE_2 => "ADDRESS_LINE_2",
-  CITY           => "CITY",
-  PROVINCE       => "PROVINCE",
-  POSTAL_CODE    => "POSTAL_CODE",
-  COUNTRY_CODE   => "COUNTRY_CODE"
+  CITY => "CITY",
+  PROVINCE => "PROVINCE",
+  POSTAL_CODE => "POSTAL_CODE",
+  COUNTRY_CODE => "COUNTRY_CODE"
 ];
 
 1;

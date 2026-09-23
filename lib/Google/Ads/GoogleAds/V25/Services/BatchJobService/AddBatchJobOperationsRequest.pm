@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     mutateOperations => $args->{mutateOperations},
-    resourceName     => $args->{resourceName},
-    sequenceToken    => $args->{sequenceToken}};
+    resourceName => $args->{resourceName},
+    sequenceToken => $args->{sequenceToken}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

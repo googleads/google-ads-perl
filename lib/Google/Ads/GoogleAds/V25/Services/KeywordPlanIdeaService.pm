@@ -19,53 +19,43 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub generate_ad_group_themes {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:generateAdGroupThemes';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::KeywordPlanIdeaService::GenerateAdGroupThemesResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::KeywordPlanIdeaService::GenerateAdGroupThemesResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate_keyword_forecast_metrics {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}:generateKeywordForecastMetrics';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::KeywordPlanIdeaService::GenerateKeywordForecastMetricsResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}:generateKeywordForecastMetrics';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::KeywordPlanIdeaService::GenerateKeywordForecastMetricsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate_keyword_historical_metrics {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}:generateKeywordHistoricalMetrics';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::KeywordPlanIdeaService::GenerateKeywordHistoricalMetricsResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}:generateKeywordHistoricalMetrics';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::KeywordPlanIdeaService::GenerateKeywordHistoricalMetricsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate_keyword_ideas {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:generateKeywordIdeas';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::KeywordPlanIdeaService::GenerateKeywordIdeaResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::KeywordPlanIdeaService::GenerateKeywordIdeaResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

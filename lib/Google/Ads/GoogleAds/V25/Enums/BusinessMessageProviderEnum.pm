@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED        => "UNSPECIFIED",
-  UNKNOWN            => "UNKNOWN",
-  WHATSAPP           => "WHATSAPP",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  WHATSAPP => "WHATSAPP",
   FACEBOOK_MESSENGER => "FACEBOOK_MESSENGER",
-  ZALO               => "ZALO"
+  ZALO => "ZALO"
 ];
 
 1;

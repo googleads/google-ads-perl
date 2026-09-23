@@ -24,16 +24,17 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     adIdToCopyImageFrom => $args->{adIdToCopyImageFrom},
-    data                => $args->{data},
-    imageAsset          => $args->{imageAsset},
-    imageUrl            => $args->{imageUrl},
-    mimeType            => $args->{mimeType},
-    name                => $args->{name},
-    pixelHeight         => $args->{pixelHeight},
-    pixelWidth          => $args->{pixelWidth},
-    previewImageUrl     => $args->{previewImageUrl},
-    previewPixelHeight  => $args->{previewPixelHeight},
-    previewPixelWidth   => $args->{previewPixelWidth}};
+    data => $args->{data},
+    imageAsset => $args->{imageAsset},
+    imageUrl => $args->{imageUrl},
+    mimeType => $args->{mimeType},
+    name => $args->{name},
+    pixelHeight => $args->{pixelHeight},
+    pixelWidth => $args->{pixelWidth},
+    previewImageUrl => $args->{previewImageUrl},
+    previewPixelHeight => $args->{previewPixelHeight},
+    previewPixelWidth => $args->{previewPixelWidth}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

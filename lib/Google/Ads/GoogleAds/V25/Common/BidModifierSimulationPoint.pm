@@ -23,20 +23,21 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    bidModifier                    => $args->{bidModifier},
-    biddableConversions            => $args->{biddableConversions},
-    biddableConversionsValue       => $args->{biddableConversionsValue},
-    clicks                         => $args->{clicks},
-    costMicros                     => $args->{costMicros},
-    impressions                    => $args->{impressions},
-    parentBiddableConversions      => $args->{parentBiddableConversions},
+    bidModifier => $args->{bidModifier},
+    biddableConversions => $args->{biddableConversions},
+    biddableConversionsValue => $args->{biddableConversionsValue},
+    clicks => $args->{clicks},
+    costMicros => $args->{costMicros},
+    impressions => $args->{impressions},
+    parentBiddableConversions => $args->{parentBiddableConversions},
     parentBiddableConversionsValue => $args->{parentBiddableConversionsValue},
-    parentClicks                   => $args->{parentClicks},
-    parentCostMicros               => $args->{parentCostMicros},
-    parentImpressions              => $args->{parentImpressions},
-    parentRequiredBudgetMicros     => $args->{parentRequiredBudgetMicros},
-    parentTopSlotImpressions       => $args->{parentTopSlotImpressions},
-    topSlotImpressions             => $args->{topSlotImpressions}};
+    parentClicks => $args->{parentClicks},
+    parentCostMicros => $args->{parentCostMicros},
+    parentImpressions => $args->{parentImpressions},
+    parentRequiredBudgetMicros => $args->{parentRequiredBudgetMicros},
+    parentTopSlotImpressions => $args->{parentTopSlotImpressions},
+    topSlotImpressions => $args->{topSlotImpressions}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

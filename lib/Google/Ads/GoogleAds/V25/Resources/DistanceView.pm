@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     distanceBucket => $args->{distanceBucket},
-    metricSystem   => $args->{metricSystem},
-    resourceName   => $args->{resourceName}};
+    metricSystem => $args->{metricSystem},
+    resourceName => $args->{resourceName}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

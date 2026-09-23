@@ -23,16 +23,17 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    channelId       => $args->{channelId},
-    channelName     => $args->{channelName},
-    channelUrl      => $args->{channelUrl},
-    commentsCount   => $args->{commentsCount},
-    likesCount      => $args->{likesCount},
-    publishDate     => $args->{publishDate},
-    thumbnailUrl    => $args->{thumbnailUrl},
+    channelId => $args->{channelId},
+    channelName => $args->{channelName},
+    channelUrl => $args->{channelUrl},
+    commentsCount => $args->{commentsCount},
+    likesCount => $args->{likesCount},
+    publishDate => $args->{publishDate},
+    thumbnailUrl => $args->{thumbnailUrl},
     videoProperties => $args->{videoProperties},
-    videoUrl        => $args->{videoUrl},
-    viewsCount      => $args->{viewsCount}};
+    videoUrl => $args->{videoUrl},
+    viewsCount => $args->{viewsCount}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

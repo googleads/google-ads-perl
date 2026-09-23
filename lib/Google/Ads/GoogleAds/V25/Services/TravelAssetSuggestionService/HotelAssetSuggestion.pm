@@ -24,12 +24,13 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     callToAction => $args->{callToAction},
-    finalUrl     => $args->{finalUrl},
-    hotelName    => $args->{hotelName},
-    imageAssets  => $args->{imageAssets},
-    placeId      => $args->{placeId},
-    status       => $args->{status},
-    textAssets   => $args->{textAssets}};
+    finalUrl => $args->{finalUrl},
+    hotelName => $args->{hotelName},
+    imageAssets => $args->{imageAssets},
+    placeId => $args->{placeId},
+    status => $args->{status},
+    textAssets => $args->{textAssets}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -24,10 +24,11 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     booleanValue => $args->{booleanValue},
-    doubleValue  => $args->{doubleValue},
-    floatValue   => $args->{floatValue},
-    int64Value   => $args->{int64Value},
-    stringValue  => $args->{stringValue}};
+    doubleValue => $args->{doubleValue},
+    floatValue => $args->{floatValue},
+    int64Value => $args->{int64Value},
+    stringValue => $args->{stringValue}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

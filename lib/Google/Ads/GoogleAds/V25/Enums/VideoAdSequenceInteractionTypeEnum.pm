@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED        => "UNSPECIFIED",
-  UNKNOWN            => "UNKNOWN",
-  PAID_VIEW          => "PAID_VIEW",
-  SKIP               => "SKIP",
-  IMPRESSION         => "IMPRESSION",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  PAID_VIEW => "PAID_VIEW",
+  SKIP => "SKIP",
+  IMPRESSION => "IMPRESSION",
   ENGAGED_IMPRESSION => "ENGAGED_IMPRESSION"
 ];
 

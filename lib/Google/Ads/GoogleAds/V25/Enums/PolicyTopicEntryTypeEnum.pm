@@ -18,13 +18,13 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED           => "UNSPECIFIED",
-  UNKNOWN               => "UNKNOWN",
-  PROHIBITED            => "PROHIBITED",
-  LIMITED               => "LIMITED",
-  FULLY_LIMITED         => "FULLY_LIMITED",
-  DESCRIPTIVE           => "DESCRIPTIVE",
-  BROADENING            => "BROADENING",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  PROHIBITED => "PROHIBITED",
+  LIMITED => "LIMITED",
+  FULLY_LIMITED => "FULLY_LIMITED",
+  DESCRIPTIVE => "DESCRIPTIVE",
+  BROADENING => "BROADENING",
   AREA_OF_INTEREST_ONLY => "AREA_OF_INTEREST_ONLY"
 ];
 

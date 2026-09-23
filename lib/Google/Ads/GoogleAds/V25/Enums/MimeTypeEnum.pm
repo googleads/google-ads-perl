@@ -18,19 +18,19 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  IMAGE_JPEG   => "IMAGE_JPEG",
-  IMAGE_GIF    => "IMAGE_GIF",
-  IMAGE_PNG    => "IMAGE_PNG",
-  FLASH        => "FLASH",
-  TEXT_HTML    => "TEXT_HTML",
-  PDF          => "PDF",
-  MSWORD       => "MSWORD",
-  MSEXCEL      => "MSEXCEL",
-  RTF          => "RTF",
-  AUDIO_WAV    => "AUDIO_WAV",
-  AUDIO_MP3    => "AUDIO_MP3",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  IMAGE_JPEG => "IMAGE_JPEG",
+  IMAGE_GIF => "IMAGE_GIF",
+  IMAGE_PNG => "IMAGE_PNG",
+  FLASH => "FLASH",
+  TEXT_HTML => "TEXT_HTML",
+  PDF => "PDF",
+  MSWORD => "MSWORD",
+  MSEXCEL => "MSEXCEL",
+  RTF => "RTF",
+  AUDIO_WAV => "AUDIO_WAV",
+  AUDIO_MP3 => "AUDIO_MP3",
   HTML5_AD_ZIP => "HTML5_AD_ZIP"
 ];
 

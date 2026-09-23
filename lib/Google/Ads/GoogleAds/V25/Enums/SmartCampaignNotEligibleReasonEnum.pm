@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED                       => "UNSPECIFIED",
-  UNKNOWN                           => "UNKNOWN",
-  ACCOUNT_ISSUE                     => "ACCOUNT_ISSUE",
-  BILLING_ISSUE                     => "BILLING_ISSUE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  ACCOUNT_ISSUE => "ACCOUNT_ISSUE",
+  BILLING_ISSUE => "BILLING_ISSUE",
   BUSINESS_PROFILE_LOCATION_REMOVED => "BUSINESS_PROFILE_LOCATION_REMOVED",
-  ALL_ADS_DISAPPROVED               => "ALL_ADS_DISAPPROVED"
+  ALL_ADS_DISAPPROVED => "ALL_ADS_DISAPPROVED"
 ];
 
 1;

@@ -19,10 +19,10 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  PENDING     => "PENDING",
-  DECLINED    => "DECLINED",
-  EXPIRED     => "EXPIRED"
+  UNKNOWN => "UNKNOWN",
+  PENDING => "PENDING",
+  DECLINED => "DECLINED",
+  EXPIRED => "EXPIRED"
 ];
 
 1;

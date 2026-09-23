@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED            => "UNSPECIFIED",
-  UNKNOWN                => "UNKNOWN",
-  MANUALLY_DIALED        => "MANUALLY_DIALED",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  MANUALLY_DIALED => "MANUALLY_DIALED",
   HIGH_END_MOBILE_SEARCH => "HIGH_END_MOBILE_SEARCH"
 ];
 

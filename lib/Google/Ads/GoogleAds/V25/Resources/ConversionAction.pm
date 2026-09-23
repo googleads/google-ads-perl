@@ -23,28 +23,29 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    appId                          => $args->{appId},
-    attributionModelSettings       => $args->{attributionModelSettings},
-    category                       => $args->{category},
+    appId => $args->{appId},
+    attributionModelSettings => $args->{attributionModelSettings},
+    category => $args->{category},
     clickThroughLookbackWindowDays => $args->{clickThroughLookbackWindowDays},
-    countingType                   => $args->{countingType},
-    firebaseSettings               => $args->{firebaseSettings},
-    googleAnalytics4Settings       => $args->{googleAnalytics4Settings},
-    id                             => $args->{id},
-    includeInConversionsMetric     => $args->{includeInConversionsMetric},
-    mobileAppVendor                => $args->{mobileAppVendor},
-    name                           => $args->{name},
-    origin                         => $args->{origin},
-    ownerCustomer                  => $args->{ownerCustomer},
-    phoneCallDurationSeconds       => $args->{phoneCallDurationSeconds},
-    primaryForGoal                 => $args->{primaryForGoal},
-    resourceName                   => $args->{resourceName},
-    status                         => $args->{status},
-    tagSnippets                    => $args->{tagSnippets},
+    countingType => $args->{countingType},
+    firebaseSettings => $args->{firebaseSettings},
+    googleAnalytics4Settings => $args->{googleAnalytics4Settings},
+    id => $args->{id},
+    includeInConversionsMetric => $args->{includeInConversionsMetric},
+    mobileAppVendor => $args->{mobileAppVendor},
+    name => $args->{name},
+    origin => $args->{origin},
+    ownerCustomer => $args->{ownerCustomer},
+    phoneCallDurationSeconds => $args->{phoneCallDurationSeconds},
+    primaryForGoal => $args->{primaryForGoal},
+    resourceName => $args->{resourceName},
+    status => $args->{status},
+    tagSnippets => $args->{tagSnippets},
     thirdPartyAppAnalyticsSettings => $args->{thirdPartyAppAnalyticsSettings},
-    type                           => $args->{type},
-    valueSettings                  => $args->{valueSettings},
-    viewThroughLookbackWindowDays  => $args->{viewThroughLookbackWindowDays}};
+    type => $args->{type},
+    valueSettings => $args->{valueSettings},
+    viewThroughLookbackWindowDays => $args->{viewThroughLookbackWindowDays}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED          => "UNSPECIFIED",
-  UNKNOWN              => "UNKNOWN",
-  ANYWHERE_ON_PAGE     => "ANYWHERE_ON_PAGE",
-  TOP_OF_PAGE          => "TOP_OF_PAGE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  ANYWHERE_ON_PAGE => "ANYWHERE_ON_PAGE",
+  TOP_OF_PAGE => "TOP_OF_PAGE",
   ABSOLUTE_TOP_OF_PAGE => "ABSOLUTE_TOP_OF_PAGE"
 ];
 

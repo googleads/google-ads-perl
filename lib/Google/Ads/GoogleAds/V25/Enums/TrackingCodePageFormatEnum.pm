@@ -19,9 +19,9 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  HTML        => "HTML",
-  AMP         => "AMP"
+  UNKNOWN => "UNKNOWN",
+  HTML => "HTML",
+  AMP => "AMP"
 ];
 
 1;

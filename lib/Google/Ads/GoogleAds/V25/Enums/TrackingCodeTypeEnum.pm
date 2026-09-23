@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED     => "UNSPECIFIED",
-  UNKNOWN         => "UNKNOWN",
-  WEBPAGE         => "WEBPAGE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  WEBPAGE => "WEBPAGE",
   WEBPAGE_ONCLICK => "WEBPAGE_ONCLICK",
-  CLICK_TO_CALL   => "CLICK_TO_CALL",
-  WEBSITE_CALL    => "WEBSITE_CALL"
+  CLICK_TO_CALL => "CLICK_TO_CALL",
+  WEBSITE_CALL => "WEBSITE_CALL"
 ];
 
 1;

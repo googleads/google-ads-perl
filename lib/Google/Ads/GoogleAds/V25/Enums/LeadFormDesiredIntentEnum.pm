@@ -19,8 +19,8 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  LOW_INTENT  => "LOW_INTENT",
+  UNKNOWN => "UNKNOWN",
+  LOW_INTENT => "LOW_INTENT",
   HIGH_INTENT => "HIGH_INTENT"
 ];
 

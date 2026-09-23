@@ -23,20 +23,24 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    adStrength              => $args->{adStrength},
-    assetCoverage           => $args->{assetCoverage},
-    campaign                => $args->{campaign},
-    finalMobileUrls         => $args->{finalMobileUrls},
-    finalUrls               => $args->{finalUrls},
+    adStrength => $args->{adStrength},
+    assetCoverage => $args->{assetCoverage},
+    campaign => $args->{campaign},
+    finalMobileUrls => $args->{finalMobileUrls},
+    finalUrlSuffix => $args->{finalUrlSuffix},
+    finalUrls => $args->{finalUrls},
     googleLocalServicesInfo => $args->{googleLocalServicesInfo},
-    id                      => $args->{id},
-    name                    => $args->{name},
-    path1                   => $args->{path1},
-    path2                   => $args->{path2},
-    primaryStatus           => $args->{primaryStatus},
-    primaryStatusReasons    => $args->{primaryStatusReasons},
-    resourceName            => $args->{resourceName},
-    status                  => $args->{status}};
+    id => $args->{id},
+    name => $args->{name},
+    path1 => $args->{path1},
+    path2 => $args->{path2},
+    primaryStatus => $args->{primaryStatus},
+    primaryStatusReasons => $args->{primaryStatusReasons},
+    resourceName => $args->{resourceName},
+    status => $args->{status},
+    trackingUrlTemplate => $args->{trackingUrlTemplate},
+    urlCustomParameters => $args->{urlCustomParameters}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -23,21 +23,22 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    ad                 => $args->{ad},
-    adGroup            => $args->{adGroup},
-    adGroupAd          => $args->{adGroupAd},
-    adGroupAsset       => $args->{adGroupAsset},
+    ad => $args->{ad},
+    adGroup => $args->{adGroup},
+    adGroupAd => $args->{adGroupAd},
+    adGroupAsset => $args->{adGroupAsset},
     adGroupBidModifier => $args->{adGroupBidModifier},
-    adGroupCriterion   => $args->{adGroupCriterion},
-    asset              => $args->{asset},
-    assetSet           => $args->{assetSet},
-    assetSetAsset      => $args->{assetSetAsset},
-    campaign           => $args->{campaign},
-    campaignAsset      => $args->{campaignAsset},
-    campaignAssetSet   => $args->{campaignAssetSet},
-    campaignBudget     => $args->{campaignBudget},
-    campaignCriterion  => $args->{campaignCriterion},
-    customerAsset      => $args->{customerAsset}};
+    adGroupCriterion => $args->{adGroupCriterion},
+    asset => $args->{asset},
+    assetSet => $args->{assetSet},
+    assetSetAsset => $args->{assetSetAsset},
+    campaign => $args->{campaign},
+    campaignAsset => $args->{campaignAsset},
+    campaignAssetSet => $args->{campaignAssetSet},
+    campaignBudget => $args->{campaignBudget},
+    campaignCriterion => $args->{campaignCriterion},
+    customerAsset => $args->{customerAsset}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

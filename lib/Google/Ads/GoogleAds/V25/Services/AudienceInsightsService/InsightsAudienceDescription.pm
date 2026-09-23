@@ -24,9 +24,10 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     audienceDescription => $args->{audienceDescription},
-    audienceDimensions  => $args->{audienceDimensions},
-    countryLocations    => $args->{countryLocations},
-    marketingObjective  => $args->{marketingObjective}};
+    audienceDimensions => $args->{audienceDimensions},
+    countryLocations => $args->{countryLocations},
+    marketingObjective => $args->{marketingObjective}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

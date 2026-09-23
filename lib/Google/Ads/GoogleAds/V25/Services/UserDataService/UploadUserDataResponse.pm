@@ -24,7 +24,8 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     receivedOperationsCount => $args->{receivedOperationsCount},
-    uploadDateTime          => $args->{uploadDateTime}};
+    uploadDateTime => $args->{uploadDateTime}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

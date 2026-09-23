@@ -19,63 +19,53 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub generate_benchmarks_metrics {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:generateBenchmarksMetrics';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::BenchmarksService::GenerateBenchmarksMetricsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::BenchmarksService::GenerateBenchmarksMetricsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_benchmarks_available_dates {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25:listBenchmarksAvailableDates';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::BenchmarksService::ListBenchmarksAvailableDatesResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::BenchmarksService::ListBenchmarksAvailableDatesResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_benchmarks_locations {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25:listBenchmarksLocations';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::BenchmarksService::ListBenchmarksLocationsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::BenchmarksService::ListBenchmarksLocationsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_benchmarks_products {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25:listBenchmarksProducts';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::BenchmarksService::ListBenchmarksProductsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::BenchmarksService::ListBenchmarksProductsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_benchmarks_sources {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25:listBenchmarksSources';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::BenchmarksService::ListBenchmarksSourcesResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::BenchmarksService::ListBenchmarksSourcesResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

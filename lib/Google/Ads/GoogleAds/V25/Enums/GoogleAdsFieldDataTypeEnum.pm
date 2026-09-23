@@ -18,19 +18,19 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED   => "UNSPECIFIED",
-  UNKNOWN       => "UNKNOWN",
-  BOOLEAN       => "BOOLEAN",
-  DATE          => "DATE",
-  DOUBLE        => "DOUBLE",
-  ENUM          => "ENUM",
-  FLOAT         => "FLOAT",
-  INT32         => "INT32",
-  INT64         => "INT64",
-  MESSAGE       => "MESSAGE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  BOOLEAN => "BOOLEAN",
+  DATE => "DATE",
+  DOUBLE => "DOUBLE",
+  ENUM => "ENUM",
+  FLOAT => "FLOAT",
+  INT32 => "INT32",
+  INT64 => "INT64",
+  MESSAGE => "MESSAGE",
   RESOURCE_NAME => "RESOURCE_NAME",
-  STRING        => "STRING",
-  UINT64        => "UINT64"
+  STRING => "STRING",
+  UINT64 => "UINT64"
 ];
 
 1;

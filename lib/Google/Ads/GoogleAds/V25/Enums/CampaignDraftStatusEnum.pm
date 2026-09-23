@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
-  PROPOSED       => "PROPOSED",
-  REMOVED        => "REMOVED",
-  PROMOTING      => "PROMOTING",
-  PROMOTED       => "PROMOTED",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  PROPOSED => "PROPOSED",
+  REMOVED => "REMOVED",
+  PROMOTING => "PROMOTING",
+  PROMOTED => "PROMOTED",
   PROMOTE_FAILED => "PROMOTE_FAILED"
 ];
 

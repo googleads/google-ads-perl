@@ -24,22 +24,23 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     alignedCampaignBudgetId => $args->{alignedCampaignBudgetId},
-    campaignCount           => $args->{campaignCount},
-    currencyCode            => $args->{currencyCode},
-    effectiveCurrencyCode   => $args->{effectiveCurrencyCode},
-    enhancedCpc             => $args->{enhancedCpc},
-    id                      => $args->{id},
+    campaignCount => $args->{campaignCount},
+    currencyCode => $args->{currencyCode},
+    effectiveCurrencyCode => $args->{effectiveCurrencyCode},
+    enhancedCpc => $args->{enhancedCpc},
+    id => $args->{id},
     maximizeConversionValue => $args->{maximizeConversionValue},
-    maximizeConversions     => $args->{maximizeConversions},
-    name                    => $args->{name},
+    maximizeConversions => $args->{maximizeConversions},
+    name => $args->{name},
     nonRemovedCampaignCount => $args->{nonRemovedCampaignCount},
-    resourceName            => $args->{resourceName},
-    status                  => $args->{status},
-    targetCpa               => $args->{targetCpa},
-    targetImpressionShare   => $args->{targetImpressionShare},
-    targetRoas              => $args->{targetRoas},
-    targetSpend             => $args->{targetSpend},
-    type                    => $args->{type}};
+    resourceName => $args->{resourceName},
+    status => $args->{status},
+    targetCpa => $args->{targetCpa},
+    targetImpressionShare => $args->{targetImpressionShare},
+    targetRoas => $args->{targetRoas},
+    targetSpend => $args->{targetSpend},
+    type => $args->{type}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

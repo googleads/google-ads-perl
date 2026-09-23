@@ -19,39 +19,33 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub apply {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/recommendations:apply';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::RecommendationService::ApplyRecommendationResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::RecommendationService::ApplyRecommendationResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub dismiss {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/recommendations:dismiss';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::RecommendationService::DismissRecommendationResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::RecommendationService::DismissRecommendationResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/recommendations:generate';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::RecommendationService::GenerateRecommendationsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::RecommendationService::GenerateRecommendationsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

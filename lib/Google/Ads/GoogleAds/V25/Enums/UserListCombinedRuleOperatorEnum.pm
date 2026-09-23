@@ -19,9 +19,9 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  AND         => "AND",
-  AND_NOT     => "AND_NOT"
+  UNKNOWN => "UNKNOWN",
+  AND => "AND",
+  AND_NOT => "AND_NOT"
 ];
 
 1;

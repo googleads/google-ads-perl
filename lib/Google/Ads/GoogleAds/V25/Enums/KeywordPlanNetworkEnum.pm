@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED                => "UNSPECIFIED",
-  UNKNOWN                    => "UNKNOWN",
-  GOOGLE_SEARCH              => "GOOGLE_SEARCH",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  GOOGLE_SEARCH => "GOOGLE_SEARCH",
   GOOGLE_SEARCH_AND_PARTNERS => "GOOGLE_SEARCH_AND_PARTNERS"
 ];
 

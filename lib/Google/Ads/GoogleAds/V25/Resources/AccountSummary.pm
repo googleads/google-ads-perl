@@ -23,38 +23,28 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    adjustmentSummaries                   => $args->{adjustmentSummaries},
-    billingCorrectionSubtotalAmountMicros =>
-      $args->{billingCorrectionSubtotalAmountMicros},
-    billingCorrectionTaxAmountMicros =>
-      $args->{billingCorrectionTaxAmountMicros},
-    billingCorrectionTotalAmountMicros =>
-      $args->{billingCorrectionTotalAmountMicros},
-    couponAdjustmentSubtotalAmountMicros =>
-      $args->{couponAdjustmentSubtotalAmountMicros},
+    adjustmentSummaries => $args->{adjustmentSummaries},
+    billingCorrectionSubtotalAmountMicros => $args->{billingCorrectionSubtotalAmountMicros},
+    billingCorrectionTaxAmountMicros => $args->{billingCorrectionTaxAmountMicros},
+    billingCorrectionTotalAmountMicros => $args->{billingCorrectionTotalAmountMicros},
+    couponAdjustmentSubtotalAmountMicros => $args->{couponAdjustmentSubtotalAmountMicros},
     couponAdjustmentTaxAmountMicros => $args->{couponAdjustmentTaxAmountMicros},
-    couponAdjustmentTotalAmountMicros =>
-      $args->{couponAdjustmentTotalAmountMicros},
-    customer                                   => $args->{customer},
-    excessCreditAdjustmentSubtotalAmountMicros =>
-      $args->{excessCreditAdjustmentSubtotalAmountMicros},
-    excessCreditAdjustmentTaxAmountMicros =>
-      $args->{excessCreditAdjustmentTaxAmountMicros},
-    excessCreditAdjustmentTotalAmountMicros =>
-      $args->{excessCreditAdjustmentTotalAmountMicros},
-    exportChargeSubtotalAmountMicros =>
-      $args->{exportChargeSubtotalAmountMicros},
-    exportChargeTaxAmountMicros   => $args->{exportChargeTaxAmountMicros},
+    couponAdjustmentTotalAmountMicros => $args->{couponAdjustmentTotalAmountMicros},
+    customer => $args->{customer},
+    excessCreditAdjustmentSubtotalAmountMicros => $args->{excessCreditAdjustmentSubtotalAmountMicros},
+    excessCreditAdjustmentTaxAmountMicros => $args->{excessCreditAdjustmentTaxAmountMicros},
+    excessCreditAdjustmentTotalAmountMicros => $args->{excessCreditAdjustmentTotalAmountMicros},
+    exportChargeSubtotalAmountMicros => $args->{exportChargeSubtotalAmountMicros},
+    exportChargeTaxAmountMicros => $args->{exportChargeTaxAmountMicros},
     exportChargeTotalAmountMicros => $args->{exportChargeTotalAmountMicros},
-    regulatoryCostSummaries       => $args->{regulatoryCostSummaries},
-    regulatoryCostsSubtotalAmountMicros =>
-      $args->{regulatoryCostsSubtotalAmountMicros},
-    regulatoryCostsTaxAmountMicros   => $args->{regulatoryCostsTaxAmountMicros},
-    regulatoryCostsTotalAmountMicros =>
-      $args->{regulatoryCostsTotalAmountMicros},
+    regulatoryCostSummaries => $args->{regulatoryCostSummaries},
+    regulatoryCostsSubtotalAmountMicros => $args->{regulatoryCostsSubtotalAmountMicros},
+    regulatoryCostsTaxAmountMicros => $args->{regulatoryCostsTaxAmountMicros},
+    regulatoryCostsTotalAmountMicros => $args->{regulatoryCostsTotalAmountMicros},
     subtotalAmountMicros => $args->{subtotalAmountMicros},
-    taxAmountMicros      => $args->{taxAmountMicros},
-    totalAmountMicros    => $args->{totalAmountMicros}};
+    taxAmountMicros => $args->{taxAmountMicros},
+    totalAmountMicros => $args->{totalAmountMicros}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

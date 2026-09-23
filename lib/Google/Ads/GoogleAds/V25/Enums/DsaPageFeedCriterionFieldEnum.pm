@@ -19,9 +19,9 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  PAGE_URL    => "PAGE_URL",
-  LABEL       => "LABEL"
+  UNKNOWN => "UNKNOWN",
+  PAGE_URL => "PAGE_URL",
+  LABEL => "LABEL"
 ];
 
 1;

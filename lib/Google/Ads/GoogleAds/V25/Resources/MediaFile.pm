@@ -23,17 +23,18 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    audio        => $args->{audio},
-    fileSize     => $args->{fileSize},
-    id           => $args->{id},
-    image        => $args->{image},
-    mediaBundle  => $args->{mediaBundle},
-    mimeType     => $args->{mimeType},
-    name         => $args->{name},
+    audio => $args->{audio},
+    fileSize => $args->{fileSize},
+    id => $args->{id},
+    image => $args->{image},
+    mediaBundle => $args->{mediaBundle},
+    mimeType => $args->{mimeType},
+    name => $args->{name},
     resourceName => $args->{resourceName},
-    sourceUrl    => $args->{sourceUrl},
-    type         => $args->{type},
-    video        => $args->{video}};
+    sourceUrl => $args->{sourceUrl},
+    type => $args->{type},
+    video => $args->{video}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

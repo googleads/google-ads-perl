@@ -18,21 +18,21 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
-  INT64          => "INT64",
-  DOUBLE         => "DOUBLE",
-  STRING         => "STRING",
-  BOOLEAN        => "BOOLEAN",
-  URL            => "URL",
-  DATE_TIME      => "DATE_TIME",
-  INT64_LIST     => "INT64_LIST",
-  DOUBLE_LIST    => "DOUBLE_LIST",
-  STRING_LIST    => "STRING_LIST",
-  BOOLEAN_LIST   => "BOOLEAN_LIST",
-  URL_LIST       => "URL_LIST",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  INT64 => "INT64",
+  DOUBLE => "DOUBLE",
+  STRING => "STRING",
+  BOOLEAN => "BOOLEAN",
+  URL => "URL",
+  DATE_TIME => "DATE_TIME",
+  INT64_LIST => "INT64_LIST",
+  DOUBLE_LIST => "DOUBLE_LIST",
+  STRING_LIST => "STRING_LIST",
+  BOOLEAN_LIST => "BOOLEAN_LIST",
+  URL_LIST => "URL_LIST",
   DATE_TIME_LIST => "DATE_TIME_LIST",
-  PRICE          => "PRICE"
+  PRICE => "PRICE"
 ];
 
 1;

@@ -23,12 +23,12 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    coarseGrainedConversionValueMappings =>
-      $args->{coarseGrainedConversionValueMappings},
+    coarseGrainedConversionValueMappings => $args->{coarseGrainedConversionValueMappings},
     lockWindowCoarseConversionValue => $args->{lockWindowCoarseConversionValue},
-    lockWindowEvent                 => $args->{lockWindowEvent},
-    lockWindowFineConversionValue   => $args->{lockWindowFineConversionValue},
-    postbackSequenceIndex           => $args->{postbackSequenceIndex}};
+    lockWindowEvent => $args->{lockWindowEvent},
+    lockWindowFineConversionValue => $args->{lockWindowFineConversionValue},
+    postbackSequenceIndex => $args->{postbackSequenceIndex}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

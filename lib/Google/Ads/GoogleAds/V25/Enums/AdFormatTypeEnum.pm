@@ -18,22 +18,22 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED               => "UNSPECIFIED",
-  UNKNOWN                   => "UNKNOWN",
-  OTHER                     => "OTHER",
-  UNSEGMENTED               => "UNSEGMENTED",
-  INSTREAM_SKIPPABLE        => "INSTREAM_SKIPPABLE",
-  INSTREAM_NON_SKIPPABLE    => "INSTREAM_NON_SKIPPABLE",
-  INFEED                    => "INFEED",
-  BUMPER                    => "BUMPER",
-  OUTSTREAM                 => "OUTSTREAM",
-  MASTHEAD                  => "MASTHEAD",
-  AUDIO                     => "AUDIO",
-  SHORTS                    => "SHORTS",
-  PAUSE                     => "PAUSE",
-  VERTICAL_ADS_PROMOTION    => "VERTICAL_ADS_PROMOTION",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  OTHER => "OTHER",
+  UNSEGMENTED => "UNSEGMENTED",
+  INSTREAM_SKIPPABLE => "INSTREAM_SKIPPABLE",
+  INSTREAM_NON_SKIPPABLE => "INSTREAM_NON_SKIPPABLE",
+  INFEED => "INFEED",
+  BUMPER => "BUMPER",
+  OUTSTREAM => "OUTSTREAM",
+  MASTHEAD => "MASTHEAD",
+  AUDIO => "AUDIO",
+  SHORTS => "SHORTS",
+  PAUSE => "PAUSE",
+  VERTICAL_ADS_PROMOTION => "VERTICAL_ADS_PROMOTION",
   VERTICAL_ADS_BOOKING_LINK => "VERTICAL_ADS_BOOKING_LINK",
-  TEXT                      => "TEXT"
+  TEXT => "TEXT"
 ];
 
 1;

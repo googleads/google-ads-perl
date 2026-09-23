@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED          => "UNSPECIFIED",
-  UNKNOWN              => "UNKNOWN",
-  UI_PREVIEW           => "UI_PREVIEW",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  UI_PREVIEW => "UI_PREVIEW",
   YOUTUBE_LIVE_PREVIEW => "YOUTUBE_LIVE_PREVIEW"
 ];
 

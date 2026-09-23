@@ -18,14 +18,14 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
-  ACCEPTED         => "ACCEPTED",
-  REQUESTED        => "REQUESTED",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  ACCEPTED => "ACCEPTED",
+  REQUESTED => "REQUESTED",
   PENDING_APPROVAL => "PENDING_APPROVAL",
-  REVOKED          => "REVOKED",
-  REJECTED         => "REJECTED",
-  EXPIRED          => "EXPIRED"
+  REVOKED => "REVOKED",
+  REJECTED => "REJECTED",
+  EXPIRED => "EXPIRED"
 ];
 
 1;

@@ -19,14 +19,14 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  ENABLED     => "ENABLED",
-  REMOVED     => "REMOVED",
-  HALTED      => "HALTED",
-  PROMOTED    => "PROMOTED",
-  SETUP       => "SETUP",
-  INITIATED   => "INITIATED",
-  GRADUATED   => "GRADUATED"
+  UNKNOWN => "UNKNOWN",
+  ENABLED => "ENABLED",
+  REMOVED => "REMOVED",
+  HALTED => "HALTED",
+  PROMOTED => "PROMOTED",
+  SETUP => "SETUP",
+  INITIATED => "INITIATED",
+  GRADUATED => "GRADUATED"
 ];
 
 1;

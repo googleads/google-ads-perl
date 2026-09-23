@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED              => "UNSPECIFIED",
-  UNKNOWN                  => "UNKNOWN",
-  NO_SUMMARY_ROW           => "NO_SUMMARY_ROW",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  NO_SUMMARY_ROW => "NO_SUMMARY_ROW",
   SUMMARY_ROW_WITH_RESULTS => "SUMMARY_ROW_WITH_RESULTS",
-  SUMMARY_ROW_ONLY         => "SUMMARY_ROW_ONLY"
+  SUMMARY_ROW_ONLY => "SUMMARY_ROW_ONLY"
 ];
 
 1;

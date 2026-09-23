@@ -19,8 +19,8 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  ASSET_ID    => "ASSET_ID"
+  UNKNOWN => "UNKNOWN",
+  ASSET_ID => "ASSET_ID"
 ];
 
 1;

@@ -18,13 +18,13 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED   => "UNSPECIFIED",
-  UNKNOWN       => "UNKNOWN",
-  PENDING       => "PENDING",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  PENDING => "PENDING",
   APPROVED_HELD => "APPROVED_HELD",
-  APPROVED      => "APPROVED",
-  CANCELLED     => "CANCELLED",
-  REJECTED      => "REJECTED"
+  APPROVED => "APPROVED",
+  CANCELLED => "CANCELLED",
+  REJECTED => "REJECTED"
 ];
 
 1;

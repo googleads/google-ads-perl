@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   DEMAND_GEN_ASSET => "DEMAND_GEN_ASSET",
-  ASSET            => "ASSET",
-  ASSET_UPLIFT     => "ASSET_UPLIFT"
+  ASSET => "ASSET",
+  ASSET_UPLIFT => "ASSET_UPLIFT"
 ];
 
 1;

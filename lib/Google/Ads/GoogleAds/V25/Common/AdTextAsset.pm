@@ -24,9 +24,10 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     assetPerformanceLabel => $args->{assetPerformanceLabel},
-    pinnedField           => $args->{pinnedField},
-    policySummaryInfo     => $args->{policySummaryInfo},
-    text                  => $args->{text}};
+    pinnedField => $args->{pinnedField},
+    policySummaryInfo => $args->{policySummaryInfo},
+    text => $args->{text}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  CLICK        => "CLICK",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  CLICK => "CLICK",
   ENGAGED_VIEW => "ENGAGED_VIEW",
-  VIEW         => "VIEW"
+  VIEW => "VIEW"
 ];
 
 1;

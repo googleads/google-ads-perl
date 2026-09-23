@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     benchmarksSourceType => $args->{benchmarksSourceType},
-    categoryInfo         => $args->{categoryInfo},
-    industryVerticalInfo => $args->{industryVerticalInfo}};
+    categoryInfo => $args->{categoryInfo},
+    industryVerticalInfo => $args->{industryVerticalInfo}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

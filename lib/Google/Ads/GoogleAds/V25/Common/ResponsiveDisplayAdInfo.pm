@@ -23,23 +23,24 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    accentColor           => $args->{accentColor},
-    allowFlexibleColor    => $args->{allowFlexibleColor},
-    businessName          => $args->{businessName},
-    callToActionText      => $args->{callToActionText},
-    controlSpec           => $args->{controlSpec},
-    descriptions          => $args->{descriptions},
-    formatSetting         => $args->{formatSetting},
-    headlines             => $args->{headlines},
-    logoImages            => $args->{logoImages},
-    longHeadline          => $args->{longHeadline},
-    mainColor             => $args->{mainColor},
-    marketingImages       => $args->{marketingImages},
-    pricePrefix           => $args->{pricePrefix},
-    promoText             => $args->{promoText},
-    squareLogoImages      => $args->{squareLogoImages},
+    accentColor => $args->{accentColor},
+    allowFlexibleColor => $args->{allowFlexibleColor},
+    businessName => $args->{businessName},
+    callToActionText => $args->{callToActionText},
+    controlSpec => $args->{controlSpec},
+    descriptions => $args->{descriptions},
+    formatSetting => $args->{formatSetting},
+    headlines => $args->{headlines},
+    logoImages => $args->{logoImages},
+    longHeadline => $args->{longHeadline},
+    mainColor => $args->{mainColor},
+    marketingImages => $args->{marketingImages},
+    pricePrefix => $args->{pricePrefix},
+    promoText => $args->{promoText},
+    squareLogoImages => $args->{squareLogoImages},
     squareMarketingImages => $args->{squareMarketingImages},
-    youtubeVideos         => $args->{youtubeVideos}};
+    youtubeVideos => $args->{youtubeVideos}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

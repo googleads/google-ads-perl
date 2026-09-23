@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED           => "UNSPECIFIED",
-  UNKNOWN               => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   KANTAR_MILLWARD_BROWN => "KANTAR_MILLWARD_BROWN",
-  DYNATA                => "DYNATA",
-  INTAGE                => "INTAGE",
-  MACROMILL             => "MACROMILL"
+  DYNATA => "DYNATA",
+  INTAGE => "INTAGE",
+  MACROMILL => "MACROMILL"
 ];
 
 1;

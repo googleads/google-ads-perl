@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED     => "UNSPECIFIED",
-  UNKNOWN         => "UNKNOWN",
-  AUTO            => "AUTO",
-  INTEREST        => "INTEREST",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  AUTO => "AUTO",
+  INTEREST => "INTEREST",
   PURCHASE_INTENT => "PURCHASE_INTENT",
-  SEARCH          => "SEARCH"
+  SEARCH => "SEARCH"
 ];
 
 1;

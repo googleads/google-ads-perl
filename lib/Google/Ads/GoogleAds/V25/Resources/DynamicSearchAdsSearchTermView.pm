@@ -25,12 +25,13 @@ sub new {
   my $self = {
     hasMatchingKeyword => $args->{hasMatchingKeyword},
     hasNegativeKeyword => $args->{hasNegativeKeyword},
-    hasNegativeUrl     => $args->{hasNegativeUrl},
-    headline           => $args->{headline},
-    landingPage        => $args->{landingPage},
-    pageUrl            => $args->{pageUrl},
-    resourceName       => $args->{resourceName},
-    searchTerm         => $args->{searchTerm}};
+    hasNegativeUrl => $args->{hasNegativeUrl},
+    headline => $args->{headline},
+    landingPage => $args->{landingPage},
+    pageUrl => $args->{pageUrl},
+    resourceName => $args->{resourceName},
+    searchTerm => $args->{searchTerm}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

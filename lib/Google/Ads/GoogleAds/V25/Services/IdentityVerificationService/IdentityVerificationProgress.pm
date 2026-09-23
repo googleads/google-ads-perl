@@ -23,9 +23,10 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    actionUrl                    => $args->{actionUrl},
+    actionUrl => $args->{actionUrl},
     invitationLinkExpirationTime => $args->{invitationLinkExpirationTime},
-    programStatus                => $args->{programStatus}};
+    programStatus => $args->{programStatus}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

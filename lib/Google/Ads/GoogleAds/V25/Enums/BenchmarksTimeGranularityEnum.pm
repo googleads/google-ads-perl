@@ -19,10 +19,10 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  WEEK        => "WEEK",
-  MONTH       => "MONTH",
-  QUARTER     => "QUARTER"
+  UNKNOWN => "UNKNOWN",
+  WEEK => "WEEK",
+  MONTH => "MONTH",
+  QUARTER => "QUARTER"
 ];
 
 1;

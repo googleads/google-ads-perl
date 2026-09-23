@@ -23,27 +23,28 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    adGroup            => $args->{adGroup},
-    adGroupAd          => $args->{adGroupAd},
-    adGroupAsset       => $args->{adGroupAsset},
+    adGroup => $args->{adGroup},
+    adGroupAd => $args->{adGroupAd},
+    adGroupAsset => $args->{adGroupAsset},
     adGroupBidModifier => $args->{adGroupBidModifier},
-    adGroupCriterion   => $args->{adGroupCriterion},
-    asset              => $args->{asset},
-    assetGroup         => $args->{assetGroup},
-    assetSet           => $args->{assetSet},
-    campaign           => $args->{campaign},
-    campaignAsset      => $args->{campaignAsset},
-    campaignAssetSet   => $args->{campaignAssetSet},
-    campaignBudget     => $args->{campaignBudget},
-    campaignCriterion  => $args->{campaignCriterion},
-    campaignSharedSet  => $args->{campaignSharedSet},
-    combinedAudience   => $args->{combinedAudience},
-    customerAsset      => $args->{customerAsset},
+    adGroupCriterion => $args->{adGroupCriterion},
+    asset => $args->{asset},
+    assetGroup => $args->{assetGroup},
+    assetSet => $args->{assetSet},
+    campaign => $args->{campaign},
+    campaignAsset => $args->{campaignAsset},
+    campaignAssetSet => $args->{campaignAssetSet},
+    campaignBudget => $args->{campaignBudget},
+    campaignCriterion => $args->{campaignCriterion},
+    campaignSharedSet => $args->{campaignSharedSet},
+    combinedAudience => $args->{combinedAudience},
+    customerAsset => $args->{customerAsset},
     lastChangeDateTime => $args->{lastChangeDateTime},
-    resourceName       => $args->{resourceName},
-    resourceStatus     => $args->{resourceStatus},
-    resourceType       => $args->{resourceType},
-    sharedSet          => $args->{sharedSet}};
+    resourceName => $args->{resourceName},
+    resourceStatus => $args->{resourceStatus},
+    resourceType => $args->{resourceType},
+    sharedSet => $args->{sharedSet}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

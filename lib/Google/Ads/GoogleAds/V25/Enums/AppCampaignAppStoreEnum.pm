@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
-  APPLE_APP_STORE  => "APPLE_APP_STORE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  APPLE_APP_STORE => "APPLE_APP_STORE",
   GOOGLE_APP_STORE => "GOOGLE_APP_STORE"
 ];
 

@@ -19,11 +19,11 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  RESOURCE    => "RESOURCE",
-  ATTRIBUTE   => "ATTRIBUTE",
-  SEGMENT     => "SEGMENT",
-  METRIC      => "METRIC"
+  UNKNOWN => "UNKNOWN",
+  RESOURCE => "RESOURCE",
+  ATTRIBUTE => "ATTRIBUTE",
+  SEGMENT => "SEGMENT",
+  METRIC => "METRIC"
 ];
 
 1;

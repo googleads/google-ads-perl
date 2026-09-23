@@ -23,21 +23,22 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    accentColor          => $args->{accentColor},
-    allowFlexibleColor   => $args->{allowFlexibleColor},
-    businessName         => $args->{businessName},
-    callToActionText     => $args->{callToActionText},
-    description          => $args->{description},
-    formatSetting        => $args->{formatSetting},
-    logoImage            => $args->{logoImage},
-    longHeadline         => $args->{longHeadline},
-    mainColor            => $args->{mainColor},
-    marketingImage       => $args->{marketingImage},
-    pricePrefix          => $args->{pricePrefix},
-    promoText            => $args->{promoText},
-    shortHeadline        => $args->{shortHeadline},
-    squareLogoImage      => $args->{squareLogoImage},
-    squareMarketingImage => $args->{squareMarketingImage}};
+    accentColor => $args->{accentColor},
+    allowFlexibleColor => $args->{allowFlexibleColor},
+    businessName => $args->{businessName},
+    callToActionText => $args->{callToActionText},
+    description => $args->{description},
+    formatSetting => $args->{formatSetting},
+    logoImage => $args->{logoImage},
+    longHeadline => $args->{longHeadline},
+    mainColor => $args->{mainColor},
+    marketingImage => $args->{marketingImage},
+    pricePrefix => $args->{pricePrefix},
+    promoText => $args->{promoText},
+    shortHeadline => $args->{shortHeadline},
+    squareLogoImage => $args->{squareLogoImage},
+    squareMarketingImage => $args->{squareMarketingImage}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

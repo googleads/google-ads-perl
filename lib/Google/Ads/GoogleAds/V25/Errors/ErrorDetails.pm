@@ -25,12 +25,13 @@ sub new {
   my $self = {
     budgetPerDayMinimumErrorDetails => $args->{budgetPerDayMinimumErrorDetails},
     incompatibleCloGoalErrorDetails => $args->{incompatibleCloGoalErrorDetails},
-    policyFindingDetails            => $args->{policyFindingDetails},
-    policyViolationDetails          => $args->{policyViolationDetails},
-    quotaErrorDetails               => $args->{quotaErrorDetails},
-    reservationErrorDetails         => $args->{reservationErrorDetails},
-    resourceCountDetails            => $args->{resourceCountDetails},
-    unpublishedErrorCode            => $args->{unpublishedErrorCode}};
+    policyFindingDetails => $args->{policyFindingDetails},
+    policyViolationDetails => $args->{policyViolationDetails},
+    quotaErrorDetails => $args->{quotaErrorDetails},
+    reservationErrorDetails => $args->{reservationErrorDetails},
+    resourceCountDetails => $args->{resourceCountDetails},
+    unpublishedErrorCode => $args->{unpublishedErrorCode}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

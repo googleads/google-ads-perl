@@ -19,11 +19,11 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  BROAD       => "BROAD",
-  EXACT       => "EXACT",
-  PHRASE      => "PHRASE",
-  AI_MAX      => "AI_MAX"
+  UNKNOWN => "UNKNOWN",
+  BROAD => "BROAD",
+  EXACT => "EXACT",
+  PHRASE => "PHRASE",
+  AI_MAX => "AI_MAX"
 ];
 
 1;

@@ -19,7 +19,7 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
+  UNKNOWN => "UNKNOWN",
   FIRST_PARTY => "FIRST_PARTY",
   THIRD_PARTY => "THIRD_PARTY"
 ];

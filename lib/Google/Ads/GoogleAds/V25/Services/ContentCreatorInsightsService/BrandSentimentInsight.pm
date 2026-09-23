@@ -23,10 +23,11 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    hasInsufficientData    => $args->{hasInsufficientData},
-    month                  => $args->{month},
+    hasInsufficientData => $args->{hasInsufficientData},
+    month => $args->{month},
     sentimentDistributions => $args->{sentimentDistributions},
-    sentimentSummaries     => $args->{sentimentSummaries}};
+    sentimentSummaries => $args->{sentimentSummaries}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

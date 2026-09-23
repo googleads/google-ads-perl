@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
-  OPTIMIZE       => "OPTIMIZE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  OPTIMIZE => "OPTIMIZE",
   ROTATE_FOREVER => "ROTATE_FOREVER"
 ];
 

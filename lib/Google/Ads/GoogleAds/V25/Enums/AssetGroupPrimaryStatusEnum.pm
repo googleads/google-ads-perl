@@ -18,14 +18,14 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  ELIGIBLE     => "ELIGIBLE",
-  PAUSED       => "PAUSED",
-  REMOVED      => "REMOVED",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  ELIGIBLE => "ELIGIBLE",
+  PAUSED => "PAUSED",
+  REMOVED => "REMOVED",
   NOT_ELIGIBLE => "NOT_ELIGIBLE",
-  LIMITED      => "LIMITED",
-  PENDING      => "PENDING"
+  LIMITED => "LIMITED",
+  PENDING => "PENDING"
 ];
 
 1;

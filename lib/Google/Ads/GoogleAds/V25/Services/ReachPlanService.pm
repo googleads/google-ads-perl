@@ -19,75 +19,63 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub generate_conversion_rates {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25:generateConversionRates';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ReachPlanService::GenerateConversionRatesResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ReachPlanService::GenerateConversionRatesResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate_reach_forecast {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:generateReachForecast';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ReachPlanService::GenerateReachForecastResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ReachPlanService::GenerateReachForecastResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_plannable_locations {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25:listPlannableLocations';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ReachPlanService::ListPlannableLocationsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ReachPlanService::ListPlannableLocationsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_plannable_products {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25:listPlannableProducts';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ReachPlanService::ListPlannableProductsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ReachPlanService::ListPlannableProductsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_plannable_user_interests {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25:listPlannableUserInterests';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ReachPlanService::ListPlannableUserInterestsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ReachPlanService::ListPlannableUserInterestsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_plannable_user_lists {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25:listPlannableUserLists';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ReachPlanService::ListPlannableUserListsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ReachPlanService::ListPlannableUserListsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

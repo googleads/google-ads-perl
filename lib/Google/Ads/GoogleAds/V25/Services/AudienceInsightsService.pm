@@ -19,104 +19,83 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub generate_audience_composition_insights {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}:generateAudienceCompositionInsights';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateAudienceCompositionInsightsResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}:generateAudienceCompositionInsights';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateAudienceCompositionInsightsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate_audience_definition {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:generateAudienceDefinition';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateAudienceDefinitionResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateAudienceDefinitionResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate_audience_overlap_insights {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}:generateAudienceOverlapInsights';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateAudienceOverlapInsightsResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}:generateAudienceOverlapInsights';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateAudienceOverlapInsightsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate_insights_finder_report {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:generateInsightsFinderReport';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateInsightsFinderReportResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateInsightsFinderReportResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate_suggested_targeting_insights {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}:generateSuggestedTargetingInsights';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateSuggestedTargetingInsightsResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}:generateSuggestedTargetingInsights';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateSuggestedTargetingInsightsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub generate_targeting_suggestion_metrics {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}:generateTargetingSuggestionMetrics';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateTargetingSuggestionMetricsResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}:generateTargetingSuggestionMetrics';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::GenerateTargetingSuggestionMetricsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_insights_eligible_dates {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/audienceInsights:listInsightsEligibleDates';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::ListInsightsEligibleDatesResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::ListInsightsEligibleDatesResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub search_audience_insights_attributes {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}:searchAudienceInsightsAttributes';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::ListAudienceInsightsAttributesResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}:searchAudienceInsightsAttributes';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AudienceInsightsService::ListAudienceInsightsAttributesResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

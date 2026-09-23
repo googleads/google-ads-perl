@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED                => "UNSPECIFIED",
-  UNKNOWN                    => "UNKNOWN",
-  PHONE_NUMBER               => "PHONE_NUMBER",
-  COUNTRY_CODE               => "COUNTRY_CODE",
-  TRACKED                    => "TRACKED",
-  CONVERSION_TYPE_ID         => "CONVERSION_TYPE_ID",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  PHONE_NUMBER => "PHONE_NUMBER",
+  COUNTRY_CODE => "COUNTRY_CODE",
+  TRACKED => "TRACKED",
+  CONVERSION_TYPE_ID => "CONVERSION_TYPE_ID",
   CONVERSION_REPORTING_STATE => "CONVERSION_REPORTING_STATE"
 ];
 

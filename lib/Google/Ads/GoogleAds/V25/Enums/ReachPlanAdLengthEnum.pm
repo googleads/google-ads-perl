@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED               => "UNSPECIFIED",
-  UNKNOWN                   => "UNKNOWN",
-  SIX_SECONDS               => "SIX_SECONDS",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  SIX_SECONDS => "SIX_SECONDS",
   FIFTEEN_OR_TWENTY_SECONDS => "FIFTEEN_OR_TWENTY_SECONDS",
-  TWENTY_SECONDS_OR_MORE    => "TWENTY_SECONDS_OR_MORE"
+  TWENTY_SECONDS_OR_MORE => "TWENTY_SECONDS_OR_MORE"
 ];
 
 1;

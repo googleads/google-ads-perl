@@ -23,106 +23,72 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    adGroup                      => $args->{adGroup},
-    callAssetRecommendation      => $args->{callAssetRecommendation},
-    calloutAssetRecommendation   => $args->{calloutAssetRecommendation},
-    campaign                     => $args->{campaign},
-    campaignBudget               => $args->{campaignBudget},
+    adGroup => $args->{adGroup},
+    callAssetRecommendation => $args->{callAssetRecommendation},
+    calloutAssetRecommendation => $args->{calloutAssetRecommendation},
+    campaign => $args->{campaign},
+    campaignBudget => $args->{campaignBudget},
     campaignBudgetRecommendation => $args->{campaignBudgetRecommendation},
-    campaignSpecificAppGoalRecommendation =>
-      $args->{campaignSpecificAppGoalRecommendation},
-    campaigns                         => $args->{campaigns},
-    customAudienceOptInRecommendation =>
-      $args->{customAudienceOptInRecommendation},
-    dismissed                           => $args->{dismissed},
-    displayExpansionOptInRecommendation =>
-      $args->{displayExpansionOptInRecommendation},
-    dynamicImageExtensionOptInRecommendation =>
-      $args->{dynamicImageExtensionOptInRecommendation},
+    campaignSpecificAppGoalRecommendation => $args->{campaignSpecificAppGoalRecommendation},
+    campaigns => $args->{campaigns},
+    customAudienceOptInRecommendation => $args->{customAudienceOptInRecommendation},
+    dismissed => $args->{dismissed},
+    displayExpansionOptInRecommendation => $args->{displayExpansionOptInRecommendation},
+    dynamicImageExtensionOptInRecommendation => $args->{dynamicImageExtensionOptInRecommendation},
     enhancedCpcOptInRecommendation => $args->{enhancedCpcOptInRecommendation},
-    forecastingCampaignBudgetRecommendation =>
-      $args->{forecastingCampaignBudgetRecommendation},
-    forecastingSetTargetCpaRecommendation =>
-      $args->{forecastingSetTargetCpaRecommendation},
-    forecastingSetTargetRoasRecommendation =>
-      $args->{forecastingSetTargetRoasRecommendation},
-    impact                                   => $args->{impact},
-    improveDemandGenAdStrengthRecommendation =>
-      $args->{improveDemandGenAdStrengthRecommendation},
-    improveGoogleTagCoverageRecommendation =>
-      $args->{improveGoogleTagCoverageRecommendation},
-    improvePerformanceMaxAdStrengthRecommendation =>
-      $args->{improvePerformanceMaxAdStrengthRecommendation},
+    forecastingCampaignBudgetRecommendation => $args->{forecastingCampaignBudgetRecommendation},
+    forecastingSetTargetCpaRecommendation => $args->{forecastingSetTargetCpaRecommendation},
+    forecastingSetTargetRoasRecommendation => $args->{forecastingSetTargetRoasRecommendation},
+    impact => $args->{impact},
+    improveDemandGenAdStrengthRecommendation => $args->{improveDemandGenAdStrengthRecommendation},
+    improveGoogleTagCoverageRecommendation => $args->{improveGoogleTagCoverageRecommendation},
+    improvePerformanceMaxAdStrengthRecommendation => $args->{improvePerformanceMaxAdStrengthRecommendation},
     keywordMatchTypeRecommendation => $args->{keywordMatchTypeRecommendation},
-    keywordRecommendation          => $args->{keywordRecommendation},
-    leadFormAssetRecommendation    => $args->{leadFormAssetRecommendation},
-    lowerTargetRoasRecommendation  => $args->{lowerTargetRoasRecommendation},
-    marginalRoiCampaignBudgetRecommendation =>
-      $args->{marginalRoiCampaignBudgetRecommendation},
-    maximizeClicksOptInRecommendation =>
-      $args->{maximizeClicksOptInRecommendation},
-    maximizeConversionValueOptInRecommendation =>
-      $args->{maximizeConversionValueOptInRecommendation},
-    maximizeConversionsOptInRecommendation =>
-      $args->{maximizeConversionsOptInRecommendation},
-    migrateDynamicSearchAdsCampaignToPerformanceMaxRecommendation =>
-      $args->{migrateDynamicSearchAdsCampaignToPerformanceMaxRecommendation},
-    moveUnusedBudgetRecommendation   => $args->{moveUnusedBudgetRecommendation},
-    optimizeAdRotationRecommendation =>
-      $args->{optimizeAdRotationRecommendation},
-    performanceMaxFinalUrlOptInRecommendation =>
-      $args->{performanceMaxFinalUrlOptInRecommendation},
-    performanceMaxOptInRecommendation =>
-      $args->{performanceMaxOptInRecommendation},
-    raiseTargetCpaBidTooLowRecommendation =>
-      $args->{raiseTargetCpaBidTooLowRecommendation},
+    keywordRecommendation => $args->{keywordRecommendation},
+    leadFormAssetRecommendation => $args->{leadFormAssetRecommendation},
+    lowerTargetRoasPerformanceBidTooLowRecommendation => $args->{lowerTargetRoasPerformanceBidTooLowRecommendation},
+    lowerTargetRoasRecommendation => $args->{lowerTargetRoasRecommendation},
+    marginalRoiCampaignBudgetRecommendation => $args->{marginalRoiCampaignBudgetRecommendation},
+    maximizeClicksOptInRecommendation => $args->{maximizeClicksOptInRecommendation},
+    maximizeConversionValueOptInRecommendation => $args->{maximizeConversionValueOptInRecommendation},
+    maximizeConversionsOptInRecommendation => $args->{maximizeConversionsOptInRecommendation},
+    migrateDynamicSearchAdsCampaignToPerformanceMaxRecommendation => $args->{migrateDynamicSearchAdsCampaignToPerformanceMaxRecommendation},
+    moveUnusedBudgetRecommendation => $args->{moveUnusedBudgetRecommendation},
+    optimizeAdRotationRecommendation => $args->{optimizeAdRotationRecommendation},
+    performanceMaxFinalUrlOptInRecommendation => $args->{performanceMaxFinalUrlOptInRecommendation},
+    performanceMaxOptInRecommendation => $args->{performanceMaxOptInRecommendation},
+    raiseTargetCpaBidTooLowRecommendation => $args->{raiseTargetCpaBidTooLowRecommendation},
+    raiseTargetCpaPerformanceBidTooLowRecommendation => $args->{raiseTargetCpaPerformanceBidTooLowRecommendation},
     raiseTargetCpaRecommendation => $args->{raiseTargetCpaRecommendation},
-    refreshCustomerMatchListRecommendation =>
-      $args->{refreshCustomerMatchListRecommendation},
-    resourceName                          => $args->{resourceName},
-    responsiveSearchAdAssetRecommendation =>
-      $args->{responsiveSearchAdAssetRecommendation},
-    responsiveSearchAdImproveAdStrengthRecommendation =>
-      $args->{responsiveSearchAdImproveAdStrengthRecommendation},
-    responsiveSearchAdRecommendation =>
-      $args->{responsiveSearchAdRecommendation},
-    searchPartnersOptInRecommendation =>
-      $args->{searchPartnersOptInRecommendation},
-    setTargetCpaRecommendation        => $args->{setTargetCpaRecommendation},
-    setTargetRoasRecommendation       => $args->{setTargetRoasRecommendation},
-    shoppingAddAgeGroupRecommendation =>
-      $args->{shoppingAddAgeGroupRecommendation},
-    shoppingAddColorRecommendation  => $args->{shoppingAddColorRecommendation},
+    refreshCustomerMatchListRecommendation => $args->{refreshCustomerMatchListRecommendation},
+    resourceName => $args->{resourceName},
+    responsiveSearchAdAssetRecommendation => $args->{responsiveSearchAdAssetRecommendation},
+    responsiveSearchAdImproveAdStrengthRecommendation => $args->{responsiveSearchAdImproveAdStrengthRecommendation},
+    responsiveSearchAdRecommendation => $args->{responsiveSearchAdRecommendation},
+    searchPartnersOptInRecommendation => $args->{searchPartnersOptInRecommendation},
+    setTargetCpaRecommendation => $args->{setTargetCpaRecommendation},
+    setTargetRoasRecommendation => $args->{setTargetRoasRecommendation},
+    shoppingAddAgeGroupRecommendation => $args->{shoppingAddAgeGroupRecommendation},
+    shoppingAddColorRecommendation => $args->{shoppingAddColorRecommendation},
     shoppingAddGenderRecommendation => $args->{shoppingAddGenderRecommendation},
-    shoppingAddGtinRecommendation   => $args->{shoppingAddGtinRecommendation},
-    shoppingAddMoreIdentifiersRecommendation =>
-      $args->{shoppingAddMoreIdentifiersRecommendation},
-    shoppingAddProductsToCampaignRecommendation =>
-      $args->{shoppingAddProductsToCampaignRecommendation},
+    shoppingAddGtinRecommendation => $args->{shoppingAddGtinRecommendation},
+    shoppingAddMoreIdentifiersRecommendation => $args->{shoppingAddMoreIdentifiersRecommendation},
+    shoppingAddProductsToCampaignRecommendation => $args->{shoppingAddProductsToCampaignRecommendation},
     shoppingAddSizeRecommendation => $args->{shoppingAddSizeRecommendation},
-    shoppingFixDisapprovedProductsRecommendation =>
-      $args->{shoppingFixDisapprovedProductsRecommendation},
-    shoppingFixMerchantCenterAccountSuspensionWarningRecommendation =>
-      $args->{shoppingFixMerchantCenterAccountSuspensionWarningRecommendation},
-    shoppingFixSuspendedMerchantCenterAccountRecommendation =>
-      $args->{shoppingFixSuspendedMerchantCenterAccountRecommendation},
-    shoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation =>
-      $args->
-      {shoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation}
-    ,
-    shoppingTargetAllOffersRecommendation =>
-      $args->{shoppingTargetAllOffersRecommendation},
-    sitelinkAssetRecommendation   => $args->{sitelinkAssetRecommendation},
-    targetCpaOptInRecommendation  => $args->{targetCpaOptInRecommendation},
+    shoppingFixDisapprovedProductsRecommendation => $args->{shoppingFixDisapprovedProductsRecommendation},
+    shoppingFixMerchantCenterAccountSuspensionWarningRecommendation => $args->{shoppingFixMerchantCenterAccountSuspensionWarningRecommendation},
+    shoppingFixSuspendedMerchantCenterAccountRecommendation => $args->{shoppingFixSuspendedMerchantCenterAccountRecommendation},
+    shoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation => $args->{shoppingMigrateRegularShoppingCampaignOffersToPerformanceMaxRecommendation},
+    shoppingTargetAllOffersRecommendation => $args->{shoppingTargetAllOffersRecommendation},
+    sitelinkAssetRecommendation => $args->{sitelinkAssetRecommendation},
+    targetCpaOptInRecommendation => $args->{targetCpaOptInRecommendation},
     targetRoasOptInRecommendation => $args->{targetRoasOptInRecommendation},
-    textAdRecommendation          => $args->{textAdRecommendation},
-    type                          => $args->{type},
-    upgradeLocalCampaignToPerformanceMaxRecommendation =>
-      $args->{upgradeLocalCampaignToPerformanceMaxRecommendation},
-    upgradeSmartShoppingCampaignToPerformanceMaxRecommendation =>
-      $args->{upgradeSmartShoppingCampaignToPerformanceMaxRecommendation},
-    useBroadMatchKeywordRecommendation =>
-      $args->{useBroadMatchKeywordRecommendation}};
+    textAdRecommendation => $args->{textAdRecommendation},
+    type => $args->{type},
+    upgradeLocalCampaignToPerformanceMaxRecommendation => $args->{upgradeLocalCampaignToPerformanceMaxRecommendation},
+    upgradeSmartShoppingCampaignToPerformanceMaxRecommendation => $args->{upgradeSmartShoppingCampaignToPerformanceMaxRecommendation},
+    useBroadMatchKeywordRecommendation => $args->{useBroadMatchKeywordRecommendation}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

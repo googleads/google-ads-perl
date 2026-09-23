@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED          => "UNSPECIFIED",
-  UNKNOWN              => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   PRESENCE_OR_INTEREST => "PRESENCE_OR_INTEREST",
-  SEARCH_INTEREST      => "SEARCH_INTEREST",
-  PRESENCE             => "PRESENCE"
+  SEARCH_INTEREST => "SEARCH_INTEREST",
+  PRESENCE => "PRESENCE"
 ];
 
 1;

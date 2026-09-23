@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED         => "UNSPECIFIED",
-  UNKNOWN             => "UNKNOWN",
-  DISPLAY_URL         => "DISPLAY_URL",
-  FINAL_URL           => "FINAL_URL",
-  FINAL_MOBILE_URL    => "FINAL_MOBILE_URL",
-  TRACKING_URL        => "TRACKING_URL",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  DISPLAY_URL => "DISPLAY_URL",
+  FINAL_URL => "FINAL_URL",
+  FINAL_MOBILE_URL => "FINAL_MOBILE_URL",
+  TRACKING_URL => "TRACKING_URL",
   MOBILE_TRACKING_URL => "MOBILE_TRACKING_URL"
 ];
 

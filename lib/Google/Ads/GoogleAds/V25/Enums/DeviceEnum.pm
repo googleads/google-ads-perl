@@ -18,13 +18,13 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  MOBILE       => "MOBILE",
-  TABLET       => "TABLET",
-  DESKTOP      => "DESKTOP",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  MOBILE => "MOBILE",
+  TABLET => "TABLET",
+  DESKTOP => "DESKTOP",
   CONNECTED_TV => "CONNECTED_TV",
-  OTHER        => "OTHER"
+  OTHER => "OTHER"
 ];
 
 1;

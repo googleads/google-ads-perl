@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED   => "UNSPECIFIED",
-  UNKNOWN       => "UNKNOWN",
-  NO_INCENTIVE  => "NO_INCENTIVE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  NO_INCENTIVE => "NO_INCENTIVE",
   CYO_INCENTIVE => "CYO_INCENTIVE"
 ];
 

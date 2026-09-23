@@ -19,42 +19,33 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub create {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}/productLinkInvitations:create';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ProductLinkInvitationService::CreateProductLinkInvitationResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}/productLinkInvitations:create';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ProductLinkInvitationService::CreateProductLinkInvitationResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub remove {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}/productLinkInvitations:remove';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ProductLinkInvitationService::RemoveProductLinkInvitationResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}/productLinkInvitations:remove';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ProductLinkInvitationService::RemoveProductLinkInvitationResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub update {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}/productLinkInvitations:update';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ProductLinkInvitationService::UpdateProductLinkInvitationResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}/productLinkInvitations:update';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ProductLinkInvitationService::UpdateProductLinkInvitationResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

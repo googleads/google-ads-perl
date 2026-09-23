@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
-  ADDED          => "ADDED",
-  EXCLUDED       => "EXCLUDED",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  ADDED => "ADDED",
+  EXCLUDED => "EXCLUDED",
   ADDED_EXCLUDED => "ADDED_EXCLUDED",
-  NONE           => "NONE"
+  NONE => "NONE"
 ];
 
 1;

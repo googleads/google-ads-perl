@@ -23,22 +23,18 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    appConversionGoals                     => $args->{appConversionGoals},
-    campaignConversionValueLastFifteenDays =>
-      $args->{campaignConversionValueLastFifteenDays},
-    campaignConversionsLastFifteenDays =>
-      $args->{campaignConversionsLastFifteenDays},
-    campaignCostMicrosLastFifteenDays =>
-      $args->{campaignCostMicrosLastFifteenDays},
-    currentAutoGoals            => $args->{currentAutoGoals},
-    currentConversionGoals      => $args->{currentConversionGoals},
+    appConversionGoals => $args->{appConversionGoals},
+    campaignConversionValueLastFifteenDays => $args->{campaignConversionValueLastFifteenDays},
+    campaignConversionsLastFifteenDays => $args->{campaignConversionsLastFifteenDays},
+    campaignCostMicrosLastFifteenDays => $args->{campaignCostMicrosLastFifteenDays},
+    currentAutoGoals => $args->{currentAutoGoals},
+    currentConversionGoals => $args->{currentConversionGoals},
     currentCustomConversionGoal => $args->{currentCustomConversionGoal},
-    currentCustomGoal           => $args->{currentCustomGoal},
-    projectedConversionValueLastFifteenDays =>
-      $args->{projectedConversionValueLastFifteenDays},
-    projectedConversionsLastFifteenDays =>
-      $args->{projectedConversionsLastFifteenDays},
-    suggestedConversionGoals => $args->{suggestedConversionGoals}};
+    currentCustomGoal => $args->{currentCustomGoal},
+    projectedConversionValueLastFifteenDays => $args->{projectedConversionValueLastFifteenDays},
+    projectedConversionsLastFifteenDays => $args->{projectedConversionsLastFifteenDays},
+    suggestedConversionGoals => $args->{suggestedConversionGoals}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

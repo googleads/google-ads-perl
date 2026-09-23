@@ -19,9 +19,9 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  KEYWORD     => "KEYWORD",
-  URL         => "URL"
+  UNKNOWN => "UNKNOWN",
+  KEYWORD => "KEYWORD",
+  URL => "URL"
 ];
 
 1;

@@ -18,16 +18,16 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED     => "UNSPECIFIED",
-  UNKNOWN         => "UNKNOWN",
-  KEYWORD         => "KEYWORD",
-  AUDIENCE        => "AUDIENCE",
-  TOPIC           => "TOPIC",
-  GENDER          => "GENDER",
-  AGE_RANGE       => "AGE_RANGE",
-  PLACEMENT       => "PLACEMENT",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  KEYWORD => "KEYWORD",
+  AUDIENCE => "AUDIENCE",
+  TOPIC => "TOPIC",
+  GENDER => "GENDER",
+  AGE_RANGE => "AGE_RANGE",
+  PLACEMENT => "PLACEMENT",
   PARENTAL_STATUS => "PARENTAL_STATUS",
-  INCOME_RANGE    => "INCOME_RANGE"
+  INCOME_RANGE => "INCOME_RANGE"
 ];
 
 1;

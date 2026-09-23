@@ -23,36 +23,34 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    autoTaggingEnabled             => $args->{autoTaggingEnabled},
-    callReportingSetting           => $args->{callReportingSetting},
+    autoTaggingEnabled => $args->{autoTaggingEnabled},
+    callReportingSetting => $args->{callReportingSetting},
     containsEuPoliticalAdvertising => $args->{containsEuPoliticalAdvertising},
-    conversionTrackingSetting      => $args->{conversionTrackingSetting},
-    currencyCode                   => $args->{currencyCode},
-    customerAgreementSetting       => $args->{customerAgreementSetting},
-    descriptiveName                => $args->{descriptiveName},
-    finalUrlSuffix                 => $args->{finalUrlSuffix},
-    hasPartnersBadge               => $args->{hasPartnersBadge},
-    id                             => $args->{id},
-    imageAssetAutoMigrationDone    => $args->{imageAssetAutoMigrationDone},
-    imageAssetAutoMigrationDoneDateTime =>
-      $args->{imageAssetAutoMigrationDoneDateTime},
-    localServicesSettings          => $args->{localServicesSettings},
+    conversionTrackingSetting => $args->{conversionTrackingSetting},
+    currencyCode => $args->{currencyCode},
+    customerAgreementSetting => $args->{customerAgreementSetting},
+    descriptiveName => $args->{descriptiveName},
+    finalUrlSuffix => $args->{finalUrlSuffix},
+    hasPartnersBadge => $args->{hasPartnersBadge},
+    id => $args->{id},
+    imageAssetAutoMigrationDone => $args->{imageAssetAutoMigrationDone},
+    imageAssetAutoMigrationDoneDateTime => $args->{imageAssetAutoMigrationDoneDateTime},
+    localServicesSettings => $args->{localServicesSettings},
     locationAssetAutoMigrationDone => $args->{locationAssetAutoMigrationDone},
-    locationAssetAutoMigrationDoneDateTime =>
-      $args->{locationAssetAutoMigrationDoneDateTime},
-    manager                 => $args->{manager},
-    optimizationScore       => $args->{optimizationScore},
+    locationAssetAutoMigrationDoneDateTime => $args->{locationAssetAutoMigrationDoneDateTime},
+    manager => $args->{manager},
+    optimizationScore => $args->{optimizationScore},
     optimizationScoreWeight => $args->{optimizationScoreWeight},
-    payPerConversionEligibilityFailureReasons =>
-      $args->{payPerConversionEligibilityFailureReasons},
-    remarketingSetting          => $args->{remarketingSetting},
-    resourceName                => $args->{resourceName},
-    status                      => $args->{status},
-    testAccount                 => $args->{testAccount},
-    timeZone                    => $args->{timeZone},
-    trackingUrlTemplate         => $args->{trackingUrlTemplate},
+    payPerConversionEligibilityFailureReasons => $args->{payPerConversionEligibilityFailureReasons},
+    remarketingSetting => $args->{remarketingSetting},
+    resourceName => $args->{resourceName},
+    status => $args->{status},
+    testAccount => $args->{testAccount},
+    timeZone => $args->{timeZone},
+    trackingUrlTemplate => $args->{trackingUrlTemplate},
     videoBrandSafetySuitability => $args->{videoBrandSafetySuitability},
-    videoCustomer               => $args->{videoCustomer}};
+    videoCustomer => $args->{videoCustomer}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);
