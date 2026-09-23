@@ -19,9 +19,9 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  MILES       => "MILES",
-  KILOMETERS  => "KILOMETERS"
+  UNKNOWN => "UNKNOWN",
+  MILES => "MILES",
+  KILOMETERS => "KILOMETERS"
 ];
 
 1;

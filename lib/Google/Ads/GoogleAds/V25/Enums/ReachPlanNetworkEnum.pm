@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED                       => "UNSPECIFIED",
-  UNKNOWN                           => "UNKNOWN",
-  YOUTUBE                           => "YOUTUBE",
-  GOOGLE_VIDEO_PARTNERS             => "GOOGLE_VIDEO_PARTNERS",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  YOUTUBE => "YOUTUBE",
+  GOOGLE_VIDEO_PARTNERS => "GOOGLE_VIDEO_PARTNERS",
   YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS => "YOUTUBE_AND_GOOGLE_VIDEO_PARTNERS"
 ];
 

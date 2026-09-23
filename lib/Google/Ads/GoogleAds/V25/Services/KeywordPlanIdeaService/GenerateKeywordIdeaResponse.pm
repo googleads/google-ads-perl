@@ -24,9 +24,10 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     aggregateMetricResults => $args->{aggregateMetricResults},
-    nextPageToken          => $args->{nextPageToken},
-    results                => $args->{results},
-    totalSize              => $args->{totalSize}};
+    nextPageToken => $args->{nextPageToken},
+    results => $args->{results},
+    totalSize => $args->{totalSize}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

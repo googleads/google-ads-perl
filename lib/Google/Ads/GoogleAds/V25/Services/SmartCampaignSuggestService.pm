@@ -19,40 +19,33 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub suggest_keyword_themes {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:suggestKeywordThemes';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::SmartCampaignSuggestService::SuggestKeywordThemesResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::SmartCampaignSuggestService::SuggestKeywordThemesResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub suggest_smart_campaign_ad {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:suggestSmartCampaignAd';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::SmartCampaignSuggestService::SuggestSmartCampaignAdResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::SmartCampaignSuggestService::SuggestSmartCampaignAdResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub suggest_smart_campaign_budget_options {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}:suggestSmartCampaignBudgetOptions';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::SmartCampaignSuggestService::SuggestSmartCampaignBudgetOptionsResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}:suggestSmartCampaignBudgetOptions';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::SmartCampaignSuggestService::SuggestSmartCampaignBudgetOptionsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

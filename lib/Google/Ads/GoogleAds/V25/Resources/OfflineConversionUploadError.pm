@@ -23,16 +23,17 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    collectionSizeError             => $args->{collectionSizeError},
+    collectionSizeError => $args->{collectionSizeError},
     conversionAdjustmentUploadError => $args->{conversionAdjustmentUploadError},
-    conversionUploadError           => $args->{conversionUploadError},
-    dateError                       => $args->{dateError},
-    distinctError                   => $args->{distinctError},
-    fieldError                      => $args->{fieldError},
-    mutateError                     => $args->{mutateError},
-    notAllowlistedError             => $args->{notAllowlistedError},
-    stringFormatError               => $args->{stringFormatError},
-    stringLengthError               => $args->{stringLengthError}};
+    conversionUploadError => $args->{conversionUploadError},
+    dateError => $args->{dateError},
+    distinctError => $args->{distinctError},
+    fieldError => $args->{fieldError},
+    mutateError => $args->{mutateError},
+    notAllowlistedError => $args->{notAllowlistedError},
+    stringFormatError => $args->{stringFormatError},
+    stringLengthError => $args->{stringLengthError}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

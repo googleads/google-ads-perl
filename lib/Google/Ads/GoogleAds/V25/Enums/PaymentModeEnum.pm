@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
-  CLICKS           => "CLICKS",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  CLICKS => "CLICKS",
   CONVERSION_VALUE => "CONVERSION_VALUE",
-  CONVERSIONS      => "CONVERSIONS",
-  GUEST_STAY       => "GUEST_STAY"
+  CONVERSIONS => "CONVERSIONS",
+  GUEST_STAY => "GUEST_STAY"
 ];
 
 1;

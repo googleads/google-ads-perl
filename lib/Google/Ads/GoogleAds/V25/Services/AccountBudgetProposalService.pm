@@ -19,16 +19,13 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub mutate {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}/accountBudgetProposals:mutate';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AccountBudgetProposalService::MutateAccountBudgetProposalResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}/accountBudgetProposals:mutate';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AccountBudgetProposalService::MutateAccountBudgetProposalResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

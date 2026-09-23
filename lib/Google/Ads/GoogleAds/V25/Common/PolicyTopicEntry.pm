@@ -24,9 +24,10 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     constraints => $args->{constraints},
-    evidences   => $args->{evidences},
-    topic       => $args->{topic},
-    type        => $args->{type}};
+    evidences => $args->{evidences},
+    topic => $args->{topic},
+    type => $args->{type}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

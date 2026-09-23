@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
-  STANDARD       => "STANDARD",
-  FIXED_CPA      => "FIXED_CPA",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  STANDARD => "STANDARD",
+  FIXED_CPA => "FIXED_CPA",
   SMART_CAMPAIGN => "SMART_CAMPAIGN",
   LOCAL_SERVICES => "LOCAL_SERVICES"
 ];

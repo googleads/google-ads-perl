@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED        => "UNSPECIFIED",
-  UNKNOWN            => "UNKNOWN",
-  UNAVAILABLE        => "UNAVAILABLE",
-  WEBSITE            => "WEBSITE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  UNAVAILABLE => "UNAVAILABLE",
+  WEBSITE => "WEBSITE",
   MOBILE_APPLICATION => "MOBILE_APPLICATION"
 ];
 

@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED           => "UNSPECIFIED",
-  UNKNOWN               => "UNKNOWN",
-  DISAPPROVED           => "DISAPPROVED",
-  APPROVED_LIMITED      => "APPROVED_LIMITED",
-  APPROVED              => "APPROVED",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  DISAPPROVED => "DISAPPROVED",
+  APPROVED_LIMITED => "APPROVED_LIMITED",
+  APPROVED => "APPROVED",
   AREA_OF_INTEREST_ONLY => "AREA_OF_INTEREST_ONLY"
 ];
 

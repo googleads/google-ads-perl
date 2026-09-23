@@ -19,10 +19,10 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  DAY         => "DAY",
-  WEEK        => "WEEK",
-  MONTH       => "MONTH"
+  UNKNOWN => "UNKNOWN",
+  DAY => "DAY",
+  WEEK => "WEEK",
+  MONTH => "MONTH"
 ];
 
 1;

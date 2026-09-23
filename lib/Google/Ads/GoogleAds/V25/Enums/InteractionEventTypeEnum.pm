@@ -19,11 +19,11 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  CLICK       => "CLICK",
-  ENGAGEMENT  => "ENGAGEMENT",
-  VIDEO_VIEW  => "VIDEO_VIEW",
-  NONE        => "NONE"
+  UNKNOWN => "UNKNOWN",
+  CLICK => "CLICK",
+  ENGAGEMENT => "ENGAGEMENT",
+  VIDEO_VIEW => "VIDEO_VIEW",
+  NONE => "NONE"
 ];
 
 1;

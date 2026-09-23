@@ -24,17 +24,18 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     advertisingChannelTypes => $args->{advertisingChannelTypes},
-    campaigns               => $args->{campaigns},
-    conversionRateModifier  => $args->{conversionRateModifier},
-    description             => $args->{description},
-    devices                 => $args->{devices},
-    endDateTime             => $args->{endDateTime},
-    name                    => $args->{name},
-    resourceName            => $args->{resourceName},
-    scope                   => $args->{scope},
+    campaigns => $args->{campaigns},
+    conversionRateModifier => $args->{conversionRateModifier},
+    description => $args->{description},
+    devices => $args->{devices},
+    endDateTime => $args->{endDateTime},
+    name => $args->{name},
+    resourceName => $args->{resourceName},
+    scope => $args->{scope},
     seasonalityAdjustmentId => $args->{seasonalityAdjustmentId},
-    startDateTime           => $args->{startDateTime},
-    status                  => $args->{status}};
+    startDateTime => $args->{startDateTime},
+    status => $args->{status}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

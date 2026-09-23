@@ -19,71 +19,63 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub end_experiment {
-  my $self          = shift;
-  my $request_body  = shift;
-  my $http_method   = 'POST';
-  my $request_path  = 'v25/{+experiment}:endExperiment';
+  my $self = shift;
+  my $request_body = shift;
+  my $http_method = 'POST';
+  my $request_path = 'v25/{+experiment}:endExperiment';
   my $response_type = '';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub graduate_experiment {
-  my $self          = shift;
-  my $request_body  = shift;
-  my $http_method   = 'POST';
-  my $request_path  = 'v25/{+experiment}:graduateExperiment';
+  my $self = shift;
+  my $request_body = shift;
+  my $http_method = 'POST';
+  my $request_path = 'v25/{+experiment}:graduateExperiment';
   my $response_type = '';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub list_experiment_async_errors {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'GET';
+  my $http_method = 'GET';
   my $request_path = 'v25/{+resourceName}:listExperimentAsyncErrors';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ExperimentService::ListExperimentAsyncErrorsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ExperimentService::ListExperimentAsyncErrorsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub mutate {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/experiments:mutate';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ExperimentService::MutateExperimentsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ExperimentService::MutateExperimentsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub promote_experiment {
-  my $self          = shift;
-  my $request_body  = shift;
-  my $http_method   = 'POST';
-  my $request_path  = 'v25/{+resourceName}:promoteExperiment';
+  my $self = shift;
+  my $request_body = shift;
+  my $http_method = 'POST';
+  my $request_path = 'v25/{+resourceName}:promoteExperiment';
   my $response_type = 'Google::Ads::GoogleAds::LongRunning::Operation';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub schedule_experiment {
-  my $self          = shift;
-  my $request_body  = shift;
-  my $http_method   = 'POST';
-  my $request_path  = 'v25/{+resourceName}:scheduleExperiment';
+  my $self = shift;
+  my $request_body = shift;
+  my $http_method = 'POST';
+  my $request_path = 'v25/{+resourceName}:scheduleExperiment';
   my $response_type = 'Google::Ads::GoogleAds::LongRunning::Operation';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

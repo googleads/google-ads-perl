@@ -24,7 +24,8 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     cloGoalSubType1 => $args->{cloGoalSubType1},
-    cloGoalSubType2 => $args->{cloGoalSubType2}};
+    cloGoalSubType2 => $args->{cloGoalSubType2}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

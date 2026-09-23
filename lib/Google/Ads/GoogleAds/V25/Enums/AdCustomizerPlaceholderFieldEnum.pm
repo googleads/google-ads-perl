@@ -19,11 +19,11 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  INTEGER     => "INTEGER",
-  PRICE       => "PRICE",
-  DATE        => "DATE",
-  STRING      => "STRING"
+  UNKNOWN => "UNKNOWN",
+  INTEGER => "INTEGER",
+  PRICE => "PRICE",
+  DATE => "DATE",
+  STRING => "STRING"
 ];
 
 1;

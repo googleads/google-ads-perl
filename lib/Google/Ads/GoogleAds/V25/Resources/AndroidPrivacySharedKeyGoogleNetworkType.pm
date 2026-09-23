@@ -25,10 +25,11 @@ sub new {
   my $self = {
     androidPrivacyInteractionDate => $args->{androidPrivacyInteractionDate},
     androidPrivacyInteractionType => $args->{androidPrivacyInteractionType},
-    androidPrivacyNetworkType     => $args->{androidPrivacyNetworkType},
-    campaignId                    => $args->{campaignId},
-    resourceName                  => $args->{resourceName},
-    sharedNetworkTypeKey          => $args->{sharedNetworkTypeKey}};
+    androidPrivacyNetworkType => $args->{androidPrivacyNetworkType},
+    campaignId => $args->{campaignId},
+    resourceName => $args->{resourceName},
+    sharedNetworkTypeKey => $args->{sharedNetworkTypeKey}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

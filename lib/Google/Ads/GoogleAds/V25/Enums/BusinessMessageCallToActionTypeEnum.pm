@@ -19,15 +19,15 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  APPLY_NOW   => "APPLY_NOW",
-  BOOK_NOW    => "BOOK_NOW",
-  CONTACT_US  => "CONTACT_US",
-  GET_INFO    => "GET_INFO",
-  GET_OFFER   => "GET_OFFER",
-  GET_QUOTE   => "GET_QUOTE",
+  UNKNOWN => "UNKNOWN",
+  APPLY_NOW => "APPLY_NOW",
+  BOOK_NOW => "BOOK_NOW",
+  CONTACT_US => "CONTACT_US",
+  GET_INFO => "GET_INFO",
+  GET_OFFER => "GET_OFFER",
+  GET_QUOTE => "GET_QUOTE",
   GET_STARTED => "GET_STARTED",
-  LEARN_MORE  => "LEARN_MORE"
+  LEARN_MORE => "LEARN_MORE"
 ];
 
 1;

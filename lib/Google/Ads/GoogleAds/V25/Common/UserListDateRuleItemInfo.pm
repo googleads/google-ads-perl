@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     offsetInDays => $args->{offsetInDays},
-    operator     => $args->{operator},
-    value        => $args->{value}};
+    operator => $args->{operator},
+    value => $args->{value}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

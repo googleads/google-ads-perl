@@ -18,13 +18,13 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED             => "UNSPECIFIED",
-  UNKNOWN                 => "UNKNOWN",
-  AFFINITY                => "AFFINITY",
-  IN_MARKET               => "IN_MARKET",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  AFFINITY => "AFFINITY",
+  IN_MARKET => "IN_MARKET",
   MOBILE_APP_INSTALL_USER => "MOBILE_APP_INSTALL_USER",
-  VERTICAL_GEO            => "VERTICAL_GEO",
-  NEW_SMART_PHONE_USER    => "NEW_SMART_PHONE_USER"
+  VERTICAL_GEO => "VERTICAL_GEO",
+  NEW_SMART_PHONE_USER => "NEW_SMART_PHONE_USER"
 ];
 
 1;

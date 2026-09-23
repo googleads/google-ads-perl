@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     advanceBookingWindow => $args->{advanceBookingWindow},
-    travelLength         => $args->{travelLength},
-    travelStartDay       => $args->{travelStartDay}};
+    travelLength => $args->{travelLength},
+    travelStartDay => $args->{travelStartDay}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

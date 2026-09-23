@@ -24,7 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     assetAutomationStatus => $args->{assetAutomationStatus},
-    assetAutomationType   => $args->{assetAutomationType}};
+    assetAutomationType => $args->{assetAutomationType},
+    automatedVideoCrawlSetting => $args->{automatedVideoCrawlSetting}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

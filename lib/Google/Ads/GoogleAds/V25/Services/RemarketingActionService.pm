@@ -19,15 +19,13 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub mutate {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/remarketingActions:mutate';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::RemarketingActionService::MutateRemarketingActionsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::RemarketingActionService::MutateRemarketingActionsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

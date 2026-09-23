@@ -19,10 +19,10 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  FROM        => "FROM",
-  UP_TO       => "UP_TO",
-  AVERAGE     => "AVERAGE"
+  UNKNOWN => "UNKNOWN",
+  FROM => "FROM",
+  UP_TO => "UP_TO",
+  AVERAGE => "AVERAGE"
 ];
 
 1;

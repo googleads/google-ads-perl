@@ -24,16 +24,17 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     accountBudgetProposal => $args->{accountBudgetProposal},
-    creationDateTime      => $args->{creationDateTime},
-    endDateTime           => $args->{endDateTime},
-    endTimeType           => $args->{endTimeType},
-    name                  => $args->{name},
-    notes                 => $args->{notes},
-    proposalType          => $args->{proposalType},
-    purchaseOrderNumber   => $args->{purchaseOrderNumber},
-    spendingLimitMicros   => $args->{spendingLimitMicros},
-    spendingLimitType     => $args->{spendingLimitType},
-    startDateTime         => $args->{startDateTime}};
+    creationDateTime => $args->{creationDateTime},
+    endDateTime => $args->{endDateTime},
+    endTimeType => $args->{endTimeType},
+    name => $args->{name},
+    notes => $args->{notes},
+    proposalType => $args->{proposalType},
+    purchaseOrderNumber => $args->{purchaseOrderNumber},
+    spendingLimitMicros => $args->{spendingLimitMicros},
+    spendingLimitType => $args->{spendingLimitType},
+    startDateTime => $args->{startDateTime}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

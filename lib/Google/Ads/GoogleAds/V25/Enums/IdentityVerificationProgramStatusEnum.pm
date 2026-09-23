@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED         => "UNSPECIFIED",
-  UNKNOWN             => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   PENDING_USER_ACTION => "PENDING_USER_ACTION",
-  PENDING_REVIEW      => "PENDING_REVIEW",
-  SUCCESS             => "SUCCESS",
-  FAILURE             => "FAILURE"
+  PENDING_REVIEW => "PENDING_REVIEW",
+  SUCCESS => "SUCCESS",
+  FAILURE => "FAILURE"
 ];
 
 1;

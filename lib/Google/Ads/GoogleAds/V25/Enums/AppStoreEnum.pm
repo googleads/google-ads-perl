@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   APPLE_ITUNES => "APPLE_ITUNES",
-  GOOGLE_PLAY  => "GOOGLE_PLAY"
+  GOOGLE_PLAY => "GOOGLE_PLAY"
 ];
 
 1;

@@ -19,11 +19,11 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  EMERGING    => "EMERGING",
-  RISING      => "RISING",
-  SUSTAINED   => "SUSTAINED",
-  DECLINING   => "DECLINING"
+  UNKNOWN => "UNKNOWN",
+  EMERGING => "EMERGING",
+  RISING => "RISING",
+  SUSTAINED => "SUSTAINED",
+  DECLINING => "DECLINING"
 ];
 
 1;

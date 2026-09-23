@@ -18,8 +18,8 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED                  => "UNSPECIFIED",
-  UNKNOWN                      => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   AI_MAX_KEYWORDLESS_EXPANSION => "AI_MAX_KEYWORDLESS_EXPANSION"
 ];
 

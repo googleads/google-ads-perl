@@ -19,28 +19,23 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub enable_p_max_brand_guidelines {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
-  my $request_path =
-    'v25/customers/{+customerId}/campaigns:enablePMaxBrandGuidelines';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::CampaignService::EnablePMaxBrandGuidelinesResponse';
+  my $http_method = 'POST';
+  my $request_path = 'v25/customers/{+customerId}/campaigns:enablePMaxBrandGuidelines';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::CampaignService::EnablePMaxBrandGuidelinesResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub mutate {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/campaigns:mutate';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::CampaignService::MutateCampaignsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::CampaignService::MutateCampaignsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

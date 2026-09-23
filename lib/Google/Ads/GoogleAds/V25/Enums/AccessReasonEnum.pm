@@ -19,12 +19,12 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  OWNED       => "OWNED",
-  SHARED      => "SHARED",
-  LICENSED    => "LICENSED",
-  SUBSCRIBED  => "SUBSCRIBED",
-  AFFILIATED  => "AFFILIATED"
+  UNKNOWN => "UNKNOWN",
+  OWNED => "OWNED",
+  SHARED => "SHARED",
+  LICENSED => "LICENSED",
+  SUBSCRIBED => "SUBSCRIBED",
+  AFFILIATED => "AFFILIATED"
 ];
 
 1;

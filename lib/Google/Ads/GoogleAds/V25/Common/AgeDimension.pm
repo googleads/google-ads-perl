@@ -23,8 +23,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    ageRanges           => $args->{ageRanges},
-    includeUndetermined => $args->{includeUndetermined}};
+    ageRanges => $args->{ageRanges},
+    includeUndetermined => $args->{includeUndetermined}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

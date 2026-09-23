@@ -18,17 +18,17 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED   => "UNSPECIFIED",
-  UNKNOWN       => "UNKNOWN",
-  ELIGIBLE      => "ELIGIBLE",
-  PAUSED        => "PAUSED",
-  REMOVED       => "REMOVED",
-  ENDED         => "ENDED",
-  PENDING       => "PENDING",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  ELIGIBLE => "ELIGIBLE",
+  PAUSED => "PAUSED",
+  REMOVED => "REMOVED",
+  ENDED => "ENDED",
+  PENDING => "PENDING",
   MISCONFIGURED => "MISCONFIGURED",
-  LIMITED       => "LIMITED",
-  LEARNING      => "LEARNING",
-  NOT_ELIGIBLE  => "NOT_ELIGIBLE"
+  LIMITED => "LIMITED",
+  LEARNING => "LEARNING",
+  NOT_ELIGIBLE => "NOT_ELIGIBLE"
 ];
 
 1;

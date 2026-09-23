@@ -18,16 +18,16 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED       => "UNSPECIFIED",
-  UNKNOWN           => "UNKNOWN",
-  STORE             => "STORE",
-  ID                => "ID",
-  LINK_TEXT         => "LINK_TEXT",
-  URL               => "URL",
-  FINAL_URLS        => "FINAL_URLS",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  STORE => "STORE",
+  ID => "ID",
+  LINK_TEXT => "LINK_TEXT",
+  URL => "URL",
+  FINAL_URLS => "FINAL_URLS",
   FINAL_MOBILE_URLS => "FINAL_MOBILE_URLS",
-  TRACKING_URL      => "TRACKING_URL",
-  FINAL_URL_SUFFIX  => "FINAL_URL_SUFFIX"
+  TRACKING_URL => "TRACKING_URL",
+  FINAL_URL_SUFFIX => "FINAL_URL_SUFFIX"
 ];
 
 1;

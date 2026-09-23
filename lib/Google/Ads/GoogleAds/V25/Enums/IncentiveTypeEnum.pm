@@ -19,7 +19,7 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
+  UNKNOWN => "UNKNOWN",
   ACQUISITION => "ACQUISITION"
 ];
 

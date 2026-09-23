@@ -23,22 +23,23 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    channelAttributes         => $args->{channelAttributes},
+    channelAttributes => $args->{channelAttributes},
     channelAudienceAttributes => $args->{channelAudienceAttributes},
-    channelDescription        => $args->{channelDescription},
-    channelMetrics            => $args->{channelMetrics},
-    channelType               => $args->{channelType},
-    channelUrl                => $args->{channelUrl},
-    countryLocation           => $args->{countryLocation},
-    dataSharingConsentGiven   => $args->{dataSharingConsentGiven},
-    displayName               => $args->{displayName},
-    handle                    => $args->{handle},
-    languageDistributions     => $args->{languageDistributions},
-    publishDate               => $args->{publishDate},
-    relevanceScore            => $args->{relevanceScore},
-    thumbnailUrl              => $args->{thumbnailUrl},
-    topVideos                 => $args->{topVideos},
-    youtubeChannel            => $args->{youtubeChannel}};
+    channelDescription => $args->{channelDescription},
+    channelMetrics => $args->{channelMetrics},
+    channelType => $args->{channelType},
+    channelUrl => $args->{channelUrl},
+    countryLocation => $args->{countryLocation},
+    dataSharingConsentGiven => $args->{dataSharingConsentGiven},
+    displayName => $args->{displayName},
+    handle => $args->{handle},
+    languageDistributions => $args->{languageDistributions},
+    publishDate => $args->{publishDate},
+    relevanceScore => $args->{relevanceScore},
+    thumbnailUrl => $args->{thumbnailUrl},
+    topVideos => $args->{topVideos},
+    youtubeChannel => $args->{youtubeChannel}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

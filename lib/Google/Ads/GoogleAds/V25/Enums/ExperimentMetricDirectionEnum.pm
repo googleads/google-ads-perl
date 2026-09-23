@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED           => "UNSPECIFIED",
-  UNKNOWN               => "UNKNOWN",
-  NO_CHANGE             => "NO_CHANGE",
-  INCREASE              => "INCREASE",
-  DECREASE              => "DECREASE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  NO_CHANGE => "NO_CHANGE",
+  INCREASE => "INCREASE",
+  DECREASE => "DECREASE",
   NO_CHANGE_OR_INCREASE => "NO_CHANGE_OR_INCREASE",
   NO_CHANGE_OR_DECREASE => "NO_CHANGE_OR_DECREASE"
 ];

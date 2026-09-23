@@ -26,11 +26,12 @@ sub new {
     addressLine1 => $args->{addressLine1},
     addressLine2 => $args->{addressLine2},
     businessName => $args->{businessName},
-    city         => $args->{city},
-    countryCode  => $args->{countryCode},
-    phoneNumber  => $args->{phoneNumber},
-    postalCode   => $args->{postalCode},
-    province     => $args->{province}};
+    city => $args->{city},
+    countryCode => $args->{countryCode},
+    phoneNumber => $args->{phoneNumber},
+    postalCode => $args->{postalCode},
+    province => $args->{province}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

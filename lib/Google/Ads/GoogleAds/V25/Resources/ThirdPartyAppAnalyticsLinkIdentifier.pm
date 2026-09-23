@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     appAnalyticsProviderId => $args->{appAnalyticsProviderId},
-    appId                  => $args->{appId},
-    appVendor              => $args->{appVendor}};
+    appId => $args->{appId},
+    appVendor => $args->{appVendor}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

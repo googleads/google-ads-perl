@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
-  SUCCESS          => "SUCCESS",
-  HOTEL_NOT_FOUND  => "HOTEL_NOT_FOUND",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  SUCCESS => "SUCCESS",
+  HOTEL_NOT_FOUND => "HOTEL_NOT_FOUND",
   INVALID_PLACE_ID => "INVALID_PLACE_ID"
 ];
 

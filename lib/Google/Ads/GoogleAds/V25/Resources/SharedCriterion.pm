@@ -23,21 +23,22 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    brand                    => $args->{brand},
-    criterionId              => $args->{criterionId},
-    keyword                  => $args->{keyword},
-    mobileAppCategory        => $args->{mobileAppCategory},
-    mobileApplication        => $args->{mobileApplication},
-    negative                 => $args->{negative},
-    placement                => $args->{placement},
-    resourceName             => $args->{resourceName},
-    retailFilter             => $args->{retailFilter},
-    sharedSet                => $args->{sharedSet},
-    type                     => $args->{type},
+    brand => $args->{brand},
+    criterionId => $args->{criterionId},
+    keyword => $args->{keyword},
+    mobileAppCategory => $args->{mobileAppCategory},
+    mobileApplication => $args->{mobileApplication},
+    negative => $args->{negative},
+    placement => $args->{placement},
+    resourceName => $args->{resourceName},
+    retailFilter => $args->{retailFilter},
+    sharedSet => $args->{sharedSet},
+    type => $args->{type},
     verticalAdsItemGroupRule => $args->{verticalAdsItemGroupRule},
-    webpage                  => $args->{webpage},
-    youtubeChannel           => $args->{youtubeChannel},
-    youtubeVideo             => $args->{youtubeVideo}};
+    webpage => $args->{webpage},
+    youtubeChannel => $args->{youtubeChannel},
+    youtubeVideo => $args->{youtubeVideo}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

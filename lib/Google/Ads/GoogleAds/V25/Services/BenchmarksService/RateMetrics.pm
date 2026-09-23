@@ -23,21 +23,22 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    activeViewViewability   => $args->{activeViewViewability},
-    averageActiveViewCpm    => $args->{averageActiveViewCpm},
-    averageCpc              => $args->{averageCpc},
-    averageCpe              => $args->{averageCpe},
-    averageCpi              => $args->{averageCpi},
-    averageCpm              => $args->{averageCpm},
-    clickThroughRate        => $args->{clickThroughRate},
-    engagementRate          => $args->{engagementRate},
-    interactionRate         => $args->{interactionRate},
-    trueviewAverageCpv      => $args->{trueviewAverageCpv},
-    trueviewViewRate        => $args->{trueviewViewRate},
+    activeViewViewability => $args->{activeViewViewability},
+    averageActiveViewCpm => $args->{averageActiveViewCpm},
+    averageCpc => $args->{averageCpc},
+    averageCpe => $args->{averageCpe},
+    averageCpi => $args->{averageCpi},
+    averageCpm => $args->{averageCpm},
+    clickThroughRate => $args->{clickThroughRate},
+    engagementRate => $args->{engagementRate},
+    interactionRate => $args->{interactionRate},
+    trueviewAverageCpv => $args->{trueviewAverageCpv},
+    trueviewViewRate => $args->{trueviewViewRate},
     videoCompletionP100Rate => $args->{videoCompletionP100Rate},
-    videoCompletionP25Rate  => $args->{videoCompletionP25Rate},
-    videoCompletionP50Rate  => $args->{videoCompletionP50Rate},
-    videoCompletionP75Rate  => $args->{videoCompletionP75Rate}};
+    videoCompletionP25Rate => $args->{videoCompletionP25Rate},
+    videoCompletionP50Rate => $args->{videoCompletionP50Rate},
+    videoCompletionP75Rate => $args->{videoCompletionP75Rate}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

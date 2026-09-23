@@ -18,18 +18,18 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED               => "UNSPECIFIED",
-  UNKNOWN                   => "UNKNOWN",
-  NOT_APPLICABLE            => "NOT_APPLICABLE",
-  WEBSITE                   => "WEBSITE",
-  APP_DEEP_LINK             => "APP_DEEP_LINK",
-  APP_STORE                 => "APP_STORE",
-  PHONE_CALL                => "PHONE_CALL",
-  MAP_DIRECTIONS            => "MAP_DIRECTIONS",
-  LOCATION_LISTING          => "LOCATION_LISTING",
-  MESSAGE                   => "MESSAGE",
-  LEAD_FORM                 => "LEAD_FORM",
-  YOUTUBE                   => "YOUTUBE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  NOT_APPLICABLE => "NOT_APPLICABLE",
+  WEBSITE => "WEBSITE",
+  APP_DEEP_LINK => "APP_DEEP_LINK",
+  APP_STORE => "APP_STORE",
+  PHONE_CALL => "PHONE_CALL",
+  MAP_DIRECTIONS => "MAP_DIRECTIONS",
+  LOCATION_LISTING => "LOCATION_LISTING",
+  MESSAGE => "MESSAGE",
+  LEAD_FORM => "LEAD_FORM",
+  YOUTUBE => "YOUTUBE",
   UNMODELED_FOR_CONVERSIONS => "UNMODELED_FOR_CONVERSIONS"
 ];
 

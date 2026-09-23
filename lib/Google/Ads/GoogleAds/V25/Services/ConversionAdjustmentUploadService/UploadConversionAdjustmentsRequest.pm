@@ -24,10 +24,11 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     conversionAdjustments => $args->{conversionAdjustments},
-    customerId            => $args->{customerId},
-    jobId                 => $args->{jobId},
-    partialFailure        => $args->{partialFailure},
-    validateOnly          => $args->{validateOnly}};
+    customerId => $args->{customerId},
+    jobId => $args->{jobId},
+    partialFailure => $args->{partialFailure},
+    validateOnly => $args->{validateOnly}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

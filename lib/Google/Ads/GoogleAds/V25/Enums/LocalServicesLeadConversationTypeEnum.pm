@@ -19,14 +19,14 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  EMAIL       => "EMAIL",
-  MESSAGE     => "MESSAGE",
-  PHONE_CALL  => "PHONE_CALL",
-  SMS         => "SMS",
-  BOOKING     => "BOOKING",
-  WHATSAPP    => "WHATSAPP",
-  ADS_API     => "ADS_API"
+  UNKNOWN => "UNKNOWN",
+  EMAIL => "EMAIL",
+  MESSAGE => "MESSAGE",
+  PHONE_CALL => "PHONE_CALL",
+  SMS => "SMS",
+  BOOKING => "BOOKING",
+  WHATSAPP => "WHATSAPP",
+  ADS_API => "ADS_API"
 ];
 
 1;

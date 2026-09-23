@@ -19,17 +19,17 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  AZTEC       => "AZTEC",
-  CODABAR     => "CODABAR",
-  CODE39      => "CODE39",
-  CODE128     => "CODE128",
+  UNKNOWN => "UNKNOWN",
+  AZTEC => "AZTEC",
+  CODABAR => "CODABAR",
+  CODE39 => "CODE39",
+  CODE128 => "CODE128",
   DATA_MATRIX => "DATA_MATRIX",
-  EAN8        => "EAN8",
-  EAN13       => "EAN13",
-  ITF         => "ITF",
-  PDF417      => "PDF417",
-  UPC_A       => "UPC_A"
+  EAN8 => "EAN8",
+  EAN13 => "EAN13",
+  ITF => "ITF",
+  PDF417 => "PDF417",
+  UPC_A => "UPC_A"
 ];
 
 1;

@@ -23,9 +23,10 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    nextPageToken     => $args->{nextPageToken},
-    results           => $args->{results},
-    totalResultsCount => $args->{totalResultsCount}};
+    nextPageToken => $args->{nextPageToken},
+    results => $args->{results},
+    totalResultsCount => $args->{totalResultsCount}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

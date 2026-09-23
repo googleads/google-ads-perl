@@ -23,13 +23,12 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    estimatedAddClicksAtFirstPositionCpc =>
-      $args->{estimatedAddClicksAtFirstPositionCpc},
-    estimatedAddCostAtFirstPositionCpc =>
-      $args->{estimatedAddCostAtFirstPositionCpc},
-    firstPageCpcMicros     => $args->{firstPageCpcMicros},
+    estimatedAddClicksAtFirstPositionCpc => $args->{estimatedAddClicksAtFirstPositionCpc},
+    estimatedAddCostAtFirstPositionCpc => $args->{estimatedAddCostAtFirstPositionCpc},
+    firstPageCpcMicros => $args->{firstPageCpcMicros},
     firstPositionCpcMicros => $args->{firstPositionCpcMicros},
-    topOfPageCpcMicros     => $args->{topOfPageCpcMicros}};
+    topOfPageCpcMicros => $args->{topOfPageCpcMicros}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

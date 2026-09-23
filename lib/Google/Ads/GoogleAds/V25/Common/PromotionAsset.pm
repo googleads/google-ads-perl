@@ -23,23 +23,24 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    adScheduleTargets      => $args->{adScheduleTargets},
-    discountModifier       => $args->{discountModifier},
-    endDate                => $args->{endDate},
-    languageCode           => $args->{languageCode},
-    moneyAmountOff         => $args->{moneyAmountOff},
-    occasion               => $args->{occasion},
-    ordersOverAmount       => $args->{ordersOverAmount},
-    percentOff             => $args->{percentOff},
-    promotionBarcodeInfo   => $args->{promotionBarcodeInfo},
-    promotionCode          => $args->{promotionCode},
-    promotionQrCodeInfo    => $args->{promotionQrCodeInfo},
-    promotionTarget        => $args->{promotionTarget},
-    redemptionEndDate      => $args->{redemptionEndDate},
-    redemptionStartDate    => $args->{redemptionStartDate},
-    startDate              => $args->{startDate},
+    adScheduleTargets => $args->{adScheduleTargets},
+    discountModifier => $args->{discountModifier},
+    endDate => $args->{endDate},
+    languageCode => $args->{languageCode},
+    moneyAmountOff => $args->{moneyAmountOff},
+    occasion => $args->{occasion},
+    ordersOverAmount => $args->{ordersOverAmount},
+    percentOff => $args->{percentOff},
+    promotionBarcodeInfo => $args->{promotionBarcodeInfo},
+    promotionCode => $args->{promotionCode},
+    promotionQrCodeInfo => $args->{promotionQrCodeInfo},
+    promotionTarget => $args->{promotionTarget},
+    redemptionEndDate => $args->{redemptionEndDate},
+    redemptionStartDate => $args->{redemptionStartDate},
+    startDate => $args->{startDate},
     termsAndConditionsText => $args->{termsAndConditionsText},
-    termsAndConditionsUri  => $args->{termsAndConditionsUri}};
+    termsAndConditionsUri => $args->{termsAndConditionsUri}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -19,19 +19,19 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  JANUARY     => "JANUARY",
-  FEBRUARY    => "FEBRUARY",
-  MARCH       => "MARCH",
-  APRIL       => "APRIL",
-  MAY         => "MAY",
-  JUNE        => "JUNE",
-  JULY        => "JULY",
-  AUGUST      => "AUGUST",
-  SEPTEMBER   => "SEPTEMBER",
-  OCTOBER     => "OCTOBER",
-  NOVEMBER    => "NOVEMBER",
-  DECEMBER    => "DECEMBER"
+  UNKNOWN => "UNKNOWN",
+  JANUARY => "JANUARY",
+  FEBRUARY => "FEBRUARY",
+  MARCH => "MARCH",
+  APRIL => "APRIL",
+  MAY => "MAY",
+  JUNE => "JUNE",
+  JULY => "JULY",
+  AUGUST => "AUGUST",
+  SEPTEMBER => "SEPTEMBER",
+  OCTOBER => "OCTOBER",
+  NOVEMBER => "NOVEMBER",
+  DECEMBER => "DECEMBER"
 ];
 
 1;

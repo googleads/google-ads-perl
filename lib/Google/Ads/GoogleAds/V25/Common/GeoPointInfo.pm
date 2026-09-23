@@ -23,8 +23,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    latitudeInMicroDegrees  => $args->{latitudeInMicroDegrees},
-    longitudeInMicroDegrees => $args->{longitudeInMicroDegrees}};
+    latitudeInMicroDegrees => $args->{latitudeInMicroDegrees},
+    longitudeInMicroDegrees => $args->{longitudeInMicroDegrees}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

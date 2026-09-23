@@ -23,28 +23,29 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    accountBudget               => $args->{accountBudget},
-    approvalDateTime            => $args->{approvalDateTime},
-    approvedEndDateTime         => $args->{approvedEndDateTime},
-    approvedEndTimeType         => $args->{approvedEndTimeType},
+    accountBudget => $args->{accountBudget},
+    approvalDateTime => $args->{approvalDateTime},
+    approvedEndDateTime => $args->{approvedEndDateTime},
+    approvedEndTimeType => $args->{approvedEndTimeType},
     approvedSpendingLimitMicros => $args->{approvedSpendingLimitMicros},
-    approvedSpendingLimitType   => $args->{approvedSpendingLimitType},
-    approvedStartDateTime       => $args->{approvedStartDateTime},
-    billingSetup                => $args->{billingSetup},
-    creationDateTime            => $args->{creationDateTime},
-    id                          => $args->{id},
-    proposalType                => $args->{proposalType},
-    proposedEndDateTime         => $args->{proposedEndDateTime},
-    proposedEndTimeType         => $args->{proposedEndTimeType},
-    proposedName                => $args->{proposedName},
-    proposedNotes               => $args->{proposedNotes},
+    approvedSpendingLimitType => $args->{approvedSpendingLimitType},
+    approvedStartDateTime => $args->{approvedStartDateTime},
+    billingSetup => $args->{billingSetup},
+    creationDateTime => $args->{creationDateTime},
+    id => $args->{id},
+    proposalType => $args->{proposalType},
+    proposedEndDateTime => $args->{proposedEndDateTime},
+    proposedEndTimeType => $args->{proposedEndTimeType},
+    proposedName => $args->{proposedName},
+    proposedNotes => $args->{proposedNotes},
     proposedPurchaseOrderNumber => $args->{proposedPurchaseOrderNumber},
     proposedSpendingLimitMicros => $args->{proposedSpendingLimitMicros},
-    proposedSpendingLimitType   => $args->{proposedSpendingLimitType},
-    proposedStartDateTime       => $args->{proposedStartDateTime},
-    proposedStartTimeType       => $args->{proposedStartTimeType},
-    resourceName                => $args->{resourceName},
-    status                      => $args->{status}};
+    proposedSpendingLimitType => $args->{proposedSpendingLimitType},
+    proposedStartDateTime => $args->{proposedStartDateTime},
+    proposedStartTimeType => $args->{proposedStartTimeType},
+    resourceName => $args->{resourceName},
+    status => $args->{status}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

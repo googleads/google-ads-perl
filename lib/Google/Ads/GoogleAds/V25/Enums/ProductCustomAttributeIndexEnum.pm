@@ -19,12 +19,12 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  INDEX0      => "INDEX0",
-  INDEX1      => "INDEX1",
-  INDEX2      => "INDEX2",
-  INDEX3      => "INDEX3",
-  INDEX4      => "INDEX4"
+  UNKNOWN => "UNKNOWN",
+  INDEX0 => "INDEX0",
+  INDEX1 => "INDEX1",
+  INDEX2 => "INDEX2",
+  INDEX3 => "INDEX3",
+  INDEX4 => "INDEX4"
 ];
 
 1;

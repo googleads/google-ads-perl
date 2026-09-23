@@ -19,10 +19,10 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  SHOPPING    => "SHOPPING",
-  WEBPAGE     => "WEBPAGE",
-  RETAIL      => "RETAIL"
+  UNKNOWN => "UNKNOWN",
+  SHOPPING => "SHOPPING",
+  WEBPAGE => "WEBPAGE",
+  RETAIL => "RETAIL"
 ];
 
 1;

@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
-  EXCELLENT        => "EXCELLENT",
-  GOOD             => "GOOD",
-  NEEDS_ATTENTION  => "NEEDS_ATTENTION",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  EXCELLENT => "EXCELLENT",
+  GOOD => "GOOD",
+  NEEDS_ATTENTION => "NEEDS_ATTENTION",
   NO_RECENT_UPLOAD => "NO_RECENT_UPLOAD"
 ];
 

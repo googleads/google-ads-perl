@@ -23,21 +23,22 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    address            => $args->{address},
-    androidAppLink     => $args->{androidAppLink},
-    cityName           => $args->{cityName},
+    address => $args->{address},
+    androidAppLink => $args->{androidAppLink},
+    cityName => $args->{cityName},
     contextualKeywords => $args->{contextualKeywords},
-    description        => $args->{description},
-    formattedPrice     => $args->{formattedPrice},
-    imageUrl           => $args->{imageUrl},
-    iosAppLink         => $args->{iosAppLink},
-    iosAppStoreId      => $args->{iosAppStoreId},
-    listingId          => $args->{listingId},
-    listingName        => $args->{listingName},
-    listingType        => $args->{listingType},
-    price              => $args->{price},
-    propertyType       => $args->{propertyType},
-    similarListingIds  => $args->{similarListingIds}};
+    description => $args->{description},
+    formattedPrice => $args->{formattedPrice},
+    imageUrl => $args->{imageUrl},
+    iosAppLink => $args->{iosAppLink},
+    iosAppStoreId => $args->{iosAppStoreId},
+    listingId => $args->{listingId},
+    listingName => $args->{listingName},
+    listingType => $args->{listingType},
+    price => $args->{price},
+    propertyType => $args->{propertyType},
+    similarListingIds => $args->{similarListingIds}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

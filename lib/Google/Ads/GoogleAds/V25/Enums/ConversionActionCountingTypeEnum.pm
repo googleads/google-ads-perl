@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
-  ONE_PER_CLICK  => "ONE_PER_CLICK",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  ONE_PER_CLICK => "ONE_PER_CLICK",
   MANY_PER_CLICK => "MANY_PER_CLICK"
 ];
 

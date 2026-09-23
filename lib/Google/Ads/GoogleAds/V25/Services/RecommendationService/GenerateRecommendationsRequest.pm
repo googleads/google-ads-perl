@@ -23,26 +23,27 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    adGroupInfo                => $args->{adGroupInfo},
-    advertisingChannelType     => $args->{advertisingChannelType},
-    assetGroupInfo             => $args->{assetGroupInfo},
-    biddingInfo                => $args->{biddingInfo},
-    budgetInfo                 => $args->{budgetInfo},
-    campaignCallAssetCount     => $args->{campaignCallAssetCount},
-    campaignImageAssetCount    => $args->{campaignImageAssetCount},
-    campaignSitelinkCount      => $args->{campaignSitelinkCount},
-    conversionTrackingStatus   => $args->{conversionTrackingStatus},
-    countryCodes               => $args->{countryCodes},
-    customerId                 => $args->{customerId},
-    isNewCustomer              => $args->{isNewCustomer},
-    languageCodes              => $args->{languageCodes},
-    merchantCenterAccountId    => $args->{merchantCenterAccountId},
-    negativeLocationsIds       => $args->{negativeLocationsIds},
-    positiveLocationsIds       => $args->{positiveLocationsIds},
-    recommendationTypes        => $args->{recommendationTypes},
-    seedInfo                   => $args->{seedInfo},
-    targetContentNetwork       => $args->{targetContentNetwork},
-    targetPartnerSearchNetwork => $args->{targetPartnerSearchNetwork}};
+    adGroupInfo => $args->{adGroupInfo},
+    advertisingChannelType => $args->{advertisingChannelType},
+    assetGroupInfo => $args->{assetGroupInfo},
+    biddingInfo => $args->{biddingInfo},
+    budgetInfo => $args->{budgetInfo},
+    campaignCallAssetCount => $args->{campaignCallAssetCount},
+    campaignImageAssetCount => $args->{campaignImageAssetCount},
+    campaignSitelinkCount => $args->{campaignSitelinkCount},
+    conversionTrackingStatus => $args->{conversionTrackingStatus},
+    countryCodes => $args->{countryCodes},
+    customerId => $args->{customerId},
+    isNewCustomer => $args->{isNewCustomer},
+    languageCodes => $args->{languageCodes},
+    merchantCenterAccountId => $args->{merchantCenterAccountId},
+    negativeLocationsIds => $args->{negativeLocationsIds},
+    positiveLocationsIds => $args->{positiveLocationsIds},
+    recommendationTypes => $args->{recommendationTypes},
+    seedInfo => $args->{seedInfo},
+    targetContentNetwork => $args->{targetContentNetwork},
+    targetPartnerSearchNetwork => $args->{targetPartnerSearchNetwork}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -19,27 +19,23 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub create {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/accountLinks:create';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AccountLinkService::CreateAccountLinkResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AccountLinkService::CreateAccountLinkResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub mutate {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/accountLinks:mutate';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::AccountLinkService::MutateAccountLinkResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::AccountLinkService::MutateAccountLinkResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

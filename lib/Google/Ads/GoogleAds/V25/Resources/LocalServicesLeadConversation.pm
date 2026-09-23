@@ -24,13 +24,14 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     conversationChannel => $args->{conversationChannel},
-    eventDateTime       => $args->{eventDateTime},
-    id                  => $args->{id},
-    lead                => $args->{lead},
-    messageDetails      => $args->{messageDetails},
-    participantType     => $args->{participantType},
-    phoneCallDetails    => $args->{phoneCallDetails},
-    resourceName        => $args->{resourceName}};
+    eventDateTime => $args->{eventDateTime},
+    id => $args->{id},
+    lead => $args->{lead},
+    messageDetails => $args->{messageDetails},
+    participantType => $args->{participantType},
+    phoneCallDetails => $args->{phoneCallDetails},
+    resourceName => $args->{resourceName}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

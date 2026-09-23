@@ -18,15 +18,15 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED               => "UNSPECIFIED",
-  UNKNOWN                   => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   OTHER_DISSATISFIED_REASON => "OTHER_DISSATISFIED_REASON",
-  GEO_MISMATCH              => "GEO_MISMATCH",
-  JOB_TYPE_MISMATCH         => "JOB_TYPE_MISMATCH",
-  NOT_READY_TO_BOOK         => "NOT_READY_TO_BOOK",
-  SPAM                      => "SPAM",
-  DUPLICATE                 => "DUPLICATE",
-  SOLICITATION              => "SOLICITATION"
+  GEO_MISMATCH => "GEO_MISMATCH",
+  JOB_TYPE_MISMATCH => "JOB_TYPE_MISMATCH",
+  NOT_READY_TO_BOOK => "NOT_READY_TO_BOOK",
+  SPAM => "SPAM",
+  DUPLICATE => "DUPLICATE",
+  SOLICITATION => "SOLICITATION"
 ];
 
 1;

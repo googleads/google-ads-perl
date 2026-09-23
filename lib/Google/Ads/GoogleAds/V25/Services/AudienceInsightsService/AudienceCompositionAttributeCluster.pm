@@ -23,9 +23,10 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    attributes         => $args->{attributes},
+    attributes => $args->{attributes},
     clusterDisplayName => $args->{clusterDisplayName},
-    clusterMetrics     => $args->{clusterMetrics}};
+    clusterMetrics => $args->{clusterMetrics}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

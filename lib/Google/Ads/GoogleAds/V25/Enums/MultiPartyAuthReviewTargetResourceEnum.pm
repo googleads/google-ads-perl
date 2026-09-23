@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED                     => "UNSPECIFIED",
-  UNKNOWN                         => "UNKNOWN",
-  CUSTOMER_USER_ACCESS            => "CUSTOMER_USER_ACCESS",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  CUSTOMER_USER_ACCESS => "CUSTOMER_USER_ACCESS",
   CUSTOMER_USER_ACCESS_INVITATION => "CUSTOMER_USER_ACCESS_INVITATION"
 ];
 

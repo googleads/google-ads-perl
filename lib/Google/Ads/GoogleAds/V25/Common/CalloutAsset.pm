@@ -24,9 +24,10 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     adScheduleTargets => $args->{adScheduleTargets},
-    calloutText       => $args->{calloutText},
-    endDate           => $args->{endDate},
-    startDate         => $args->{startDate}};
+    calloutText => $args->{calloutText},
+    endDate => $args->{endDate},
+    startDate => $args->{startDate}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

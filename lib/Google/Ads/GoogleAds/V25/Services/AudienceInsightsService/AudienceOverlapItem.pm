@@ -23,9 +23,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    attributeMetadata                 => $args->{attributeMetadata},
-    potentialYoutubeReachIntersection =>
-      $args->{potentialYoutubeReachIntersection}};
+    attributeMetadata => $args->{attributeMetadata},
+    potentialYoutubeReachIntersection => $args->{potentialYoutubeReachIntersection}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

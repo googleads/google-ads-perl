@@ -23,13 +23,14 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    friday    => $args->{friday},
-    monday    => $args->{monday},
-    saturday  => $args->{saturday},
-    sunday    => $args->{sunday},
-    thursday  => $args->{thursday},
-    tuesday   => $args->{tuesday},
-    wednesday => $args->{wednesday}};
+    friday => $args->{friday},
+    monday => $args->{monday},
+    saturday => $args->{saturday},
+    sunday => $args->{sunday},
+    thursday => $args->{thursday},
+    tuesday => $args->{tuesday},
+    wednesday => $args->{wednesday}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

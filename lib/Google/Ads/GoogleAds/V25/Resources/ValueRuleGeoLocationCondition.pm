@@ -23,10 +23,11 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    excludedGeoMatchType       => $args->{excludedGeoMatchType},
+    excludedGeoMatchType => $args->{excludedGeoMatchType},
     excludedGeoTargetConstants => $args->{excludedGeoTargetConstants},
-    geoMatchType               => $args->{geoMatchType},
-    geoTargetConstants         => $args->{geoTargetConstants}};
+    geoMatchType => $args->{geoMatchType},
+    geoTargetConstants => $args->{geoTargetConstants}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

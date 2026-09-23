@@ -23,20 +23,21 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    address            => $args->{address},
-    androidAppLink     => $args->{androidAppLink},
+    address => $args->{address},
+    androidAppLink => $args->{androidAppLink},
     contextualKeywords => $args->{contextualKeywords},
-    description        => $args->{description},
-    imageUrl           => $args->{imageUrl},
-    iosAppLink         => $args->{iosAppLink},
-    iosAppStoreId      => $args->{iosAppStoreId},
-    jobCategory        => $args->{jobCategory},
-    jobId              => $args->{jobId},
-    jobSubtitle        => $args->{jobSubtitle},
-    jobTitle           => $args->{jobTitle},
-    locationId         => $args->{locationId},
-    salary             => $args->{salary},
-    similarJobIds      => $args->{similarJobIds}};
+    description => $args->{description},
+    imageUrl => $args->{imageUrl},
+    iosAppLink => $args->{iosAppLink},
+    iosAppStoreId => $args->{iosAppStoreId},
+    jobCategory => $args->{jobCategory},
+    jobId => $args->{jobId},
+    jobSubtitle => $args->{jobSubtitle},
+    jobTitle => $args->{jobTitle},
+    locationId => $args->{locationId},
+    salary => $args->{salary},
+    similarJobIds => $args->{similarJobIds}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

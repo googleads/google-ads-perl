@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
-  SAME_COST        => "SAME_COST",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  SAME_COST => "SAME_COST",
   SAME_CONVERSIONS => "SAME_CONVERSIONS",
-  SAME_CPA         => "SAME_CPA",
-  CLOSEST_CPA      => "CLOSEST_CPA"
+  SAME_CPA => "SAME_CPA",
+  CLOSEST_CPA => "CLOSEST_CPA"
 ];
 
 1;

@@ -19,8 +19,8 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  UNUSED      => "UNUSED"
+  UNKNOWN => "UNKNOWN",
+  UNUSED => "UNUSED"
 ];
 
 1;

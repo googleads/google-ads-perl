@@ -19,12 +19,12 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  ACTIVE      => "ACTIVE",
-  INACTIVE    => "INACTIVE",
-  PENDING     => "PENDING",
-  REFUSED     => "REFUSED",
-  CANCELED    => "CANCELED"
+  UNKNOWN => "UNKNOWN",
+  ACTIVE => "ACTIVE",
+  INACTIVE => "INACTIVE",
+  PENDING => "PENDING",
+  REFUSED => "REFUSED",
+  CANCELED => "CANCELED"
 ];
 
 1;

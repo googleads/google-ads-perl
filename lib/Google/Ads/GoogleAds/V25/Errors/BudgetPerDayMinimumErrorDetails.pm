@@ -23,12 +23,13 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    budgetPerDayMinimumMicros      => $args->{budgetPerDayMinimumMicros},
-    currencyCode                   => $args->{currencyCode},
-    failedBudgetAmountMicros       => $args->{failedBudgetAmountMicros},
-    failedBudgetTotalAmountMicros  => $args->{failedBudgetTotalAmountMicros},
-    minimumBudgetAmountMicros      => $args->{minimumBudgetAmountMicros},
-    minimumBudgetTotalAmountMicros => $args->{minimumBudgetTotalAmountMicros}};
+    budgetPerDayMinimumMicros => $args->{budgetPerDayMinimumMicros},
+    currencyCode => $args->{currencyCode},
+    failedBudgetAmountMicros => $args->{failedBudgetAmountMicros},
+    failedBudgetTotalAmountMicros => $args->{failedBudgetTotalAmountMicros},
+    minimumBudgetAmountMicros => $args->{minimumBudgetAmountMicros},
+    minimumBudgetTotalAmountMicros => $args->{minimumBudgetTotalAmountMicros}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -19,14 +19,14 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  MONDAY      => "MONDAY",
-  TUESDAY     => "TUESDAY",
-  WEDNESDAY   => "WEDNESDAY",
-  THURSDAY    => "THURSDAY",
-  FRIDAY      => "FRIDAY",
-  SATURDAY    => "SATURDAY",
-  SUNDAY      => "SUNDAY"
+  UNKNOWN => "UNKNOWN",
+  MONDAY => "MONDAY",
+  TUESDAY => "TUESDAY",
+  WEDNESDAY => "WEDNESDAY",
+  THURSDAY => "THURSDAY",
+  FRIDAY => "FRIDAY",
+  SATURDAY => "SATURDAY",
+  SUNDAY => "SUNDAY"
 ];
 
 1;

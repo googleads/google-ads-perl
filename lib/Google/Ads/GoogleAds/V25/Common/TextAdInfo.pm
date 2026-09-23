@@ -25,7 +25,8 @@ sub new {
   my $self = {
     description1 => $args->{description1},
     description2 => $args->{description2},
-    headline     => $args->{headline}};
+    headline => $args->{headline}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

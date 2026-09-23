@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED        => "UNSPECIFIED",
+  UNSPECIFIED => "UNSPECIFIED",
   RESOURCE_NAME_ONLY => "RESOURCE_NAME_ONLY",
-  MUTABLE_RESOURCE   => "MUTABLE_RESOURCE"
+  MUTABLE_RESOURCE => "MUTABLE_RESOURCE"
 ];
 
 1;

@@ -24,19 +24,20 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     attributeResources => $args->{attributeResources},
-    category           => $args->{category},
-    dataType           => $args->{dataType},
-    enumValues         => $args->{enumValues},
-    filterable         => $args->{filterable},
-    isRepeated         => $args->{isRepeated},
-    metrics            => $args->{metrics},
-    name               => $args->{name},
-    resourceName       => $args->{resourceName},
-    segments           => $args->{segments},
-    selectable         => $args->{selectable},
-    selectableWith     => $args->{selectableWith},
-    sortable           => $args->{sortable},
-    typeUrl            => $args->{typeUrl}};
+    category => $args->{category},
+    dataType => $args->{dataType},
+    enumValues => $args->{enumValues},
+    filterable => $args->{filterable},
+    isRepeated => $args->{isRepeated},
+    metrics => $args->{metrics},
+    name => $args->{name},
+    resourceName => $args->{resourceName},
+    segments => $args->{segments},
+    selectable => $args->{selectable},
+    selectableWith => $args->{selectableWith},
+    sortable => $args->{sortable},
+    typeUrl => $args->{typeUrl}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

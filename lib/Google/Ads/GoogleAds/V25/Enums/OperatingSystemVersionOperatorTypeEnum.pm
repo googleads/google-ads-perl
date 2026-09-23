@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED            => "UNSPECIFIED",
-  UNKNOWN                => "UNKNOWN",
-  EQUALS_TO              => "EQUALS_TO",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  EQUALS_TO => "EQUALS_TO",
   GREATER_THAN_EQUALS_TO => "GREATER_THAN_EQUALS_TO"
 ];
 

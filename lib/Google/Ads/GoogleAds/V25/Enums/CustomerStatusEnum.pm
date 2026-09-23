@@ -19,11 +19,11 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  ENABLED     => "ENABLED",
-  CANCELED    => "CANCELED",
-  SUSPENDED   => "SUSPENDED",
-  CLOSED      => "CLOSED"
+  UNKNOWN => "UNKNOWN",
+  ENABLED => "ENABLED",
+  CANCELED => "CANCELED",
+  SUSPENDED => "SUSPENDED",
+  CLOSED => "CLOSED"
 ];
 
 1;

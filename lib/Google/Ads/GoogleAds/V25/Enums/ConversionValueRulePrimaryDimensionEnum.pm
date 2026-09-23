@@ -18,17 +18,17 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED           => "UNSPECIFIED",
-  UNKNOWN               => "UNKNOWN",
-  NO_RULE_APPLIED       => "NO_RULE_APPLIED",
-  ORIGINAL              => "ORIGINAL",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  NO_RULE_APPLIED => "NO_RULE_APPLIED",
+  ORIGINAL => "ORIGINAL",
   NEW_VS_RETURNING_USER => "NEW_VS_RETURNING_USER",
-  GEO_LOCATION          => "GEO_LOCATION",
-  DEVICE                => "DEVICE",
-  AUDIENCE              => "AUDIENCE",
-  MULTIPLE              => "MULTIPLE",
-  ITINERARY             => "ITINERARY",
-  LOYALTY_MEMBERSHIP    => "LOYALTY_MEMBERSHIP"
+  GEO_LOCATION => "GEO_LOCATION",
+  DEVICE => "DEVICE",
+  AUDIENCE => "AUDIENCE",
+  MULTIPLE => "MULTIPLE",
+  ITINERARY => "ITINERARY",
+  LOYALTY_MEMBERSHIP => "LOYALTY_MEMBERSHIP"
 ];
 
 1;

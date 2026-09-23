@@ -25,7 +25,8 @@ sub new {
   my $self = {
     locationInfo => $args->{locationInfo},
     locationName => $args->{locationName},
-    locationType => $args->{locationType}};
+    locationType => $args->{locationType}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  BRAND        => "BRAND",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  BRAND => "BRAND",
   OTHER_BRANDS => "OTHER_BRANDS",
-  NON_BRAND    => "NON_BRAND"
+  NON_BRAND => "NON_BRAND"
 ];
 
 1;

@@ -25,9 +25,10 @@ sub new {
   my $self = {
     channelCountLowerBound => $args->{channelCountLowerBound},
     channelCountUpperBound => $args->{channelCountUpperBound},
-    inventoryCountry       => $args->{inventoryCountry},
+    inventoryCountry => $args->{inventoryCountry},
     medianMonthlyInventory => $args->{medianMonthlyInventory},
-    sampleChannels         => $args->{sampleChannels}};
+    sampleChannels => $args->{sampleChannels}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

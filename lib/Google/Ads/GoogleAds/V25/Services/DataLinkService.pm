@@ -19,39 +19,33 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub create {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/dataLinks:create';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::DataLinkService::CreateDataLinkResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::DataLinkService::CreateDataLinkResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub remove {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/dataLinks:remove';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::DataLinkService::RemoveDataLinkResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::DataLinkService::RemoveDataLinkResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub update {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/dataLinks:update';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::DataLinkService::UpdateDataLinkResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::DataLinkService::UpdateDataLinkResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

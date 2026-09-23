@@ -24,13 +24,14 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     bidModifierPointList => $args->{bidModifierPointList},
-    campaignId           => $args->{campaignId},
-    criterionId          => $args->{criterionId},
-    endDate              => $args->{endDate},
-    modificationMethod   => $args->{modificationMethod},
-    resourceName         => $args->{resourceName},
-    startDate            => $args->{startDate},
-    type                 => $args->{type}};
+    campaignId => $args->{campaignId},
+    criterionId => $args->{criterionId},
+    endDate => $args->{endDate},
+    modificationMethod => $args->{modificationMethod},
+    resourceName => $args->{resourceName},
+    startDate => $args->{startDate},
+    type => $args->{type}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

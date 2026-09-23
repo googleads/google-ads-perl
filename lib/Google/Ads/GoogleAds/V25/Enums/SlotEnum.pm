@@ -18,15 +18,15 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED          => "UNSPECIFIED",
-  UNKNOWN              => "UNKNOWN",
-  SEARCH_SIDE          => "SEARCH_SIDE",
-  SEARCH_TOP           => "SEARCH_TOP",
-  SEARCH_OTHER         => "SEARCH_OTHER",
-  CONTENT              => "CONTENT",
-  SEARCH_PARTNER_TOP   => "SEARCH_PARTNER_TOP",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  SEARCH_SIDE => "SEARCH_SIDE",
+  SEARCH_TOP => "SEARCH_TOP",
+  SEARCH_OTHER => "SEARCH_OTHER",
+  CONTENT => "CONTENT",
+  SEARCH_PARTNER_TOP => "SEARCH_PARTNER_TOP",
   SEARCH_PARTNER_OTHER => "SEARCH_PARTNER_OTHER",
-  MIXED                => "MIXED"
+  MIXED => "MIXED"
 ];
 
 1;

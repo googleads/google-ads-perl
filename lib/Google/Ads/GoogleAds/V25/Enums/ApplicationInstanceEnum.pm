@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED             => "UNSPECIFIED",
-  UNKNOWN                 => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   DEVELOPMENT_AND_TESTING => "DEVELOPMENT_AND_TESTING",
-  PRODUCTION              => "PRODUCTION"
+  PRODUCTION => "PRODUCTION"
 ];
 
 1;

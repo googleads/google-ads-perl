@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
-  REACH            => "REACH",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  REACH => "REACH",
   TARGET_FREQUENCY => "TARGET_FREQUENCY"
 ];
 

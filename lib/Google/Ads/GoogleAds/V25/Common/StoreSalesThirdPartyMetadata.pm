@@ -24,11 +24,12 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     advertiserUploadDateTime => $args->{advertiserUploadDateTime},
-    bridgeMapVersionId       => $args->{bridgeMapVersionId},
-    partnerId                => $args->{partnerId},
-    partnerMatchFraction     => $args->{partnerMatchFraction},
-    partnerUploadFraction    => $args->{partnerUploadFraction},
-    validTransactionFraction => $args->{validTransactionFraction}};
+    bridgeMapVersionId => $args->{bridgeMapVersionId},
+    partnerId => $args->{partnerId},
+    partnerMatchFraction => $args->{partnerMatchFraction},
+    partnerUploadFraction => $args->{partnerUploadFraction},
+    validTransactionFraction => $args->{validTransactionFraction}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

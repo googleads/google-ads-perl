@@ -19,9 +19,9 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  CAMPAIGN    => "CAMPAIGN",
-  AD_GROUP    => "AD_GROUP"
+  UNKNOWN => "UNKNOWN",
+  CAMPAIGN => "CAMPAIGN",
+  AD_GROUP => "AD_GROUP"
 ];
 
 1;

@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED                  => "UNSPECIFIED",
-  UNKNOWN                      => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   LOCATION_EXTENSION_TARGETING => "LOCATION_EXTENSION_TARGETING",
-  DSA_PAGE_FEED                => "DSA_PAGE_FEED"
+  DSA_PAGE_FEED => "DSA_PAGE_FEED"
 ];
 
 1;

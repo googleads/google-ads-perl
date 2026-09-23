@@ -24,27 +24,28 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     adjustedSpendingLimitMicros => $args->{adjustedSpendingLimitMicros},
-    adjustedSpendingLimitType   => $args->{adjustedSpendingLimitType},
-    amountServedMicros          => $args->{amountServedMicros},
-    approvedEndDateTime         => $args->{approvedEndDateTime},
-    approvedEndTimeType         => $args->{approvedEndTimeType},
+    adjustedSpendingLimitType => $args->{adjustedSpendingLimitType},
+    amountServedMicros => $args->{amountServedMicros},
+    approvedEndDateTime => $args->{approvedEndDateTime},
+    approvedEndTimeType => $args->{approvedEndTimeType},
     approvedSpendingLimitMicros => $args->{approvedSpendingLimitMicros},
-    approvedSpendingLimitType   => $args->{approvedSpendingLimitType},
-    approvedStartDateTime       => $args->{approvedStartDateTime},
-    billingSetup                => $args->{billingSetup},
-    id                          => $args->{id},
-    name                        => $args->{name},
-    notes                       => $args->{notes},
-    pendingProposal             => $args->{pendingProposal},
-    proposedEndDateTime         => $args->{proposedEndDateTime},
-    proposedEndTimeType         => $args->{proposedEndTimeType},
+    approvedSpendingLimitType => $args->{approvedSpendingLimitType},
+    approvedStartDateTime => $args->{approvedStartDateTime},
+    billingSetup => $args->{billingSetup},
+    id => $args->{id},
+    name => $args->{name},
+    notes => $args->{notes},
+    pendingProposal => $args->{pendingProposal},
+    proposedEndDateTime => $args->{proposedEndDateTime},
+    proposedEndTimeType => $args->{proposedEndTimeType},
     proposedSpendingLimitMicros => $args->{proposedSpendingLimitMicros},
-    proposedSpendingLimitType   => $args->{proposedSpendingLimitType},
-    proposedStartDateTime       => $args->{proposedStartDateTime},
-    purchaseOrderNumber         => $args->{purchaseOrderNumber},
-    resourceName                => $args->{resourceName},
-    status                      => $args->{status},
-    totalAdjustmentsMicros      => $args->{totalAdjustmentsMicros}};
+    proposedSpendingLimitType => $args->{proposedSpendingLimitType},
+    proposedStartDateTime => $args->{proposedStartDateTime},
+    purchaseOrderNumber => $args->{purchaseOrderNumber},
+    resourceName => $args->{resourceName},
+    status => $args->{status},
+    totalAdjustmentsMicros => $args->{totalAdjustmentsMicros}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

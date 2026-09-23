@@ -19,10 +19,10 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  DESKTOP     => "DESKTOP",
-  ANDROID     => "ANDROID",
-  IOS         => "IOS"
+  UNKNOWN => "UNKNOWN",
+  DESKTOP => "DESKTOP",
+  ANDROID => "ANDROID",
+  IOS => "IOS"
 ];
 
 1;

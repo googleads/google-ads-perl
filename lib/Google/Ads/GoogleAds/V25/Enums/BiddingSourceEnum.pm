@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED               => "UNSPECIFIED",
-  UNKNOWN                   => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   CAMPAIGN_BIDDING_STRATEGY => "CAMPAIGN_BIDDING_STRATEGY",
-  AD_GROUP                  => "AD_GROUP",
-  AD_GROUP_CRITERION        => "AD_GROUP_CRITERION"
+  AD_GROUP => "AD_GROUP",
+  AD_GROUP_CRITERION => "AD_GROUP_CRITERION"
 ];
 
 1;

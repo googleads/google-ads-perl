@@ -18,20 +18,20 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED     => "UNSPECIFIED",
-  UNKNOWN         => "UNKNOWN",
-  SEARCH          => "SEARCH",
-  DISPLAY         => "DISPLAY",
-  SHOPPING        => "SHOPPING",
-  HOTEL           => "HOTEL",
-  VIDEO           => "VIDEO",
-  MULTI_CHANNEL   => "MULTI_CHANNEL",
-  LOCAL           => "LOCAL",
-  SMART           => "SMART",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  SEARCH => "SEARCH",
+  DISPLAY => "DISPLAY",
+  SHOPPING => "SHOPPING",
+  HOTEL => "HOTEL",
+  VIDEO => "VIDEO",
+  MULTI_CHANNEL => "MULTI_CHANNEL",
+  LOCAL => "LOCAL",
+  SMART => "SMART",
   PERFORMANCE_MAX => "PERFORMANCE_MAX",
-  LOCAL_SERVICES  => "LOCAL_SERVICES",
-  TRAVEL          => "TRAVEL",
-  DEMAND_GEN      => "DEMAND_GEN"
+  LOCAL_SERVICES => "LOCAL_SERVICES",
+  TRAVEL => "TRAVEL",
+  DEMAND_GEN => "DEMAND_GEN"
 ];
 
 1;

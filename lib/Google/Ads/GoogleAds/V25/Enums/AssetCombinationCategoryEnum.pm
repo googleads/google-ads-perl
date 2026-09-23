@@ -19,10 +19,10 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  TEXT        => "TEXT",
-  IMAGE       => "IMAGE",
-  VIDEO       => "VIDEO"
+  UNKNOWN => "UNKNOWN",
+  TEXT => "TEXT",
+  IMAGE => "IMAGE",
+  VIDEO => "VIDEO"
 ];
 
 1;

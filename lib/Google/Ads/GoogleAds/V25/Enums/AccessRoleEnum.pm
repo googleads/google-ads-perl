@@ -19,11 +19,11 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  ADMIN       => "ADMIN",
-  STANDARD    => "STANDARD",
-  READ_ONLY   => "READ_ONLY",
-  EMAIL_ONLY  => "EMAIL_ONLY"
+  UNKNOWN => "UNKNOWN",
+  ADMIN => "ADMIN",
+  STANDARD => "STANDARD",
+  READ_ONLY => "READ_ONLY",
+  EMAIL_ONLY => "EMAIL_ONLY"
 ];
 
 1;

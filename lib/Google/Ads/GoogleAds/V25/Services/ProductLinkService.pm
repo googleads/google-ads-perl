@@ -19,27 +19,23 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub create {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/productLinks:create';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ProductLinkService::CreateProductLinkResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ProductLinkService::CreateProductLinkResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub remove {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/productLinks:remove';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ProductLinkService::RemoveProductLinkResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ProductLinkService::RemoveProductLinkResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

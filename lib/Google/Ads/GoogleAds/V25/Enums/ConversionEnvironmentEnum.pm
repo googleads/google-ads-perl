@@ -19,9 +19,9 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  APP         => "APP",
-  WEB         => "WEB"
+  UNKNOWN => "UNKNOWN",
+  APP => "APP",
+  WEB => "WEB"
 ];
 
 1;

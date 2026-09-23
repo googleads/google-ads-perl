@@ -24,9 +24,10 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     customizerAttribute => $args->{customizerAttribute},
-    resourceName        => $args->{resourceName},
-    status              => $args->{status},
-    value               => $args->{value}};
+    resourceName => $args->{resourceName},
+    status => $args->{status},
+    value => $args->{value}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

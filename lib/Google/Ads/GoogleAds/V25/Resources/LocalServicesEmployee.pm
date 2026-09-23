@@ -23,23 +23,24 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    categoryIds              => $args->{categoryIds},
-    creationDateTime         => $args->{creationDateTime},
-    emailAddress             => $args->{emailAddress},
-    fellowships              => $args->{fellowships},
-    firstName                => $args->{firstName},
-    id                       => $args->{id},
-    jobTitle                 => $args->{jobTitle},
-    languagesSpoken          => $args->{languagesSpoken},
-    lastName                 => $args->{lastName},
-    middleName               => $args->{middleName},
+    categoryIds => $args->{categoryIds},
+    creationDateTime => $args->{creationDateTime},
+    emailAddress => $args->{emailAddress},
+    fellowships => $args->{fellowships},
+    firstName => $args->{firstName},
+    id => $args->{id},
+    jobTitle => $args->{jobTitle},
+    languagesSpoken => $args->{languagesSpoken},
+    lastName => $args->{lastName},
+    middleName => $args->{middleName},
     nationalProviderIdNumber => $args->{nationalProviderIdNumber},
-    residencies              => $args->{residencies},
-    resourceName             => $args->{resourceName},
-    status                   => $args->{status},
-    type                     => $args->{type},
-    universityDegrees        => $args->{universityDegrees},
-    yearStartedPracticing    => $args->{yearStartedPracticing}};
+    residencies => $args->{residencies},
+    resourceName => $args->{resourceName},
+    status => $args->{status},
+    type => $args->{type},
+    universityDegrees => $args->{universityDegrees},
+    yearStartedPracticing => $args->{yearStartedPracticing}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -19,27 +19,23 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub upload_call_conversions {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:uploadCallConversions';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ConversionUploadService::UploadCallConversionsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ConversionUploadService::UploadCallConversionsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub upload_click_conversions {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}:uploadClickConversions';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::ConversionUploadService::UploadClickConversionsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::ConversionUploadService::UploadClickConversionsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

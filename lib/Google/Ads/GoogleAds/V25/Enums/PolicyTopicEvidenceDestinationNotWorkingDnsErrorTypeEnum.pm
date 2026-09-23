@@ -18,9 +18,9 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED              => "UNSPECIFIED",
-  UNKNOWN                  => "UNKNOWN",
-  HOSTNAME_NOT_FOUND       => "HOSTNAME_NOT_FOUND",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  HOSTNAME_NOT_FOUND => "HOSTNAME_NOT_FOUND",
   GOOGLE_CRAWLER_DNS_ISSUE => "GOOGLE_CRAWLER_DNS_ISSUE"
 ];
 

@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED     => "UNSPECIFIED",
-  UNKNOWN         => "UNKNOWN",
-  AVAILABLE       => "AVAILABLE",
-  STALE           => "STALE",
-  EXPIRED         => "EXPIRED",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  AVAILABLE => "AVAILABLE",
+  STALE => "STALE",
+  EXPIRED => "EXPIRED",
   NEVER_GENERATED => "NEVER_GENERATED"
 ];
 

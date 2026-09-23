@@ -18,8 +18,8 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED                      => "UNSPECIFIED",
-  UNKNOWN                          => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   ADVERTISER_IDENTITY_VERIFICATION => "ADVERTISER_IDENTITY_VERIFICATION"
 ];
 

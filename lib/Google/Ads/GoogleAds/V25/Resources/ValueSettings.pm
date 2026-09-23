@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     alwaysUseDefaultValue => $args->{alwaysUseDefaultValue},
-    defaultCurrencyCode   => $args->{defaultCurrencyCode},
-    defaultValue          => $args->{defaultValue}};
+    defaultCurrencyCode => $args->{defaultCurrencyCode},
+    defaultValue => $args->{defaultValue}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

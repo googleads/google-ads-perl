@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED        => "UNSPECIFIED",
-  UNKNOWN            => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   REVIEW_IN_PROGRESS => "REVIEW_IN_PROGRESS",
-  REVIEWED           => "REVIEWED",
-  UNDER_APPEAL       => "UNDER_APPEAL",
+  REVIEWED => "REVIEWED",
+  UNDER_APPEAL => "UNDER_APPEAL",
   ELIGIBLE_MAY_SERVE => "ELIGIBLE_MAY_SERVE"
 ];
 

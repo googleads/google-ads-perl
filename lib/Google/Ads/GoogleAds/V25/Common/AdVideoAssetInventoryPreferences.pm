@@ -23,9 +23,10 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    inFeedPreference   => $args->{inFeedPreference},
+    inFeedPreference => $args->{inFeedPreference},
     inStreamPreference => $args->{inStreamPreference},
-    shortsPreference   => $args->{shortsPreference}};
+    shortsPreference => $args->{shortsPreference}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

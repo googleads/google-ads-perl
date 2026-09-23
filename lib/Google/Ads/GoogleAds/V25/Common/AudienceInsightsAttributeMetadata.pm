@@ -23,20 +23,21 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    attribute                       => $args->{attribute},
-    dimension                       => $args->{dimension},
-    displayInfo                     => $args->{displayInfo},
-    displayName                     => $args->{displayName},
+    attribute => $args->{attribute},
+    dimension => $args->{dimension},
+    displayInfo => $args->{displayInfo},
+    displayName => $args->{displayName},
     knowledgeGraphAttributeMetadata => $args->{knowledgeGraphAttributeMetadata},
-    lineupAttributeMetadata         => $args->{lineupAttributeMetadata},
-    locationAttributeMetadata       => $args->{locationAttributeMetadata},
-    potentialYoutubeReach           => $args->{potentialYoutubeReach},
-    subscriberShare                 => $args->{subscriberShare},
-    userInterestAttributeMetadata   => $args->{userInterestAttributeMetadata},
-    userListAttributeMetadata       => $args->{userListAttributeMetadata},
-    viewerShare                     => $args->{viewerShare},
-    youtubeChannelMetadata          => $args->{youtubeChannelMetadata},
-    youtubeVideoMetadata            => $args->{youtubeVideoMetadata}};
+    lineupAttributeMetadata => $args->{lineupAttributeMetadata},
+    locationAttributeMetadata => $args->{locationAttributeMetadata},
+    potentialYoutubeReach => $args->{potentialYoutubeReach},
+    subscriberShare => $args->{subscriberShare},
+    userInterestAttributeMetadata => $args->{userInterestAttributeMetadata},
+    userListAttributeMetadata => $args->{userListAttributeMetadata},
+    viewerShare => $args->{viewerShare},
+    youtubeChannelMetadata => $args->{youtubeChannelMetadata},
+    youtubeVideoMetadata => $args->{youtubeVideoMetadata}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

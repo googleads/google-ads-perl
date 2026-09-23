@@ -19,13 +19,13 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  PENDING     => "PENDING",
-  NO_ADS      => "NO_ADS",
-  POOR        => "POOR",
-  AVERAGE     => "AVERAGE",
-  GOOD        => "GOOD",
-  EXCELLENT   => "EXCELLENT"
+  UNKNOWN => "UNKNOWN",
+  PENDING => "PENDING",
+  NO_ADS => "NO_ADS",
+  POOR => "POOR",
+  AVERAGE => "AVERAGE",
+  GOOD => "GOOD",
+  EXCELLENT => "EXCELLENT"
 ];
 
 1;

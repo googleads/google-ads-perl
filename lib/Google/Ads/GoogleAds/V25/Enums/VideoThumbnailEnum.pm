@@ -18,12 +18,12 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED       => "UNSPECIFIED",
-  UNKNOWN           => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   DEFAULT_THUMBNAIL => "DEFAULT_THUMBNAIL",
-  THUMBNAIL_1       => "THUMBNAIL_1",
-  THUMBNAIL_2       => "THUMBNAIL_2",
-  THUMBNAIL_3       => "THUMBNAIL_3"
+  THUMBNAIL_1 => "THUMBNAIL_1",
+  THUMBNAIL_2 => "THUMBNAIL_2",
+  THUMBNAIL_3 => "THUMBNAIL_3"
 ];
 
 1;

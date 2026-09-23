@@ -18,14 +18,14 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED      => "UNSPECIFIED",
-  UNKNOWN          => "UNKNOWN",
-  HOTELS           => "HOTELS",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  HOTELS => "HOTELS",
   VACATION_RENTALS => "VACATION_RENTALS",
-  RENTAL_CARS      => "RENTAL_CARS",
-  EVENTS           => "EVENTS",
-  THINGS_TO_DO     => "THINGS_TO_DO",
-  FLIGHTS          => "FLIGHTS"
+  RENTAL_CARS => "RENTAL_CARS",
+  EVENTS => "EVENTS",
+  THINGS_TO_DO => "THINGS_TO_DO",
+  FLIGHTS => "FLIGHTS"
 ];
 
 1;

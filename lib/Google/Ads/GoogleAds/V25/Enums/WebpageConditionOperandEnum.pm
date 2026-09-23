@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED  => "UNSPECIFIED",
-  UNKNOWN      => "UNKNOWN",
-  URL          => "URL",
-  CATEGORY     => "CATEGORY",
-  PAGE_TITLE   => "PAGE_TITLE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  URL => "URL",
+  CATEGORY => "CATEGORY",
+  PAGE_TITLE => "PAGE_TITLE",
   PAGE_CONTENT => "PAGE_CONTENT",
   CUSTOM_LABEL => "CUSTOM_LABEL"
 ];

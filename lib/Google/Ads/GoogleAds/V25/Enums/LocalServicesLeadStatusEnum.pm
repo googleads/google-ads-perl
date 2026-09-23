@@ -18,16 +18,16 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED       => "UNSPECIFIED",
-  UNKNOWN           => "UNKNOWN",
-  NEW               => "NEW",
-  ACTIVE            => "ACTIVE",
-  BOOKED            => "BOOKED",
-  DECLINED          => "DECLINED",
-  EXPIRED           => "EXPIRED",
-  DISABLED          => "DISABLED",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  NEW => "NEW",
+  ACTIVE => "ACTIVE",
+  BOOKED => "BOOKED",
+  DECLINED => "DECLINED",
+  EXPIRED => "EXPIRED",
+  DISABLED => "DISABLED",
   CONSUMER_DECLINED => "CONSUMER_DECLINED",
-  WIPED_OUT         => "WIPED_OUT"
+  WIPED_OUT => "WIPED_OUT"
 ];
 
 1;

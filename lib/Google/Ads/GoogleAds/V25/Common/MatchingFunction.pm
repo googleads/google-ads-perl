@@ -24,9 +24,10 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     functionString => $args->{functionString},
-    leftOperands   => $args->{leftOperands},
-    operator       => $args->{operator},
-    rightOperands  => $args->{rightOperands}};
+    leftOperands => $args->{leftOperands},
+    operator => $args->{operator},
+    rightOperands => $args->{rightOperands}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

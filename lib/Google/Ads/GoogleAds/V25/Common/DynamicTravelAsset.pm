@@ -23,23 +23,24 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    androidAppLink        => $args->{androidAppLink},
-    category              => $args->{category},
-    contextualKeywords    => $args->{contextualKeywords},
-    destinationAddress    => $args->{destinationAddress},
-    destinationId         => $args->{destinationId},
-    destinationName       => $args->{destinationName},
-    formattedPrice        => $args->{formattedPrice},
-    formattedSalePrice    => $args->{formattedSalePrice},
-    imageUrl              => $args->{imageUrl},
-    iosAppLink            => $args->{iosAppLink},
-    iosAppStoreId         => $args->{iosAppStoreId},
-    originId              => $args->{originId},
-    originName            => $args->{originName},
-    price                 => $args->{price},
-    salePrice             => $args->{salePrice},
+    androidAppLink => $args->{androidAppLink},
+    category => $args->{category},
+    contextualKeywords => $args->{contextualKeywords},
+    destinationAddress => $args->{destinationAddress},
+    destinationId => $args->{destinationId},
+    destinationName => $args->{destinationName},
+    formattedPrice => $args->{formattedPrice},
+    formattedSalePrice => $args->{formattedSalePrice},
+    imageUrl => $args->{imageUrl},
+    iosAppLink => $args->{iosAppLink},
+    iosAppStoreId => $args->{iosAppStoreId},
+    originId => $args->{originId},
+    originName => $args->{originName},
+    price => $args->{price},
+    salePrice => $args->{salePrice},
     similarDestinationIds => $args->{similarDestinationIds},
-    title                 => $args->{title}};
+    title => $args->{title}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

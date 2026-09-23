@@ -23,20 +23,20 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    couponCode                           => $args->{couponCode},
-    currencyCode                         => $args->{currencyCode},
-    currentSpendTowardsFulfillmentMicros =>
-      $args->{currentSpendTowardsFulfillmentMicros},
+    couponCode => $args->{couponCode},
+    currencyCode => $args->{currencyCode},
+    currentSpendTowardsFulfillmentMicros => $args->{currentSpendTowardsFulfillmentMicros},
     fulfillmentExpirationDateTime => $args->{fulfillmentExpirationDateTime},
-    grantedAmountMicros           => $args->{grantedAmountMicros},
-    incentiveState                => $args->{incentiveState},
-    redemptionDateTime            => $args->{redemptionDateTime},
-    requiredMinSpendMicros        => $args->{requiredMinSpendMicros},
-    resourceName                  => $args->{resourceName},
-    rewardAmountMicros            => $args->{rewardAmountMicros},
-    rewardBalanceRemainingMicros  => $args->{rewardBalanceRemainingMicros},
-    rewardExpirationDateTime      => $args->{rewardExpirationDateTime},
-    rewardGrantDateTime           => $args->{rewardGrantDateTime}};
+    grantedAmountMicros => $args->{grantedAmountMicros},
+    incentiveState => $args->{incentiveState},
+    redemptionDateTime => $args->{redemptionDateTime},
+    requiredMinSpendMicros => $args->{requiredMinSpendMicros},
+    resourceName => $args->{resourceName},
+    rewardAmountMicros => $args->{rewardAmountMicros},
+    rewardBalanceRemainingMicros => $args->{rewardBalanceRemainingMicros},
+    rewardExpirationDateTime => $args->{rewardExpirationDateTime},
+    rewardGrantDateTime => $args->{rewardGrantDateTime}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

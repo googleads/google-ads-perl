@@ -23,21 +23,22 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    accountBudget               => $args->{accountBudget},
-    accountBudgetName           => $args->{accountBudgetName},
-    billableActivityDateRange   => $args->{billableActivityDateRange},
-    billedAmountMicros          => $args->{billedAmountMicros},
-    campaignSummaries           => $args->{campaignSummaries},
-    customer                    => $args->{customer},
-    customerDescriptiveName     => $args->{customerDescriptiveName},
+    accountBudget => $args->{accountBudget},
+    accountBudgetName => $args->{accountBudgetName},
+    billableActivityDateRange => $args->{billableActivityDateRange},
+    billedAmountMicros => $args->{billedAmountMicros},
+    campaignSummaries => $args->{campaignSummaries},
+    customer => $args->{customer},
+    customerDescriptiveName => $args->{customerDescriptiveName},
     invalidActivityAmountMicros => $args->{invalidActivityAmountMicros},
-    invalidActivitySummaries    => $args->{invalidActivitySummaries},
-    overdeliveryAmountMicros    => $args->{overdeliveryAmountMicros},
-    purchaseOrderNumber         => $args->{purchaseOrderNumber},
-    servedAmountMicros          => $args->{servedAmountMicros},
-    subtotalAmountMicros        => $args->{subtotalAmountMicros},
-    taxAmountMicros             => $args->{taxAmountMicros},
-    totalAmountMicros           => $args->{totalAmountMicros}};
+    invalidActivitySummaries => $args->{invalidActivitySummaries},
+    overdeliveryAmountMicros => $args->{overdeliveryAmountMicros},
+    purchaseOrderNumber => $args->{purchaseOrderNumber},
+    servedAmountMicros => $args->{servedAmountMicros},
+    subtotalAmountMicros => $args->{subtotalAmountMicros},
+    taxAmountMicros => $args->{taxAmountMicros},
+    totalAmountMicros => $args->{totalAmountMicros}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

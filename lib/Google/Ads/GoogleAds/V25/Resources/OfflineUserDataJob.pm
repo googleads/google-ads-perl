@@ -24,14 +24,15 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     customerMatchUserListMetadata => $args->{customerMatchUserListMetadata},
-    externalId                    => $args->{externalId},
-    failureReason                 => $args->{failureReason},
-    id                            => $args->{id},
-    operationMetadata             => $args->{operationMetadata},
-    resourceName                  => $args->{resourceName},
-    status                        => $args->{status},
-    storeSalesMetadata            => $args->{storeSalesMetadata},
-    type                          => $args->{type}};
+    externalId => $args->{externalId},
+    failureReason => $args->{failureReason},
+    id => $args->{id},
+    operationMetadata => $args->{operationMetadata},
+    resourceName => $args->{resourceName},
+    status => $args->{status},
+    storeSalesMetadata => $args->{storeSalesMetadata},
+    type => $args->{type}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

@@ -18,17 +18,17 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED           => "UNSPECIFIED",
-  UNKNOWN               => "UNKNOWN",
-  NIELSEN               => "NIELSEN",
-  COMSCORE              => "COMSCORE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  NIELSEN => "NIELSEN",
+  COMSCORE => "COMSCORE",
   KANTAR_MILLWARD_BROWN => "KANTAR_MILLWARD_BROWN",
-  VIDEO_RESEARCH        => "VIDEO_RESEARCH",
-  GEMIUS                => "GEMIUS",
-  MEDIA_SCOPE           => "MEDIA_SCOPE",
-  AUDIENCE_PROJECT      => "AUDIENCE_PROJECT",
-  VIDEO_AMP             => "VIDEO_AMP",
-  ISPOT_TV              => "ISPOT_TV"
+  VIDEO_RESEARCH => "VIDEO_RESEARCH",
+  GEMIUS => "GEMIUS",
+  MEDIA_SCOPE => "MEDIA_SCOPE",
+  AUDIENCE_PROJECT => "AUDIENCE_PROJECT",
+  VIDEO_AMP => "VIDEO_AMP",
+  ISPOT_TV => "ISPOT_TV"
 ];
 
 1;

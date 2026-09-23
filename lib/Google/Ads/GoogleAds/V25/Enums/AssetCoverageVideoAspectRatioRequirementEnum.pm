@@ -19,10 +19,10 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  HORIZONTAL  => "HORIZONTAL",
-  SQUARE      => "SQUARE",
-  VERTICAL    => "VERTICAL"
+  UNKNOWN => "UNKNOWN",
+  HORIZONTAL => "HORIZONTAL",
+  SQUARE => "SQUARE",
+  VERTICAL => "VERTICAL"
 ];
 
 1;

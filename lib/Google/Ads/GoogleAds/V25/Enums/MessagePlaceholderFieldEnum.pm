@@ -18,13 +18,13 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED            => "UNSPECIFIED",
-  UNKNOWN                => "UNKNOWN",
-  BUSINESS_NAME          => "BUSINESS_NAME",
-  COUNTRY_CODE           => "COUNTRY_CODE",
-  PHONE_NUMBER           => "PHONE_NUMBER",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  BUSINESS_NAME => "BUSINESS_NAME",
+  COUNTRY_CODE => "COUNTRY_CODE",
+  PHONE_NUMBER => "PHONE_NUMBER",
   MESSAGE_EXTENSION_TEXT => "MESSAGE_EXTENSION_TEXT",
-  MESSAGE_TEXT           => "MESSAGE_TEXT"
+  MESSAGE_TEXT => "MESSAGE_TEXT"
 ];
 
 1;

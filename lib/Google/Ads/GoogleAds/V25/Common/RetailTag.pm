@@ -24,7 +24,8 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     expressionName => $args->{expressionName},
-    value          => $args->{value}};
+    value => $args->{value}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

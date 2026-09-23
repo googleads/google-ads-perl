@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED     => "UNSPECIFIED",
-  UNKNOWN         => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   CUSTOM_AFFINITY => "CUSTOM_AFFINITY",
-  CUSTOM_INTENT   => "CUSTOM_INTENT"
+  CUSTOM_INTENT => "CUSTOM_INTENT"
 ];
 
 1;

@@ -19,9 +19,9 @@ use warnings;
 
 use Const::Exporter enums => [
   UNSPECIFIED => "UNSPECIFIED",
-  UNKNOWN     => "UNKNOWN",
-  WEEKLY      => "WEEKLY",
-  MONTHLY     => "MONTHLY"
+  UNKNOWN => "UNKNOWN",
+  WEEKLY => "WEEKLY",
+  MONTHLY => "MONTHLY"
 ];
 
 1;

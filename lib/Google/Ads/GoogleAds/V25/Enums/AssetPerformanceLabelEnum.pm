@@ -18,13 +18,13 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED    => "UNSPECIFIED",
-  UNKNOWN        => "UNKNOWN",
-  PENDING        => "PENDING",
-  LEARNING       => "LEARNING",
-  LOW            => "LOW",
-  GOOD           => "GOOD",
-  BEST           => "BEST",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  PENDING => "PENDING",
+  LEARNING => "LEARNING",
+  LOW => "LOW",
+  GOOD => "GOOD",
+  BEST => "BEST",
   NOT_APPLICABLE => "NOT_APPLICABLE"
 ];
 

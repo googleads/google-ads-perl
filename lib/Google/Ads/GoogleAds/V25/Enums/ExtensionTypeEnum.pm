@@ -18,21 +18,21 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED        => "UNSPECIFIED",
-  UNKNOWN            => "UNKNOWN",
-  NONE               => "NONE",
-  APP                => "APP",
-  CALL               => "CALL",
-  CALLOUT            => "CALLOUT",
-  MESSAGE            => "MESSAGE",
-  PRICE              => "PRICE",
-  PROMOTION          => "PROMOTION",
-  SITELINK           => "SITELINK",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  NONE => "NONE",
+  APP => "APP",
+  CALL => "CALL",
+  CALLOUT => "CALLOUT",
+  MESSAGE => "MESSAGE",
+  PRICE => "PRICE",
+  PROMOTION => "PROMOTION",
+  SITELINK => "SITELINK",
   STRUCTURED_SNIPPET => "STRUCTURED_SNIPPET",
-  LOCATION           => "LOCATION",
+  LOCATION => "LOCATION",
   AFFILIATE_LOCATION => "AFFILIATE_LOCATION",
-  HOTEL_CALLOUT      => "HOTEL_CALLOUT",
-  IMAGE              => "IMAGE"
+  HOTEL_CALLOUT => "HOTEL_CALLOUT",
+  IMAGE => "IMAGE"
 ];
 
 1;

@@ -18,13 +18,13 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED         => "UNSPECIFIED",
-  UNKNOWN             => "UNKNOWN",
-  OPTIMIZE            => "OPTIMIZE",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  OPTIMIZE => "OPTIMIZE",
   CONVERSION_OPTIMIZE => "CONVERSION_OPTIMIZE",
-  ROTATE              => "ROTATE",
+  ROTATE => "ROTATE",
   ROTATE_INDEFINITELY => "ROTATE_INDEFINITELY",
-  UNAVAILABLE         => "UNAVAILABLE"
+  UNAVAILABLE => "UNAVAILABLE"
 ];
 
 1;

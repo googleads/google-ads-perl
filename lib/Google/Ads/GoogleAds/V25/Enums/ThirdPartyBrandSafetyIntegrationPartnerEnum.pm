@@ -18,11 +18,11 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED         => "UNSPECIFIED",
-  UNKNOWN             => "UNKNOWN",
-  DOUBLE_VERIFY       => "DOUBLE_VERIFY",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  DOUBLE_VERIFY => "DOUBLE_VERIFY",
   INTEGRAL_AD_SCIENCE => "INTEGRAL_AD_SCIENCE",
-  ZEFR                => "ZEFR"
+  ZEFR => "ZEFR"
 ];
 
 1;

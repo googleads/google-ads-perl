@@ -24,10 +24,11 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     advertisingChannelType => $args->{advertisingChannelType},
-    asset                  => $args->{asset},
-    assetSource            => $args->{assetSource},
-    fieldType              => $args->{fieldType},
-    resourceName           => $args->{resourceName}};
+    asset => $args->{asset},
+    assetSource => $args->{assetSource},
+    fieldType => $args->{fieldType},
+    resourceName => $args->{resourceName}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

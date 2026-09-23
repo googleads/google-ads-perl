@@ -24,7 +24,8 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     restrictionText => $args->{restrictionText},
-    restrictionType => $args->{restrictionType}};
+    restrictionType => $args->{restrictionType}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

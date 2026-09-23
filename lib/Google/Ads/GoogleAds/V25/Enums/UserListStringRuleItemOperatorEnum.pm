@@ -18,16 +18,16 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED     => "UNSPECIFIED",
-  UNKNOWN         => "UNKNOWN",
-  CONTAINS        => "CONTAINS",
-  EQUALS          => "EQUALS",
-  STARTS_WITH     => "STARTS_WITH",
-  ENDS_WITH       => "ENDS_WITH",
-  NOT_EQUALS      => "NOT_EQUALS",
-  NOT_CONTAINS    => "NOT_CONTAINS",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  CONTAINS => "CONTAINS",
+  EQUALS => "EQUALS",
+  STARTS_WITH => "STARTS_WITH",
+  ENDS_WITH => "ENDS_WITH",
+  NOT_EQUALS => "NOT_EQUALS",
+  NOT_CONTAINS => "NOT_CONTAINS",
   NOT_STARTS_WITH => "NOT_STARTS_WITH",
-  NOT_ENDS_WITH   => "NOT_ENDS_WITH"
+  NOT_ENDS_WITH => "NOT_ENDS_WITH"
 ];
 
 1;

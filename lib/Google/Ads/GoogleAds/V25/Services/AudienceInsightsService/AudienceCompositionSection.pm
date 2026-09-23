@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     clusteredAttributes => $args->{clusteredAttributes},
-    dimension           => $args->{dimension},
-    topAttributes       => $args->{topAttributes}};
+    dimension => $args->{dimension},
+    topAttributes => $args->{topAttributes}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

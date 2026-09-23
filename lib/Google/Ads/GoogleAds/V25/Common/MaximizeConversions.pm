@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     cpcBidCeilingMicros => $args->{cpcBidCeilingMicros},
-    cpcBidFloorMicros   => $args->{cpcBidFloorMicros},
-    targetCpaMicros     => $args->{targetCpaMicros}};
+    cpcBidFloorMicros => $args->{cpcBidFloorMicros},
+    targetCpaMicros => $args->{targetCpaMicros}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

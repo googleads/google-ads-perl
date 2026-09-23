@@ -23,16 +23,17 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    absoluteTopImpressions      => $args->{absoluteTopImpressions},
-    biddableConversions         => $args->{biddableConversions},
-    biddableConversionsValue    => $args->{biddableConversionsValue},
-    clicks                      => $args->{clicks},
-    costMicros                  => $args->{costMicros},
-    impressions                 => $args->{impressions},
-    requiredBudgetAmountMicros  => $args->{requiredBudgetAmountMicros},
+    absoluteTopImpressions => $args->{absoluteTopImpressions},
+    biddableConversions => $args->{biddableConversions},
+    biddableConversionsValue => $args->{biddableConversionsValue},
+    clicks => $args->{clicks},
+    costMicros => $args->{costMicros},
+    impressions => $args->{impressions},
+    requiredBudgetAmountMicros => $args->{requiredBudgetAmountMicros},
     requiredCpcBidCeilingMicros => $args->{requiredCpcBidCeilingMicros},
     targetImpressionShareMicros => $args->{targetImpressionShareMicros},
-    topSlotImpressions          => $args->{topSlotImpressions}};
+    topSlotImpressions => $args->{topSlotImpressions}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

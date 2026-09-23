@@ -18,14 +18,14 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED           => "UNSPECIFIED",
-  UNKNOWN               => "UNKNOWN",
-  GREATER_THAN          => "GREATER_THAN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  GREATER_THAN => "GREATER_THAN",
   GREATER_THAN_OR_EQUAL => "GREATER_THAN_OR_EQUAL",
-  EQUALS                => "EQUALS",
-  NOT_EQUALS            => "NOT_EQUALS",
-  LESS_THAN             => "LESS_THAN",
-  LESS_THAN_OR_EQUAL    => "LESS_THAN_OR_EQUAL"
+  EQUALS => "EQUALS",
+  NOT_EQUALS => "NOT_EQUALS",
+  LESS_THAN => "LESS_THAN",
+  LESS_THAN_OR_EQUAL => "LESS_THAN_OR_EQUAL"
 ];
 
 1;

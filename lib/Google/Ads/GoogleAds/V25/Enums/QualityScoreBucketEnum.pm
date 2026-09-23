@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED   => "UNSPECIFIED",
-  UNKNOWN       => "UNKNOWN",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
   BELOW_AVERAGE => "BELOW_AVERAGE",
-  AVERAGE       => "AVERAGE",
+  AVERAGE => "AVERAGE",
   ABOVE_AVERAGE => "ABOVE_AVERAGE"
 ];
 

@@ -25,9 +25,10 @@ sub new {
   my $self = {
     createDateTime => $args->{createDateTime},
     modifyDateTime => $args->{modifyDateTime},
-    resourceName   => $args->{resourceName},
-    status         => $args->{status},
-    type           => $args->{type}};
+    resourceName => $args->{resourceName},
+    status => $args->{status},
+    type => $args->{type}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

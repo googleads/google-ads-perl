@@ -23,29 +23,30 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    activityCity              => $args->{activityCity},
-    activityCountry           => $args->{activityCountry},
-    activityId                => $args->{activityId},
-    activityRating            => $args->{activityRating},
-    activityState             => $args->{activityState},
-    hotelCity                 => $args->{hotelCity},
-    hotelClass                => $args->{hotelClass},
-    hotelCountryRegion        => $args->{hotelCountryRegion},
-    hotelId                   => $args->{hotelId},
-    hotelState                => $args->{hotelState},
-    productBrand              => $args->{productBrand},
-    productCategory           => $args->{productCategory},
-    productChannel            => $args->{productChannel},
+    activityCity => $args->{activityCity},
+    activityCountry => $args->{activityCountry},
+    activityId => $args->{activityId},
+    activityRating => $args->{activityRating},
+    activityState => $args->{activityState},
+    hotelCity => $args->{hotelCity},
+    hotelClass => $args->{hotelClass},
+    hotelCountryRegion => $args->{hotelCountryRegion},
+    hotelId => $args->{hotelId},
+    hotelState => $args->{hotelState},
+    productBrand => $args->{productBrand},
+    productCategory => $args->{productCategory},
+    productChannel => $args->{productChannel},
     productChannelExclusivity => $args->{productChannelExclusivity},
-    productCondition          => $args->{productCondition},
-    productCustomAttribute    => $args->{productCustomAttribute},
-    productGrouping           => $args->{productGrouping},
-    productItemId             => $args->{productItemId},
-    productLabels             => $args->{productLabels},
-    productLegacyCondition    => $args->{productLegacyCondition},
-    productType               => $args->{productType},
-    productTypeFull           => $args->{productTypeFull},
-    unknownListingDimension   => $args->{unknownListingDimension}};
+    productCondition => $args->{productCondition},
+    productCustomAttribute => $args->{productCustomAttribute},
+    productGrouping => $args->{productGrouping},
+    productItemId => $args->{productItemId},
+    productLabels => $args->{productLabels},
+    productLegacyCondition => $args->{productLegacyCondition},
+    productType => $args->{productType},
+    productTypeFull => $args->{productTypeFull},
+    unknownListingDimension => $args->{unknownListingDimension}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

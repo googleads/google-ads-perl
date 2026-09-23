@@ -18,18 +18,18 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED           => "UNSPECIFIED",
-  UNKNOWN               => "UNKNOWN",
-  SEARCH                => "SEARCH",
-  SEARCH_PARTNERS       => "SEARCH_PARTNERS",
-  CONTENT               => "CONTENT",
-  MIXED                 => "MIXED",
-  YOUTUBE               => "YOUTUBE",
-  GOOGLE_TV             => "GOOGLE_TV",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  SEARCH => "SEARCH",
+  SEARCH_PARTNERS => "SEARCH_PARTNERS",
+  CONTENT => "CONTENT",
+  MIXED => "MIXED",
+  YOUTUBE => "YOUTUBE",
+  GOOGLE_TV => "GOOGLE_TV",
   GOOGLE_OWNED_CHANNELS => "GOOGLE_OWNED_CHANNELS",
-  GMAIL                 => "GMAIL",
-  DISCOVER              => "DISCOVER",
-  MAPS                  => "MAPS"
+  GMAIL => "GMAIL",
+  DISCOVER => "DISCOVER",
+  MAPS => "MAPS"
 ];
 
 1;

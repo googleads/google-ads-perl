@@ -19,38 +19,33 @@ use warnings;
 use base qw(Google::Ads::GoogleAds::BaseService);
 
 sub list_async_errors {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'GET';
+  my $http_method = 'GET';
   my $request_path = 'v25/{+resourceName}:listAsyncErrors';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::CampaignDraftService::ListCampaignDraftAsyncErrorsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::CampaignDraftService::ListCampaignDraftAsyncErrorsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub mutate {
-  my $self         = shift;
+  my $self = shift;
   my $request_body = shift;
-  my $http_method  = 'POST';
+  my $http_method = 'POST';
   my $request_path = 'v25/customers/{+customerId}/campaignDrafts:mutate';
-  my $response_type =
-'Google::Ads::GoogleAds::V25::Services::CampaignDraftService::MutateCampaignDraftsResponse';
+  my $response_type = 'Google::Ads::GoogleAds::V25::Services::CampaignDraftService::MutateCampaignDraftsResponse';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 sub promote {
-  my $self          = shift;
-  my $request_body  = shift;
-  my $http_method   = 'POST';
-  my $request_path  = 'v25/{+campaignDraft}:promote';
+  my $self = shift;
+  my $request_body = shift;
+  my $http_method = 'POST';
+  my $request_path = 'v25/{+campaignDraft}:promote';
   my $response_type = 'Google::Ads::GoogleAds::LongRunning::Operation';
 
-  return $self->SUPER::call($http_method, $request_path, $request_body,
-    $response_type);
+  return $self->SUPER::call($http_method, $request_path, $request_body, $response_type);
 }
 
 1;

@@ -24,8 +24,9 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     feedLabel => $args->{feedLabel},
-    merchant  => $args->{merchant},
-    reason    => $args->{reason}};
+    merchant => $args->{merchant},
+    reason => $args->{reason}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

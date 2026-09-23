@@ -24,9 +24,10 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     additionalHighLifetimeValue => $args->{additionalHighLifetimeValue},
-    additionalValue             => $args->{additionalValue},
+    additionalValue => $args->{additionalValue},
     highLifetimeValueMultiplier => $args->{highLifetimeValueMultiplier},
-    valueMultiplier             => $args->{valueMultiplier}};
+    valueMultiplier => $args->{valueMultiplier}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

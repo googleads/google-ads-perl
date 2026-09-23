@@ -23,9 +23,9 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    formatRestriction                => $args->{formatRestriction},
-    nonSkippableInStreamRestrictions =>
-      $args->{nonSkippableInStreamRestrictions}};
+    formatRestriction => $args->{formatRestriction},
+    nonSkippableInStreamRestrictions => $args->{nonSkippableInStreamRestrictions}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

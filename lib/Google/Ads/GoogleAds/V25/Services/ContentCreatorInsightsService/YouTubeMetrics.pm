@@ -23,22 +23,23 @@ use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 sub new {
   my ($class, $args) = @_;
   my $self = {
-    averageCommentsPerVideo   => $args->{averageCommentsPerVideo},
-    averageLikesPerVideo      => $args->{averageLikesPerVideo},
-    averageSharesPerVideo     => $args->{averageSharesPerVideo},
-    averageViewsPerVideo      => $args->{averageViewsPerVideo},
-    commentsCount             => $args->{commentsCount},
-    engagementRate            => $args->{engagementRate},
+    averageCommentsPerVideo => $args->{averageCommentsPerVideo},
+    averageLikesPerVideo => $args->{averageLikesPerVideo},
+    averageSharesPerVideo => $args->{averageSharesPerVideo},
+    averageViewsPerVideo => $args->{averageViewsPerVideo},
+    commentsCount => $args->{commentsCount},
+    engagementRate => $args->{engagementRate},
     isActiveLiveStreamCreator => $args->{isActiveLiveStreamCreator},
-    isActiveShortsCreator     => $args->{isActiveShortsCreator},
-    likesCount                => $args->{likesCount},
-    partnershipOpportunities  => $args->{partnershipOpportunities},
-    sharesCount               => $args->{sharesCount},
-    shortsVideoCount          => $args->{shortsVideoCount},
-    shortsViewsCount          => $args->{shortsViewsCount},
-    subscriberCount           => $args->{subscriberCount},
-    videoCount                => $args->{videoCount},
-    viewsCount                => $args->{viewsCount}};
+    isActiveShortsCreator => $args->{isActiveShortsCreator},
+    likesCount => $args->{likesCount},
+    partnershipOpportunities => $args->{partnershipOpportunities},
+    sharesCount => $args->{sharesCount},
+    shortsVideoCount => $args->{shortsVideoCount},
+    shortsViewsCount => $args->{shortsViewsCount},
+    subscriberCount => $args->{subscriberCount},
+    videoCount => $args->{videoCount},
+    viewsCount => $args->{viewsCount}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

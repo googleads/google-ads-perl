@@ -24,7 +24,8 @@ sub new {
   my ($class, $args) = @_;
   my $self = {
     defaultYoutubeSelectLineup => $args->{defaultYoutubeSelectLineup},
-    youtubeSelectLineups       => $args->{youtubeSelectLineups}};
+    youtubeSelectLineups => $args->{youtubeSelectLineups}
+  };
 
   # Delete the unassigned fields in this object for a more concise JSON payload
   remove_unassigned_fields($self, $args);

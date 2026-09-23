@@ -18,10 +18,10 @@ use strict;
 use warnings;
 
 use Const::Exporter enums => [
-  UNSPECIFIED     => "UNSPECIFIED",
-  UNKNOWN         => "UNKNOWN",
-  ADS_ONLY        => "ADS_ONLY",
-  ORGANIC_ONLY    => "ORGANIC_ONLY",
+  UNSPECIFIED => "UNSPECIFIED",
+  UNKNOWN => "UNKNOWN",
+  ADS_ONLY => "ADS_ONLY",
+  ORGANIC_ONLY => "ORGANIC_ONLY",
   ADS_AND_ORGANIC => "ADS_AND_ORGANIC"
 ];
 
