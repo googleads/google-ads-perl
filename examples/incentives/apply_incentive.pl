@@ -30,7 +30,7 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V25::Services::IncentiveService::ApplyIncentiveRequest;
+  Google::Ads::GoogleAds::V26::Services::IncentiveService::ApplyIncentiveRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -40,7 +40,7 @@ sub apply_incentive {
   my ($api_client, $customer_id, $incentive_id, $country_code) = @_;
 
   my $apply_incentive_request =
-    Google::Ads::GoogleAds::V25::Services::IncentiveService::ApplyIncentiveRequest
+    Google::Ads::GoogleAds::V26::Services::IncentiveService::ApplyIncentiveRequest
     ->new({
       customerId          => $customer_id,
       selectedIncentiveId => $incentive_id,

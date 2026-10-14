@@ -27,7 +27,7 @@ use lib "$Bin/../../lib";
 use Google::Ads::GoogleAds::Client;
 use Google::Ads::GoogleAds::Utils::GoogleAdsHelper;
 use
-  Google::Ads::GoogleAds::V25::Services::IncentiveService::FetchIncentiveRequest;
+  Google::Ads::GoogleAds::V26::Services::IncentiveService::FetchIncentiveRequest;
 
 use Getopt::Long qw(:config auto_help);
 use Pod::Usage;
@@ -38,7 +38,7 @@ sub fetch_incentives {
   my ($api_client, $email_address, $language_code, $country_code) = @_;
 
   my $fetch_incentives_request =
-    Google::Ads::GoogleAds::V25::Services::IncentiveService::FetchIncentiveRequest
+    Google::Ads::GoogleAds::V26::Services::IncentiveService::FetchIncentiveRequest
     ->new({
       email        => $email_address,
       languageCode => $language_code,
