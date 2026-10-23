@@ -59,7 +59,6 @@ API](https://developers.google.com/google-ads/api/docs/start).
             oAuth2ClientId       --> clientId
             oAuth2ClientSecret   --> clientSecret
             oAuth2RefreshToken   --> refreshToken
-            developerToken       --> developerToken
 
         If you are authenticating as a manager account, additionally you must
         specify:
@@ -81,8 +80,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
         example, by providing your OAuth2 client ID and secret as the parameters.
 
     *   Copy the output from the last step of the example into the
-        `googleads.properties` file in your home directory. Don't forget to fill
-        in your developer token too.
+        `googleads.properties` file in your home directory.
 
     **If you're accessing the Google Ads API on behalf of clients...**
 
@@ -99,8 +97,7 @@ API](https://developers.google.com/google-ads/api/docs/start).
         example, by providing your OAuth2 client ID and secret as the parameters.
 
     *   Copy the output from the last step of the example into the
-        `googleads.properties` file in your home directory. Don't forget to fill
-        in your developer token too.
+        `googleads.properties` file in your home directory.
 
 1.  Run the [get_campaigns](examples/basic_operations/get_campaigns.pl) example
     to test if your credentials are valid. You also need to pass your Google Ads
@@ -128,9 +125,6 @@ To issue requests via the Google Ads API, you first need to create an
 [API client](lib/Google/Ads/GoogleAds/Client.pm). For convenience, you can store
 the required settings in a properties file (`googleads.properties`) with the
 following format:
-
-    ### Google Ads ###
-    developerToken=INSERT_DEVELOPER_TOKEN_HERE
 
     ### OAuth2 ###
     clientId=INSERT_OAUTH2_CLIENT_ID_HERE
@@ -167,7 +161,6 @@ refresh token at runtime:
 
 ```perl
 my $api_client = Google::Ads::GoogleAds::Client->new({
-  developer_token   => "INSERT_DEVELOPER_TOKEN_HERE",
   login_customer_id => "INSERT_LOGIN_CUSTOMER_ID_HERE"
 });
 

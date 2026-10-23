@@ -330,15 +330,6 @@ for retrieving or setting them dynamically. For example, the set_login_customer_
 allows you to change the value of the L</login_customer_id> attribute and
 get_login_customer_id() returns the current value of the attribute.
 
-=head2 developer_token
-
-A string used to tie usage of the Google Ads API to a specific Google Ads manager
-account.
-
-The value should be a character string assigned to you by Google. You can
-apply for a Developer Token by following the instructions at
-L<https://developers.google.com/google-ads/api/docs/first-call/dev-token>.
-
 =head2 login_customer_id
 
 This is the customer ID of the authorized customer to use in the request, without
@@ -456,9 +447,8 @@ die() with an error message describing the failure.
     # The properties file couldn't be read; handle error as appropriate.
   }
 
-  # Specify all attributes explicitly. The properties file will not override.
+  # Specify attributes explicitly. The properties file will not override.
   my $api_client = Google::Ads::GoogleAds::Client->new({
-    developer_token   => "123xyzabc...",
     login_customer_id => "1234567890"
   });
 
