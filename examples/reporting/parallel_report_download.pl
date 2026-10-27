@@ -65,7 +65,7 @@ sub parallel_report_download {
 
   # IMPORTANT: You should avoid hitting the same customer ID in parallel. There
   # are rate limits at the customer ID level which are much stricter than limits
-  # at the developer token level.
+  # at the Google Cloud project level.
   foreach my $search_query (@{+GAQL_QUERY_STRINGS}) {
     # Use a list of threads to make sure that we wait for this report to complete
     # on all customer IDs before proceeding.
