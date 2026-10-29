@@ -114,6 +114,7 @@ sub new {
     customer                     => $args->{customer},
     customerAsset                => $args->{customerAsset},
     customerAssetSet             => $args->{customerAssetSet},
+    customerBudgetNetworkSetting => $args->{customerBudgetNetworkSetting},
     customerClient               => $args->{customerClient},
     customerClientLink           => $args->{customerClientLink},
     customerConversionGoal       => $args->{customerConversionGoal},

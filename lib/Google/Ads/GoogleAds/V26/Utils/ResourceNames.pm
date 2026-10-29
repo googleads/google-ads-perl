@@ -1017,6 +1017,15 @@ sub customer_asset_set {
   return expand_path_template($path_template, [$customer_id, $asset_set_id]);
 }
 
+# Returns the customer_budget_network_setting resource name for the specified components.
+sub customer_budget_network_setting {
+  my ($customer_id) = @_;
+
+  my $path_template = 'customers/{customer_id}/customerBudgetNetworkSettings';
+
+  return expand_path_template($path_template, [$customer_id]);
+}
+
 # Returns the customer_client resource name for the specified components.
 sub customer_client {
   my ($customer_id, $client_customer_id) = @_;

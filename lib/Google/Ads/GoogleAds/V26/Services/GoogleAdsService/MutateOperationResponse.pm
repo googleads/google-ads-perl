@@ -66,10 +66,12 @@ sub new {
     conversionCustomVariableResult => $args->{conversionCustomVariableResult},
     conversionGoalCampaignConfigResult =>
       $args->{conversionGoalCampaignConfigResult},
-    conversionValueRuleResult       => $args->{conversionValueRuleResult},
-    conversionValueRuleSetResult    => $args->{conversionValueRuleSetResult},
-    customConversionGoalResult      => $args->{customConversionGoalResult},
-    customerAssetResult             => $args->{customerAssetResult},
+    conversionValueRuleResult          => $args->{conversionValueRuleResult},
+    conversionValueRuleSetResult       => $args->{conversionValueRuleSetResult},
+    customConversionGoalResult         => $args->{customConversionGoalResult},
+    customerAssetResult                => $args->{customerAssetResult},
+    customerBudgetNetworkSettingResult =>
+      $args->{customerBudgetNetworkSettingResult},
     customerConversionGoalResult    => $args->{customerConversionGoalResult},
     customerCustomizerResult        => $args->{customerCustomizerResult},
     customerLabelResult             => $args->{customerLabelResult},
