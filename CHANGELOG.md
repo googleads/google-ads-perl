@@ -1,3 +1,8 @@
+36.1.0 - 2026-10-28
+-------------------
+- Added support for Google Ads API v26_1.
+- Added code example: create_asset_optimization_experiment.
+
 36.0.0 - 2026-10-14
 -------------------
 - Added support for Google Ads API v26_0.

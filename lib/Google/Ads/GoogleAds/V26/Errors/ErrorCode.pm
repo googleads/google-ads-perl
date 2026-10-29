@@ -62,6 +62,7 @@ sub new {
     biddingStrategyError             => $args->{biddingStrategyError},
     billingSetupError                => $args->{billingSetupError},
     brandGuidelinesMigrationError    => $args->{brandGuidelinesMigrationError},
+    budgetNetworkSettingError        => $args->{budgetNetworkSettingError},
     businessProfileLocationSyncError =>
       $args->{businessProfileLocationSyncError},
     campaignBudgetError             => $args->{campaignBudgetError},

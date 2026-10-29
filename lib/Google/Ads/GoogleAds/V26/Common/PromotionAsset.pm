@@ -26,6 +26,7 @@ sub new {
     adScheduleTargets      => $args->{adScheduleTargets},
     discountModifier       => $args->{discountModifier},
     endDate                => $args->{endDate},
+    externalRedeemInfo     => $args->{externalRedeemInfo},
     languageCode           => $args->{languageCode},
     moneyAmountOff         => $args->{moneyAmountOff},
     occasion               => $args->{occasion},

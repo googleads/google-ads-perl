@@ -71,6 +71,8 @@ sub new {
     conversionValueRuleSetOperation => $args->{conversionValueRuleSetOperation},
     customConversionGoalOperation   => $args->{customConversionGoalOperation},
     customerAssetOperation          => $args->{customerAssetOperation},
+    customerBudgetNetworkSettingOperation =>
+      $args->{customerBudgetNetworkSettingOperation},
     customerConversionGoalOperation => $args->{customerConversionGoalOperation},
     customerCustomizerOperation     => $args->{customerCustomizerOperation},
     customerLabelOperation          => $args->{customerLabelOperation},
