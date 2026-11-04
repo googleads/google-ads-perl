@@ -253,9 +253,9 @@ See the [Proxy guide](https://developers.google.com/google-ads/api/docs/client-l
 
 - https://developers.google.com/google-ads/api/docs
 
-### Support forum
+### Support
 
-- https://groups.google.com/forum/#!forum/adwords-api
+- https://developers.google.com/google-ads/api/support
 
 ### Authors
 
