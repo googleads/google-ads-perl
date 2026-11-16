@@ -189,9 +189,9 @@ sub create_campaign {
       # Optional: Set the start and end datetimes for the campaign, beginning one day
       # from now and ending a year from now.
       startDateTime =>
-        strftime("%Y%m%d 00:00:00", localtime(time + 60 * 60 * 24)),
+        strftime("%Y-%m-%d 00:00:00", localtime(time + 60 * 60 * 24)),
       endDateTime =>
-        strftime("%Y%m%d 23:59:59", localtime(time + 60 * 60 * 24 * 365)),
+        strftime("%Y-%m-%d 23:59:59", localtime(time + 60 * 60 * 24 * 365)),
     });
 
   # Create a campaign operation.
@@ -283,7 +283,7 @@ sub create_ad_group {
   # Note that the ad group type must not be set.
   # Since the advertisingChannelSubType is APP_CAMPAIGN,
   #   1- you cannot override bid settings at the ad group level.
-  #   2- you cannot add ad group criteria.
+  #   2- you cannot add ad group criteria other than audience signals.
   my $ad_group = Google::Ads::GoogleAds::V26::Resources::AdGroup->new({
     name   => "Earth to Mars Cruises #" . uniqid(),
     status => Google::Ads::GoogleAds::V26::Enums::AdGroupStatusEnum::ENABLED,
