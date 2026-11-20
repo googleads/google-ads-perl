@@ -46,24 +46,9 @@ API](https://developers.google.com/google-ads/api/docs/start).
 
 1.  Set up your OAuth2 credentials.
 
-    The Google Ads API uses [OAuth2](http://oauth.net/2/) as the authentication
+    The Google Ads API uses [OAuth2](https://oauth.net/2/) as the authentication
     mechanism. Choose the appropriate option below based on your use case, and
     read and follow the instructions that the example prints to the console.
-
-    **If you already have credentials for the AdWords API...**
-
-    *   If you have the `adwords.properties` file you used for the AdWords API,
-        copy and name it as `googleads.properties`. Simply change the key names
-        in the new configuration file as below:
-
-            oAuth2ClientId       --> clientId
-            oAuth2ClientSecret   --> clientSecret
-            oAuth2RefreshToken   --> refreshToken
-
-        If you are authenticating as a manager account, additionally you must
-        specify:
-
-            loginCustomerId --> Manager account ID (with hyphens removed).
 
     **If you're accessing the Google Ads API using your own credentials...**
 
@@ -137,7 +122,7 @@ manager account ID (with hyphens removed) as the login customer ID:
     ### Google Ads ###
     loginCustomerId=INSERT_LOGIN_CUSTOMER_ID_HERE
 
-If you have an `googleads.properties` configuration file in the above format in
+If you have a `googleads.properties` configuration file in the above format in
 your home directory, you can instantiate the client with no arguments:
 
 ```perl
@@ -145,7 +130,7 @@ my $api_client = Google::Ads::GoogleAds::Client->new();
 ```
 
 If your configuration file is not in your home directory, you can pass the file
-location to the the `properties_file` property as follows:
+location to the `properties_file` property as follows:
 
 ```perl
 my $properties_file = "/path/to/googleads.properties";
@@ -155,7 +140,7 @@ my $api_client = Google::Ads::GoogleAds::Client->new({
 });
 ```
 
-You can also get a [OAuth2ApplicationsHandler](lib/Google/Ads/GoogleAds/OAuth2ApplicationsHandler.pm)
+You can also get an [OAuth2ApplicationsHandler](lib/Google/Ads/GoogleAds/OAuth2ApplicationsHandler.pm)
 object from the `API client`, and change the client ID, client secret and
 refresh token at runtime:
 
@@ -176,7 +161,7 @@ Once you have an instance of `API client`, you can obtain a service client for a
 particular service using one of the `...Service()` methods:
 
 ```perl
-my $campaign_serevice = $api_client->CampaignService();
+my $campaign_service = $api_client->CampaignService();
 ```
 
 ### Request/Response Logging
@@ -195,7 +180,7 @@ succeeded.
 | SUMMARY  | Google.Ads.GoogleAds.Summary   | INFO          | WARN          |
 | DETAIL   | Google.Ads.GoogleAds.Detail    | DEBUG         | INFO          |
 
-**Caveat**: Mutate requests where [Partial failure](https://developers.google.com/google-ads/api/docs/samples/handle-partial-failure)
+**Caveat**: Mutate requests where [Partial failure](https://developers.google.com/google-ads/api/samples/handle-partial-failure)
 is true do not cause the entire request to fail. Therefore, partial failure logs
 are always logged at Success level, not at Failure level as may be expected.
 
@@ -249,9 +234,9 @@ See the [Proxy guide](https://developers.google.com/google-ads/api/docs/client-l
 
 - https://github.com/googleads/google-ads-perl/issues
 
-### API Documentation:
+### API documentation
 
-- https://developers.google.com/google-ads/api/docs
+- https://developers.google.com/google-ads/api
 
 ### Support
 
@@ -259,5 +244,4 @@ See the [Proxy guide](https://developers.google.com/google-ads/api/docs/client-l
 
 ### Authors
 
-- [Wang Fan](https://github.com/wfansh)
-- [Laura Chevalier](https://github.com/laurachevalier4)
+- [Mattia Tommasone](https://github.com/Raibaz)

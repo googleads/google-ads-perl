@@ -33,7 +33,7 @@ Please check existing issues to see if your bug has already been reported before
 
 * Which version of Perl are you using?
 
-* Which operating system (Linux, Windows, ...) and version?*
+* Which operating system (Linux, Windows, ...) and version?
 
 **Description of the bug:**
 
