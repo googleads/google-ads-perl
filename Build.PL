@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Mobulde::Build build file. See
-# http://search.cpan.org/~ewilhelm/Module-Build-0.32/lib/Module/Build.pm
+# Module::Build build file. See
+# https://metacpan.org/pod/Module::Build
 # for explanation of format.
 
 use Module::Build;
@@ -38,7 +38,7 @@ my $build_sc = Module::Build->subclass(
 $build_sc->new(
   module_name        => "Google::Ads::GoogleAds::Client",
   license            => "apache",
-  dist_author        => "Laura Chevalier",
+  dist_author        => "Mattia Tommasone",
   create_makefile_pl => "traditional",
   dist_abstract      => "Google Ads API Client Library for Perl",
   dist_name          => "Google-Ads-GoogleAds-Client",
